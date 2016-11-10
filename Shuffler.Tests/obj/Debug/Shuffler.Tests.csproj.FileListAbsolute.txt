@@ -7,3 +7,5 @@ C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Rhino.Mocks.xml
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\obj\Debug\Shuffler.Tests.csprojResolveAssemblyReference.cache
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\obj\Debug\Shuffler.Tests.dll
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\obj\Debug\Shuffler.Tests.pdb
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\CSWordRemoveBlankPage.exe
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\CSWordRemoveBlankPage.pdb

@@ -1,6 +1,5 @@
 C:\Users\jegglestone\TheShuffler\CSWordRemoveBlankPage\obj\x86\Debug\CSWordRemoveBlankPage.exe
 C:\Users\jegglestone\TheShuffler\CSWordRemoveBlankPage\obj\x86\Debug\CSWordRemoveBlankPage.pdb
-C:\Users\jegglestone\TheShuffler\CSWordRemoveBlankPage\obj\x86\Debug\Shuffler.Main.csprojResolveAssemblyReference.cache
 C:\Users\jegglestone\TheShuffler\CSWordRemoveBlankPage\obj\x86\Debug\CSWordRemoveBlankPage.MainForm.resources
 C:\Users\jegglestone\TheShuffler\CSWordRemoveBlankPage\obj\x86\Debug\CSWordRemoveBlankPage.Properties.Resources.resources
 C:\Users\jegglestone\TheShuffler\CSWordRemoveBlankPage\obj\x86\Debug\Shuffler.Main.csproj.GenerateResource.Cache
