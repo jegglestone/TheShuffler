@@ -1,0 +1,8 @@
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\CSWordRemoveBlankPage\obj\x86\Debug\CSWordRemoveBlankPage.exe
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\CSWordRemoveBlankPage\obj\x86\Debug\CSWordRemoveBlankPage.pdb
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\CSWordRemoveBlankPage\bin\Debug\CSWordRemoveBlankPage.exe
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\CSWordRemoveBlankPage\bin\Debug\CSWordRemoveBlankPage.pdb
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\CSWordRemoveBlankPage\obj\x86\Debug\Shuffler.Main.csprojResolveAssemblyReference.cache
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\CSWordRemoveBlankPage\obj\x86\Debug\CSWordRemoveBlankPage.MainForm.resources
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\CSWordRemoveBlankPage\obj\x86\Debug\CSWordRemoveBlankPage.Properties.Resources.resources
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\CSWordRemoveBlankPage\obj\x86\Debug\Shuffler.Main.csproj.GenerateResource.Cache
