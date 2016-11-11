@@ -1,0 +1,22 @@
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Shuffler.Tests.dll
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Shuffler.Tests.pdb
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\nunit.framework.dll
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Rhino.Mocks.dll
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\nunit.framework.xml
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Rhino.Mocks.xml
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\obj\Debug\Shuffler.Tests.csprojResolveAssemblyReference.cache
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\obj\Debug\Shuffler.Tests.dll
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\obj\Debug\Shuffler.Tests.pdb
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\CSWordRemoveBlankPage.exe
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\CSWordRemoveBlankPage.pdb
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Shuffler.Tests.dll
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Shuffler.Tests.pdb
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\CSWordRemoveBlankPage.exe
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\nunit.framework.dll
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Rhino.Mocks.dll
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\CSWordRemoveBlankPage.pdb
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\nunit.framework.xml
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Rhino.Mocks.xml
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\obj\Debug\Shuffler.Tests.csprojResolveAssemblyReference.cache
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\obj\Debug\Shuffler.Tests.dll
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\obj\Debug\Shuffler.Tests.pdb
