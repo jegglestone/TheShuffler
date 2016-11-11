@@ -1,4 +1,4 @@
-﻿namespace CSWordRemoveBlankPage
+﻿namespace Shuffler
 {
     partial class MainForm
     {

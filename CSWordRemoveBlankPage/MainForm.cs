@@ -3,9 +3,9 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
-using CSWordRemoveBlankPage.Services;
+using Shuffler.Helper;
 
-namespace CSWordRemoveBlankPage
+namespace Shuffler
 {
     
     public partial class MainForm : Form
@@ -66,7 +66,6 @@ namespace CSWordRemoveBlankPage
                 paragraphs = DocumentFormatter.RemoveBlankPages(doc, wordapp);
 
                 SaveDocumentAsNewFileAndClose(doc);
-
                 wordapp.Quit();
             }
             catch (Exception ex)
