@@ -1,7 +1,9 @@
 ﻿namespace CSWordRemoveBlankPage.Services
 {
     using System;
+    using System.Windows.Forms;
     using Microsoft.Office.Interop.Word;
+    using Application = Microsoft.Office.Interop.Word.Application;
 
     public class DocumentFormatter : IDocumentFormatter
     {
@@ -9,15 +11,20 @@
             Document doc,
             Application wordapp)
         {
-            Paragraphs paragraphs = doc.Paragraphs;
+            var paragraphs = doc.Paragraphs;
             foreach (Paragraph paragraph in paragraphs)
             {
-                if (paragraph.Range.Text.Trim() != string.Empty) continue;
+                if (ParagraphHasText(paragraph)) continue;
 
                 paragraph.Range.Select();
                 wordapp.Selection.Delete();
             }
             return paragraphs;
+        }
+
+        private static bool ParagraphHasText(Paragraph paragraph)
+        {
+            return paragraph.Range.Text.Trim() != string.Empty;
         }
 
         public bool ShuffleClauserUnits(Range sentenceRange)
