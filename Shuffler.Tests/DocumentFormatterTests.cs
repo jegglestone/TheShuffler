@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using Microsoft.Office.Interop.Word;
-using Word = Microsoft.Office.Interop.Word;
 using Rhino.Mocks;
 using CSWordRemoveBlankPage.Services;
 
