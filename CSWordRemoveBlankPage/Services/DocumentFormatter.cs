@@ -1,8 +1,7 @@
 ﻿namespace Shuffler.Helper
 {
     using System;
-    using System.Windows.Forms;
-    using Helper;
+    using System.Xml.Linq;
     using Microsoft.Office.Interop.Word;
     using Services;
     using Application = Microsoft.Office.Interop.Word.Application;
@@ -23,20 +22,12 @@
             var paragraphs = doc.Paragraphs;
             foreach (Paragraph paragraph in paragraphs)
             {
-                if (ParagraphHasText(paragraph)) continue;
-
-                paragraph.Range.Select();
-                wordapp.Selection.Delete();
+                
             }
             return paragraphs;
         }
 
-        private static bool ParagraphHasText(Paragraph paragraph)
-        {
-            return paragraph.Range.Text.Trim() != string.Empty;
-        }
-
-        public bool ShuffleClauserUnits(Range sentenceRange)
+        public bool ShuffleClauserUnits(XElement xmlSentenceElement)
         {
             throw new NotImplementedException();
 
@@ -51,5 +42,6 @@
             // move to the beginning of the sentence
 
         }
+
     }
 }
