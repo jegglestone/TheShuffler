@@ -5,3 +5,4 @@ C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\CSWor
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\CSWordRemoveBlankPage\obj\x64\Debug\CSWordRemoveBlankPage.exe
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\CSWordRemoveBlankPage\obj\x64\Debug\CSWordRemoveBlankPage.pdb
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\CSWordRemoveBlankPage\obj\x64\Debug\Shuffler.MainForm.resources
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\CSWordRemoveBlankPage\obj\x64\Debug\Shuffler.Main.csprojResolveAssemblyReference.cache
