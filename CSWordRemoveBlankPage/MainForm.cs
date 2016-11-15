@@ -7,7 +7,11 @@ using Shuffler.Helper;
 
 namespace Shuffler
 {
-    
+    using System.IO.Packaging;
+    using System.Linq;
+    using System.Xml;
+    using System.Xml.Linq;
+
     public partial class MainForm : Form
     {
         private string wordPath;
@@ -52,35 +56,65 @@ namespace Shuffler
             }
         }
 
-
         private bool FormatDocument()
         {
-            Word.Application wordapp = null;
-            Word.Document doc = null;
-            Word.Paragraphs paragraphs = null;
+            const string fileName = "SampleDoc.docx";
 
-            try
-            {
-                wordapp = new Word.Application { Visible = false };
-                doc = wordapp.Documents.Open(wordPath);
-                paragraphs = DocumentFormatter.RemoveBlankPages(doc, wordapp);
+            const string documentRelationshipType =
+              "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
+    
+            const string wordmlNamespace =
+              "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 
-                SaveDocumentAsNewFileAndClose(doc);
-                wordapp.Quit();
-            }
-            catch (Exception ex)
-            {
-                DisplayException(ex);
-                return false;
-            }
-            finally
-            {
-                CleanUpUnmangedComResources(
-                    ref wordapp, ref doc, ref paragraphs);
-            }
+            XNamespace w = wordmlNamespace;
 
+            using (Package wdPackage = Package.Open(fileName, FileMode.Open, FileAccess.Read))
+            {
+                PackageRelationship docPackageRelationship =
+                  wdPackage.GetRelationshipsByType(documentRelationshipType).FirstOrDefault();
+                if (docPackageRelationship != null)
+                {
+                    Uri documentUri = PackUriHelper.ResolvePartUri(new Uri("/", UriKind.Relative),
+                      docPackageRelationship.TargetUri);
+                    PackagePart documentPart = wdPackage.GetPart(documentUri);
+ 
+                    XmlDocument xDoc  = new XmlDocument();
+                    xDoc.Load(XmlReader.Create(documentPart.GetStream()));
+                    
+                }
+            }
             return true;
         }
+
+
+        //private bool FormatDocument()
+        //{
+        //    Word.Application wordapp = null;
+        //    Word.Document doc = null;
+        //    Word.Paragraphs paragraphs = null;
+
+        //    try
+        //    {
+        //        wordapp = new Word.Application { Visible = false };
+        //        doc = wordapp.Documents.Open(wordPath);
+        //        paragraphs = DocumentFormatter.RemoveBlankPages(doc, wordapp);
+
+        //        SaveDocumentAsNewFileAndClose(doc);
+        //        wordapp.Quit();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        DisplayException(ex);
+        //        return false;
+        //    }
+        //    finally
+        //    {
+        //        CleanUpUnmangedComResources(
+        //            ref wordapp, ref doc, ref paragraphs);
+        //    }
+
+        //    return true;
+        //}
 
         private void SaveDocumentAsNewFileAndClose(Word.Document doc)
         {
