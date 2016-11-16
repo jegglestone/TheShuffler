@@ -4,6 +4,7 @@
     using DocumentFormat.OpenXml.Packaging;
     using System;
     using System.Xml.Linq;
+    using DocumentFormat.OpenXml.Wordprocessing;
 
     public class DocumentFormatter
     {
@@ -20,28 +21,32 @@
 
             foreach (var element in documentBodyXml.Elements())
             {
-                if (element.LocalName == "Paragraph")
+                if (element.LocalName == "p")
                 {
-                    ShuffleClauserUnits(element);
+                    ShuffleClauserUnits(element as Paragraph);
                 }
             }
 
             return false;
         }
 
-        private bool ShuffleClauserUnits(OpenXmlElement xmlSentenceElement)
+        public Paragraph ShuffleClauserUnits(Paragraph xmlSentenceElement)
         {
-            throw new NotImplementedException();
+           throw  new NotImplementedException();
 
-            // locate a CS 
+           // loop through all word runs
 
-            // use the ClauserUnitChecker to make sure it's superscripted
+            int[] clauserPosition;
+
+            // get the position of any valid CS
+
+            // get the position of the next comma
 
             // get the ending point (bkp)
 
             // add a comma if there isn't one
 
-            // move to the beginning of the sentence
+            // move the block to the beginning of the sentence
 
         }
 

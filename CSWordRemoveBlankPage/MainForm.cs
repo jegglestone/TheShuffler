@@ -65,7 +65,7 @@ namespace Shuffler
             using (var document = WordprocessingDocument.Open(wordPath, false))
             {
                 var docPart = document.MainDocumentPart;
-                if (docPart != null && docPart.Document != null)
+                if (docPart?.Document != null)
                 {
                     documentFormatter.ProcessDocument(docPart);
                 }
@@ -73,7 +73,7 @@ namespace Shuffler
             return true;
         }
 
-        #region sample code
+        #region alternative code
 
         private bool FormatDocument2()
         {
