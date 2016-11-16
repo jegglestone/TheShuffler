@@ -1,12 +1,11 @@
 ﻿namespace Shuffler.Helper
 {
+    using DocumentFormat.OpenXml;
+    using DocumentFormat.OpenXml.Packaging;
     using System;
     using System.Xml.Linq;
-    using Microsoft.Office.Interop.Word;
-    using Services;
-    using Application = Microsoft.Office.Interop.Word.Application;
 
-    public class DocumentFormatter : IDocumentFormatter
+    public class DocumentFormatter
     {
         private IUnitChecker _clauserUnitChecker;
 
@@ -15,19 +14,22 @@
             _clauserUnitChecker = clauserUnitChecker;
         }
 
-        public static Paragraphs RemoveBlankPages(
-            Document doc,
-            Application wordapp)
+        public bool ProcessDocument(MainDocumentPart docPart)
         {
-            var paragraphs = doc.Paragraphs;
-            foreach (Paragraph paragraph in paragraphs)
+            OpenXmlElement documentBodyXml = docPart.Document.Body;
+
+            foreach (var element in documentBodyXml.Elements())
             {
-                
+                if (element.LocalName == "Paragraph")
+                {
+                    ShuffleClauserUnits(element);
+                }
             }
-            return paragraphs;
+
+            return false;
         }
 
-        public bool ShuffleClauserUnits(XElement xmlSentenceElement)
+        private bool ShuffleClauserUnits(OpenXmlElement xmlSentenceElement)
         {
             throw new NotImplementedException();
 

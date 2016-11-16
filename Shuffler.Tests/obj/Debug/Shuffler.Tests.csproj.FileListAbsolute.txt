@@ -24,3 +24,8 @@ C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuff
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Moq.dll
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Castle.Core.xml
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Moq.xml
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Castle.Core.dll
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Moq.dll
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Castle.Core.xml
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Moq.xml
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\DocumentFormat.OpenXml.dll

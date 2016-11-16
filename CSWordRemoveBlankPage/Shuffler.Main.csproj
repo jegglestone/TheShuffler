@@ -63,9 +63,6 @@
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.Packaging">
-      <HintPath>..\..\..\..\..\.nuget\packages\System.IO.Packaging\4.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
@@ -74,7 +71,6 @@
   <ItemGroup>
     <Compile Include="Helper\ClauserUnitChecker.cs" />
     <Compile Include="Services\DocumentFormatter.cs" />
-    <Compile Include="Services\IDocumentFormatter.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

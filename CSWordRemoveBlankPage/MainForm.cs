@@ -7,6 +7,8 @@ using Shuffler.Helper;
 
 namespace Shuffler
 {
+    using DocumentFormat.OpenXml;
+    using DocumentFormat.OpenXml.Packaging;
     using System.IO.Packaging;
     using System.Linq;
     using System.Xml;
@@ -57,6 +59,23 @@ namespace Shuffler
         }
 
         private bool FormatDocument()
+        {
+            var documentFormatter = new DocumentFormatter(new ClauserUnitChecker());
+
+            using (var document = WordprocessingDocument.Open(wordPath, false))
+            {
+                var docPart = document.MainDocumentPart;
+                if (docPart != null && docPart.Document != null)
+                {
+                    documentFormatter.ProcessDocument(docPart);
+                }
+            }
+            return true;
+        }
+
+        #region sample code
+
+        private bool FormatDocument2()
         {
             const string fileName = "SampleDoc.docx";
 
@@ -115,6 +134,8 @@ namespace Shuffler
 
         //    return true;
         //}
+
+        #endregion
 
         private void SaveDocumentAsNewFileAndClose(Word.Document doc)
         {
