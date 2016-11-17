@@ -1,0 +1,5 @@
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.TestFiles\bin\Debug\Shuffler.TestFiles.dll
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.TestFiles\bin\Debug\Shuffler.TestFiles.pdb
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.TestFiles\obj\Debug\Shuffler.TestFiles.csprojResolveAssemblyReference.cache
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.TestFiles\obj\Debug\Shuffler.TestFiles.dll
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.TestFiles\obj\Debug\Shuffler.TestFiles.pdb

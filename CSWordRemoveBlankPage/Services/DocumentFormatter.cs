@@ -23,7 +23,7 @@
             {
                 if (element.LocalName == "p")
                 {
-                    ShuffleClauserUnits(element as Paragraph);
+                    //ShuffleClauserUnits(element as Paragraph);
                 }
             }
 

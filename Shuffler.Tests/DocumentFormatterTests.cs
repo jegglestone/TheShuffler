@@ -1,8 +1,14 @@
 ﻿namespace Shuffler.Tests
 {
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
     using NUnit.Framework;
     using System.Text;
+    using System.Xml;
     using System.Xml.Linq;
+    using DocumentFormat.OpenXml;
+    using DocumentFormat.OpenXml.Packaging;
     using DocumentFormat.OpenXml.Wordprocessing;
     using Helper;
 
@@ -13,9 +19,8 @@
         [Test]
         public void ShuffleClauserUnits_ToTheBeginningOfTheSentenceAndAddComma()
         {
-
             Paragraph paragraph = 
-                new Paragraph {InnerXml = GetUnShuffledParagraphWithClauserUnit()};
+                GetParagraph_TMIn_April_and_May_BK_CShowever_BKP_PRENthe_NNreport_VBwasnt_ADJgood_BKP();
 
             var documentFormatter = new DocumentFormatter(new ClauserUnitChecker());
 
@@ -28,6 +33,7 @@
                 "CSbefore he VBhad a chance VBto speak BKP, PRENThe meeting VBwas over BKP."));
         }
 
+        #region not finished tests
         //[Test]
         //public void ShuffleClauserUnits_when_clauserAtStartOfSentence_DontMoveIt()
         //{
@@ -68,203 +74,34 @@
         // multiple clauser units?
         // Does a clauser unit only end with BKP?
 
-        /// <summary>
-        /// Returns word XML for the following string
-        /// TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP.
-        /// </summary>
-        /// <returns></returns>
-        private static string GetUnShuffledParagraphWithClauserUnit()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("<xml version='1.0' encoding='utf-8' xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:p w:rsidR=\"002D50D3\" w:rsidRDefault=\"002D50D3\">");
-            sb.Append("   <w:pPr>");
-            sb.Append("     <w:spacing w:after=\"0\" w:line=\"240\" w:lineRule=\"auto\" />");
-            sb.Append("     <w:rPr>");
-            sb.Append("       <w:vertAlign w:val=\"subscript\" />");
-            sb.Append("     </w:rPr>");
-            sb.Append("   </w:pPr>");
-            sb.Append("   <w:proofErr w:type=\"spellStart\" />");
-            sb.Append("   <w:r>");
-            sb.Append("   <w:rPr>");
-            sb.Append("       <w:vertAlign w:val=\"superscript\" />");
-            sb.Append("   </w:rPr>");
-            sb.Append("   <w:t>TM</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:r>");
-            sb.Append("   <w:rPr>");
-            sb.Append("   <w:lang w:val=\"en-US\" />");
-            sb.Append("   </w:rPr>");
-            sb.Append("   <w:t>In</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:proofErr w:type=\"spellEnd\" ");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t xml:space=\"preserve\"> April and</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:vertAlign w:val=\"superscript\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t xml:space=\"preserve\"></w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:u w:val=\"single\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t>May</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t xml:space=\"preserve\"></w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:vertAlign w:val=\"superscript\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t>BKP</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t>,</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t xml:space=\"preserve\"></w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:proofErr w:type=\"spellStart\" />");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:vertAlign w:val=\"superscript\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t>CS</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("        </w:rPr>");
-            sb.Append("        <w:t>however</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:proofErr w:type=\"spellEnd\" />");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:vertAlign w:val=\"superscript\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t xml:space=\"preserve\"></w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:vertAlign w:val=\"superscript\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("        <w:t>BKP</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:lang w:val=\"en-US\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t>,</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:lang w:val=\"en-US\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t xml:space=\"preserve\"></w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:proofErr w:type=\"spellStart\" />");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:vertAlign w:val=\"superscript\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t>PREN</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:lang w:val=\"en-US\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t>the</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:proofErr w:type=\"spellEnd\" />");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:rFonts w:ascii=\"Arial\" w:hAnsi=\"Arial\" w:eastAsia=\"SimSun\" w:cs=\"Arial\" />");
-            sb.Append("   	</w:rPr>");
-            sb.Append("       <w:t xml:space=\"preserve\"></w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:proofErr w:type=\"spellStart\" />");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:vertAlign w:val=\"superscript\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t>NN</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:lang w:val=\"en-US\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t>report</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:proofErr w:type=\"spellEnd\" />");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t xml:space=\"preserve\"></w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:proofErr w:type=\"spellStart\" />");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:vertAlign w:val=\"superscript\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t>VB</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:lang w:val=\"en-US\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t>wasn’t</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:proofErr w:type=\"spellEnd\" />");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t xml:space=\"preserve\"></w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:proofErr w:type=\"spellStart\" />");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:vertAlign w:val=\"superscript\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t>ADJ</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:lang w:val=\"en-US\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t>good</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:proofErr w:type=\"spellEnd\" />");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:lang w:val=\"en-US\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t xml:space=\"preserve\"></w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:vertAlign w:val=\"superscript\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t>BKP</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   <w:r>");
-            sb.Append("       <w:rPr>");
-            sb.Append("           <w:u w:val=\"single\" />");
-            sb.Append("       </w:rPr>");
-            sb.Append("       <w:t>.</w:t>");
-            sb.Append("   </w:r>");
-            sb.Append("   </w:p></xml>");
+        #endregion
 
-            return sb.ToString();
+        private Paragraph GetParagraph_TMIn_April_and_May_BK_CShowever_BKP_PRENthe_NNreport_VBwasnt_ADJgood_BKP()
+        {
+            var outPutDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+            using (
+                var document =
+                    WordprocessingDocument.Open(
+                        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) +
+                        "\\Shuffler.TestFiles\\TestFiles\\TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP..docx"
+                        , false))
+            {
+                var docPart = document.MainDocumentPart;
+                if (docPart?.Document != null)
+                {
+                    OpenXmlElement documentBodyXml = docPart.Document.Body;
+                    OpenXmlElement p =
+                        documentBodyXml.FirstOrDefault(
+                            x =>
+                                x.LocalName == "p" &&
+                                x.InnerText.Contains(
+                                    "TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP"
+                                    ));
+                    return p as Paragraph;
+                }
+            }
+
+            throw new XmlException();
         }
     }
 }
