@@ -4,9 +4,7 @@
     using System.Linq;
     using System.Reflection;
     using NUnit.Framework;
-    using System.Text;
     using System.Xml;
-    using System.Xml.Linq;
     using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Packaging;
     using DocumentFormat.OpenXml.Wordprocessing;
@@ -82,8 +80,8 @@
             using (
                 var document =
                     WordprocessingDocument.Open(
-                        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) +
-                        "\\Shuffler.TestFiles\\TestFiles\\TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP..docx"
+                        TestContext.CurrentContext.TestDirectory +
+                        "\\TestFiles\\TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP..docx"
                         , false))
             {
                 var docPart = document.MainDocumentPart;
