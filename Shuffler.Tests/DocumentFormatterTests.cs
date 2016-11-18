@@ -13,10 +13,10 @@
     [TestFixture]
     public class DocumentFormatterTests
     {    
-
         [Test]
         public void ShuffleClauserUnits_ToTheBeginningOfTheSentenceAndAddComma()
         {
+            // TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP
             Paragraph paragraph = 
                 GetParagraph_TMIn_April_and_May_BK_CShowever_BKP_PRENthe_NNreport_VBwasnt_ADJgood_BKP();
 
@@ -28,7 +28,7 @@
 
             // assert
             Assert.That(shufflerParagraph.InnerText, Is.EqualTo(
-                "CSbefore he VBhad a chance VBto speak BKP, PRENThe meeting VBwas over BKP."));
+                "CShowever BKP, TMIn April and May BKP, PRENthe NNreport VBwasn’t ADJgood BKP."));
         }
 
         #region not finished tests
@@ -76,7 +76,6 @@
 
         private Paragraph GetParagraph_TMIn_April_and_May_BK_CShowever_BKP_PRENthe_NNreport_VBwasnt_ADJgood_BKP()
         {
-            var outPutDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
             using (
                 var document =
                     WordprocessingDocument.Open(

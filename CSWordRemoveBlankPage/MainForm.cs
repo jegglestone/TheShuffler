@@ -7,7 +7,6 @@ using Shuffler.Helper;
 
 namespace Shuffler
 {
-    using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Packaging;
     using System.IO.Packaging;
     using System.Linq;
