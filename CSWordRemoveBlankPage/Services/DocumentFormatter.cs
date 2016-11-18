@@ -59,23 +59,32 @@
                         sentenceArray[0].Parent.InsertBeforeSelf(tmpClauserWord.CloneNode(true));
                         sentenceArray[0].Parent.InsertBeforeSelf(tmpCommaVar.CloneNode(true));
                         sentenceArray[0].Parent.InsertBeforeSelf(tmpComma.CloneNode(true));
-                      
+
                         sentenceArray[clauserIndexPosition].Parent.Remove();
-                        sentenceArray[clauserIndexPosition+1].Parent.Remove();
+                        sentenceArray[clauserIndexPosition + 1].Parent.Remove();
                         sentenceArray[clauserIndexPosition + 2].Parent.Remove();
                         sentenceArray[clauserIndexPosition + 3].Parent.Remove();
-                        
+
                         //sentenceArray[0].Parent.InsertBefore(tmpClauserVar, sentenceArray[3].Parent);
                         //sentenceArray[1].Parent.InsertAfter(tmpClauserWord, sentenceArray[4]);
                         //sentenceArray[2].Parent.InsertAfter(tmpCommaVar, sentenceArray[5]);
                     }
-                    // else
-                    //  get the ending point (bkp)
-                    //  move the remainder to the start of sentence
-                    //  add a comma 
+                    else
+                    {
+                        // find the position of the next bkp after clauserIndexPosition 
+                        // split the array from the instance of the clause
+                        
+                        int i = Array.IndexOf(sentenceArray, "BKP");
 
-                    // move the block to the beginning of the sentence
+                        // split again.
 
+                        //  get the ending point (bkp)
+                        //  move the remainder to the start of sentence
+                        //  add a comma 
+
+                        // move the block to the beginning of the sentence                        
+
+                    }
                 }
             }
             

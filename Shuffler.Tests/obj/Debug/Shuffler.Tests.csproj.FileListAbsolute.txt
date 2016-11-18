@@ -32,3 +32,4 @@ C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\DocumentFormat.OpenXml
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\DocumentFormat.OpenXml.dll
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\DocumentFormat.OpenXml.xml
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP..docx
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\PRENThe meeting VBwas over CSbefore he VBhad a chance VBto speak BKP..docx

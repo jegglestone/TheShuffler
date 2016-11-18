@@ -1,8 +1,6 @@
 ﻿namespace Shuffler.Tests
 {
-    using System.IO;
     using System.Linq;
-    using System.Reflection;
     using NUnit.Framework;
     using System.Xml;
     using DocumentFormat.OpenXml;
@@ -16,9 +14,11 @@
         [Test]
         public void ShuffleClauserUnits_ToTheBeginningOfTheSentenceAndAddComma()
         {
-            // TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP
+            const string unShuffledSentence = 
+                "TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP.";
+
             Paragraph paragraph = 
-                GetParagraph_TMIn_April_and_May_BK_CShowever_BKP_PRENthe_NNreport_VBwasnt_ADJgood_BKP();
+                GetParagraphFromWordDocument(unShuffledSentence);
 
             var documentFormatter = new DocumentFormatter(new ClauserUnitChecker());
 
@@ -31,16 +31,32 @@
                 "CShowever BKP, TMIn April and May BKP, PRENthe NNreport VBwasn’t ADJgood BKP."));
         }
 
-        #region not finished tests
+
+        [Test]
+        public void ShuffleClauserUnits_when_NoComma_MoveEntireClauserUnitToStartOfSentence_AndAddComma()
+        {
+            const string unShuffledSentence =
+                "PRENThe meeting VBwas over CSbefore he VBhad a chance VBto speak BKP.";
+
+            Paragraph paragraph =
+                GetParagraphFromWordDocument(unShuffledSentence);
+
+            var documentFormatter = new DocumentFormatter(new ClauserUnitChecker());
+
+            // act
+            var shufflerParagraph =
+                documentFormatter.ShuffleClauserUnits(paragraph);
+
+
+            // assert
+            Assert.That(shufflerParagraph.InnerText, Is.EqualTo(
+                "CSbefore he VBhad a chance VBto speak BKP, PRENThe meeting VBwas over BKP."));
+        }
+
         //[Test]
         //public void ShuffleClauserUnits_when_clauserAtStartOfSentence_DontMoveIt()
         //{
-        //    var mockRange = new Mock<Range>();
-        //    mockRange.Setup(f => f.Text).Returns(
-        //        "CSbefore he VBhad a chance VBto speak BKP, PRENThe meeting VBwas over BKP.");
-        //    var sentence = mockRange.Object;
-
-        //    var documentFormatter = new DocumentFormatter(GetClauserUnitChecker());
+        //    same sentence
 
         //    // act
         //    documentFormatter.ShuffleClauserUnits(sentence);
@@ -51,36 +67,18 @@
         //}
 
 
-        //[Test]
-        //public void ShuffleClauserUnits_when_clauserHasComma_MoveTheClauserAndCommaToStartOfSentence()
-        //{
-        //    var mockRange = new Mock<Range>();
-        //    mockRange.Setup(f => f.Text).Returns(
-        //        "TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP.");
-        //    var sentence = mockRange.Object;
-
-        //    var documentFormatter = new DocumentFormatter(GetClauserUnitChecker());
-
-        //    // act
-        //    documentFormatter.ShuffleClauserUnits(sentence);
-
-        //    // assert
-        //    Assert.That(sentence.Text, Is.EqualTo(
-        //        "CShowever BKP, TMIn April and May BKP, PRENthe NNreport VBwasn’t ADJgood BKP."));
-        //}
 
         // multiple clauser units?
         // Does a clauser unit only end with BKP?
 
-        #endregion
 
-        private Paragraph GetParagraph_TMIn_April_and_May_BK_CShowever_BKP_PRENthe_NNreport_VBwasnt_ADJgood_BKP()
+        private Paragraph GetParagraphFromWordDocument(string unShuffledSentence)
         {
             using (
                 var document =
                     WordprocessingDocument.Open(
                         TestContext.CurrentContext.TestDirectory +
-                        "\\TestFiles\\TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP..docx"
+                        string.Format("\\TestFiles\\{0}.docx", unShuffledSentence)
                         , false))
             {
                 var docPart = document.MainDocumentPart;
@@ -91,9 +89,7 @@
                         documentBodyXml.FirstOrDefault(
                             x =>
                                 x.LocalName == "p" &&
-                                x.InnerText.Contains(
-                                    "TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP"
-                                    ));
+                                x.InnerText.Contains(unShuffledSentence));
                     return p as Paragraph;
                 }
             }
