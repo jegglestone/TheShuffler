@@ -1,4 +1,4 @@
-﻿namespace CSWordRemoveBlankPage
+﻿namespace Main
 {
     using DocumentFormat.OpenXml.Wordprocessing;
 

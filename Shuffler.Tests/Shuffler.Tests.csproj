@@ -87,15 +87,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CSWordRemoveBlankPage\Shuffler.Main.csproj">
-      <Project>{17CEC28F-E6FC-476E-9576-A632602D9CD5}</Project>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Shuffler.Main\Shuffler.Main.csproj">
+      <Project>{17cec28f-e6fc-476e-9576-a632602d9cd5}</Project>
       <Name>Shuffler.Main</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,9 +1,8 @@
 ﻿namespace Shuffler.Tests
 {
-    using CSWordRemoveBlankPage;
     using DocumentFormat.OpenXml.Wordprocessing;
-    using Helper;
     using NUnit.Framework;
+    using Main;
 
     [TestFixture]
     public class AdverbStrategyTests
@@ -49,5 +48,6 @@
                     Is.EqualTo(DocumentContentHelper.GetParagraphFromWordDocument(
                         "He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP_EXPECTATION").InnerXml));
         }
+
     }
 }

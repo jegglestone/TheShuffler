@@ -8,8 +8,8 @@
     <ProjectGuid>{17CEC28F-E6FC-476E-9576-A632602D9CD5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CSWordRemoveBlankPage</RootNamespace>
-    <AssemblyName>CSWordRemoveBlankPage</AssemblyName>
+    <RootNamespace>Main</RootNamespace>
+    <AssemblyName>Main</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CSWordRemoveBlankPage
+namespace Main
 {
     using System.Xml;
     using DocumentFormat.OpenXml;

@@ -1,8 +1,7 @@
-﻿namespace Shuffler.Helper
+﻿namespace Main
 {
     using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Packaging;
-    using CSWordRemoveBlankPage;
     using DocumentFormat.OpenXml.Wordprocessing;
 
     public class DocumentFormatter

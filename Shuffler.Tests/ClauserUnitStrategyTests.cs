@@ -1,7 +1,7 @@
 ﻿namespace Shuffler.Tests
 {
     using NUnit.Framework;
-    using CSWordRemoveBlankPage;
+    using Main;
     using DocumentFormat.OpenXml.Wordprocessing;
     using Helper;
 

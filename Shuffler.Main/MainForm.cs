@@ -5,9 +5,8 @@ using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
 using Shuffler.Helper;
 
-namespace Shuffler
+namespace Main
 {
-    using CSWordRemoveBlankPage;
     using DocumentFormat.OpenXml.Packaging;
 
     public partial class MainForm : Form

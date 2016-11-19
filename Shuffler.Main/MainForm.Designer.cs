@@ -1,4 +1,4 @@
-﻿namespace Shuffler
+﻿namespace Main
 {
     partial class MainForm
     {
