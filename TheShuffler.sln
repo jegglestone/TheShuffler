@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shuffler.Main", "CSWordRemoveBlankPage\Shuffler.Main.csproj", "{17CEC28F-E6FC-476E-9576-A632602D9CD5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shuffler.Main", "Shuffler.Main\Shuffler.Main.csproj", "{17CEC28F-E6FC-476E-9576-A632602D9CD5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shuffler.Tests", "Shuffler.Tests\Shuffler.Tests.csproj", "{D2EC8324-5BEC-4CE8-9805-8FB93E3A0377}"
 EndProject

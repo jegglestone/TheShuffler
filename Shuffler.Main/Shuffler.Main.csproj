@@ -69,7 +69,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdverbStrategy.cs" />
+    <Compile Include="ClauserUnitStrategy.cs" />
     <Compile Include="Helper\ClauserUnitChecker.cs" />
+    <Compile Include="IAdverbStrategy.cs" />
+    <Compile Include="IClauserUnitStrategy.cs" />
     <Compile Include="Services\DocumentFormatter.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

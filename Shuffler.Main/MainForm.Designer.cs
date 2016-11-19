@@ -31,7 +31,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txbWordPath = new System.Windows.Forms.TextBox();
             this.btnOpenWord = new System.Windows.Forms.Button();
-            this.btnRemove = new System.Windows.Forms.Button();
+            this.btnShuffle = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -64,17 +64,17 @@
             this.btnOpenWord.UseVisualStyleBackColor = false;
             this.btnOpenWord.Click += new System.EventHandler(this.btnOpenWord_Click);
             // 
-            // btnRemove
+            // btnShuffle
             // 
-            this.btnRemove.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.btnRemove.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnRemove.Location = new System.Drawing.Point(154, 56);
-            this.btnRemove.Name = "btnRemove";
-            this.btnRemove.Size = new System.Drawing.Size(130, 23);
-            this.btnRemove.TabIndex = 3;
-            this.btnRemove.Text = "Shuffle";
-            this.btnRemove.UseVisualStyleBackColor = false;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            this.btnShuffle.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.btnShuffle.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnShuffle.Location = new System.Drawing.Point(154, 56);
+            this.btnShuffle.Name = "btnShuffle";
+            this.btnShuffle.Size = new System.Drawing.Size(130, 23);
+            this.btnShuffle.TabIndex = 3;
+            this.btnShuffle.Text = "Shuffle";
+            this.btnShuffle.UseVisualStyleBackColor = false;
+            this.btnShuffle.Click += new System.EventHandler(this.btnShuffle_Click);
             // 
             // MainForm
             // 
@@ -82,7 +82,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Silver;
             this.ClientSize = new System.Drawing.Size(434, 91);
-            this.Controls.Add(this.btnRemove);
+            this.Controls.Add(this.btnShuffle);
             this.Controls.Add(this.btnOpenWord);
             this.Controls.Add(this.txbWordPath);
             this.Controls.Add(this.label1);
@@ -100,7 +100,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txbWordPath;
         private System.Windows.Forms.Button btnOpenWord;
-        private System.Windows.Forms.Button btnRemove;
+        private System.Windows.Forms.Button btnShuffle;
     }
 }
 
