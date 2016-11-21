@@ -27,8 +27,8 @@
     <DirectoryRef Id="ApplicationProgramsFolder">
         <Component Id="ApplicationShortcut" Guid="F6564354-EF1F-4DBF-8833-679D5BC60DC9">
             <Shortcut Id="ApplicationStartMenuShortcut" 
-                  Name="My Application Name" 
-                Description="My Application Description"
+                  Name="The Shuffler" 
+                Description="The Shuffler"
                 Target="[#Main.exe]"
                       WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
             <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>

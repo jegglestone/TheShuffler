@@ -1,2 +1,2 @@
-C:\Users\jegglestone\TheShuffler\SetupProject\bin\Debug\SetupProject.msi
-C:\Users\jegglestone\TheShuffler\SetupProject\bin\Debug\SetupProject.wixpdb
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\SetupProject\bin\Debug\SetupProject.msi
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\SetupProject\bin\Debug\SetupProject.wixpdb

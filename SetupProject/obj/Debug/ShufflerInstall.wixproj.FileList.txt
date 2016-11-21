@@ -4,3 +4,5 @@ C:\Users\jegglestone\TheShuffler\SetupProject\bin\Debug\SetupProject.wixpdb
 obj\Debug\ShufflerInstall.wixproj.BindContentsFileListnull.txt
 obj\Debug\ShufflerInstall.wixproj.BindOutputsFileListnull.txt
 obj\Debug\ShufflerInstall.wixproj.BindBuiltOutputsFileListnull.txt
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\SetupProject\bin\Debug\SetupProject.msi
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\SetupProject\bin\Debug\SetupProject.wixpdb
