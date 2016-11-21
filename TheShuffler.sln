@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shuffler.Main", "Shuffler.M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shuffler.Tests", "Shuffler.Tests\Shuffler.Tests.csproj", "{D2EC8324-5BEC-4CE8-9805-8FB93E3A0377}"
 EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "ShufflerInstall", "SetupProject\ShufflerInstall.wixproj", "{B8D85682-AE67-4641-B4A4-6FFC477FF194}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,14 @@ Global
 		{D2EC8324-5BEC-4CE8-9805-8FB93E3A0377}.Release|x64.Build.0 = Release|Any CPU
 		{D2EC8324-5BEC-4CE8-9805-8FB93E3A0377}.Release|x86.ActiveCfg = Release|Any CPU
 		{D2EC8324-5BEC-4CE8-9805-8FB93E3A0377}.Release|x86.Build.0 = Release|Any CPU
+		{B8D85682-AE67-4641-B4A4-6FFC477FF194}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{B8D85682-AE67-4641-B4A4-6FFC477FF194}.Debug|x64.ActiveCfg = Debug|x86
+		{B8D85682-AE67-4641-B4A4-6FFC477FF194}.Debug|x86.ActiveCfg = Debug|x86
+		{B8D85682-AE67-4641-B4A4-6FFC477FF194}.Debug|x86.Build.0 = Debug|x86
+		{B8D85682-AE67-4641-B4A4-6FFC477FF194}.Release|Any CPU.ActiveCfg = Release|x86
+		{B8D85682-AE67-4641-B4A4-6FFC477FF194}.Release|x64.ActiveCfg = Release|x86
+		{B8D85682-AE67-4641-B4A4-6FFC477FF194}.Release|x86.ActiveCfg = Release|x86
+		{B8D85682-AE67-4641-B4A4-6FFC477FF194}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

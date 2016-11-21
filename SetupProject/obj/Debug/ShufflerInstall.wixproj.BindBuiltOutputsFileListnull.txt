@@ -1,0 +1,2 @@
+C:\Users\jegglestone\TheShuffler\SetupProject\bin\Debug\SetupProject.msi
+C:\Users\jegglestone\TheShuffler\SetupProject\bin\Debug\SetupProject.wixpdb

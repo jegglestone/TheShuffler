@@ -1,0 +1,6 @@
+obj\Debug\Product.wixobj
+C:\Users\jegglestone\TheShuffler\SetupProject\bin\Debug\SetupProject.msi
+C:\Users\jegglestone\TheShuffler\SetupProject\bin\Debug\SetupProject.wixpdb
+obj\Debug\ShufflerInstall.wixproj.BindContentsFileListnull.txt
+obj\Debug\ShufflerInstall.wixproj.BindOutputsFileListnull.txt
+obj\Debug\ShufflerInstall.wixproj.BindBuiltOutputsFileListnull.txt

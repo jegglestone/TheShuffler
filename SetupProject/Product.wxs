@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="The Shuffler 2016" Language="1033" Manufacturer="Kevin Lin" Version="1.0.0.0" UpgradeCode="04eab9d1-797f-4851-b6d9-eec93707a060">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of TheShuffler is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+    
+    <UIRef Id="WixUI_Minimal" />
+
+		<Feature Id="ProductFeature" Title="The Shuffler 2016" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="TheShuffler" />
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+          <Directory Id="ApplicationProgramsFolder" Name="The Shuffler 2016"/>
+      </Directory>
+    </Directory>
+ 
+    <!-- Step 2: Add the shortcut to your installer package -->
+    <DirectoryRef Id="ApplicationProgramsFolder">
+        <Component Id="ApplicationShortcut" Guid="F6564354-EF1F-4DBF-8833-679D5BC60DC9">
+            <Shortcut Id="ApplicationStartMenuShortcut" 
+                  Name="My Application Name" 
+                Description="My Application Description"
+                Target="[#Main.exe]"
+                      WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+            <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+            <RegistryValue Root="HKCU" Key="Software\Microsoft\MyApplicationName" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+        </Component>
+    </DirectoryRef>
+	</Fragment>
+  
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			 <Component Id="ProductComponent"> 
+				 <!--TODO: Insert files, registry keys, and other resources here.-->
+         <File Source = "..\Shuffler.Main\bin\x64\Debug\Main.exe" />
+			 </Component> 
+       <Component Id="OpenXml"> 
+         <File Source = "..\Shuffler.Main\bin\x64\Debug\DocumentFormat.OpenXml.dll" />   
+        </Component> 
+       <Component Id="NuGet"> 
+         <File Source = "..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll" />        
+        </Component>  
+        <!-- Step 3: Tell WiX to install the shortcut -->
+        <ComponentRef Id="ApplicationShortcut" />  
+		</ComponentGroup>
+	</Fragment>
+</Wix>
