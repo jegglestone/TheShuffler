@@ -47,7 +47,7 @@ namespace Main
                         if (nextBKPPosition == -1)
                             throw new XmlException("Full stop not found in this sentence");
 
-                        if (afterClauser[nextBKPPosition + 1].Text == ".")  // Future could be ! or ?
+                        if (NextBreakerIsAFullStop(afterClauser, nextBKPPosition))  // Future could be ! or ?
                         {
                             afterClauser[nextBKPPosition + 1] = new Text(",");
 
@@ -86,6 +86,10 @@ namespace Main
             return xmlSentenceElement;
         }
 
+        private static bool NextBreakerIsAFullStop(Text[] afterClauser, int nextBKPPosition)
+        {
+            return afterClauser[nextBKPPosition + 1].Text == ".";
+        }
 
 
         private static int GetPositionOfNextBreakerUnit(Text[] arrayOfUnits)

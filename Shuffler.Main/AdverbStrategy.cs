@@ -2,7 +2,13 @@
 {
     using System;
     using System.Linq;
+    using DocumentFormat.OpenXml;
+    using DocumentFormat.OpenXml.Drawing;
     using DocumentFormat.OpenXml.Wordprocessing;
+    using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
+    using RunProperties = DocumentFormat.OpenXml.Wordprocessing.RunProperties;
+    using Text = DocumentFormat.OpenXml.Wordprocessing.Text;
+    using Underline = DocumentFormat.OpenXml.Wordprocessing.Underline;
 
     public class AdverbStrategy : IAdverbStrategy
     {
@@ -21,30 +27,47 @@
             int ADVIndexPosition =
                 Array.FindIndex(sentenceArray, i => i.InnerText == _ADVTag);
 
-            var nextBreakerPosition =
-                Array.FindIndex(sentenceArray, i =>    // need test cases for all three of these
-                        i.InnerText.Replace(" ", "") == "VB"
-                        || i.InnerText.Replace(" ", "") == "PAST"
-                        || i.InnerText.Replace(" ", "") == "PRES"
-                        || i.InnerText.Replace(" ", "") == "BKP");
-
-            // how many ADV elements between ADVIndexPosition and nextBreakerPosition?
+            //get number of adverbs between first adverb and next breaker
             int ADVCount = 0;
-            for (int i = ADVIndexPosition; i < nextBreakerPosition; i++)
+            int breakerPosition = 0;
+            for (int i = ADVIndexPosition; i >= ADVIndexPosition; i++)
             {
+              
                 if (sentenceArray[i].InnerText.Replace(" ", "") == "ADV")
                 {
                     ADVCount = ADVCount + 1;
+                    // underline
+                }
+
+                // once we are at the second ADV 
+
+                if (sentenceArray[i].InnerText.Replace(" ", "") == "VB"         // tests needed for each of these
+                        || sentenceArray[i].InnerText.Replace(" ", "") == "PAST"
+                        || sentenceArray[i].InnerText.Replace(" ", "") == "PRES"
+                        || sentenceArray[i].InnerText.Replace(" ", "") == "BKP")
+                {
+                    breakerPosition = i;
+                    break;
                 }
             }
 
-            //if (ADVCount > 1)
-            //{
-            //    foreach (int i = ADVIndexPosition; i < nextBreakerPosition; i++)
-            //    {
-            //        sentenceArray[i].Parent.Elements("underline") = "superscript";
-            //    }
-            //}
+            if (ADVCount > 1)
+            {
+                // underline from ADVIndexPosition to breakerPosition
+                for (int i = ADVIndexPosition; i < breakerPosition; i++)
+                {
+                    var runProperties =  sentenceArray[i].Parent.Descendants<RunProperties>();
+                    
+                    var underlineElement = runProperties.Select(x => x.Underline).FirstOrDefault();
+                    if (underlineElement != null)
+                        underlineElement.Val = "Single";
+                    else
+                    {
+                        // add an underline element
+                    }
+                    //vertAlign.Val = new EnumValue<VerticalPositionValues>(VerticalPositionValues.Superscript);
+                }
+            }
 
 
             // If a second or even a third ADV is found, underline from the first ADV to and including the last ADV together with all words and punctuations in between.
