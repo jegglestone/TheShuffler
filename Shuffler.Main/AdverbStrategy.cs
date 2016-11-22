@@ -60,10 +60,13 @@
                     
                     var underlineElement = runProperties.Select(x => x.Underline).FirstOrDefault();
                     if (underlineElement != null)
-                        underlineElement.Val = "Single";
+                        underlineElement.Val = new EnumValue<UnderlineValues>(UnderlineValues.Single);
+                            
+                            
                     else
                     {
-                        // add an underline element
+                        // add/append an underline element
+                        
                     }
                     //vertAlign.Val = new EnumValue<VerticalPositionValues>(VerticalPositionValues.Superscript);
                 }
