@@ -26,7 +26,7 @@
                         documentBodyXml.FirstOrDefault(
                             x =>
                                 x.LocalName == "p" &&
-                                x.InnerText.Contains(unShuffledSentence));
+                                x.InnerText.Contains(unShuffledSentence.Replace("_EXPECTATION", "").Replace("_Different", "")));
                     return p as Paragraph;
                 }
             }

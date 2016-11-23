@@ -2,10 +2,8 @@
 {
     using System.Text;
     using System.Xml;
-    using System.Xml.Linq;
-    using Castle.Components.DictionaryAdapter.Xml;
-    using Shuffler.Helper;
     using NUnit.Framework;
+    using Helper;
 
     [TestFixture]
     public class ClauserUnitCheckerTests

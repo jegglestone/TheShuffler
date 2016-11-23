@@ -1,74 +1,51 @@
 ﻿namespace Main
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using DocumentFormat.OpenXml;
-    using DocumentFormat.OpenXml.Drawing;
     using DocumentFormat.OpenXml.Wordprocessing;
     using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
     using RunProperties = DocumentFormat.OpenXml.Wordprocessing.RunProperties;
     using Text = DocumentFormat.OpenXml.Wordprocessing.Text;
-    using Underline = DocumentFormat.OpenXml.Wordprocessing.Underline;
 
     public class AdverbStrategy : IAdverbStrategy
     {
-        private const string _ADVTag = "ADV";
-
         public Paragraph ShuffleAdverbUnits(Paragraph xmlSentenceElement)
         {
             //  Search for ADV
             Text[] sentenceArray = xmlSentenceElement.Descendants<Text>().ToArray();
 
-            if (!Array.Exists(
-                sentenceArray, element => element.InnerText.Replace(" ", "") == _ADVTag))
+            if (NoAdverbFoundInSentence(sentenceArray))
                 return xmlSentenceElement;
 
             // If an ADV is found, continue to search for the next ADV until reaching any of VB / PAST / PRES / Full - Stop.
-            int ADVIndexPosition =
-                Array.FindIndex(sentenceArray, i => i.InnerText == _ADVTag);
+            int AdverbIndexPosition =
+                Array.FindIndex(sentenceArray, i => i.IsAdverb());
 
             //get number of adverbs between first adverb and next breaker
-            int ADVCount = 0;
+            int AdverbCount = 0;
             int breakerPosition = 0;
-            for (int i = ADVIndexPosition; i >= ADVIndexPosition; i++)
+            for (int i = AdverbIndexPosition; i >= AdverbIndexPosition; i++)
             {
-              
-                if (sentenceArray[i].InnerText.Replace(" ", "") == "ADV")
+                if (sentenceArray[i].IsAdverb())
                 {
-                    ADVCount = ADVCount + 1;
-                    // underline
+                    AdverbCount = AdverbCount + 1;
                 }
 
-                // once we are at the second ADV 
-
-                if (sentenceArray[i].InnerText.Replace(" ", "") == "VB"         // tests needed for each of these
-                        || sentenceArray[i].InnerText.Replace(" ", "") == "PAST"
-                        || sentenceArray[i].InnerText.Replace(" ", "") == "PRES"
-                        || sentenceArray[i].InnerText.Replace(" ", "") == "BKP")
+                if (ReachedSentenceBreaker(sentenceArray, i))
                 {
                     breakerPosition = i;
                     break;
                 }
             }
 
-            if (ADVCount > 1)
+            if (IsMoreThanOneAdverb(AdverbCount))
             {
                 // underline from ADVIndexPosition to breakerPosition
-                for (int i = ADVIndexPosition; i < breakerPosition; i++)
+                for (int i = AdverbIndexPosition; i < breakerPosition; i++)
                 {
-                    var runProperties =  sentenceArray[i].Parent.Descendants<RunProperties>();
-                    
-                    var underlineElement = runProperties.Select(x => x.Underline).FirstOrDefault();
-                    if (underlineElement != null)
-                        underlineElement.Val = new EnumValue<UnderlineValues>(UnderlineValues.Single);
-                            
-                            
-                    else
-                    {
-                        // add/append an underline element
-                        
-                    }
-                    //vertAlign.Val = new EnumValue<VerticalPositionValues>(VerticalPositionValues.Superscript);
+                    UnderlineWordRun(GetParentRunProperties(sentenceArray, i));
                 }
             }
 
@@ -78,5 +55,58 @@
 
             return xmlSentenceElement;
         }
+
+        private static bool NoAdverbFoundInSentence(Text[] sentenceArray)
+        {
+            return !Array.Exists(
+                sentenceArray, element => element.InnerText.Replace(" ", "") == TagMarks.AdverbTag);
+        }
+
+        private static bool ReachedSentenceBreaker(Text[] sentenceArray, int i)
+        {
+            return sentenceArray[i].InnerText.Replace(" ", "") == "VB"         // tests needed for each of these
+                   || sentenceArray[i].InnerText.Replace(" ", "") == "PAST"
+                   || sentenceArray[i].InnerText.Replace(" ", "") == "PRES"
+                   || sentenceArray[i].InnerText.Replace(" ", "") == "BKP";
+        }
+
+        private static bool IsMoreThanOneAdverb(int ADVCount)
+        {
+            return ADVCount > 1;
+        }
+
+        private static void UnderlineWordRun(RunProperties runProperties)
+        {
+            var underlineElement = runProperties.Underline;
+            if (underlineElement != null)
+                underlineElement.Val = new EnumValue<UnderlineValues>(UnderlineValues.Single);
+            else
+            {
+                // add/append an underline element
+                runProperties.Append(
+                    new OpenXmlElement[]
+                    {
+                        new Underline() { Val = new EnumValue<UnderlineValues>(UnderlineValues.Single)}
+                    });
+            }
+        }
+
+        private static RunProperties GetParentRunProperties(Text[] sentenceArray, int i)
+        {
+            return sentenceArray[i].Parent.Descendants<RunProperties>().First();
+        }
+    }
+
+    public static class OpenXmlExtensions
+    {
+        public static bool IsAdverb(this OpenXmlLeafElement openXmlLeafElement)
+        {
+            return openXmlLeafElement.InnerText.Replace(" ", "") == TagMarks.AdverbTag;
+        }
+    }
+
+    public class TagMarks
+    {
+        public const string AdverbTag = "ADV";
     }
 }

@@ -42,3 +42,4 @@ C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\TMIn April a
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Main.exe
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Main.pdb
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\DocumentFormat.OpenXml.xml
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP._DIFFERENT.docx

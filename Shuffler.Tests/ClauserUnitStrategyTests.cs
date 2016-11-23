@@ -7,11 +7,11 @@
 
     [TestFixture]
     public class ClauserUnitStrategyTests
-    {    
+    {
         [Test]
         public void ShuffleClauserUnits_ToTheBeginningOfTheSentenceAndAddComma()
         {
-            const string unShuffledSentence = 
+            const string unShuffledSentence =
                 "TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP.";
 
             Paragraph paragraph =
@@ -43,7 +43,7 @@
             // act
             var shufflerParagraph =
                 clauserUnitStrategy.ShuffleClauserUnits(paragraph);
-            
+
             // assert
             Assert.That(shufflerParagraph.InnerText, Is.EqualTo(
                 "CSbefore he VBhad a chance VBto speak BKP, PRENThe meeting VBwas over BKP."));
@@ -69,9 +69,28 @@
                 "CSbefore he VBhad a chance VBto speak BKP, PRENThe meeting VBwas over BKP."));
         }
 
+        [Test]
+        public void ShuffleClauserUnits_ToTheBeginningOfTheSentenceAndAddsComma_WhenExtraSpaceBeforeComma()
+        {
+            const string unShuffledSentence =
+                "TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP._Different";
 
-        // multiple clauser units?
+            Paragraph paragraph =
+                DocumentContentHelper.GetParagraphFromWordDocument(unShuffledSentence);
 
-        // what if the bkp is a ? or !
+            var clauserUnitStrategy = new ClauserUnitStrategy(new ClauserUnitChecker());
+
+            // act
+            var shufflerParagraph =
+                clauserUnitStrategy.ShuffleClauserUnits(paragraph);
+
+            // assert
+            Assert.That(shufflerParagraph.InnerText, Is.EqualTo(
+                "CShowever BKP, TMIn April and May BKP, PRENthe NNreport VBwasn’t ADJgood BKP."));
+
+            // multiple clauser units?
+
+            // what if the bkp is a ? or !
+        }
     }
 }

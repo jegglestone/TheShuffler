@@ -85,6 +85,9 @@
     <None Include="TestFiles\TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="TestFiles\TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP._DIFFERENT.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
