@@ -7,33 +7,11 @@ C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Rhino.Mocks.xml
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\obj\Debug\Shuffler.Tests.csprojResolveAssemblyReference.cache
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\obj\Debug\Shuffler.Tests.dll
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\obj\Debug\Shuffler.Tests.pdb
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Shuffler.Tests.dll
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Shuffler.Tests.pdb
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\nunit.framework.dll
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Rhino.Mocks.dll
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\nunit.framework.xml
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Rhino.Mocks.xml
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\obj\Debug\Shuffler.Tests.csprojResolveAssemblyReference.cache
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\obj\Debug\Shuffler.Tests.dll
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\obj\Debug\Shuffler.Tests.pdb
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Castle.Core.dll
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Moq.dll
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Castle.Core.xml
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Moq.xml
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Castle.Core.dll
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Moq.dll
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Castle.Core.xml
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Moq.xml
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\DocumentFormat.OpenXml.dll
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\DocumentFormat.OpenXml.dll
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\DocumentFormat.OpenXml.xml
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP..docx
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\PRENThe meeting VBwas over CSbefore he VBhad a chance VBto speak BKP..docx
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\CSbefore he VBhad a chance VBto speak BKP, PRENThe meeting VBwas over BKP..docx
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP..docx
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP_EXPECTATION.docx
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Main.exe
-C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Main.pdb
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\CSbefore he VBhad a chance VBto speak BKP, PRENThe meeting VBwas over BKP..docx
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP..docx
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP_EXPECTATION.docx
@@ -42,4 +20,25 @@ C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\TMIn April a
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Main.exe
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Main.pdb
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\DocumentFormat.OpenXml.xml
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\CSbefore he VBhad a chance VBto speak BKP, PRENThe meeting VBwas over BKP..docx
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP..docx
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\PRENThe meeting VBwas over CSbefore he VBhad a chance VBto speak BKP..docx
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP..docx
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP._DIFFERENT.docx
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Shuffler.Tests.dll
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Shuffler.Tests.pdb
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Castle.Core.dll
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\DocumentFormat.OpenXml.dll
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Main.exe
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Moq.dll
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\nunit.framework.dll
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Rhino.Mocks.dll
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Main.pdb
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Castle.Core.xml
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\DocumentFormat.OpenXml.xml
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Moq.xml
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\nunit.framework.xml
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\Rhino.Mocks.xml
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\obj\Debug\Shuffler.Tests.csprojResolveAssemblyReference.cache
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\obj\Debug\Shuffler.Tests.dll
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\obj\Debug\Shuffler.Tests.pdb

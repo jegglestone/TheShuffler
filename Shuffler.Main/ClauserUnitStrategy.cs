@@ -34,7 +34,9 @@ namespace Main
                     if (clauserIndexPosition == 0)
                         return xmlSentenceElement; // no need to shuffle if clauser is already at beginning
 
-                    if (NoCommaFollowingTheClauserUnit(sentenceArray, clauserIndexPosition))
+                                    //sentenceArray[clauserIndexPosition + 2].Parent.Remove(clauserIndexPosition + 2);
+
+                    if (!CommaFollowingTheClauserUnit(sentenceArray, clauserIndexPosition))
                     {
                         Text[] beforeClauser;
                         Text[] afterClauser;
@@ -64,21 +66,7 @@ namespace Main
                     }
                     else
                     {
-                        //   move the clauser and comma to the beginning
-                        OpenXmlElement tmpClauserVar = sentenceArray[clauserIndexPosition].Parent;
-                        OpenXmlElement tmpClauserWord = sentenceArray[clauserIndexPosition + 1].Parent;
-                        OpenXmlElement tmpCommaVar = sentenceArray[clauserIndexPosition + 2].Parent;
-                        OpenXmlElement tmpComma = sentenceArray[clauserIndexPosition + 3].Parent;
-
-                        sentenceArray[0].Parent.InsertBeforeSelf(tmpClauserVar.CloneNode(true));
-                        sentenceArray[0].Parent.InsertBeforeSelf(tmpClauserWord.CloneNode(true));
-                        sentenceArray[0].Parent.InsertBeforeSelf(tmpCommaVar.CloneNode(true));
-                        sentenceArray[0].Parent.InsertBeforeSelf(tmpComma.CloneNode(true));
-
-                        sentenceArray[clauserIndexPosition].Parent.Remove();
-                        sentenceArray[clauserIndexPosition + 1].Parent.Remove();
-                        sentenceArray[clauserIndexPosition + 2].Parent.Remove();
-                        sentenceArray[clauserIndexPosition + 3].Parent.Remove();
+                        MoveClauserAndCommaToBeginningOfSentence(sentenceArray, clauserIndexPosition);
                     }
                 }
             }
@@ -86,11 +74,41 @@ namespace Main
             return xmlSentenceElement;
         }
 
+        private static void MoveClauserAndCommaToBeginningOfSentence(Text[] sentenceArray, int clauserIndexPosition)
+        {
+            bool hasAdditionalSpaceElementBeforeBreaker = SentenceHasSpaceBeforeBKP(sentenceArray,
+                clauserIndexPosition);
+
+            // move the clauser and comma to the beginning
+            sentenceArray[0].Parent.InsertBeforeSelf(
+               sentenceArray[clauserIndexPosition].Parent.CloneNode(true));
+            sentenceArray[0].Parent.InsertBeforeSelf(
+                sentenceArray[clauserIndexPosition + 1].Parent.CloneNode(true));
+            sentenceArray[0].Parent.InsertBeforeSelf(
+                sentenceArray[clauserIndexPosition + 2].Parent.CloneNode(true));
+            sentenceArray[0].Parent.InsertBeforeSelf(
+                sentenceArray[clauserIndexPosition + 3].Parent.CloneNode(true));
+            if (hasAdditionalSpaceElementBeforeBreaker)
+            {
+                sentenceArray[0].Parent.InsertBeforeSelf(
+                    sentenceArray[clauserIndexPosition + 4].Parent.CloneNode(true));
+                sentenceArray[0].Parent.InsertBeforeSelf(
+                    sentenceArray[clauserIndexPosition + 5].Parent.CloneNode(true));
+            }
+
+            sentenceArray[clauserIndexPosition].Parent.Remove();
+            sentenceArray[clauserIndexPosition + 1].Parent.Remove();
+            sentenceArray[clauserIndexPosition + 2].Parent.Remove();
+            sentenceArray[clauserIndexPosition + 3].Parent.Remove();
+            if (!hasAdditionalSpaceElementBeforeBreaker) return;
+            sentenceArray[clauserIndexPosition + 4].Parent.Remove();
+            sentenceArray[clauserIndexPosition + 5].Parent.Remove();
+        }
+
         private static bool NextBreakerIsAFullStop(Text[] afterClauser, int nextBKPPosition)
         {
             return afterClauser[nextBKPPosition + 1].Text == ".";
         }
-
 
         private static int GetPositionOfNextBreakerUnit(Text[] arrayOfUnits)
         {
@@ -128,10 +146,24 @@ namespace Main
             return wordElements;
         }
 
-        private static bool NoCommaFollowingTheClauserUnit(Text[] sentenceArray, int clauserIndexPosition)
+        private static bool CommaFollowingTheClauserUnit(Text[] sentenceArray, int clauserIndexPosition)
         {
-            return sentenceArray[clauserIndexPosition + 2].InnerText.Replace(" ", "") != "BKP" ||
-                                    sentenceArray[clauserIndexPosition + 3].InnerText.Replace(" ", "") != ",";
+            if (SentenceHasSpaceBeforeBKP(sentenceArray, clauserIndexPosition))
+            {
+                sentenceArray = sentenceArray.RemoveAt(clauserIndexPosition + 2);
+            }
+
+            //if (sentenceArray[clauserIndexPosition + 3].InnerText.Replace(" ", "") == "")
+            //    sentenceArray[clauserIndexPosition + 3].Parent.Remove();
+
+            return sentenceArray[clauserIndexPosition + 2].InnerText.Replace(" ", "") == "BKP" &&
+                   sentenceArray[clauserIndexPosition + 3].InnerText.Replace(" ", "") == ",";
+        }
+
+        private static bool SentenceHasSpaceBeforeBKP(Text[] sentenceArray, int clauserIndexPosition)
+        {
+            return sentenceArray[clauserIndexPosition + 2].InnerText.Replace(" ", "") == ""
+                            && sentenceArray[clauserIndexPosition + 3].InnerText.Replace(" ", "") == "BKP";
         }
 
         public void SplitArrayAtPosition<T>(T[] array, int index, out T[] first, out T[] second)
@@ -140,8 +172,10 @@ namespace Main
             second = array.Skip(index).ToArray();
         }
 
+  
         private bool IsClauserUnit(OpenXmlElement node)
         {
+            //TODO: Move this to make it reusable
             var doc = new XmlDocument();
             doc.LoadXml("<xml xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\">"
                 + node.OuterXml + "</xml>");
@@ -153,4 +187,21 @@ namespace Main
             return _clauserUnitChecker.IsValidUnit(xmlNode);
         }
     }
+
+
+    public static class ArrayExtensions
+    {
+        public static T[] RemoveAt<T>(this T[] source, int index)
+        {
+            T[] dest = new T[source.Length - 1];
+            if (index > 0)
+                Array.Copy(source, 0, dest, 0, index);
+
+            if (index < source.Length - 1)
+                Array.Copy(source, index + 1, dest, index, source.Length - index - 1);
+
+            return dest;
+        }
+    }
+
 }

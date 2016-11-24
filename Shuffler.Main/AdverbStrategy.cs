@@ -1,7 +1,6 @@
 ﻿namespace Main
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Wordprocessing;
@@ -33,7 +32,7 @@
                     AdverbCount = AdverbCount + 1;
                 }
 
-                if (ReachedSentenceBreaker(sentenceArray, i))
+                if (sentenceArray[i].ReachedSentenceBreaker())
                 {
                     breakerPosition = i;
                     break;
@@ -60,14 +59,6 @@
         {
             return !Array.Exists(
                 sentenceArray, element => element.InnerText.Replace(" ", "") == TagMarks.AdverbTag);
-        }
-
-        private static bool ReachedSentenceBreaker(Text[] sentenceArray, int i)
-        {
-            return sentenceArray[i].InnerText.Replace(" ", "") == "VB"         // tests needed for each of these
-                   || sentenceArray[i].InnerText.Replace(" ", "") == "PAST"
-                   || sentenceArray[i].InnerText.Replace(" ", "") == "PRES"
-                   || sentenceArray[i].InnerText.Replace(" ", "") == "BKP";
         }
 
         private static bool IsMoreThanOneAdverb(int ADVCount)
@@ -103,10 +94,19 @@
         {
             return openXmlLeafElement.InnerText.Replace(" ", "") == TagMarks.AdverbTag;
         }
+
+        public static bool ReachedSentenceBreaker(this OpenXmlLeafElement openXmlLeafElement)
+        {
+            return openXmlLeafElement.InnerText.Replace(" ", "") == "VB"         // tests needed for each of these
+                   || openXmlLeafElement.InnerText.Replace(" ", "") == "PAST"
+                   || openXmlLeafElement.InnerText.Replace(" ", "") == "PRES"
+                   || openXmlLeafElement.InnerText.Replace(" ", "") == "BKP";
+        }
     }
 
     public class TagMarks
     {
         public const string AdverbTag = "ADV";
+        public const string ClauserTag = "CS";
     }
 }

@@ -4,6 +4,7 @@
     using Main;
     using DocumentFormat.OpenXml.Wordprocessing;
     using Helper;
+    using Shuffler.Helper;
 
     [TestFixture]
     public class ClauserUnitStrategyTests
@@ -19,7 +20,7 @@
 
             var clauserUnitStrategy = new ClauserUnitStrategy(new ClauserUnitChecker());
 
-            // act
+            //act
             var shufflerParagraph =
                 clauserUnitStrategy.ShuffleClauserUnits(paragraph);
 
