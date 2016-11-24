@@ -1,10 +1,10 @@
 ﻿namespace Shuffler.Tests
 {
+    using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
     using NUnit.Framework;
     using Main;
     using DocumentFormat.OpenXml.Wordprocessing;
     using Helper;
-    using Shuffler.Helper;
 
     [TestFixture]
     public class ClauserUnitStrategyTests
@@ -20,7 +20,7 @@
 
             var clauserUnitStrategy = new ClauserUnitStrategy(new ClauserUnitChecker());
 
-            //act
+            //  act
             var shufflerParagraph =
                 clauserUnitStrategy.ShuffleClauserUnits(paragraph);
 
@@ -70,11 +70,16 @@
                 "CSbefore he VBhad a chance VBto speak BKP, PRENThe meeting VBwas over BKP."));
         }
 
-        [Test]
-        public void ShuffleClauserUnits_ToTheBeginningOfTheSentenceAndAddsComma_WhenExtraSpaceBeforeComma()
+        [TestCase(
+            "TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP._Different",
+            "CShowever BKP, TMIn April and May BKP, PRENthe NNreport VBwasn’t ADJgood BKP.")]
+        [TestCase(
+            "MD1In TMMApril DYN2and TMMMay BKP, CShowever BKP, ADJthe reported NNpace MD1of NNjob NNgains PASTslowed BKP.",
+            "CShowever BKP, MD1In TMMApril DYN2and TMMMay BKP, ADJthe reported NNpace MD1of NNjob NNgains PASTslowed BKP.")]
+        public void ShuffleClauserUnits_ToTheBeginningOfTheSentenceAndAddsComma_WhenSpaceElementBeforeComma(
+            string sentenceFile, string expectation)
         {
-            const string unShuffledSentence =
-                "TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP._Different";
+            string unShuffledSentence = sentenceFile;
 
             Paragraph paragraph =
                 DocumentContentHelper.GetParagraphFromWordDocument(unShuffledSentence);
@@ -87,7 +92,7 @@
 
             // assert
             Assert.That(shufflerParagraph.InnerText, Is.EqualTo(
-                "CShowever BKP, TMIn April and May BKP, PRENthe NNreport VBwasn’t ADJgood BKP."));
+                expectation));
 
             // multiple clauser units?
 

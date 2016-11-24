@@ -76,6 +76,9 @@
     <None Include="TestFiles\He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="TestFiles\MD1In TMMApril DYN2and TMMMay BKP, CShowever BKP, ADJthe reported NNpace MD1of NNjob NNgains PASTslowed BKP..docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestFiles\PRENThe meeting VBwas over CSbefore he VBhad a chance VBto speak BKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

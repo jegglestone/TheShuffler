@@ -42,3 +42,4 @@ C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuff
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\obj\Debug\Shuffler.Tests.csprojResolveAssemblyReference.cache
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\obj\Debug\Shuffler.Tests.dll
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\obj\Debug\Shuffler.Tests.pdb
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\MD1In TMMApril DYN2and TMMMay BKP, CShowever BKP, ADJthe reported NNpace MD1of NNjob NNgains PASTslowed BKP..docx
