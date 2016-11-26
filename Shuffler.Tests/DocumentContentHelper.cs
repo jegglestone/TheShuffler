@@ -13,10 +13,7 @@
         {
             using (
                 var document =
-                    WordprocessingDocument.Open(
-                        TestContext.CurrentContext.TestDirectory +
-                        string.Format("\\TestFiles\\{0}.docx", unShuffledSentence)
-                        , false))
+                    GetDocument(unShuffledSentence, "TestFiles", false))
             {
                 var docPart = document.MainDocumentPart;
                 if (docPart?.Document != null)
@@ -32,6 +29,25 @@
             }
 
             throw new XmlException();
+        }
+
+        public static MainDocumentPart GetMainDocumentPart(string fileName)
+        {
+            using (var document = 
+                GetDocument(fileName, "TestFiles\\MultiLineFiles", true))
+            {
+                return document.MainDocumentPart;
+            }
+            throw new XmlException();
+        }
+
+        private static WordprocessingDocument GetDocument(string fileName, string subDirectory, bool isEditable)
+        {
+            var path = string.Format("\\{0}\\{1}.docx", subDirectory, fileName);
+            return WordprocessingDocument.Open(
+                                    TestContext.CurrentContext.TestDirectory +
+                                    path
+                                    , isEditable);
         }
     }
 }

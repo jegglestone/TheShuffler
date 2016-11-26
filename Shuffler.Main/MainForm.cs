@@ -1,24 +1,26 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using Word = Microsoft.Office.Interop.Word;
 using Shuffler.Helper;
 
 namespace Main
 {
+    using System.Collections.Generic;
+    using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Packaging;
+    using DocumentFormat.OpenXml.Wordprocessing;
     using Services;
 
     public partial class MainForm : Form
     {
-        private string wordPath;
+        private static string wordPath;
 
         private const string _invalidFilePathErrorHeaderText = "File not found";
         private const string _invalidFilePathErrorDescriptionText = "Invalid path - no word document found.";
         private const string _exceptionOccurredErrorMessageTemplate = "Exception Occured, error message is: {0}";
 
         private const string _documentShuffledSuccessfullyMessage = "The document was shuffled successfully!";
+        private const string _documentShuffledUnSuccessfullyMessage = "Something went wrong! Document may not have been shuffled correctly";
         private const string _WordDocumentFilter = "Word document(*.doc,*.docx)|*.doc;*.docx";
 
         public MainForm()
@@ -44,63 +46,73 @@ namespace Main
             if (SelectedFileDoesNotExist())
             {
                 ShowInvalidFilePathErrorMessage();
-
-                return;
-            }
-
-            string newDocument = SaveDocumentAsNewFile();
-
-            if (FormatDocument(newDocument))
-            {
-                MessageBox.Show(_documentShuffledSuccessfullyMessage);
             }
             else
             {
-                DisplayException(new Exception("An error occured"));
+                MessageBox.Show(FormatDocument()
+                    ? _documentShuffledSuccessfullyMessage
+                    : _documentShuffledUnSuccessfullyMessage);
             }
         }
 
-        private static bool FormatDocument(string documentName)
+        private static bool FormatDocument()
         {
             var documentFormatter = new DocumentFormatter(
                 new ClauserUnitStrategy(new ClauserUnitChecker()),
                 new AdverbStrategy());
 
-            using (var document = WordprocessingDocument.Open(documentName, true))
+            List<OpenXmlElement> shuffledXmlElements = new List<OpenXmlElement>();
+
+            try
             {
-                var docPart = document.MainDocumentPart;
-                if (docPart?.Document != null)
+                using (var document = WordprocessingDocument.Open(wordPath, true))
                 {
-                    documentFormatter.ProcessDocument(docPart);
+                    var docPart = document.MainDocumentPart;
+                    if (docPart?.Document != null)
+                    {
+                        shuffledXmlElements = documentFormatter.ProcessDocument(docPart);
+                    }
+                    CreateAndSaveShuffledDocument(shuffledXmlElements);
                 }
-                SaveChanges(document);
             }
+            catch (Exception ex)
+            {
+                DisplayException(ex);
+                return false;
+            }
+
             return true;
         }
 
-        private string SaveDocumentAsNewFile()
+        private static void CreateAndSaveShuffledDocument(
+            List<OpenXmlElement> shuffledXmlElements)
         {
-            var wordapp = new Word.Application { Visible = false };
-            var doc = wordapp.Documents.Open(wordPath);
+            string path = GetPathAndFileNameForNewWordDocument();
+            using (
+                WordprocessingDocument doc = WordprocessingDocument.Create
+                    (path, WordprocessingDocumentType.Document))
+            {
+                MainDocumentPart mainPart = doc.AddMainDocumentPart();
 
-            var path = wordPath.Replace(
-                wordPath.Substring(wordPath.LastIndexOf("\\", StringComparison.Ordinal)), "");
+                mainPart.Document = new Document();
+                Body body = mainPart.Document.AppendChild(new Body());
+                foreach (var openXmlElement in shuffledXmlElements)
+                {
+                    body.AppendChild(openXmlElement.CloneNode(true));
+                }
+                SaveChanges(doc);
+            }
+        }
 
-            var docNameExtension = 
-                doc.Name.Substring(doc.Name.LastIndexOf('.'));
+        private static string GetPathAndFileNameForNewWordDocument()
+        { 
+            var docNameExtension =
+                wordPath.Substring(wordPath.LastIndexOf('.'));
 
-            string newName = 
-                doc.Name.Replace(docNameExtension, "S" + docNameExtension);
+            string newName =
+                wordPath.Replace(docNameExtension, "S" + docNameExtension);
 
-            string documentNameAndPath = path + "\\" + newName;
-
-            doc.SaveAs(documentNameAndPath);
-
-            doc.Close();
-            
-            CleanUpUnmangedComResources(ref wordapp, ref doc);
-
-            return documentNameAndPath;
+            return newName;
         }
 
         private static void SaveChanges(WordprocessingDocument docx)
@@ -133,23 +145,6 @@ namespace Main
         private bool SelectedFileDoesNotExist()
         {
             return !File.Exists(txbWordPath.Text);
-        }
-
-        private static void CleanUpUnmangedComResources(
-            ref Word.Application wordapp, 
-            ref Word.Document doc
-            )
-        {
-            if (doc != null)
-            {
-                Marshal.FinalReleaseComObject(doc);
-                doc = null;
-            }
-            if (wordapp != null)
-            {
-                Marshal.FinalReleaseComObject(wordapp);
-                wordapp = null;
-            }
         }
     }
 }

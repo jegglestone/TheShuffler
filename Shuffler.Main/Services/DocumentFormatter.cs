@@ -1,5 +1,7 @@
 ﻿namespace Main.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Packaging;
     using DocumentFormat.OpenXml.Wordprocessing;
@@ -17,18 +19,30 @@
             _adverbStrategy = adverbStrategy;
         }
 
-        public void ProcessDocument(MainDocumentPart docPart)
+        public List<OpenXmlElement> ProcessDocument(MainDocumentPart docPart)
         {
-            OpenXmlElement documentBodyXml = docPart.Document.Body;
+            var shuffledElements = new List<OpenXmlElement>();
 
-            foreach (var element in documentBodyXml.Elements())
+            foreach (var element in docPart.Document.Body.Elements().ToList())
             {
+                // if a paragraph as more than one full stop
+                // we may need to split the paragraph into multiple elements
+                // pass each of them in
+                // then amalagamate them into a single paragraph at the end
                 if (element.LocalName == "p")
                 {
-                    _clauserUnitStrategy.ShuffleClauserUnits(element as Paragraph);
-                    _adverbStrategy.ShuffleAdverbUnits(element as Paragraph);
+                    var shuffledElement = element as Paragraph;
+                    shuffledElement = _clauserUnitStrategy.ShuffleClauserUnits(shuffledElement);
+                    shuffledElement = _adverbStrategy.ShuffleAdverbUnits(shuffledElement);
+
+                    shuffledElements.Add(shuffledElement);
+                }
+                else {
+                    shuffledElements.Add(element);
                 }
             }
+
+            return shuffledElements;
         }
     }
 }
