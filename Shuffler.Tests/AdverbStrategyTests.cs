@@ -1,5 +1,7 @@
 ﻿namespace Shuffler.Tests
 {
+    using System;
+    using System.Linq;
     using DocumentFormat.OpenXml.Wordprocessing;
     using NUnit.Framework;
     using Main;
@@ -8,7 +10,7 @@
     public class AdverbStrategyTests
     {
         [Test]
-        public void DontShuffle_AdverUnits_ThatAreInFrontOfAdjectives()
+        public void DontShuffle_AdverbUnits_ThatAreInFrontOfAdjectives()
         {
             const string unShuffledSentence =
                 "He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP.";
@@ -25,15 +27,13 @@
             // assert
             Assert.That(shufflerParagraph.InnerText, Is.EqualTo(
                 "He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP."));
-
         }
 
-        [Test]
-        public void Underlines_FromFirstToLastAdverbUnit_IncludingAllUnitsInBetween()
+        [TestCase("He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP.")]
+        [TestCase("He VBAis PRESdoing NNit ADVconsistently BKand ADVcarefully BKP.")]
+        public void Underlines_FromFirstToLastAdverbUnit_IncludingAllUnitsInBetween(
+            string unShuffledSentence)
         {
-            const string unShuffledSentence =
-                "He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP.";
-
             Paragraph paragraph =
                 DocumentContentHelper.GetParagraphFromWordDocument(unShuffledSentence);
 
@@ -42,12 +42,20 @@
             // act
             var shufflerParagraph =
                 clauserUnitStrategy.ShuffleAdverbUnits(paragraph);
-            
-            // assert
-            Assert.That(shufflerParagraph.InnerXml,
-                    Is.EqualTo(DocumentContentHelper.GetParagraphFromWordDocument(
-                        "He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP_EXPECTATION").InnerXml));
-        }
 
+            // assert
+            Text[] sentenceArray = shufflerParagraph.Descendants<Text>().ToArray();
+           
+            int firstAdverbPosition = Array.FindIndex(
+                sentenceArray, text => text.InnerText == "ADV");
+
+            for (int index = 0; index < sentenceArray.Length; index++)
+            {
+                Text t = sentenceArray[index];
+
+                if (index >= firstAdverbPosition)
+                    Assert.That(t.Parent.InnerXml.Contains("<w:u w:val=\"single\" />"));
+            }
+        }        
     }
 }

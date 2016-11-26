@@ -1,4 +1,4 @@
-﻿namespace Main
+﻿namespace Main.Services
 {
     using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Packaging;
@@ -7,10 +7,14 @@
     public class DocumentFormatter
     {
         private readonly IClauserUnitStrategy _clauserUnitStrategy;
+        private readonly IAdverbStrategy _adverbStrategy;
 
-        public DocumentFormatter(IClauserUnitStrategy clauserUnitStrategy)
+        public DocumentFormatter(
+            IClauserUnitStrategy clauserUnitStrategy
+            , AdverbStrategy adverbStrategy)
         {
             _clauserUnitStrategy = clauserUnitStrategy;
+            _adverbStrategy = adverbStrategy;
         }
 
         public void ProcessDocument(MainDocumentPart docPart)
@@ -22,6 +26,7 @@
                 if (element.LocalName == "p")
                 {
                     _clauserUnitStrategy.ShuffleClauserUnits(element as Paragraph);
+                    _adverbStrategy.ShuffleAdverbUnits(element as Paragraph);
                 }
             }
         }

@@ -8,6 +8,7 @@ using Shuffler.Helper;
 namespace Main
 {
     using DocumentFormat.OpenXml.Packaging;
+    using Services;
 
     public partial class MainForm : Form
     {
@@ -61,7 +62,9 @@ namespace Main
 
         private static bool FormatDocument(string documentName)
         {
-            var documentFormatter = new DocumentFormatter(new ClauserUnitStrategy(new ClauserUnitChecker()));
+            var documentFormatter = new DocumentFormatter(
+                new ClauserUnitStrategy(new ClauserUnitChecker()),
+                new AdverbStrategy());
 
             using (var document = WordprocessingDocument.Open(documentName, true))
             {

@@ -1,6 +1,5 @@
 ﻿namespace Shuffler.Tests
 {
-    using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
     using NUnit.Framework;
     using Main;
     using DocumentFormat.OpenXml.Wordprocessing;

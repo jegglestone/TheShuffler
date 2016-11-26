@@ -4,6 +4,7 @@
     using System.Linq;
     using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Wordprocessing;
+    using Extensions;
     using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
     using RunProperties = DocumentFormat.OpenXml.Wordprocessing.RunProperties;
     using Text = DocumentFormat.OpenXml.Wordprocessing.Text;
@@ -12,7 +13,6 @@
     {
         public Paragraph ShuffleAdverbUnits(Paragraph xmlSentenceElement)
         {
-            //  Search for ADV
             Text[] sentenceArray = xmlSentenceElement.Descendants<Text>().ToArray();
 
             if (NoAdverbFoundInSentence(sentenceArray))
@@ -48,17 +48,13 @@
                 }
             }
 
-
-            // If a second or even a third ADV is found, underline from the first ADV to and including the last ADV together with all words and punctuations in between.
-            //This in effect joins up the individual ADV units to form a large ADV unit -
-
             return xmlSentenceElement;
         }
 
         private static bool NoAdverbFoundInSentence(Text[] sentenceArray)
         {
             return !Array.Exists(
-                sentenceArray, element => element.InnerText.Replace(" ", "") == TagMarks.AdverbTag);
+                sentenceArray, element => element.InnerText.IsAdverb());
         }
 
         private static bool IsMoreThanOneAdverb(int ADVCount)
@@ -86,27 +82,5 @@
         {
             return sentenceArray[i].Parent.Descendants<RunProperties>().First();
         }
-    }
-
-    public static class OpenXmlExtensions
-    {
-        public static bool IsAdverb(this OpenXmlLeafElement openXmlLeafElement)
-        {
-            return openXmlLeafElement.InnerText.Replace(" ", "") == TagMarks.AdverbTag;
-        }
-
-        public static bool ReachedSentenceBreaker(this OpenXmlLeafElement openXmlLeafElement)
-        {
-            return openXmlLeafElement.InnerText.Replace(" ", "") == "VB"         // tests needed for each of these
-                   || openXmlLeafElement.InnerText.Replace(" ", "") == "PAST"
-                   || openXmlLeafElement.InnerText.Replace(" ", "") == "PRES"
-                   || openXmlLeafElement.InnerText.Replace(" ", "") == "BKP";
-        }
-    }
-
-    public class TagMarks
-    {
-        public const string AdverbTag = "ADV";
-        public const string ClauserTag = "CS";
     }
 }

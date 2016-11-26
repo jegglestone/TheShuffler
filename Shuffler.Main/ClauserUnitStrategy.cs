@@ -7,6 +7,7 @@ namespace Main
     using System.Xml;
     using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Wordprocessing;
+    using Extensions;
     using Shuffler.Helper;
 
     public class ClauserUnitStrategy : IClauserUnitStrategy
@@ -33,9 +34,7 @@ namespace Main
                 {
                     if (clauserIndexPosition == 0)
                         return xmlSentenceElement; // no need to shuffle if clauser is already at beginning
-
-                                    //sentenceArray[clauserIndexPosition + 2].Parent.Remove(clauserIndexPosition + 2);
-
+                    
                     if (!CommaFollowingTheClauserUnit(sentenceArray, clauserIndexPosition))
                     {
                         Text[] beforeClauser;
@@ -60,8 +59,8 @@ namespace Main
                             var arr = afterClauser.Concat(beforeClauser).ToArray();
                             List<OpenXmlElement> wordElements = BuildWordsIntoOpenXmlElement(arr);
 
-                            var p = new Paragraph(wordElements);
-                            return p;
+                            xmlSentenceElement = new Paragraph(wordElements);
+                            return xmlSentenceElement;
                         }
                     }
                     else
@@ -76,10 +75,9 @@ namespace Main
 
         private static void MoveClauserAndCommaToBeginningOfSentence(Text[] sentenceArray, int clauserIndexPosition)
         {
-            bool hasAdditionalSpaceElementBeforeBreaker = SentenceHasSpaceBeforeBKP(sentenceArray,
-                clauserIndexPosition);
+            bool hasAdditionalSpaceElementBeforeBreaker = 
+                SentenceHasSpaceBeforeBKP(sentenceArray, clauserIndexPosition);
 
-            // move the clauser and comma to the beginning
             sentenceArray[0].Parent.InsertBeforeSelf(
                sentenceArray[clauserIndexPosition].Parent.CloneNode(true));
             sentenceArray[0].Parent.InsertBeforeSelf(
@@ -153,17 +151,14 @@ namespace Main
                 sentenceArray = sentenceArray.RemoveAt(clauserIndexPosition + 2);
             }
 
-            //if (sentenceArray[clauserIndexPosition + 3].InnerText.Replace(" ", "") == "")
-            //    sentenceArray[clauserIndexPosition + 3].Parent.Remove();
-
-            return sentenceArray[clauserIndexPosition + 2].InnerText.Replace(" ", "") == "BKP" &&
-                   sentenceArray[clauserIndexPosition + 3].InnerText.Replace(" ", "") == ",";
+            return sentenceArray[clauserIndexPosition + 2].InnerText.RemoveWhiteSpaces() == "BKP" &&
+                   sentenceArray[clauserIndexPosition + 3].InnerText.RemoveWhiteSpaces() == ",";
         }
 
         private static bool SentenceHasSpaceBeforeBKP(Text[] sentenceArray, int clauserIndexPosition)
         {
-            return sentenceArray[clauserIndexPosition + 2].InnerText.Replace(" ", "") == ""
-                            && sentenceArray[clauserIndexPosition + 3].InnerText.Replace(" ", "") == "BKP";
+            return sentenceArray[clauserIndexPosition + 2].InnerText.RemoveWhiteSpaces() == ""
+                            && sentenceArray[clauserIndexPosition + 3].InnerText.RemoveWhiteSpaces() == "BKP";
         }
 
         public void SplitArrayAtPosition<T>(T[] array, int index, out T[] first, out T[] second)
@@ -187,21 +182,4 @@ namespace Main
             return _clauserUnitChecker.IsValidUnit(xmlNode);
         }
     }
-
-
-    public static class ArrayExtensions
-    {
-        public static T[] RemoveAt<T>(this T[] source, int index)
-        {
-            T[] dest = new T[source.Length - 1];
-            if (index > 0)
-                Array.Copy(source, 0, dest, 0, index);
-
-            if (index < source.Length - 1)
-                Array.Copy(source, index + 1, dest, index, source.Length - index - 1);
-
-            return dest;
-        }
-    }
-
 }

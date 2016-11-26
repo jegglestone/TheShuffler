@@ -71,6 +71,9 @@
   <ItemGroup>
     <Compile Include="AdverbStrategy.cs" />
     <Compile Include="ClauserUnitStrategy.cs" />
+    <Compile Include="Extensions\ArrayExtensions.cs" />
+    <Compile Include="Extensions\OpenXmlExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helper\ClauserUnitChecker.cs" />
     <Compile Include="IAdverbStrategy.cs" />
     <Compile Include="IClauserUnitStrategy.cs" />
@@ -84,6 +87,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helper\IUnitChecker.cs" />
+    <Compile Include="Constants\TagMarks.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
