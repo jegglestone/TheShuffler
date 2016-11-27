@@ -31,14 +31,10 @@
             throw new XmlException();
         }
 
-        public static MainDocumentPart GetMainDocumentPart(string fileName)
+        public static WordprocessingDocument GetMainDocumentPart(string fileName)
         {
-            using (var document = 
-                GetDocument(fileName, "TestFiles\\MultiLineFiles", true))
-            {
-                return document.MainDocumentPart;
-            }
-            throw new XmlException();
+            return GetDocument(fileName, "TestFiles\\MultiLineFiles", true);
+
         }
 
         private static WordprocessingDocument GetDocument(string fileName, string subDirectory, bool isEditable)

@@ -26,9 +26,17 @@
             foreach (var element in docPart.Document.Body.Elements().ToList())
             {
                 // if a paragraph as more than one full stop
-                // we may need to split the paragraph into multiple elements
+                // split the paragraph into multiple elements
                 // pass each of them in
                 // then amalagamate them into a single paragraph at the end
+
+                if (element.InnerText.Split("BKP.").Length > 1)
+                {
+                    
+                }
+
+
+
                 if (element.LocalName == "p")
                 {
                     var shuffledElement = element as Paragraph;

@@ -13,7 +13,7 @@
     {
         public Paragraph ShuffleAdverbUnits(Paragraph xmlSentenceElement)
         {
-            Text[] sentenceArray = xmlSentenceElement.Descendants<Text>().ToArray();
+            Text[] sentenceArray = xmlSentenceElement.Descendants<Text>().ToArray(); // repeated code - refactor
 
             if (NoAdverbFoundInSentence(sentenceArray))
                 return xmlSentenceElement;

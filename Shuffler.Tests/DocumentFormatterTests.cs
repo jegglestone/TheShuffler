@@ -1,6 +1,9 @@
 ﻿namespace Shuffler.Tests
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Packaging;
     using DocumentFormat.OpenXml.Wordprocessing;
     using Helper;
@@ -14,13 +17,6 @@
         [Test]
         public void WhenGivenOpenXmlDocumentWithClauser_TheClauserParagraphIsShuffled()
         {
-            var documentFormatter = new DocumentFormatter(
-                new ClauserUnitStrategy(new ClauserUnitChecker()),
-                new AdverbStrategy());
-
-            MainDocumentPart docPart =
-                DocumentContentHelper.GetMainDocumentPart("Adverbs and Clausers");
-
             //NNEconomic growth VBhas continued ADV1at a moderate rate TM1so far TM2this year BKP.
             //ADJReal NNgross domestic productNN(GDP)PASTrose ADV1at an annual rate of 
             //PREN1about DG2 NNpercent MD1in PREN2the TM1first quarter CSafter PRESincreasing 
@@ -28,31 +24,32 @@
             //NNGrowth TM1last quarter VBwas supportedBKby ADJfurther NNgains MD1in ADJprivate ADJdomestic NNdemand BKP, 
             // BKwhich BKmore than VBoffset NNa drag MD1from PREN1a NNdecline MD2in NNgovernment NNspending BKP.
 
-            if (docPart?.Document != null)
+            List<OpenXmlElement> elements;
+            using (WordprocessingDocument document =
+                DocumentContentHelper.GetMainDocumentPart("Adverbs and Clausers"))
             {
-                documentFormatter.ProcessDocument(docPart);
+                // arrange
+                var documentFormatter = new DocumentFormatter(
+                new ClauserUnitStrategy(new ClauserUnitChecker()),
+                new AdverbStrategy());
+
+                var docPart = document.MainDocumentPart;
+                if (docPart == null || docPart.Document == null)
+                    throw new Exception();
+
+                // act
+                elements = documentFormatter.ProcessDocument(docPart);                
             }
 
-            if (docPart == null)
-                throw new System.IO.FileNotFoundException();
-
-            //  act
-            documentFormatter.ProcessDocument(docPart);
-
             // assert
-            Assert.That(docPart.Document != null, "Xml Document came back null");
+            Assert.That(elements != null, "Xml Document came back null");
             foreach (var element in
-                docPart.Document.Body.Elements().Where(
-                    element => element.LocalName == "p"))
+                elements.Where(element => element.LocalName == "p"))
             {
-                // AssertThatAnyClauserUnitsAreAtTheBeginningOfSentence
-                if (element.InnerText.Contains("CS"))
-                {
-                    Assert.That(element.Descendants<Text>().First().InnerText == "CS");
-                    Assert.That(
-                        element.InnerText.Contains(
-                            "CSafter PRESincreasing MD2at PREN3a DG3 NNpercent NNpace MD3in PREN4the TM2fourth quarter MD4of TMY2011 BKP,ADJReal NNgross domestic productNN(GDP)PASTrose"));
-                }
+                if (!element.InnerText.Contains("CS")) continue;
+                Assert.That(element.Descendants<Text>().First().InnerText == "CS");
+                Assert.That(element.InnerText.Contains(
+                        "CSafter PRESincreasing MD2at PREN3a DG3 NNpercent NNpace MD3in PREN4the TM2fourth quarter MD4of TMY2011 BKP,ADJReal NNgross domestic productNN(GDP)PASTrose"));
             }
         }
     }
