@@ -5,9 +5,11 @@ using System.Linq;
 namespace Main
 {
     using System.Xml;
+    using Constants;
     using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Wordprocessing;
     using Extensions;
+    using Helper;
     using Shuffler.Helper;
 
     public class ClauserUnitStrategy : IClauserUnitStrategy
@@ -18,6 +20,7 @@ namespace Main
         public ClauserUnitStrategy(IUnitChecker clauserUnitChecker)
         {
             _clauserUnitChecker = clauserUnitChecker;
+
         }
 
         public Paragraph ShuffleClauserUnits(Paragraph xmlSentenceElement)
@@ -30,7 +33,7 @@ namespace Main
                 int clauserIndexPosition =
                     Array.FindIndex(sentenceArray, i => i.InnerText == _clauserTag);
 
-                if (IsClauserUnit(sentenceArray[clauserIndexPosition].Parent)) // what if not?
+                if (IsClauserUnit(sentenceArray[clauserIndexPosition].Parent)) // what if not? - test for more 2 cs with one false -Sony EricCSon
                 {
                     if (clauserIndexPosition == 0)
                         return xmlSentenceElement; // no need to shuffle if clauser is already at beginning
@@ -40,7 +43,7 @@ namespace Main
                         Text[] beforeClauser;
                         Text[] afterClauser;
 
-                        SplitArrayAtPosition(sentenceArray, clauserIndexPosition, out beforeClauser, out afterClauser);
+                        ArrayUtility.SplitArrayAtPosition(sentenceArray, clauserIndexPosition, out beforeClauser, out afterClauser);
 
                         int nextBKPPosition =
                             GetPositionOfNextBreakerUnit(afterClauser);
@@ -53,7 +56,7 @@ namespace Main
                             afterClauser[nextBKPPosition + 1] = new Text(",");
 
                             Array.Resize(ref beforeClauser, beforeClauser.Length + 2);
-                            beforeClauser[beforeClauser.Length - 2] = new Text("BKP");
+                            beforeClauser[beforeClauser.Length - 2] = new Text(TagMarks.BreakerPunctuation);
                             beforeClauser[beforeClauser.Length - 1] = new Text(".");
 
                             var arr = afterClauser.Concat(beforeClauser).ToArray();
@@ -113,7 +116,7 @@ namespace Main
             int nextBKPPosition = -1;
             for (int i = 0; i < arrayOfUnits.Length; i++)
             {
-                if (arrayOfUnits[i].Text.Contains("BKP"))
+                if (arrayOfUnits[i].Text.Contains(TagMarks.BreakerPunctuation))
                 {
                     nextBKPPosition = i;
                     break;
@@ -151,23 +154,17 @@ namespace Main
                 sentenceArray = sentenceArray.RemoveAt(clauserIndexPosition + 2);
             }
 
-            return sentenceArray[clauserIndexPosition + 2].InnerText.RemoveWhiteSpaces() == "BKP" &&
+            return sentenceArray[clauserIndexPosition + 2].InnerText.RemoveWhiteSpaces().IsBreakerPunctuation() &&
                    sentenceArray[clauserIndexPosition + 3].InnerText.RemoveWhiteSpaces() == ",";
         }
 
         private static bool SentenceHasSpaceBeforeBKP(Text[] sentenceArray, int clauserIndexPosition)
         {
             return sentenceArray[clauserIndexPosition + 2].InnerText.RemoveWhiteSpaces() == ""
-                            && sentenceArray[clauserIndexPosition + 3].InnerText.RemoveWhiteSpaces() == "BKP";
+                            && sentenceArray[clauserIndexPosition + 3].InnerText.RemoveWhiteSpaces().IsBreakerPunctuation();
         }
 
-        public void SplitArrayAtPosition<T>(T[] array, int index, out T[] first, out T[] second)
-        {
-            first = array.Take(index).ToArray();
-            second = array.Skip(index).ToArray();
-        }
 
-  
         private bool IsClauserUnit(OpenXmlElement node)
         {
             //TODO: Move this to make it reusable

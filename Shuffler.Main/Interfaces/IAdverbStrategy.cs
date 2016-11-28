@@ -1,4 +1,4 @@
-﻿namespace Main
+﻿namespace Main.Interfaces
 {
     using DocumentFormat.OpenXml.Wordprocessing;
 

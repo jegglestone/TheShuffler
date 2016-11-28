@@ -4,5 +4,6 @@
     {
         public const string AdverbTag = "ADV";
         public const string ClauserTag = "CS";
+        public const string BreakerPunctuation = "BKP";
     }
 }

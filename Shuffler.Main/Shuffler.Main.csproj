@@ -70,13 +70,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdverbStrategy.cs" />
+    <Compile Include="Helper\ArrayUtility.cs" />
     <Compile Include="ClauserUnitStrategy.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
     <Compile Include="Extensions\OpenXmlExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helper\ClauserUnitChecker.cs" />
-    <Compile Include="IAdverbStrategy.cs" />
-    <Compile Include="IClauserUnitStrategy.cs" />
+    <Compile Include="Interfaces\IAdverbStrategy.cs" />
+    <Compile Include="Interfaces\IClauserUnitStrategy.cs" />
     <Compile Include="Services\DocumentFormatter.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

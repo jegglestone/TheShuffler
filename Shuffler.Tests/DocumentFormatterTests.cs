@@ -15,7 +15,7 @@
     public class DocumentFormatterTests
     {
         [Test]
-        public void WhenGivenOpenXmlDocumentWithClauser_TheClauserParagraphIsShuffled()
+        public void WhenGivenOpenXmlDocumentWithClauser_AndMultipleSentences_TheClauserParagraphIsShuffled()
         {
             //NNEconomic growth VBhas continued ADV1at a moderate rate TM1so far TM2this year BKP.
             //ADJReal NNgross domestic productNN(GDP)PASTrose ADV1at an annual rate of 
@@ -34,7 +34,7 @@
                 new AdverbStrategy());
 
                 var docPart = document.MainDocumentPart;
-                if (docPart == null || docPart.Document == null)
+                if (docPart?.Document == null)
                     throw new Exception();
 
                 // act
@@ -48,8 +48,8 @@
             {
                 if (!element.InnerText.Contains("CS")) continue;
                 Assert.That(element.Descendants<Text>().First().InnerText == "CS");
-                Assert.That(element.InnerText.Contains(
-                        "CSafter PRESincreasing MD2at PREN3a DG3 NNpercent NNpace MD3in PREN4the TM2fourth quarter MD4of TMY2011 BKP,ADJReal NNgross domestic productNN(GDP)PASTrose"));
+                Assert.That(element.InnerText.Equals(
+                        "CSafter PRESincreasing MD2at PREN3a DG3 NNpercent NNpace MD3in PREN4the TM2fourth quarter MD4of TMY2011 BKP, ADJReal NNgross domestic productNN(GDP) PASTrose ADV1at an annual rate of PREN1about DG2 NNpercent MD1in PREN2the TM1first quarter BKP."));
             }
         }
     }

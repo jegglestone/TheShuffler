@@ -5,6 +5,7 @@
     using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Wordprocessing;
     using Extensions;
+    using Interfaces;
     using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
     using RunProperties = DocumentFormat.OpenXml.Wordprocessing.RunProperties;
     using Text = DocumentFormat.OpenXml.Wordprocessing.Text;

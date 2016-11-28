@@ -123,6 +123,7 @@ namespace Main
                 sw.Write(sr.ReadToEnd());
             }
             docx.MainDocumentPart.Document.Save();
+            docx.Close();
         }
 
         private static void DisplayException(Exception ex)
