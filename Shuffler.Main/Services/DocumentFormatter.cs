@@ -60,7 +60,7 @@
             var strArray = element.Descendants<Text>().ToArray();
             int prevBKP = 0;
             int prevFullStopPosition = 0;
-
+            
             var ShuffledSentences = new List<OpenXmlElement>();
             for (int i = 0; i < strArray.Length; i++)
             {

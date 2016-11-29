@@ -69,7 +69,7 @@
     <Compile Include="DocumentFormatterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensionTests.cs" />
-    <Compile Include="TimerStrategyTests.cs" />
+    <Compile Include="TimerUnitStrategyTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -80,6 +80,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestFiles\He VBAis PRESdoing NNit ADVconsistently BKand ADVcarefully BKP..docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestFiles\He VBtries ADVhard BKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestFiles\MD1In TMMApril DYN2and TMMMay BKP, CShowever BKP, ADJthe reported NNpace MD1of NNjob NNgains PASTslowed BKP..docx">
