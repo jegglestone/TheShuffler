@@ -12,14 +12,14 @@
     public class DocumentFormatter
     {
         private readonly IClauserUnitStrategy _clauserUnitStrategy;
-        private readonly IAdverbStrategy _adverbStrategy;
+        private readonly IAdverbStrategy adverbUnitStrategy;
 
         public DocumentFormatter(
             IClauserUnitStrategy clauserUnitStrategy
-            , AdverbStrategy adverbStrategy)
+            , AdverbUnitStrategy adverbUnitStrategy)
         {
             _clauserUnitStrategy = clauserUnitStrategy;
-            _adverbStrategy = adverbStrategy;
+            this.adverbUnitStrategy = adverbUnitStrategy;
         }
 
         public List<OpenXmlElement> ProcessDocument(MainDocumentPart docPart)
@@ -114,7 +114,7 @@
         {
             var shuffledElement = element as Paragraph;
             shuffledElement = _clauserUnitStrategy.ShuffleClauserUnits(shuffledElement);
-            shuffledElement = _adverbStrategy.ShuffleAdverbUnits(shuffledElement);
+            shuffledElement = adverbUnitStrategy.ShuffleAdverbUnits(shuffledElement);
             return shuffledElement;
         }
 

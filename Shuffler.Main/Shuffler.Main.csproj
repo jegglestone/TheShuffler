@@ -69,7 +69,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdverbStrategy.cs" />
+    <Compile Include="AdverbUnitStrategy.cs" />
     <Compile Include="Helper\ArrayUtility.cs" />
     <Compile Include="ClauserUnitStrategy.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
@@ -89,6 +89,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helper\IUnitChecker.cs" />
     <Compile Include="Constants\TagMarks.cs" />
+    <Compile Include="TimerUnitStrategy.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

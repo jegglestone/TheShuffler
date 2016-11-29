@@ -10,7 +10,7 @@
     using RunProperties = DocumentFormat.OpenXml.Wordprocessing.RunProperties;
     using Text = DocumentFormat.OpenXml.Wordprocessing.Text;
 
-    public class AdverbStrategy : IAdverbStrategy
+    public class AdverbUnitStrategy : IAdverbStrategy
     {
         public Paragraph ShuffleAdverbUnits(Paragraph xmlSentenceElement)
         {

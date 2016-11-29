@@ -31,7 +31,7 @@
                 // arrange
                 var documentFormatter = new DocumentFormatter(
                 new ClauserUnitStrategy(new ClauserUnitChecker()),
-                new AdverbStrategy());
+                new AdverbUnitStrategy());
 
                 var docPart = document.MainDocumentPart;
                 if (docPart?.Document == null)

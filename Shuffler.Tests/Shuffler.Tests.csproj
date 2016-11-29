@@ -69,6 +69,7 @@
     <Compile Include="DocumentFormatterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensionTests.cs" />
+    <Compile Include="TimerStrategyTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

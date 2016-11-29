@@ -7,7 +7,7 @@
     using Main;
 
     [TestFixture]
-    public class AdverbStrategyTests
+    public class AdverbUnitStrategyTests
     {
         [Test]
         public void DontShuffle_AdverbUnits_ThatAreInFrontOfAdjectives()
@@ -18,7 +18,7 @@
             Paragraph paragraph =
                 DocumentContentHelper.GetParagraphFromWordDocument(unShuffledSentence);
 
-            var clauserUnitStrategy = new AdverbStrategy();
+            var clauserUnitStrategy = new AdverbUnitStrategy();
 
             // act
             var shufflerParagraph =
@@ -37,7 +37,7 @@
             Paragraph paragraph =
                 DocumentContentHelper.GetParagraphFromWordDocument(unShuffledSentence);
 
-            var clauserUnitStrategy = new AdverbStrategy();
+            var clauserUnitStrategy = new AdverbUnitStrategy();
 
             // act
             var shufflerParagraph =
