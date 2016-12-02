@@ -45,4 +45,5 @@
         {
             return openXmlLeafElement.InnerText.IsTimer();
         }
+    }
 }

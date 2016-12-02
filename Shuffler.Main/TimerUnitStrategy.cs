@@ -31,6 +31,7 @@
                         new TimerUnit {StartPosition = index};
 
                     if (timerUnitCount <= 0) continue;
+
                     timerUnits[timerUnitCount - 1].EndPosition = index - 1;
 
                     timerUnitCount++;

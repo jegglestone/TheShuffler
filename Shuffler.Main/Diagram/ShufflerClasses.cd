@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Main.Extensions.ArrayExtensions">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Extensions\ArrayExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Main.Extensions.OpenXmlExtensions">
+    <Position X="7.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAABAAAAAAAAAAQAAEAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Extensions\OpenXmlExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Main.Extensions.StringExtensions">
+    <Position X="10" Y="1.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Extensions\StringExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Main.Helper.ArrayUtility">
+    <Position X="7.75" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helper\ArrayUtility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Main.Helper.OpenXmlTextHelper">
+    <Position X="10.25" Y="5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAAAAAAgAAAQAAAAAAAA=</HashCode>
+      <FileName>Helper\OpenXmlTextHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shuffler.Helper.ClauserUnitChecker" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAgAAAAAAABAA=</HashCode>
+      <FileName>Helper\ClauserUnitChecker.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Main.Model.TimerUnit">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\TimerUnit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Main.AdverbUnitStrategy" BaseTypeListCollapsed="true">
+    <Position X="2" Y="1.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIgAAAAAAAAAAAAAAAAAAACBAAACAAAAAAAAAEABAA=</HashCode>
+      <FileName>AdverbUnitStrategy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Main.ClauserUnitStrategy" BaseTypeListCollapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAEAIBAAAwAAAAAgAAAgAAAAAAAAAAAAAI=</HashCode>
+      <FileName>ClauserUnitStrategy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Main.OpenXmlHelper">
+    <Position X="6" Y="5.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>OpenXmlHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Main.TimerUnitStrategy">
+    <Position X="3.5" Y="4.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAEEAAAAAA=</HashCode>
+      <FileName>TimerUnitStrategy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Main.Services.DocumentFormatter">
+    <Position X="5.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIAAmAAAAACAAAAAAQAAAAAAARAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Services\DocumentFormatter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Shuffler.Helper.IUnitChecker">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Helper\IUnitChecker.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Main.Interfaces.IAdverbStrategy">
+    <Position X="6" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IAdverbStrategy.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Main.IClauserUnitStrategy">
+    <Position X="7.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IClauserUnitStrategy.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

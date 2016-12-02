@@ -51,31 +51,31 @@
             }
         }
 
-        //[TestCase(
-        //    "He VBAhas PASTplanned NNit ADVpatientlyBK, ADVquitely BKand ADVmeticulously BKP.",
-        //    "He VBAhas ADVpatientlyBK, ADVquitely BKand ADVmeticulously PASTplanned NNit BKP.")]
-        //[TestCase(
-        //    "He VBAis PRESdoing NNit ADVconsistently BKand ADVcarefully BKP.",
-        //    "He VBAis ADVconsistently BKand ADVcarefully PRESdoing NNit BKP.")]
-        //public void AdverbUnits_VBA_IsPresentToTheLeft_ADVerbUnit_IsMoved_Between_The_VBA_And_PAST_or_PRES(
-        //    string unShuffledSentence, string expectedSentence)
-        //{
-        //    AssertThatUnShuffledSentenceReturnExpectedSentence(
-        //        unShuffledSentence, expectedSentence);
-        //}
+        [TestCase(
+            "He VBAhas PASTplanned NNit ADVpatientlyBK, ADVquitely BKand ADVmeticulously BKP.",
+            "He VBAhas ADVpatientlyBK, ADVquitely BKand ADVmeticulously PASTplanned NNit BKP.")]
+        [TestCase(
+            "He VBAis PRESdoing NNit ADVconsistently BKand ADVcarefully BKP.",
+            "He VBAis ADVconsistently BKand ADVcarefully PRESdoing NNit BKP.")]
+        public void AdverbUnits_VBA_IsPresentToTheLeft_ADVerbUnit_IsMoved_Between_The_VBA_And_PAST_or_PRES(
+            string unShuffledSentence, string expectedSentence)
+        {
+            AssertThatUnShuffledSentenceReturnExpectedSentence(
+                unShuffledSentence, expectedSentence);
+        }
 
-        //[TestCase(
-        //    "He VBtries ADVhard BKP.",
-        //    "He ADVhard VBtries BKP.")]
-        //[TestCase(
-        //    "He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP.",
-        //    "He ADVloudlyBK, ADVemotionally BKand ADVnon-stop PASTshouted BKP.")]
-        //public void When_Only_One_ADVerb_And_No_VBA_unit_Move_ADV_To_Before_The_VB_or_PAST_or_PRES(
-        //    string unShuffledSentence, string expectedSentence)
-        //{
-        //    AssertThatUnShuffledSentenceReturnExpectedSentence(
-        //        unShuffledSentence, expectedSentence);
-        //}
+        [TestCase(
+            "He VBtries ADVhard BKP.",
+            "He ADVhard VBtries BKP.")]
+        [TestCase(
+            "He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP.",
+            "He ADVloudlyBK, ADVemotionally BKand ADVnon-stop PASTshouted BKP.")]
+        public void When_Only_One_ADVerb_And_No_VBA_unit_Move_ADV_To_Before_The_VB_or_PAST_or_PRES(
+            string unShuffledSentence, string expectedSentence)
+        {
+            AssertThatUnShuffledSentenceReturnExpectedSentence(
+                unShuffledSentence, expectedSentence);
+        }
 
         private static void AssertThatUnShuffledSentenceReturnExpectedSentence(string unShuffledSentence,
             string expectedSentence)
