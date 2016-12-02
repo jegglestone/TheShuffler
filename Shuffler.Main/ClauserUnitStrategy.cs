@@ -60,7 +60,7 @@ namespace Main
                             beforeClauser[beforeClauser.Length - 1] = new Text(".");
 
                             var arr = afterClauser.Concat(beforeClauser).ToArray();
-                            List<OpenXmlElement> wordElements = BuildWordsIntoOpenXmlElement(arr);
+                            List<OpenXmlElement> wordElements = OpenXmlHelper.BuildWordsIntoOpenXmlElement(arr);
 
                             xmlSentenceElement = new Paragraph(wordElements);
                             return xmlSentenceElement;
@@ -124,27 +124,6 @@ namespace Main
             }
 
             return nextBKPPosition;
-        }
-
-        private static List<OpenXmlElement> BuildWordsIntoOpenXmlElement(Text[] textUnits)
-        {
-            var wordElements =
-                new List<OpenXmlElement>();
-
-            foreach (var text in textUnits)
-            {
-                if (text.Parent != null)
-                    wordElements.Add(
-                        text.Parent.CloneNode(true));
-                else
-                {
-                    var wordRun = new Run();
-                    wordRun.AppendChild(text);
-                    wordElements.Add(wordRun);
-                }
-            }
-
-            return wordElements;
         }
 
         private static bool CommaFollowingTheClauserUnit(Text[] sentenceArray, int clauserIndexPosition)

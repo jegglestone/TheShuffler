@@ -62,7 +62,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdverbStrategyTests.cs" />
+    <Compile Include="AdverbUnitStrategyTests.cs" />
     <Compile Include="ClauserUnitCheckerTests.cs" />
     <Compile Include="ClauserUnitStrategyTests.cs" />
     <Compile Include="DocumentContentHelper.cs" />

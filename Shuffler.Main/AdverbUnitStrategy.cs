@@ -5,6 +5,7 @@
     using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Wordprocessing;
     using Extensions;
+    using Helper;
     using Interfaces;
     using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
     using RunProperties = DocumentFormat.OpenXml.Wordprocessing.RunProperties;
@@ -14,7 +15,7 @@
     {
         public Paragraph ShuffleAdverbUnits(Paragraph xmlSentenceElement)
         {
-            Text[] sentenceArray = xmlSentenceElement.Descendants<Text>().ToArray(); // repeated code - refactor
+            Text[] sentenceArray = xmlSentenceElement.Descendants<Text>().ToArray();
 
             if (NoAdverbFoundInSentence(sentenceArray))
                 return xmlSentenceElement;
@@ -45,11 +46,67 @@
                 // underline from ADVIndexPosition to breakerPosition
                 for (int i = AdverbIndexPosition; i < breakerPosition; i++)
                 {
-                    UnderlineWordRun(GetParentRunProperties(sentenceArray, i));
+                    OpenXmlTextHelper.UnderlineWordRun(
+                        OpenXmlTextHelper.GetParentRunProperties(sentenceArray, i));
+                }
+            }
+            else if (IsOneAdverb(AdverbCount))
+            {
+                if (NoVBAFoundInSentence(sentenceArray))
+                {
+                    xmlSentenceElement = 
+                        MoveBeforeVBOrPASTorPRESUnit(sentenceArray, AdverbIndexPosition);
                 }
             }
 
             return xmlSentenceElement;
+        }
+
+        private static Paragraph MoveBeforeVBOrPASTorPRESUnit(Text[] sentenceArray, int adverbIndexPosition)
+        {
+            var VbPastPresPosition = GetClosestVbPastOrPresUnit(sentenceArray, adverbIndexPosition);
+            var adverbTag = sentenceArray[adverbIndexPosition];
+            var adverb = sentenceArray[adverbIndexPosition + 1];
+
+            Text[] beforeVbPastPres;
+            Text[] afterVbPastPres;
+
+            ArrayUtility.SplitArrayAtPosition(
+                sentenceArray, VbPastPresPosition, out beforeVbPastPres, out afterVbPastPres);
+
+            Text[] beforeADV;
+            Text[] afterADV;
+
+            ArrayUtility.SplitArrayAtPosition(
+                afterVbPastPres, adverbIndexPosition, out beforeADV, out afterADV);
+
+            var vbPastPres = 
+                OpenXmlTextHelper.RemoveUnitFromOriginalPosition(beforeADV);
+          
+            var arr = 
+                beforeVbPastPres
+                .Concat(new[] {adverbTag})
+                .Concat(new[] {adverb, new Text(" ") })
+                .Concat(vbPastPres)
+                .Concat(afterADV).ToArray();
+
+            var wordElements = OpenXmlHelper.BuildWordsIntoOpenXmlElement(arr);
+
+            return new Paragraph(wordElements);
+        }
+
+        private static int GetClosestVbPastOrPresUnit(Text[] sentenceArray, int adverbIndexPosition)
+        {
+            Text[] beforeAdverb;
+            Text[] afterAdverb;
+
+            ArrayUtility.SplitArrayAtPosition(
+                sentenceArray, adverbIndexPosition, out beforeAdverb, out afterAdverb);
+
+            var VbPastPresPosition = Array.FindLastIndex(
+                beforeAdverb, i => i.IsVbPastPres());
+
+            return VbPastPresPosition;
         }
 
         private static bool NoAdverbFoundInSentence(Text[] sentenceArray)
@@ -58,30 +115,20 @@
                 sentenceArray, element => element.InnerText.IsAdverb());
         }
 
+        private static bool NoVBAFoundInSentence(Text[] sentenceArray)
+        {
+            return !Array.Exists(
+                sentenceArray, element => element.InnerText.IsVBA());
+        }
+
         private static bool IsMoreThanOneAdverb(int ADVCount)
         {
             return ADVCount > 1;
         }
 
-        private static void UnderlineWordRun(RunProperties runProperties)
+        private static bool IsOneAdverb(int ADVCount)
         {
-            var underlineElement = runProperties.Underline;
-            if (underlineElement != null)
-                underlineElement.Val = new EnumValue<UnderlineValues>(UnderlineValues.Single);
-            else
-            {
-                // add/append an underline element
-                runProperties.Append(
-                    new OpenXmlElement[]
-                    {
-                        new Underline() { Val = new EnumValue<UnderlineValues>(UnderlineValues.Single)}
-                    });
-            }
-        }
-
-        private static RunProperties GetParentRunProperties(Text[] sentenceArray, int i)
-        {
-            return sentenceArray[i].Parent.Descendants<RunProperties>().First();
+            return ADVCount == 1;
         }
     }
 }
