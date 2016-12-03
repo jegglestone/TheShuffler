@@ -16,7 +16,6 @@
             if (NoTimerFoundInSentence(sentenceArray))
                 return xmlSentenceElement;
 
-            // If an ADV is found, continue to search for the next ADV until reaching any of VB / PAST / PRES / Full - Stop.
             var totalNumberOfTimers = sentenceArray.Count(x => x.InnerText.IsTimer());
 
             var timerUnits = new TimerUnit[totalNumberOfTimers];
@@ -52,8 +51,10 @@
              Split the Array at each timer.StartPosition
              * */
              // move to ReverseShuffle() method
+            TimerUnit prevTimerUnit;
             foreach (var timerUnit in timerUnits)
             {
+
                 Text[] beforeTimerUnit;
                 Text[] afterTimerUnit;
                 ArrayUtility.SplitArrayAtPosition(
