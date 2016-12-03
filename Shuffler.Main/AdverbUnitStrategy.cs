@@ -2,18 +2,25 @@
 {
     using System;
     using System.Linq;
+    using Constants;
     using Extensions;
     using Helper;
     using Interfaces;
+    using Model;
     using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
     using Text = DocumentFormat.OpenXml.Wordprocessing.Text;
 
     public class AdverbUnitStrategy : IAdverbStrategy
     {
+        private Sentence _sentence;
+
         public Paragraph ShuffleAdverbUnits(Paragraph xmlSentenceElement)
         {
-            var sentenceArray = xmlSentenceElement.Descendants<Text>().ToArray();
+            _sentence = new Sentence(xmlSentenceElement); // move to a constructor later!
 
+            var sentenceArray = _sentence.SentenceArray;
+
+           
             if (NoAdverbFoundInSentence(sentenceArray))
                 return xmlSentenceElement;
 
@@ -43,10 +50,15 @@
                 UnderlineAdverbUnitUpToNextBreaker(
                     AdverbIndexPosition, breakerPosition, sentenceArray);
 
-                //Move entire unit (AdverbIndexPosition to breaker position) to before something else
-                if (HasVBAToTheLeft())
-                    xmlSentenceElement = 
+                if (HasVBAToTheLeft(sentenceArray, AdverbIndexPosition))
+                    xmlSentenceElement =
                         MoveAdverbUnitBetweenTheVBAAndPASTPRES(sentenceArray, AdverbIndexPosition);
+                else
+                {
+                    xmlSentenceElement =
+                        MoveAdverbUnitBeforeVBOrPASTorPRESUnit(sentenceArray, AdverbIndexPosition);
+                   // throw new NotImplementedException();
+                }
             }
             else if (IsOneAdverb(AdverbCount))
             {
@@ -58,16 +70,6 @@
             }
 
             return xmlSentenceElement;
-        }
-
-        private static void UnderlineAdverbUnitUpToNextBreaker(int AdverbIndexPosition, int breakerPosition,
-            Text[] sentenceArray)
-        {
-            for (int i = AdverbIndexPosition; i < breakerPosition; i++)
-            {
-                OpenXmlTextHelper.UnderlineWordRun(
-                    OpenXmlTextHelper.GetParentRunProperties(sentenceArray, i));
-            }
         }
 
         private static Paragraph MoveSingleAdverbBeforeVBOrPASTorPRESUnit(Text[] sentenceArray, int adverbIndexPosition)
@@ -88,13 +90,13 @@
             ArrayUtility.SplitArrayAtPosition(
                 afterVbPastPres, adverbIndexPosition, out beforeADV, out afterADV);
 
-            var vbPastPres = 
+            var vbPastPres =
                 OpenXmlTextHelper.RemoveUnitFromOriginalPosition(beforeADV);
-          
-            var arr = 
+
+            var arr =
                 beforeVbPastPres
-                .Concat(new[] {adverbTag})
-                .Concat(new[] {adverb, new Text(" ") })
+                .Concat(new[] { adverbTag })
+                .Concat(new[] { adverb, new Text(" ") })
                 .Concat(vbPastPres)
                 .Concat(afterADV).ToArray();
 
@@ -102,6 +104,77 @@
 
             return new Paragraph(wordElements);
         }
+
+        private Paragraph MoveAdverbUnitBeforeVBOrPASTorPRESUnit(Text[] sentenceArray, int adverbIndexPosition)
+        {
+            int vbPastPresPosition = GetClosestVbPastOrPresUnit(sentenceArray, adverbIndexPosition);
+
+            Text[] adverbUnit = GetAdverbUnit(sentenceArray, adverbIndexPosition);
+
+            Text[] PastPresUnitAndTag = sentenceArray.Skip(vbPastPresPosition - 1).Take(vbPastPresPosition + 1).ToArray();
+
+            Text[] beforePastPresent = sentenceArray.Take(vbPastPresPosition-1).ToArray();
+
+            Text[] breaker = sentenceArray.Skip(sentenceArray.Length - 3).ToArray();
+
+            Text[] shuffledSentence = beforePastPresent.Concat(adverbUnit).Concat(PastPresUnitAndTag).Concat(breaker).ToArray();
+            
+            return new Paragraph(
+                OpenXmlHelper.BuildWordsIntoOpenXmlElement(shuffledSentence));
+        }
+
+        private Paragraph MoveAdverbUnitBetweenTheVBAAndPASTPRES(Text[] sentenceArray, int adverbIndexPosition)
+        {
+            //get VBA pos
+            Text[] beforeAdverb;
+            var VBAPosition = GetVBAPosition(out beforeAdverb, sentenceArray, adverbIndexPosition);
+            Text[] adverbUnit = GetAdverbUnit(sentenceArray, adverbIndexPosition);
+
+            int pastPresPosition =
+                GetFirstPastPresPositionAfterVBA(beforeAdverb, VBAPosition);
+
+            Text[] sentenceToVBA = sentenceArray.Take(VBAPosition + 2).ToArray();
+            Text[] pastPresUnit = sentenceArray.Skip(pastPresPosition - 1).Take(pastPresPosition + 1).ToArray();
+            Text[] breaker = sentenceArray.Skip(sentenceArray.Length - 3).ToArray();
+            var shuffledSentence = sentenceToVBA.Concat(adverbUnit).Concat(pastPresUnit).Concat(breaker).ToArray();
+
+            return new Paragraph(OpenXmlHelper.BuildWordsIntoOpenXmlElement(shuffledSentence));
+        }
+
+        private static Text[] GetAdverbUnit(Text[] sentenceArray, int adverbIndexPosition)
+        {
+            Text[] adverbUnit = sentenceArray.Skip(adverbIndexPosition - 1).ToArray();
+            adverbUnit = adverbUnit.Take(adverbUnit.Length - 3).ToArray(); // remove full stop
+            return adverbUnit;
+        }
+
+        private static int GetVBAPosition(out Text[] beforeAdverb, Text[] sentenceArray, int adverbIndexPosition)
+        {
+            beforeAdverb = sentenceArray.Take(adverbIndexPosition).ToArray();
+            int VBAPosition = Array.FindIndex(beforeAdverb, text => text.InnerText == TagMarks.VBA);
+            return VBAPosition;
+        }
+
+        private static int GetFirstPastPresPositionAfterVBA(Text[] beforeAdverb, int VBAPosition)
+        {
+            var afterVBA = beforeAdverb.Skip(VBAPosition).ToArray();
+
+            if (Array.Exists(afterVBA, text => text.InnerText.RemoveWhiteSpaces() == "PAST"))
+                return Array.FindIndex(afterVBA, text => text.InnerText.RemoveWhiteSpaces() == "PAST")+VBAPosition;
+            return Array.FindIndex(afterVBA, text => text.InnerText.RemoveWhiteSpaces()== "PRES")+VBAPosition;
+        }
+
+        private static void UnderlineAdverbUnitUpToNextBreaker(int AdverbIndexPosition, int breakerPosition,
+            Text[] sentenceArray)
+        {
+            for (int i = AdverbIndexPosition; i < breakerPosition; i++)
+            {
+                OpenXmlTextHelper.UnderlineWordRun(
+                    OpenXmlTextHelper.GetParentRunProperties(sentenceArray, i));
+            }
+        }
+
+        // Move the below into Sentence class
 
         private static int GetClosestVbPastOrPresUnit(Text[] sentenceArray, int adverbIndexPosition)
         {
@@ -121,6 +194,12 @@
         {
             return !Array.Exists(
                 sentenceArray, element => element.InnerText.IsAdverb());
+        }
+
+        private static bool HasVBAToTheLeft(Text[] sentenceArray, int adverbIndexPosition)
+        {
+            var beforeAdverb = sentenceArray.Take(adverbIndexPosition).ToArray();
+            return !NoVBAFoundInSentence(beforeAdverb);
         }
 
         private static bool NoVBAFoundInSentence(Text[] sentenceArray)

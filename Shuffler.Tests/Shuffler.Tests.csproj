@@ -79,6 +79,9 @@
     <None Include="TestFiles\He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="TestFiles\He VBAhas PASTplanned NNit ADVpatientlyBK, ADVquitely BKand ADVmeticulously BKP..DOCX">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestFiles\He VBAis PRESdoing NNit ADVconsistently BKand ADVcarefully BKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -20,7 +20,6 @@ namespace Main
         public ClauserUnitStrategy(IUnitChecker clauserUnitChecker)
         {
             _clauserUnitChecker = clauserUnitChecker;
-
         }
 
         public Paragraph ShuffleClauserUnits(Paragraph xmlSentenceElement)

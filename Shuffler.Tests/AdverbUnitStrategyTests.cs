@@ -9,19 +9,6 @@
     [TestFixture]
     public class AdverbUnitStrategyTests
     {
-        [Test]
-        public void DontShuffle_AdverbUnits_ThatAreInFrontOfAdjectives()
-        {
-            const string unShuffledSentence =
-                "He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP.";
-            
-            const string expectedSentence = 
-                "He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP.";
-
-            AssertThatUnShuffledSentenceReturnExpectedSentence(
-                unShuffledSentence, expectedSentence);
-        }
-
         [TestCase("He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP.")]
         [TestCase("He VBAis PRESdoing NNit ADVconsistently BKand ADVcarefully BKP.")]
         public void Underlines_FromFirstToLastAdverbUnit_IncludingAllUnitsInBetween(
@@ -42,11 +29,14 @@
             int firstAdverbPosition = Array.FindIndex(
                 sentenceArray, text => text.InnerText == "ADV");
 
+            int lastAdverbPosition = Array.FindLastIndex(
+                sentenceArray, text => text.InnerText == "ADV") + 1;
+
             for (int index = 0; index < sentenceArray.Length; index++)
             {
                 Text t = sentenceArray[index];
 
-                if (index >= firstAdverbPosition)
+                if (index >= firstAdverbPosition && index <= lastAdverbPosition)
                     Assert.That(t.Parent.InnerXml.Contains("<w:u w:val=\"single\" />"));
             }
         }
@@ -60,7 +50,7 @@
         public void AdverbUnits_VBA_IsPresentToTheLeft_ADVerbUnit_IsMoved_Between_The_VBA_And_PAST_or_PRES(
             string unShuffledSentence, string expectedSentence)
         {
-            AssertThatUnShuffledSentenceReturnExpectedSentence(
+            AssertThatUnShuffledSentenceReturnsExpectedSentence(
                 unShuffledSentence, expectedSentence);
         }
 
@@ -73,11 +63,11 @@
         public void When_Only_One_ADVerb_And_No_VBA_unit_Move_ADV_To_Before_The_VB_or_PAST_or_PRES(
             string unShuffledSentence, string expectedSentence)
         {
-            AssertThatUnShuffledSentenceReturnExpectedSentence(
+            AssertThatUnShuffledSentenceReturnsExpectedSentence(
                 unShuffledSentence, expectedSentence);
         }
 
-        private static void AssertThatUnShuffledSentenceReturnExpectedSentence(string unShuffledSentence,
+        private static void AssertThatUnShuffledSentenceReturnsExpectedSentence(string unShuffledSentence,
             string expectedSentence)
         {
             Paragraph paragraph =
