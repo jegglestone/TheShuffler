@@ -7,7 +7,7 @@
     [TestFixture]
     public class TimerUnitStrategyTests
     {
-        [Test] // this will need changing once the 2nd test is implemented > Real GDP TM2last year TM1this time VBrose BKP.
+        [Test]  // this will need changing once the 2nd test is implemented > Real GDP TM2last year TM1this time VBrose BKP.
         public void TimerUnits_Are_ShuffledInDescendingOrderOfTheirSerialNumber()
         {
             const string unShuffledSentence =
