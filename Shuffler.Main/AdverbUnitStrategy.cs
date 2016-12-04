@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq;
-    using Constants;
     using Extensions;
     using Helper;
     using Interfaces;
@@ -19,7 +18,6 @@
             _sentence = new Sentence(xmlSentenceElement); // move to a constructor later!
 
             var sentenceArray = _sentence.SentenceArray;
-
            
             if (NoAdverbFoundInSentence(sentenceArray))
                 return xmlSentenceElement;
@@ -47,22 +45,16 @@
 
             if (IsMoreThanOneAdverb(AdverbCount))
             {
-                UnderlineAdverbUnitUpToNextBreaker(
-                    AdverbIndexPosition, breakerPosition, sentenceArray);
+                _sentence.UnderlineJoinedSentenceUnit(
+                    sentenceArray, AdverbIndexPosition, breakerPosition);
 
-                if (HasVBAToTheLeft(sentenceArray, AdverbIndexPosition))
-                    xmlSentenceElement =
-                        MoveAdverbUnitBetweenTheVBAAndPASTPRES(sentenceArray, AdverbIndexPosition);
-                else
-                {
-                    xmlSentenceElement =
-                        MoveAdverbUnitBeforeVBOrPASTorPRESUnit(sentenceArray, AdverbIndexPosition);
-                   // throw new NotImplementedException();
-                }
+                xmlSentenceElement = _sentence.HasVBAToTheLeft(sentenceArray, AdverbIndexPosition)
+                    ? MoveAdverbUnitBetweenTheVBAAndPASTPRES(sentenceArray, AdverbIndexPosition) 
+                    : MoveAdverbUnitBeforeVBOrPASTorPRESUnit(sentenceArray, AdverbIndexPosition);
             }
             else if (IsOneAdverb(AdverbCount))
             {
-                if (NoVBAFoundInSentence(sentenceArray))
+                if (_sentence.NoVBAFoundInSentence(sentenceArray))
                 {
                     xmlSentenceElement =
                         MoveSingleAdverbBeforeVBOrPASTorPRESUnit(sentenceArray, AdverbIndexPosition);
@@ -72,9 +64,9 @@
             return xmlSentenceElement;
         }
 
-        private static Paragraph MoveSingleAdverbBeforeVBOrPASTorPRESUnit(Text[] sentenceArray, int adverbIndexPosition)
+        private Paragraph MoveSingleAdverbBeforeVBOrPASTorPRESUnit(Text[] sentenceArray, int adverbIndexPosition)
         {
-            var VbPastPresPosition = GetClosestVbPastOrPresUnit(sentenceArray, adverbIndexPosition);
+            var VbPastPresPosition = _sentence.GetClosestVbPastOrPresUnit(sentenceArray, adverbIndexPosition);
             var adverbTag = sentenceArray[adverbIndexPosition];
             var adverb = sentenceArray[adverbIndexPosition + 1];
 
@@ -107,7 +99,7 @@
 
         private Paragraph MoveAdverbUnitBeforeVBOrPASTorPRESUnit(Text[] sentenceArray, int adverbIndexPosition)
         {
-            int vbPastPresPosition = GetClosestVbPastOrPresUnit(sentenceArray, adverbIndexPosition);
+            int vbPastPresPosition = _sentence.GetClosestVbPastOrPresUnit(sentenceArray, adverbIndexPosition);
 
             Text[] adverbUnit = GetAdverbUnit(sentenceArray, adverbIndexPosition);
 
@@ -115,7 +107,7 @@
 
             Text[] beforePastPresent = sentenceArray.Take(vbPastPresPosition-1).ToArray();
 
-            Text[] breaker = sentenceArray.Skip(sentenceArray.Length - 3).ToArray();
+            Text[] breaker = _sentence.GetSentenceBreaker(sentenceArray);
 
             Text[] shuffledSentence = beforePastPresent.Concat(adverbUnit).Concat(PastPresUnitAndTag).Concat(breaker).ToArray();
             
@@ -127,11 +119,11 @@
         {
             //get VBA pos
             Text[] beforeAdverb;
-            var VBAPosition = GetVBAPosition(out beforeAdverb, sentenceArray, adverbIndexPosition);
+            var VBAPosition = _sentence.GetVBAPosition(out beforeAdverb, sentenceArray, adverbIndexPosition);
             Text[] adverbUnit = GetAdverbUnit(sentenceArray, adverbIndexPosition);
 
             int pastPresPosition =
-                GetFirstPastPresPositionAfterVBA(beforeAdverb, VBAPosition);
+                _sentence.GetFirstPastPresPositionAfterVBA(beforeAdverb, VBAPosition);
 
             Text[] sentenceToVBA = sentenceArray.Take(VBAPosition + 2).ToArray();
             Text[] pastPresUnit = sentenceArray.Skip(pastPresPosition - 1).Take(pastPresPosition + 1).ToArray();
@@ -148,64 +140,10 @@
             return adverbUnit;
         }
 
-        private static int GetVBAPosition(out Text[] beforeAdverb, Text[] sentenceArray, int adverbIndexPosition)
-        {
-            beforeAdverb = sentenceArray.Take(adverbIndexPosition).ToArray();
-            int VBAPosition = Array.FindIndex(beforeAdverb, text => text.InnerText == TagMarks.VBA);
-            return VBAPosition;
-        }
-
-        private static int GetFirstPastPresPositionAfterVBA(Text[] beforeAdverb, int VBAPosition)
-        {
-            var afterVBA = beforeAdverb.Skip(VBAPosition).ToArray();
-
-            if (Array.Exists(afterVBA, text => text.InnerText.RemoveWhiteSpaces() == "PAST"))
-                return Array.FindIndex(afterVBA, text => text.InnerText.RemoveWhiteSpaces() == "PAST")+VBAPosition;
-            return Array.FindIndex(afterVBA, text => text.InnerText.RemoveWhiteSpaces()== "PRES")+VBAPosition;
-        }
-
-        private static void UnderlineAdverbUnitUpToNextBreaker(int AdverbIndexPosition, int breakerPosition,
-            Text[] sentenceArray)
-        {
-            for (int i = AdverbIndexPosition; i < breakerPosition; i++)
-            {
-                OpenXmlTextHelper.UnderlineWordRun(
-                    OpenXmlTextHelper.GetParentRunProperties(sentenceArray, i));
-            }
-        }
-
-        // Move the below into Sentence class
-
-        private static int GetClosestVbPastOrPresUnit(Text[] sentenceArray, int adverbIndexPosition)
-        {
-            Text[] beforeAdverb;
-            Text[] afterAdverb;
-
-            ArrayUtility.SplitArrayAtPosition(
-                sentenceArray, adverbIndexPosition, out beforeAdverb, out afterAdverb);
-
-            var VbPastPresPosition = Array.FindLastIndex(
-                beforeAdverb, i => i.IsVbPastPres());
-
-            return VbPastPresPosition;
-        }
-
         private static bool NoAdverbFoundInSentence(Text[] sentenceArray)
         {
             return !Array.Exists(
                 sentenceArray, element => element.InnerText.IsAdverb());
-        }
-
-        private static bool HasVBAToTheLeft(Text[] sentenceArray, int adverbIndexPosition)
-        {
-            var beforeAdverb = sentenceArray.Take(adverbIndexPosition).ToArray();
-            return !NoVBAFoundInSentence(beforeAdverb);
-        }
-
-        private static bool NoVBAFoundInSentence(Text[] sentenceArray)
-        {
-            return !Array.Exists(
-                sentenceArray, element => element.InnerText.IsVBA());
         }
 
         private static bool IsMoreThanOneAdverb(int ADVCount)

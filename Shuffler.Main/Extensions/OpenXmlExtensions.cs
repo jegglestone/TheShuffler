@@ -1,5 +1,6 @@
 ﻿namespace Main.Extensions
 {
+    using System;
     using Constants;
     using DocumentFormat.OpenXml;
 
@@ -22,8 +23,13 @@
 
         public static bool IsTimer(this string textElement)
         {
-            return textElement.RemoveWhiteSpaces()
-                .ToCharArray(0, 1).ToString() == TagMarks.TimerTag;
+            var value = textElement.RemoveWhiteSpaces();
+            if (value == string.Empty)
+                return false;
+            if (textElement.Length < 2)
+                return false;
+            var tagPrefix = value.Substring(0, 2);
+            return tagPrefix == TagMarks.TimerTag;
         }
 
         public static bool ReachedSentenceBreaker(this OpenXmlLeafElement openXmlLeafElement)

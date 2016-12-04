@@ -1,80 +1,90 @@
 ﻿namespace Main
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using DocumentFormat.OpenXml.Wordprocessing;
     using Extensions;
-    using Helper;
     using Model;
 
     public class TimerUnitStrategy
     {
         public Paragraph ShuffleTimerUnits(Paragraph xmlSentenceElement)
         {
-            Text[] sentenceArray = xmlSentenceElement.Descendants<Text>().ToArray();
+            var sentence = new Sentence(xmlSentenceElement);
+            Text[] sentenceArray = sentence.SentenceArray;
 
             if (NoTimerFoundInSentence(sentenceArray))
                 return xmlSentenceElement;
 
-            var totalNumberOfTimers = sentenceArray.Count(x => x.InnerText.IsTimer());
+            int timerUnitCount;
+            var timerUnits = GetTimerUnits(
+                sentenceArray, out timerUnitCount).ToArray<IMoveableUnit>();
 
-            var timerUnits = new TimerUnit[totalNumberOfTimers];
-            int timerUnitCount = 0;
+            sentence.UnderlineJoinedSentenceUnit(
+                sentenceArray, 
+                timerUnits[0].StartPosition, 
+                timerUnits[timerUnitCount - 1].EndPosition);
 
-            for (int index = 0; index < sentenceArray.Length; index++)
-            {
-                var text = sentenceArray[index];
-                if (text.IsTimer())
-                {
-                    timerUnits[timerUnitCount] = 
-                        new TimerUnit {StartPosition = index};
+            var reversedTimerUnits = 
+                sentence.GetMoveableUnitsInReverseOrder(
+                    timerUnitCount, timerUnits, sentenceArray);
 
-                    if (timerUnitCount <= 0) continue;
-
-                    timerUnits[timerUnitCount - 1].EndPosition = index - 1;
-
-                    timerUnitCount++;
-                }
-                else if (text.ReachedSentenceBreaker())
-                {
-                    break;
-                }
-            }
-
-            //Real GDP VBrose TM1this time TM2last year BKP.
-            //Real GDP VBrose TM2last year TM1this time BKP.
-            int firstTimerUnitPosition = timerUnits[0].StartPosition;
-            int lastTimerUnitPosition = timerUnits[totalNumberOfTimers].EndPosition;
-            UnderlineEntireTMUnit(sentenceArray, firstTimerUnitPosition, lastTimerUnitPosition);
-
-            /*
-             Split the Array at each timer.StartPosition
-             * */
-             // move to ReverseShuffle() method
-            TimerUnit prevTimerUnit;
-            foreach (var timerUnit in timerUnits)
-            {
-
-                Text[] beforeTimerUnit;
-                Text[] afterTimerUnit;
-                ArrayUtility.SplitArrayAtPosition(
-                    sentenceArray, timerUnit.StartPosition, out beforeTimerUnit, out afterTimerUnit);
-            }
 
             // move shuffled timer unit before the VB/VBA/PAST/DG they modify
 
-            return null;
+            // If a VB/ VBA / PAST is found, move the TM unit to before the VB/ VBA / PAST
+
+            // If a DG is found, move the TM unit to before the digit unit
+
+            RemoveAnyBlankSpaceFromEndOfUnit(reversedTimerUnits);
+
+            return new Paragraph(
+                OpenXmlHelper.BuildWordsIntoOpenXmlElement(
+                    reversedTimerUnits
+                    .Concat(
+                        sentence.GetSentenceBreaker(sentenceArray)).ToArray()));
         }
 
-        private void UnderlineEntireTMUnit(Text[] sentenceArray, int firstTimerUnitPosition, int lastTimerUnitPosition)
+        private static void RemoveAnyBlankSpaceFromEndOfUnit(Text[] reversedTimerUnits)
         {
-            for (int i = firstTimerUnitPosition; i < lastTimerUnitPosition; i ++)
-            {
-                OpenXmlTextHelper.UnderlineWordRun(
-                    OpenXmlTextHelper.GetParentRunProperties(sentenceArray, i));
-            }
+            var lastText = reversedTimerUnits[reversedTimerUnits.Length - 1].Text;
+            if (lastText == string.Empty)
+                reversedTimerUnits[reversedTimerUnits.Length - 1].Remove();
+
+            reversedTimerUnits[reversedTimerUnits.Length - 1].Text = lastText.TrimEnd(Convert.ToChar(" "));
         }
 
+        private static IEnumerable<TimerUnit> GetTimerUnits(IList<Text> sentenceArray, out int timerUnitCount)
+        {
+            TimerUnit[] timerUnits =
+                new TimerUnit[sentenceArray.Count(x => x.InnerText.IsTimer())];
+
+            timerUnitCount = 0;
+
+            for (int index = 0; index < sentenceArray.Count; index++)
+            {
+                if (sentenceArray[index].IsTimer())
+                {
+                    timerUnits[timerUnitCount] = new TimerUnit
+                    {
+                        StartPosition = index
+                    };
+
+                    timerUnitCount++;
+
+                    if (timerUnitCount <= 1) continue;
+
+                    timerUnits[timerUnitCount - 2].EndPosition = index;
+                }
+                else if (sentenceArray[index].InnerText.IsBreakerPunctuation())
+                {
+                    timerUnits[timerUnitCount - 1].EndPosition = index;
+                    break;
+                }
+            }
+            return timerUnits;
+        }
 
         private static bool NoTimerFoundInSentence(Text[] sentenceArray)
         {

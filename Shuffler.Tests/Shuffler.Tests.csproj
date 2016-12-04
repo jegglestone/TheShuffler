@@ -76,6 +76,9 @@
     <None Include="TestFiles\CSbefore he VBhad a chance VBto speak BKP, PRENThe meeting VBwas over BKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="TestFiles\DG100 TMper month BKP..docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestFiles\He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -83,6 +86,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestFiles\He VBAis PRESdoing NNit ADVconsistently BKand ADVcarefully BKP..docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestFiles\He VBAwas PRESleaving TM2last year TM1this time BKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestFiles\He VBtries ADVhard BKP..docx">
@@ -98,6 +104,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestFiles\Real GDP VBrose TM1this time TM2last year BKP..docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestFiles\TM1this time TM2last year BKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestFiles\TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP..docx">
