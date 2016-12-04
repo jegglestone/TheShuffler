@@ -20,6 +20,7 @@
             var timerUnitStrategy = new TimerUnitStrategy();
 
             //  act
+            
             var shufflerParagraph =
                 timerUnitStrategy.ShuffleTimerUnits(paragraph);
 
@@ -28,11 +29,15 @@
                 "TM2last year TM1this time BKP."));
         }
 
-        [Test]
-        public void When_DG_Found_Move_TimerUnit_InFront()
+        [TestCase(
+            "DG100 TMper month BKP.",
+            "TMper month DG100 BKP.")]
+        [TestCase(
+            "There were DG100 TMper month BKP.",
+            "There were TMper month DG100 BKP.")]
+        public void When_DG_Found_Move_TimerUnit_InFront(
+            string unShuffledSentence, string expected)
         {
-            const string unShuffledSentence = "DG100 TMper month BKP.";
-
             Paragraph paragraph =
                 DocumentContentHelper.GetParagraphFromWordDocument(unShuffledSentence);
 
@@ -44,38 +49,36 @@
 
             // assert
             Assert.That(shufflerParagraph.InnerText, Is.EqualTo(
-                "TMper month DG100 BKP."));
+                expected));
         }
 
-        #region next tests
-        /*       [TestCase(
-                   "Real GDP VBrose TM2last year TM1this time BKP.",
-                   "Real GDP TM2last year TM1this time VBrose BKP.")]
-               [TestCase(
-                   "He VBAwas PRESleaving TM2last year TM1this time BKP.",
-                   "He TM2last year TM1this time VBAwas PRESleaving BKP.")]
-               [TestCase(
-                   "He PASTleft TM2last year TM1this time BKP.",
-                   "He TM2last year TM1this time PASTleft BKP.")]
-               public void When_VB_VBA_PAST_Found_Move_TimerUnit_InFront(
-                   string unShuffledSentence, string output)
-               {
-                   Paragraph paragraph =
-                       DocumentContentHelper.GetParagraphFromWordDocument(unShuffledSentence);
+        [TestCase(
+            "Real GDP VBrose TM1this time TM2last year BKP.",
+            "Real GDP TM2last year TM1this time VBrose BKP.")]
+        [TestCase(
+            "Real GDP VBrose TM2last year TM1this time BKP.",
+            "Real GDP TM2last year TM1this time VBrose BKP.")]
+        [TestCase(
+            "He VBAwas PRESleaving TM2last year TM1this time BKP.",
+            "He TM2last year TM1this time VBAwas PRESleaving BKP.")]
+        [TestCase(
+            "He PASTleft TM2last year TM1this time BKP.",
+            "He TM2last year TM1this time PASTleft BKP.")]
+        public void When_VB_VBA_PAST_Found_Move_TimerUnit_InFront(
+            string unShuffledSentence, string output)
+        {
+            Paragraph paragraph =
+                DocumentContentHelper.GetParagraphFromWordDocument(unShuffledSentence);
 
-                   var timerUnitStrategy = new TimerUnitStrategy();
+            var timerUnitStrategy = new TimerUnitStrategy();
 
-                   //  act
-                   var shufflerParagraph =
-                       timerUnitStrategy.ShuffleTimerUnits(paragraph);
+            //  act
+            var shufflerParagraph =
+                timerUnitStrategy.ShuffleTimerUnits(paragraph);
 
-                   // assert
-                   Assert.That(shufflerParagraph.InnerText, Is.EqualTo(
-                       output));
-               }
-
-               */
-
-        #endregion
+            // assert
+            Assert.That(shufflerParagraph.InnerText, Is.EqualTo(
+                output));
+        }
     }
 }

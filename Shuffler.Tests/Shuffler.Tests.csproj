@@ -79,6 +79,9 @@
     <None Include="TestFiles\DG100 TMper month BKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="TestFiles\He PASTleft TM2last year TM1this time BKP..docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestFiles\He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -104,6 +107,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestFiles\Real GDP VBrose TM1this time TM2last year BKP..docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestFiles\Real GDP VBrose TM2last year TM1this time BKP..docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestFiles\There were DG100 TMper month BKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestFiles\TM1this time TM2last year BKP..docx">

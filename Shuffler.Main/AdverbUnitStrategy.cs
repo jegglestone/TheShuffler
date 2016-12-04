@@ -66,7 +66,9 @@
 
         private Paragraph MoveSingleAdverbBeforeVBOrPASTorPRESUnit(Text[] sentenceArray, int adverbIndexPosition)
         {
-            var VbPastPresPosition = _sentence.GetClosestVbPastOrPresUnit(sentenceArray, adverbIndexPosition);
+            var VbPastPresPosition = 
+                _sentence.GetPositionOfClosestSpecifiedUnit(
+                    sentenceArray, adverbIndexPosition, text => text.IsVbPastPres());
             var adverbTag = sentenceArray[adverbIndexPosition];
             var adverb = sentenceArray[adverbIndexPosition + 1];
 
@@ -97,19 +99,32 @@
             return new Paragraph(wordElements);
         }
 
-        private Paragraph MoveAdverbUnitBeforeVBOrPASTorPRESUnit(Text[] sentenceArray, int adverbIndexPosition)
+        private Paragraph MoveAdverbUnitBeforeVBOrPASTorPRESUnit(
+            Text[] sentenceArray, int adverbIndexPosition)
         {
-            int vbPastPresPosition = _sentence.GetClosestVbPastOrPresUnit(sentenceArray, adverbIndexPosition);
+            int vbPastPresPosition = _sentence.GetPositionOfClosestSpecifiedUnit(
+                sentenceArray, adverbIndexPosition, text => text.IsVbPastPres());
 
-            Text[] adverbUnit = GetAdverbUnit(sentenceArray, adverbIndexPosition);
+            Text[] adverbUnit = GetAdverbUnit(
+                sentenceArray, adverbIndexPosition);
 
-            Text[] PastPresUnitAndTag = sentenceArray.Skip(vbPastPresPosition - 1).Take(vbPastPresPosition + 1).ToArray();
+            Text[] PastPresUnitAndTag =
+                sentenceArray
+                .Skip(vbPastPresPosition - 1)
+                .Take(vbPastPresPosition + 1).ToArray();
 
-            Text[] beforePastPresent = sentenceArray.Take(vbPastPresPosition-1).ToArray();
+            Text[] beforePastPresent = 
+                sentenceArray
+                .Take(vbPastPresPosition-1).ToArray();
 
-            Text[] breaker = _sentence.GetSentenceBreaker(sentenceArray);
+            Text[] breaker =
+                _sentence.GetSentenceBreaker(sentenceArray);
 
-            Text[] shuffledSentence = beforePastPresent.Concat(adverbUnit).Concat(PastPresUnitAndTag).Concat(breaker).ToArray();
+            Text[] shuffledSentence = 
+                beforePastPresent
+                .Concat(adverbUnit)
+                .Concat(PastPresUnitAndTag)
+                .Concat(breaker).ToArray();
             
             return new Paragraph(
                 OpenXmlHelper.BuildWordsIntoOpenXmlElement(shuffledSentence));

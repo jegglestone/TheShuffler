@@ -1,6 +1,5 @@
 ﻿namespace Main.Extensions
 {
-    using System;
     using Constants;
     using DocumentFormat.OpenXml;
 
@@ -21,6 +20,26 @@
             return textElement.RemoveWhiteSpaces() == TagMarks.VBA;
         }
 
+        public static bool IsVB(this string textElement)
+        {
+            return textElement.RemoveWhiteSpaces() == TagMarks.VB;
+        }
+        
+        public static bool IsDG(this string textElement)
+        {
+            return textElement.RemoveWhiteSpaces() == TagMarks.DGTag;
+        }
+        
+        public static bool IsPast(this string textElement)
+        {
+            return textElement.RemoveWhiteSpaces() == TagMarks.PastParticiple;
+        }
+
+        public static bool IsDG(this OpenXmlLeafElement openXmlLeafElement)
+        {
+            return openXmlLeafElement.InnerText.IsDG();
+        }
+
         public static bool IsTimer(this string textElement)
         {
             var value = textElement.RemoveWhiteSpaces();
@@ -34,17 +53,25 @@
 
         public static bool ReachedSentenceBreaker(this OpenXmlLeafElement openXmlLeafElement)
         {
-            return openXmlLeafElement.InnerText.RemoveWhiteSpaces() == "VB"
-                   || openXmlLeafElement.InnerText.RemoveWhiteSpaces() == "PAST"
+            return openXmlLeafElement.InnerText.IsVB()
+                   || openXmlLeafElement.InnerText.IsPast()
                    || openXmlLeafElement.InnerText.RemoveWhiteSpaces() == "PRES"
-                   || openXmlLeafElement.InnerText.RemoveWhiteSpaces() == "BKP";
+                   || openXmlLeafElement.InnerText.IsBreakerPunctuation();
         }
 
         public static bool IsVbPastPres(this OpenXmlLeafElement openXmlLeafElement)
         {
-            return openXmlLeafElement.InnerText.RemoveWhiteSpaces() == "VB"
-                   || openXmlLeafElement.InnerText.RemoveWhiteSpaces() == "PAST"
+            return openXmlLeafElement.InnerText.IsVB()
+                   || openXmlLeafElement.InnerText.IsPast()
                    || openXmlLeafElement.InnerText.RemoveWhiteSpaces() == "PRES";
+        }
+
+        //IsVbVbaPast
+        public static bool IsVbVbaPast(this OpenXmlLeafElement openXmlLeafElement)
+        {
+            return openXmlLeafElement.InnerText.IsVB()
+                    || openXmlLeafElement.InnerText.IsVBA()
+                    || openXmlLeafElement.InnerText.IsPast();
         }
 
         public static bool IsTimer(this OpenXmlLeafElement openXmlLeafElement)

@@ -51,3 +51,6 @@ C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuff
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\He VBAwas PRESleaving TM2last year TM1this time BKP..docx
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\TM1this time TM2last year BKP..docx
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\DG100 TMper month BKP..docx
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\There were DG100 TMper month BKP..docx
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\Real GDP VBrose TM2last year TM1this time BKP..docx
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\He PASTleft TM2last year TM1this time BKP..docx

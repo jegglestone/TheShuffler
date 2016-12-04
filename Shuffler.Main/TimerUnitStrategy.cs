@@ -9,10 +9,12 @@
 
     public class TimerUnitStrategy
     {
+        private Sentence _sentence;
+
         public Paragraph ShuffleTimerUnits(Paragraph xmlSentenceElement)
         {
-            var sentence = new Sentence(xmlSentenceElement);
-            Text[] sentenceArray = sentence.SentenceArray;
+            _sentence = new Sentence(xmlSentenceElement);
+            Text[] sentenceArray = _sentence.SentenceArray;
 
             if (NoTimerFoundInSentence(sentenceArray))
                 return xmlSentenceElement;
@@ -21,38 +23,123 @@
             var timerUnits = GetTimerUnits(
                 sentenceArray, out timerUnitCount).ToArray<IMoveableUnit>();
 
-            sentence.UnderlineJoinedSentenceUnit(
+            _sentence.UnderlineJoinedSentenceUnit(
                 sentenceArray, 
                 timerUnits[0].StartPosition, 
                 timerUnits[timerUnitCount - 1].EndPosition);
 
-            var reversedTimerUnits = 
-                sentence.GetMoveableUnitsInReverseOrder(
+            Text[] timerUnitsInSerialNumberOrder =
+                _sentence.GetMoveableUnitsInSerialNumberDescendingOrder(
                     timerUnitCount, timerUnits, sentenceArray);
 
+            Text[] newSentence;
 
-            // move shuffled timer unit before the VB/VBA/PAST/DG they modify
+            if (_sentence.HasVbVbaPastToTheLeft(
+                sentenceArray, timerUnits[0].StartPosition))
+            {
+                newSentence = MoveTimerUnitBeforeVbVbaPast(
+                    sentenceArray, 
+                    timerUnitsInSerialNumberOrder, 
+                    timerUnits[0].StartPosition);
+            }
+            else if (_sentence.HasDGToTheLeft(
+                sentenceArray, timerUnits[0].StartPosition))
+            {
+                int dGIndexPosition = 
+                    Array.FindIndex(sentenceArray, i => i.IsDG());
+ 
+                newSentence = MoveTimerUnitBeforeDGUnit(
+                    sentenceArray, 
+                    dGIndexPosition,
+                    timerUnitsInSerialNumberOrder);
+            }
+            else
+            {
+                var beforeTimer = 
+                    sentenceArray.Take(timerUnits[0].StartPosition);
 
-            // If a VB/ VBA / PAST is found, move the TM unit to before the VB/ VBA / PAST
-
-            // If a DG is found, move the TM unit to before the digit unit
-
-            RemoveAnyBlankSpaceFromEndOfUnit(reversedTimerUnits);
+                newSentence = 
+                    beforeTimer.Concat(timerUnitsInSerialNumberOrder).ToArray();
+            }
+            
+            
+            newSentence = RemoveAnyBlankSpaceFromEndOfUnit
+                (newSentence
+                    .Concat(
+                        _sentence.GetSentenceBreaker(sentenceArray)).ToArray());
 
             return new Paragraph(
                 OpenXmlHelper.BuildWordsIntoOpenXmlElement(
-                    reversedTimerUnits
-                    .Concat(
-                        sentence.GetSentenceBreaker(sentenceArray)).ToArray()));
+                    newSentence));
         }
 
-        private static void RemoveAnyBlankSpaceFromEndOfUnit(Text[] reversedTimerUnits)
+        private Text[] MoveTimerUnitBeforeVbVbaPast( 
+            Text[] sentenceArray, 
+            Text[] reversedTimerUnits, 
+            int timerUnitStartPosition)
         {
-            var lastText = reversedTimerUnits[reversedTimerUnits.Length - 1].Text;
-            if (lastText == string.Empty)
-                reversedTimerUnits[reversedTimerUnits.Length - 1].Remove();
+            int vbVbaPastUnitPosition
+                = _sentence.GetPositionOfClosestSpecifiedUnit(
+                    sentenceArray, 
+                    timerUnitStartPosition, 
+                    t => t.IsVbVbaPast());
 
-            reversedTimerUnits[reversedTimerUnits.Length - 1].Text = lastText.TrimEnd(Convert.ToChar(" "));
+            Text[] vbVbaPastTagAndUnit =
+                sentenceArray
+                .Skip(vbVbaPastUnitPosition)
+                .Take(2).ToArray();
+
+            // if after vbVbaPastUnitPosition+2 is not  (" ", "BKP", ".")
+            // add the rest of the sentence up to BKP to vbVbaPastTagAndUnit
+
+            Text[] beforeVbVbaPastUnit =
+                sentenceArray
+                .Take(vbVbaPastUnitPosition).ToArray();
+
+            return
+                beforeVbVbaPastUnit
+                    .Concat(reversedTimerUnits)
+                    .Concat(vbVbaPastTagAndUnit).ToArray();
+        }
+
+        private Text[] MoveTimerUnitBeforeDGUnit(
+            Text[] sentenceArray, 
+            int dGIndexPosition, 
+            IEnumerable<Text> reversedTimerUnits)
+        {
+            Text[] dGUnitAndTag =
+                sentenceArray
+                .Skip(dGIndexPosition)
+                .Take(2).ToArray();
+
+            Text[] beforeDG =
+                sentenceArray
+                .Take(dGIndexPosition).ToArray();
+
+            return 
+                beforeDG
+                    .Concat(reversedTimerUnits)
+                    .Concat(dGUnitAndTag).ToArray();
+        }
+
+        private static Text[] RemoveAnyBlankSpaceFromEndOfUnit(Text[] newSentence)
+        {
+            int positionOfTextBeforeBreakerUnit = newSentence.Length - 3;
+            int positionOfTextTwoPlacesBeforeBreakerUnit = newSentence.Length - 4;
+
+            string textBeforeBreakerUnit = newSentence[positionOfTextBeforeBreakerUnit].Text;
+            string textTwoPlacesBeforeBreakerUnit = newSentence[positionOfTextTwoPlacesBeforeBreakerUnit].Text;
+
+            if (string.IsNullOrWhiteSpace(textBeforeBreakerUnit))
+            {
+                if (string.IsNullOrWhiteSpace(textTwoPlacesBeforeBreakerUnit) 
+                    || textTwoPlacesBeforeBreakerUnit.EndsWith(" "))
+                {
+                    newSentence = newSentence.RemoveAt(positionOfTextBeforeBreakerUnit);
+                }
+            }
+
+            return newSentence;
         }
 
         private static IEnumerable<TimerUnit> GetTimerUnits(IList<Text> sentenceArray, out int timerUnitCount)

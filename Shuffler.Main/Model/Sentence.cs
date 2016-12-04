@@ -33,7 +33,7 @@
             }
         }
 
-        public Text[] GetMoveableUnitsInReverseOrder(
+        public Text[] GetMoveableUnitsInSerialNumberDescendingOrder(
             int moveableUnitCount, IMoveableUnit[] moveableUnitsUnits, IList<Text> sentenceArray)
         {
             Text[][] arrayOfMoveableTextElements = new Text[moveableUnitCount][];
@@ -55,7 +55,8 @@
                 arrayOfMoveableTextElements[index] = timerArray;
             }
 
-            Array.Reverse(arrayOfMoveableTextElements);
+            if(arrayOfMoveableTextElements[0][0].Text.EndsWith("1"))
+                Array.Reverse(arrayOfMoveableTextElements);
 
             var reversedTimerUnit = new Text[totalArrayWords];
 
@@ -79,10 +80,37 @@
             return !NoVBAFoundInSentence(beforeCurrentUnit);
         }
 
+        public bool HasDGToTheLeft(Text[] sentenceArray, int currentUnitIndexPosition)
+        {
+            var beforeCurrentUnit = sentenceArray.Take(currentUnitIndexPosition).ToArray();
+            return !NoDGFoundInSentence(beforeCurrentUnit);
+        }
+
+        public bool HasVbVbaPastToTheLeft(Text[] sentenceArray, int currentUnitIndexPosition)
+        {
+            var beforeCurrentUnit = sentenceArray.Take(currentUnitIndexPosition).ToArray();
+            return !NoVbVbaPastFoundInSentence(beforeCurrentUnit);
+        }
+
         public bool NoVBAFoundInSentence(Text[] sentenceArray)
         {
             return !Array.Exists(
                 sentenceArray, element => element.InnerText.IsVBA());
+        }
+
+        public bool NoVbVbaPastFoundInSentence(Text[] sentenceArray)
+        {
+            return !Array.Exists(
+                sentenceArray, element => 
+                    element.InnerText.IsVBA()
+                    || element.InnerText.IsVB()
+                    || element.InnerText.IsPast());
+        }
+
+        public bool NoDGFoundInSentence(Text[] sentenceArray)
+        {
+            return !Array.Exists(
+                sentenceArray, element => element.InnerText.IsDG());
         }
 
         public int GetVBAPosition(out Text[] beforeCurrentUnit, Text[] sentenceArray, int currentUnitIndexPosition)
@@ -101,7 +129,7 @@
             return Array.FindIndex(afterVBA, text => text.InnerText.RemoveWhiteSpaces() == "PRES") + VBAPosition;
         }
 
-        public int GetClosestVbPastOrPresUnit(Text[] sentenceArray, int currentUnitIndexPosition)
+        public int GetPositionOfClosestSpecifiedUnit(Text[] sentenceArray, int currentUnitIndexPosition, Predicate<Text> p)
         {
             Text[] beforeCurrentUnit;
             Text[] afterCurrentUnit;
@@ -109,8 +137,9 @@
             ArrayUtility.SplitArrayAtPosition(
                 sentenceArray, currentUnitIndexPosition, out beforeCurrentUnit, out afterCurrentUnit);
 
+            // = i => i.IsVbPastPres();
             var VbPastPresPosition = Array.FindLastIndex(
-                beforeCurrentUnit, i => i.IsVbPastPres());
+                beforeCurrentUnit, p);
 
             return VbPastPresPosition;
         }
