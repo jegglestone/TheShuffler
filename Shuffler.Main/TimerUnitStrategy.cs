@@ -5,9 +5,10 @@
     using System.Linq;
     using DocumentFormat.OpenXml.Wordprocessing;
     using Extensions;
+    using Interfaces;
     using Model;
 
-    public class TimerUnitStrategy
+    public class TimerUnitStrategy : ITimerUnitStrategy
     {
         private Sentence _sentence;
 
@@ -87,10 +88,7 @@
             Text[] vbVbaPastTagAndUnit =
                 sentenceArray
                 .Skip(vbVbaPastUnitPosition)
-                .Take(2).ToArray();
-
-            // if after vbVbaPastUnitPosition+2 is not  (" ", "BKP", ".")
-            // add the rest of the sentence up to BKP to vbVbaPastTagAndUnit
+                .Take(timerUnitStartPosition-vbVbaPastUnitPosition).ToArray();
 
             Text[] beforeVbVbaPastUnit =
                 sentenceArray

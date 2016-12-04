@@ -20,7 +20,6 @@
             var timerUnitStrategy = new TimerUnitStrategy();
 
             //  act
-            
             var shufflerParagraph =
                 timerUnitStrategy.ShuffleTimerUnits(paragraph);
 
