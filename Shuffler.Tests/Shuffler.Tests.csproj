@@ -104,6 +104,9 @@
     <None Include="TestFiles\MultiLineFiles\Adverbs and Clausers.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="TestFiles\NNPayrollNNemployment PASTincreased DIG225,000 TM1per month ADVon average BKP..docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestFiles\PRENThe meeting VBwas over CSbefore he VBhad a chance VBto speak BKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

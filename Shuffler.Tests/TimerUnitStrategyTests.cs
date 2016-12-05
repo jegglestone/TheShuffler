@@ -63,6 +63,9 @@
         [TestCase(
             "He PASTleft TM2last year TM1this time BKP.",
             "He TM2last year TM1this time PASTleft BKP.")]
+        [TestCase(
+            "NNPayrollNNemployment PASTincreased DIG225,000 TM1per month ADVon average BKP.",
+            "NNPayrollNNemployment TM1per month ADVon average PASTincreased DIG225,000 BKP.")]
         public void When_VB_VBA_PAST_Found_Move_TimerUnit_InFront(
             string unShuffledSentence, string output)
         {

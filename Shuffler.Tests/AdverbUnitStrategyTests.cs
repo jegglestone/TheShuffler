@@ -60,6 +60,10 @@
         [TestCase(
             "He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP.",
             "He ADVloudlyBK, ADVemotionally BKand ADVnon-stop PASTshouted BKP.")]
+        [TestCase(
+            "NNPayrollNNemployment PASTincreased DIG225,000 TM1per month ADVon average BKP.",
+            "NNPayrollNNemployment ADVon average PASTincreased DIG225,000 TM1per month BKP.")]
+
         public void When_Only_One_ADVerb_And_No_VBA_unit_Move_ADV_To_Before_The_VB_or_PAST_or_PRES(
             string unShuffledSentence, string expectedSentence)
         {
