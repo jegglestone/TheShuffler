@@ -8,11 +8,11 @@
     using Interfaces;
     using Model;
 
-    public class TimerUnitStrategy : ITimerUnitStrategy
+    public class TimerUnitStrategy : IShuffleStrategy
     {
         private Sentence _sentence;
 
-        public Paragraph ShuffleTimerUnits(Paragraph xmlSentenceElement)
+        public Paragraph ShuffleSentenceUnit(Paragraph xmlSentenceElement)
         {
             _sentence = new Sentence(xmlSentenceElement);
             Text[] sentenceArray = _sentence.SentenceArray;
@@ -162,7 +162,8 @@
 
                     timerUnits[timerUnitCount - 2].EndPosition = index;
                 }
-                else if (sentenceArray[index].InnerText.IsBreakerPunctuation())
+                else if (sentenceArray[index].InnerText.IsBreakerPunctuation()
+                    && sentenceArray[index+1].Text == ".")
                 {
                     timerUnits[timerUnitCount - 1].EndPosition = index;
                     break;

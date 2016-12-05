@@ -11,14 +11,14 @@
 
     public class DocumentFormatter
     {
-        private readonly IClauserUnitStrategy _clauserUnitStrategy;
-        private readonly IAdverbStrategy _adverbUnitStrategy;
-        private readonly ITimerUnitStrategy _timerUnitStrategy;
+        private readonly IShuffleStrategy _clauserUnitStrategy;
+        private readonly IShuffleStrategy _adverbUnitStrategy;
+        private readonly IShuffleStrategy _timerUnitStrategy;
 
         public DocumentFormatter(
-            IClauserUnitStrategy clauserUnitStrategy
-            , AdverbUnitStrategy adverbUnitStrategy
-            , ITimerUnitStrategy timerUnitStrategy)
+            IShuffleStrategy clauserUnitStrategy
+            , IShuffleStrategy adverbUnitStrategy
+            , IShuffleStrategy timerUnitStrategy)
         {
             _clauserUnitStrategy = clauserUnitStrategy;
             _adverbUnitStrategy = adverbUnitStrategy;
@@ -116,9 +116,9 @@
         private Paragraph ShuffleParagraph(OpenXmlElement element)
         {
             var shuffledElement = element as Paragraph;
-            shuffledElement = _clauserUnitStrategy.ShuffleClauserUnits(shuffledElement);
-            shuffledElement = _adverbUnitStrategy.ShuffleAdverbUnits(shuffledElement);
-            shuffledElement = _timerUnitStrategy.ShuffleTimerUnits(shuffledElement);
+            shuffledElement = _clauserUnitStrategy.ShuffleSentenceUnit(shuffledElement);
+            shuffledElement = _adverbUnitStrategy.ShuffleSentenceUnit(shuffledElement);
+            shuffledElement = _timerUnitStrategy.ShuffleSentenceUnit(shuffledElement);
             return shuffledElement;
         }
 

@@ -9,11 +9,11 @@
     using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
     using Text = DocumentFormat.OpenXml.Wordprocessing.Text;
 
-    public class AdverbUnitStrategy : IAdverbStrategy
+    public class AdverbUnitStrategy : IShuffleStrategy
     {
         private Sentence _sentence;
 
-        public Paragraph ShuffleAdverbUnits(Paragraph xmlSentenceElement)
+        public Paragraph ShuffleSentenceUnit(Paragraph xmlSentenceElement)
         {
             _sentence = new Sentence(xmlSentenceElement); // move to a constructor later!
 

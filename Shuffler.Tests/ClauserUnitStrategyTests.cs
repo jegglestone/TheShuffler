@@ -21,13 +21,12 @@
 
             //  act
             var shufflerParagraph =
-                clauserUnitStrategy.ShuffleClauserUnits(paragraph);
+                clauserUnitStrategy.ShuffleSentenceUnit(paragraph);
 
             // assert
             Assert.That(shufflerParagraph.InnerText, Is.EqualTo(
                 "CShowever BKP, TMIn April and May BKP, PRENthe NNreport VBwasn’t ADJgood BKP."));
         }
-
 
         [Test]
         public void ShuffleClauserUnits_when_NoComma_MoveEntireClauserUnitToStartOfSentence_AndAddComma()
@@ -42,7 +41,7 @@
 
             // act
             var shufflerParagraph =
-                clauserUnitStrategy.ShuffleClauserUnits(paragraph);
+                clauserUnitStrategy.ShuffleSentenceUnit(paragraph);
 
             // assert
             Assert.That(shufflerParagraph.InnerText, Is.EqualTo(
@@ -62,7 +61,7 @@
 
             // act
             var shufflerParagraph =
-                clauserUnitStrategy.ShuffleClauserUnits(paragraph);
+                clauserUnitStrategy.ShuffleSentenceUnit(paragraph);
 
             // assert
             Assert.That(shufflerParagraph.InnerText, Is.EqualTo(
@@ -87,7 +86,7 @@
 
             // act
             var shufflerParagraph =
-                clauserUnitStrategy.ShuffleClauserUnits(paragraph);
+                clauserUnitStrategy.ShuffleSentenceUnit(paragraph);
 
             // assert
             Assert.That(shufflerParagraph.InnerText, Is.EqualTo(

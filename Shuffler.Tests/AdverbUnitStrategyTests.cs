@@ -21,7 +21,7 @@
 
             // act
             var shufflerParagraph =
-                clauserUnitStrategy.ShuffleAdverbUnits(paragraph);
+                clauserUnitStrategy.ShuffleSentenceUnit(paragraph);
 
             // assert
             Text[] sentenceArray = shufflerParagraph.Descendants<Text>().ToArray();
@@ -77,7 +77,7 @@
 
             // act
             var shufflerParagraph =
-                clauserUnitStrategy.ShuffleAdverbUnits(paragraph);
+                clauserUnitStrategy.ShuffleSentenceUnit(paragraph);
 
             // assert
             Assert.That(shufflerParagraph.InnerText, Is.EqualTo(

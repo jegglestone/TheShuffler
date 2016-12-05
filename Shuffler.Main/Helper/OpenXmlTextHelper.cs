@@ -1,5 +1,6 @@
 ﻿namespace Main.Helper
 {
+    using System;
     using System.Linq;
     using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Wordprocessing;
@@ -16,6 +17,9 @@
 
         public static void UnderlineWordRun(RunProperties runProperties)
         {
+            if (runProperties == null)
+                return;
+
             var underlineElement = runProperties.Underline;
             if (underlineElement != null)
                 underlineElement.Val = new EnumValue<UnderlineValues>(UnderlineValues.Single);
@@ -32,7 +36,14 @@
 
         public static RunProperties GetParentRunProperties(Text[] sentenceArray, int i)
         {
-            return sentenceArray[i].Parent.Descendants<RunProperties>().First();
+            try
+            {
+                return sentenceArray[i].Parent.Descendants<RunProperties>().First();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

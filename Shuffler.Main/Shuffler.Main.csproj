@@ -77,8 +77,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helper\ClauserUnitChecker.cs" />
     <Compile Include="Helper\OpenXmlTextHelper.cs" />
-    <Compile Include="Interfaces\IAdverbStrategy.cs" />
-    <Compile Include="Interfaces\IClauserUnitStrategy.cs" />
+    <Compile Include="Interfaces\IShuffleStrategy.cs" />
     <Compile Include="Model\MoveableUnit.cs" />
     <Compile Include="Model\Sentence.cs" />
     <Compile Include="Model\TimerUnit.cs" />

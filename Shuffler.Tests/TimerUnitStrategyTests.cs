@@ -21,7 +21,7 @@
 
             //  act
             var shufflerParagraph =
-                timerUnitStrategy.ShuffleTimerUnits(paragraph);
+                timerUnitStrategy.ShuffleSentenceUnit(paragraph);
 
             // assert
             Assert.That(shufflerParagraph.InnerText, Is.EqualTo(
@@ -44,7 +44,7 @@
 
             //  act
             var shufflerParagraph =
-                timerUnitStrategy.ShuffleTimerUnits(paragraph);
+                timerUnitStrategy.ShuffleSentenceUnit(paragraph);
 
             // assert
             Assert.That(shufflerParagraph.InnerText, Is.EqualTo(
@@ -73,7 +73,7 @@
 
             //  act
             var shufflerParagraph =
-                timerUnitStrategy.ShuffleTimerUnits(paragraph);
+                timerUnitStrategy.ShuffleSentenceUnit(paragraph);
 
             // assert
             Assert.That(shufflerParagraph.InnerText, Is.EqualTo(

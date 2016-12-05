@@ -59,7 +59,8 @@ namespace Main
         {
             var documentFormatter = new DocumentFormatter(
                 new ClauserUnitStrategy(new ClauserUnitChecker()),
-                new AdverbUnitStrategy());
+                new AdverbUnitStrategy(),
+                new TimerUnitStrategy());
 
             List<OpenXmlElement> shuffledXmlElements = new List<OpenXmlElement>();
 

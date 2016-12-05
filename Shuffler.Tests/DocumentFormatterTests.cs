@@ -30,8 +30,9 @@
             {
                 // arrange
                 var documentFormatter = new DocumentFormatter(
-                new ClauserUnitStrategy(new ClauserUnitChecker()),
-                new AdverbUnitStrategy());
+                    new ClauserUnitStrategy(new ClauserUnitChecker()),
+                    new AdverbUnitStrategy(),
+                    new TimerUnitStrategy());
 
                 var docPart = document.MainDocumentPart;
                 if (docPart?.Document == null)
@@ -49,7 +50,7 @@
                 if (!element.InnerText.Contains("CS")) continue;
                 Assert.That(element.Descendants<Text>().First().InnerText == "CS");
                 Assert.That(element.InnerText.Equals(
-                        "CSafter PRESincreasing MD2at PREN3a DG3 NNpercent NNpace MD3in PREN4the TM2fourth quarter MD4of TMY2011 BKP, ADJReal NNgross domestic productNN(GDP) PASTrose ADV1at an annual rate of PREN1about DG2 NNpercent MD1in PREN2the TM1first quarter BKP."));
+                        "CSafter PRESincreasing MD2at PREN3a TM2fourth quarter MD4of TMY2011 BKP, ADJReal NNgross domestic productNN(GDP) PASTrose ADV1at an annual rate of PREN1about DG2 NNpercent MD1in PREN2the TM1first quarter DG3 BKP."));
             }
         }
     }

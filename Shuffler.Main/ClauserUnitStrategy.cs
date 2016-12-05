@@ -10,9 +10,10 @@ namespace Main
     using DocumentFormat.OpenXml.Wordprocessing;
     using Extensions;
     using Helper;
+    using Interfaces;
     using Shuffler.Helper;
 
-    public class ClauserUnitStrategy : IClauserUnitStrategy
+    public class ClauserUnitStrategy : IShuffleStrategy
     {
         private readonly IUnitChecker _clauserUnitChecker;
         private const string _clauserTag = "CS";
@@ -22,7 +23,7 @@ namespace Main
             _clauserUnitChecker = clauserUnitChecker;
         }
 
-        public Paragraph ShuffleClauserUnits(Paragraph xmlSentenceElement)
+        public Paragraph ShuffleSentenceUnit(Paragraph xmlSentenceElement)
         {
             Text[] sentenceArray = xmlSentenceElement.Descendants<Text>().ToArray();
 

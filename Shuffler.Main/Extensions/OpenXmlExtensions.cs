@@ -1,5 +1,8 @@
 ﻿namespace Main.Extensions
 {
+    using System;
+    using System.Globalization;
+    using System.Linq;
     using Constants;
     using DocumentFormat.OpenXml;
 
@@ -43,11 +46,15 @@
         public static bool IsTimer(this string textElement)
         {
             var value = textElement.RemoveWhiteSpaces();
+
             if (value == string.Empty)
                 return false;
+
             if (textElement.Length < 2)
                 return false;
-            var tagPrefix = value.Substring(0, 2);
+
+            var tagPrefix = value.Substring(0, 2); 
+
             return tagPrefix == TagMarks.TimerTag;
         }
 
