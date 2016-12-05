@@ -17,21 +17,23 @@
             _sentence = new Sentence(xmlSentenceElement);
             Text[] sentenceArray = _sentence.SentenceArray;
 
-            if (NoTimerFoundInSentence(sentenceArray))
+            if (_sentence.UnitNotFoundInSentence(
+                sentenceArray, 
+                element => element.InnerText.IsTimer()))
                 return xmlSentenceElement;
 
-            int timerUnitCount;
+            _sentence.TimerUnitCount = 0;
             var timerUnits = GetTimerUnits(
-                sentenceArray, out timerUnitCount).ToArray<IMoveableUnit>();
+                sentenceArray).ToArray<IMoveableUnit>();
 
             _sentence.UnderlineJoinedSentenceUnit(
                 sentenceArray, 
                 timerUnits[0].StartPosition, 
-                timerUnits[timerUnitCount - 1].EndPosition);
+                timerUnits[_sentence.TimerUnitCount - 1].EndPosition);
 
             Text[] timerUnitsInSerialNumberOrder =
                 _sentence.GetMoveableUnitsInSerialNumberDescendingOrder(
-                    timerUnitCount, timerUnits, sentenceArray);
+                    _sentence.TimerUnitCount, timerUnits, sentenceArray);
 
             Text[] newSentence;
 
@@ -62,7 +64,6 @@
                 newSentence = 
                     beforeTimer.Concat(timerUnitsInSerialNumberOrder).ToArray();
             }
-            
             
             newSentence = RemoveAnyBlankSpaceFromEndOfUnit
                 (newSentence
@@ -140,42 +141,20 @@
             return newSentence;
         }
 
-        private static IEnumerable<TimerUnit> GetTimerUnits(IList<Text> sentenceArray, out int timerUnitCount)
+        private IEnumerable<MoveableUnit> GetTimerUnits(
+            IList<Text> sentenceArray)
         {
-            TimerUnit[] timerUnits =
-                new TimerUnit[sentenceArray.Count(x => x.InnerText.IsTimer())];
+            var timerUnits =
+                new MoveableUnit[sentenceArray.Count(
+                    x => x.InnerText.IsTimer())];
 
-            timerUnitCount = 0;
+            int timerUnitCount = 0;
 
-            for (int index = 0; index < sentenceArray.Count; index++)
-            {
-                if (sentenceArray[index].IsTimer())
-                {
-                    timerUnits[timerUnitCount] = new TimerUnit
-                    {
-                        StartPosition = index
-                    };
+            _sentence.PopulateMoveableUnits(
+                sentenceArray, ref timerUnitCount, timerUnits);
 
-                    timerUnitCount++;
-
-                    if (timerUnitCount <= 1) continue;
-
-                    timerUnits[timerUnitCount - 2].EndPosition = index;
-                }
-                else if (sentenceArray[index].InnerText.IsBreakerPunctuation()
-                    && sentenceArray[index+1].Text == ".")
-                {
-                    timerUnits[timerUnitCount - 1].EndPosition = index;
-                    break;
-                }
-            }
+            _sentence.TimerUnitCount = timerUnitCount;
             return timerUnits;
-        }
-
-        private static bool NoTimerFoundInSentence(Text[] sentenceArray)
-        {
-            return !Array.Exists(
-                sentenceArray, element => element.InnerText.IsTimer());
         }
     }
 }

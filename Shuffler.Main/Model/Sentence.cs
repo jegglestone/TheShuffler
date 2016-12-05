@@ -12,6 +12,10 @@
     {
         private readonly Paragraph _sentenceElement;
 
+        public int TimerUnitCount { get; set; }
+
+        public int ModifierCount { get; set; }
+
         public Text[] SentenceArray {
             get
             {
@@ -77,40 +81,32 @@
         public bool HasVBAToTheLeft(Text[] sentenceArray, int currentUnitIndexPosition)
         {
             var beforeCurrentUnit = sentenceArray.Take(currentUnitIndexPosition).ToArray();
-            return !NoVBAFoundInSentence(beforeCurrentUnit);
+            return !UnitNotFoundInSentence(
+                beforeCurrentUnit,
+                element => element.InnerText.IsVBA());
         }
 
         public bool HasDGToTheLeft(Text[] sentenceArray, int currentUnitIndexPosition)
         {
             var beforeCurrentUnit = sentenceArray.Take(currentUnitIndexPosition).ToArray();
-            return !NoDGFoundInSentence(beforeCurrentUnit);
+            return !UnitNotFoundInSentence(beforeCurrentUnit, t => t.InnerText.IsDG());
         }
 
         public bool HasVbVbaPastToTheLeft(Text[] sentenceArray, int currentUnitIndexPosition)
         {
             var beforeCurrentUnit = sentenceArray.Take(currentUnitIndexPosition).ToArray();
-            return !NoVbVbaPastFoundInSentence(beforeCurrentUnit);
-        }
-
-        public bool NoVBAFoundInSentence(Text[] sentenceArray)
-        {
-            return !Array.Exists(
-                sentenceArray, element => element.InnerText.IsVBA());
-        }
-
-        public bool NoVbVbaPastFoundInSentence(Text[] sentenceArray)
-        {
-            return !Array.Exists(
-                sentenceArray, element => 
+            return !UnitNotFoundInSentence(
+                beforeCurrentUnit,
+                element =>
                     element.InnerText.IsVBA()
                     || element.InnerText.IsVB()
                     || element.InnerText.IsPast());
         }
 
-        public bool NoDGFoundInSentence(Text[] sentenceArray)
+        public bool UnitNotFoundInSentence(Text[] sentenceArray, Predicate<Text> p)
         {
             return !Array.Exists(
-                sentenceArray, element => element.InnerText.IsDG());
+                sentenceArray, p);
         }
 
         public int GetVBAPosition(out Text[] beforeCurrentUnit, Text[] sentenceArray, int currentUnitIndexPosition)
@@ -147,6 +143,45 @@
         public Text[] GetSentenceBreaker(Text[] sentenceArray)
         {
             return sentenceArray.Skip(sentenceArray.Length - 3).ToArray();
+        }
+
+        public void PopulateMoveableUnits(
+            IList<Text> sentenceArray,
+            ref int moveableUnitCount,
+            IList<MoveableUnit> moveableUnits)
+        {
+            for (int index = 0; index < sentenceArray.Count; index++)
+            {
+                if (sentenceArray[index].IsTimer())
+                {
+                    AddMoveableUnit(ref moveableUnitCount, moveableUnits, index);
+                }
+                else if (IsFullStopEndOfSentence(sentenceArray, index))
+                {
+                    moveableUnits[moveableUnitCount - 1].EndPosition = index;
+                    break;
+                }
+            }
+        }
+
+        private static bool IsFullStopEndOfSentence(IList<Text> sentenceArray, int index)
+        {
+            return sentenceArray[index].InnerText.IsBreakerPunctuation()
+                   && sentenceArray[index + 1].Text == ".";
+        }
+
+        private static void AddMoveableUnit(ref int moveableUnitCount, IList<MoveableUnit> moveableUnits, int index)
+        {
+            moveableUnits[moveableUnitCount] = new MoveableUnit
+            {
+                StartPosition = index
+            };
+
+            moveableUnitCount++;
+
+            if (moveableUnitCount <= 1) return;
+
+            moveableUnits[moveableUnitCount - 2].EndPosition = index;
         }
     }
 }

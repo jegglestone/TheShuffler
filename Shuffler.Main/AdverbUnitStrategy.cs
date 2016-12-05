@@ -54,7 +54,9 @@
             }
             else if (IsOneAdverb(AdverbCount))
             {
-                if (_sentence.NoVBAFoundInSentence(sentenceArray))
+                if (_sentence.UnitNotFoundInSentence(
+                    sentenceArray,
+                    element => element.InnerText.IsVBA()))
                 {
                     xmlSentenceElement =
                         MoveSingleAdverbBeforeVBOrPASTorPRESUnit(sentenceArray, AdverbIndexPosition);

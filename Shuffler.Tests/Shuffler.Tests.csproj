@@ -67,6 +67,7 @@
     <Compile Include="ClauserUnitStrategyTests.cs" />
     <Compile Include="DocumentContentHelper.cs" />
     <Compile Include="DocumentFormatterTests.cs" />
+    <Compile Include="ModifierStrategyTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensionTests.cs" />
     <Compile Include="TimerUnitStrategyTests.cs" />
@@ -113,6 +114,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestFiles\There were DG100 TMper month BKP..docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestFiles\They VBbombed PRENthe NNhouse MD1on PRENthe NNcorner MD2of NNRiver NNStreet MD3in PRENthe NNcity NNcentre BKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestFiles\TM1this time TM2last year BKP..docx">

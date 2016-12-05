@@ -1,8 +1,8 @@
 ﻿namespace Main.Model
 {
-    public interface IMoveableUnit
+    public class MoveableUnit : IMoveableUnit
     {
-        int StartPosition { get; set; }
-        int EndPosition { get; set; }
+        public int StartPosition { get; set; }
+        public int EndPosition { get; set; }
     }
 }

@@ -10,12 +10,12 @@
     {
         public static bool IsAdverb(this OpenXmlLeafElement openXmlLeafElement)
         {
-            return openXmlLeafElement.InnerText.RemoveWhiteSpaces() == TagMarks.AdverbTag;
+            return openXmlLeafElement.InnerText.RemoveWhiteSpaces() == TagMarks.Adverb;
         }
 
         public static bool IsAdverb(this string textElement)
         {
-            return textElement.RemoveWhiteSpaces() == TagMarks.AdverbTag;
+            return textElement.RemoveWhiteSpaces() == TagMarks.Adverb;
         }
 
         public static bool IsVBA(this string textElement)
@@ -30,7 +30,7 @@
         
         public static bool IsDG(this string textElement)
         {
-            return textElement.RemoveWhiteSpaces() == TagMarks.DGTag;
+            return textElement.RemoveWhiteSpaces() == TagMarks.DG;
         }
         
         public static bool IsPast(this string textElement)
@@ -43,7 +43,20 @@
             return openXmlLeafElement.InnerText.IsDG();
         }
 
+        public static bool IsModifier(this string textElement)
+        {
+            return EvaluateNumberedUnit(
+                textElement, TagMarks.Modifier);
+        }
+
         public static bool IsTimer(this string textElement)
+        {
+            return EvaluateNumberedUnit(
+                textElement, TagMarks.Timer);
+        }
+
+        private static bool EvaluateNumberedUnit(
+            string textElement, string tagMark)
         {
             var value = textElement.RemoveWhiteSpaces();
 
@@ -52,10 +65,11 @@
 
             if (textElement.Length < 2)
                 return false;
+            
+            var tagPrefix = value.Substring(0, 2);
 
-            var tagPrefix = value.Substring(0, 2); 
-
-            return tagPrefix == TagMarks.TimerTag;
+            return tagPrefix == tagMark;
+  
         }
 
         public static bool ReachedSentenceBreaker(this OpenXmlLeafElement openXmlLeafElement)
