@@ -1,8 +1,5 @@
 ﻿namespace Main.Extensions
 {
-    using System;
-    using System.Globalization;
-    using System.Linq;
     using Constants;
     using DocumentFormat.OpenXml;
 
@@ -38,6 +35,11 @@
             return textElement.RemoveWhiteSpaces() == TagMarks.PastParticiple;
         }
 
+        public static bool IsPren(this string textElement)
+        {
+            return textElement.RemoveWhiteSpaces() == TagMarks.Pren;
+        }
+
         public static bool IsDG(this OpenXmlLeafElement openXmlLeafElement)
         {
             return openXmlLeafElement.InnerText.IsDG();
@@ -69,7 +71,6 @@
             var tagPrefix = value.Substring(0, 2);
 
             return tagPrefix == tagMark;
-  
         }
 
         public static bool ReachedSentenceBreaker(this OpenXmlLeafElement openXmlLeafElement)

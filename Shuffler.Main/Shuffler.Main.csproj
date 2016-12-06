@@ -82,7 +82,7 @@
     <Compile Include="Model\Sentence.cs" />
     <Compile Include="Model\MoveableUnit.cs" />
     <Compile Include="ModifierStrategy.cs" />
-    <Compile Include="OpenXmlHelper.cs" />
+    <Compile Include="Helper\OpenXmlHelper.cs" />
     <Compile Include="Services\DocumentFormatter.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

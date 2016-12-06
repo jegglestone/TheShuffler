@@ -1,10 +1,10 @@
 ﻿namespace Main
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using DocumentFormat.OpenXml.Wordprocessing;
     using Extensions;
+    using Helper;
     using Interfaces;
     using Model;
 
@@ -22,15 +22,71 @@
                 element => element.InnerText.IsModifier()))
                 return xmlSentenceElement;
 
-            _sentence.TimerUnitCount = 0;
+            _sentence.ModifierCount = 0;
             var modifierUnits = GetModifierUnits(
                 sentenceArray).ToArray<IMoveableUnit>();
 
-            throw new NotImplementedException();
+            _sentence.UnderlineJoinedSentenceUnit(
+                sentenceArray,
+                modifierUnits[0].StartPosition,
+                modifierUnits[_sentence.ModifierCount - 1].EndPosition);
 
-            
-            // reverse them
-            
+            Text[] modifierUnitsInSerialNumberOrder =
+                _sentence.GetMoveableUnitsInSerialNumberDescendingOrder(
+                    _sentence.ModifierCount, modifierUnits, sentenceArray);
+
+            Text[] newSentence;
+
+            if (_sentence.HasPrenToTheLeft(
+                sentenceArray, modifierUnits[0].StartPosition))
+                newSentence = MoveModifierUnitBeforePren(
+                    sentenceArray,
+                    modifierUnitsInSerialNumberOrder,
+                    modifierUnits[0].StartPosition);
+            else
+            {
+                var beforeModifier =
+                    sentenceArray.Take(modifierUnits[0].StartPosition);
+
+                newSentence =
+                    beforeModifier
+                    .Concat(modifierUnitsInSerialNumberOrder).ToArray();
+            }
+
+            newSentence = _sentence.RemoveAnyBlankSpaceFromEndOfUnit
+                (newSentence
+                    .Concat(
+                        _sentence.GetSentenceBreaker(sentenceArray)).ToArray());
+
+            return new Paragraph(
+                OpenXmlHelper.BuildWordsIntoOpenXmlElement(
+                    newSentence));
+        }
+
+        private Text[] MoveModifierUnitBeforePren(
+            Text[] sentenceArray, 
+            Text[] modifierUnitsInSerialNumberOrder, 
+            int modiferUnitStartPosition)
+        {
+            int prenUnitPosition
+                = _sentence.GetPositionOfClosestSpecifiedUnit(
+                    sentenceArray,
+                    modiferUnitStartPosition,
+                    t => t.Text.IsPren());
+
+            var modifierTagAndUnit =
+                sentenceArray
+                .Skip(prenUnitPosition)
+                .Take(modiferUnitStartPosition-prenUnitPosition).ToArray();
+
+            var beforePrenUnitPosition =
+                sentenceArray
+                    .Take(prenUnitPosition).ToArray();
+
+            return
+                beforePrenUnitPosition
+                    .Concat(modifierUnitsInSerialNumberOrder)
+                    .Concat(modifierTagAndUnit).ToArray();
         }
 
         private IEnumerable<MoveableUnit> GetModifierUnits(
@@ -42,7 +98,7 @@
 
             int modifierUnitCount = 0;
 
-            _sentence.PopulateMoveableUnits(
+            _sentence.PopulateMoveableModifierUnits(
                 sentenceArray, ref modifierUnitCount, modifierUnits);
 
             _sentence.ModifierCount = modifierUnitCount;

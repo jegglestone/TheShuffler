@@ -56,26 +56,41 @@
                     iterationCount++;
                 }
 
+                // if first part is space - remove it
+                // if last part is not a space and the last word doesnt end in space
+                // add a space element  {"dsds", "ss", "sfsf", " " } 
+                // unless it's the first one (which will be reversed and have " BKP." manually appended
+
                 arrayOfMoveableTextElements[index] = timerArray;
             }
 
-            if(arrayOfMoveableTextElements[0][0].Text.EndsWith("1"))
+            if (arrayOfMoveableTextElements[0][0].Text.EndsWith("1"))
                 Array.Reverse(arrayOfMoveableTextElements);
 
-            var reversedTimerUnit = new Text[totalArrayWords];
+            Text[] reversedTimerUnit =
+                MergeJaggedUnitArrayIntoSingleArray(
+                    arrayOfMoveableTextElements, totalArrayWords);
+
+            return reversedTimerUnit;
+        }
+
+        private static Text[] MergeJaggedUnitArrayIntoSingleArray(Text[][] arrayOfMoveableTextElements, int totalArrayWords)
+        {
+            var reversedUnitOfUnits = new Text[totalArrayWords];
 
             int iteratorCount = -1;
 
-            foreach (var timerTextArray in arrayOfMoveableTextElements)
+            foreach (var unitTextArray in arrayOfMoveableTextElements)
             {
-                foreach (Text t in timerTextArray)
+                foreach (Text t in unitTextArray)
                 {
                     iteratorCount++;
-                    var timerText = t;
-                    reversedTimerUnit[iteratorCount] = timerText;
+                    var unitText = t;
+                    reversedUnitOfUnits[iteratorCount] = unitText;
                 }
             }
-            return reversedTimerUnit;
+
+            return reversedUnitOfUnits;
         }
 
         public bool HasVBAToTheLeft(Text[] sentenceArray, int currentUnitIndexPosition)
@@ -101,6 +116,12 @@
                     element.InnerText.IsVBA()
                     || element.InnerText.IsVB()
                     || element.InnerText.IsPast());
+        }
+
+        public bool HasPrenToTheLeft(Text[] sentenceArray, int currentUnitIndexPosition)
+        {
+            var beforeCurrentUnit = sentenceArray.Take(currentUnitIndexPosition).ToArray();
+            return !UnitNotFoundInSentence(beforeCurrentUnit, t => t.InnerText.IsPren());
         }
 
         public bool UnitNotFoundInSentence(Text[] sentenceArray, Predicate<Text> p)
@@ -133,7 +154,6 @@
             ArrayUtility.SplitArrayAtPosition(
                 sentenceArray, currentUnitIndexPosition, out beforeCurrentUnit, out afterCurrentUnit);
 
-            // = i => i.IsVbPastPres();
             var VbPastPresPosition = Array.FindLastIndex(
                 beforeCurrentUnit, p);
 
@@ -145,7 +165,7 @@
             return sentenceArray.Skip(sentenceArray.Length - 3).ToArray();
         }
 
-        public void PopulateMoveableUnits(
+        public void PopulateMoveableTimerUnits(
             IList<Text> sentenceArray,
             ref int moveableUnitCount,
             IList<MoveableUnit> moveableUnits)
@@ -159,6 +179,27 @@
                 else if (IsFullStopEndOfSentence(sentenceArray, index))
                 {
                     moveableUnits[moveableUnitCount - 1].EndPosition = index;
+                    break;
+                }
+            }
+        }
+
+        public void PopulateMoveableModifierUnits(
+            IList<Text> sentenceArray,
+            ref int moveableUnitCount,
+            IList<MoveableUnit> moveableUnits)
+        {
+            for (int index = 0; index < sentenceArray.Count; index++)
+            {
+                if (sentenceArray[index].Text.IsModifier())
+                {
+                    AddMoveableUnit(ref moveableUnitCount, moveableUnits, index);
+                }
+                else if (IsFullStopEndOfSentence(sentenceArray, index))
+                {
+                    moveableUnits[moveableUnitCount - 1].EndPosition = index;
+                    if (sentenceArray[index].Text.IsBreakerPunctuation())
+                        moveableUnits[moveableUnitCount - 1].EndPosition--;
                     break;
                 }
             }
@@ -182,6 +223,26 @@
             if (moveableUnitCount <= 1) return;
 
             moveableUnits[moveableUnitCount - 2].EndPosition = index;
+        }
+
+        public Text[] RemoveAnyBlankSpaceFromEndOfUnit(Text[] sentence)
+        {
+            int positionOfTextBeforeBreakerUnit = sentence.Length - 3;
+            int positionOfTextTwoPlacesBeforeBreakerUnit = sentence.Length - 4;
+
+            string textBeforeBreakerUnit = sentence[positionOfTextBeforeBreakerUnit].Text;
+            string textTwoPlacesBeforeBreakerUnit = sentence[positionOfTextTwoPlacesBeforeBreakerUnit].Text;
+
+            if (string.IsNullOrWhiteSpace(textBeforeBreakerUnit))
+            {
+                if (string.IsNullOrWhiteSpace(textTwoPlacesBeforeBreakerUnit)
+                    || textTwoPlacesBeforeBreakerUnit.EndsWith(" "))
+                {
+                    sentence = sentence.RemoveAt(positionOfTextBeforeBreakerUnit);
+                }
+            }
+
+            return sentence;
         }
     }
 }

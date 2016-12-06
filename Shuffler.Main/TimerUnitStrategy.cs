@@ -5,6 +5,7 @@
     using System.Linq;
     using DocumentFormat.OpenXml.Wordprocessing;
     using Extensions;
+    using Helper;
     using Interfaces;
     using Model;
 
@@ -65,7 +66,7 @@
                     beforeTimer.Concat(timerUnitsInSerialNumberOrder).ToArray();
             }
             
-            newSentence = RemoveAnyBlankSpaceFromEndOfUnit
+            newSentence = _sentence.RemoveAnyBlankSpaceFromEndOfUnit
                 (newSentence
                     .Concat(
                         _sentence.GetSentenceBreaker(sentenceArray)).ToArray());
@@ -121,26 +122,6 @@
                     .Concat(dGUnitAndTag).ToArray();
         }
 
-        private static Text[] RemoveAnyBlankSpaceFromEndOfUnit(Text[] newSentence)
-        {
-            int positionOfTextBeforeBreakerUnit = newSentence.Length - 3;
-            int positionOfTextTwoPlacesBeforeBreakerUnit = newSentence.Length - 4;
-
-            string textBeforeBreakerUnit = newSentence[positionOfTextBeforeBreakerUnit].Text;
-            string textTwoPlacesBeforeBreakerUnit = newSentence[positionOfTextTwoPlacesBeforeBreakerUnit].Text;
-
-            if (string.IsNullOrWhiteSpace(textBeforeBreakerUnit))
-            {
-                if (string.IsNullOrWhiteSpace(textTwoPlacesBeforeBreakerUnit) 
-                    || textTwoPlacesBeforeBreakerUnit.EndsWith(" "))
-                {
-                    newSentence = newSentence.RemoveAt(positionOfTextBeforeBreakerUnit);
-                }
-            }
-
-            return newSentence;
-        }
-
         private IEnumerable<MoveableUnit> GetTimerUnits(
             IList<Text> sentenceArray)
         {
@@ -150,7 +131,7 @@
 
             int timerUnitCount = 0;
 
-            _sentence.PopulateMoveableUnits(
+            _sentence.PopulateMoveableTimerUnits(
                 sentenceArray, ref timerUnitCount, timerUnits);
 
             _sentence.TimerUnitCount = timerUnitCount;
