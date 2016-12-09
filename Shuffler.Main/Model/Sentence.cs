@@ -16,6 +16,8 @@
 
         public int ModifierCount { get; set; }
 
+        public int PrenUnitCount { get; set; }
+
         public Text[] SentenceArray
         {
             get
@@ -143,7 +145,11 @@
 
         public Text[] GetSentenceBreaker(Text[] sentenceArray)
         {
-            return sentenceArray.Skip(sentenceArray.Length - 3).ToArray();
+            if (sentenceArray[sentenceArray.Length - 3].Text == " ")
+            {
+                return sentenceArray.Skip(sentenceArray.Length - 3).ToArray();
+            }
+            return sentenceArray.Skip(sentenceArray.Length - 2).ToArray();
         }
 
         public void PopulateMoveableTimerUnits(
@@ -173,6 +179,25 @@
             for (int index = 0; index < sentenceArray.Count; index++)
             {
                 if (sentenceArray[index].Text.IsModifier())
+                {
+                    AddMoveableUnit(ref moveableUnitCount, moveableUnits, index);
+                }
+                else if (IsFullStopEndOfSentence(sentenceArray, index))
+                {
+                    moveableUnits[moveableUnitCount - 1].EndPosition = index;
+                    break;
+                }
+            }
+        }
+
+        public void PopulateMoveablePrenUnits(
+            IList<Text> sentenceArray,
+            ref int moveableUnitCount,
+            IList<MoveableUnit> moveableUnits)
+        {
+            for (int index = 0; index < sentenceArray.Count; index++)
+            {
+                if (sentenceArray[index].Text.IsPren())
                 {
                     AddMoveableUnit(ref moveableUnitCount, moveableUnits, index);
                 }

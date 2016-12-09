@@ -69,6 +69,7 @@
     <Compile Include="DocumentFormatterTests.cs" />
     <Compile Include="Fakes\FakeModifierFormatter.cs" />
     <Compile Include="ModifierStrategyTests.cs" />
+    <Compile Include="PrenStrategyTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensionTests.cs" />
     <Compile Include="TimerUnitStrategyTests.cs" />
@@ -114,6 +115,9 @@
     <None Include="TestFiles\NNPayrollNNemployment PASTincreased DIG225,000 TM1per month ADVon average BKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="TestFiles\PREN1a NNbook PREN2about NNwarBKP..docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestFiles\PRENThe meeting VBwas over CSbefore he VBhad a chance VBto speak BKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -130,6 +134,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestFiles\They VBbombed PRENthe NNhouse MD1on PRENthe NNcorner MD2of NNRiver NNStreet MD3in PRENthe NNcity NNcentre BKP..docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestFiles\This VB1is PREN1a NNbook PREN2about NNwarBKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestFiles\TM1this time TM2last year BKP..docx">

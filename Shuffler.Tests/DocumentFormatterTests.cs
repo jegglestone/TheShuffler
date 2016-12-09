@@ -33,7 +33,9 @@
                 var documentFormatter = new DocumentFormatter(
                     new ClauserUnitStrategy(new ClauserUnitChecker()),
                     new AdverbUnitStrategy(),
-                    new TimerUnitStrategy());
+                    new TimerUnitStrategy(),
+                    new ModifierStrategy(new ModifierFormatter()),
+                    new PrenStrategy());
 
                 var docPart = document.MainDocumentPart;
                 if (docPart?.Document == null)

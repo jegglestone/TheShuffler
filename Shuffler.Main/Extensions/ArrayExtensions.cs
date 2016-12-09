@@ -54,5 +54,18 @@ namespace Main.Extensions
 
             return sentence;
         }
+
+        public static Text[] RemoveTags(
+            this Text[] sentenceUnit, string tag) // refactor enum etc
+        {
+            // validation on type NN etc
+            for (int index = 0; index < sentenceUnit.Length; index++)
+            {
+                var textUnit = sentenceUnit[index];
+                if (textUnit.Text == tag) // predicate might be better
+                    sentenceUnit = sentenceUnit.RemoveAt(index);
+            }
+            return sentenceUnit;
+        }
     }
 }

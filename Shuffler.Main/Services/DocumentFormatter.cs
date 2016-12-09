@@ -14,15 +14,22 @@
         private readonly IShuffleStrategy _clauserUnitStrategy;
         private readonly IShuffleStrategy _adverbUnitStrategy;
         private readonly IShuffleStrategy _timerUnitStrategy;
+        private readonly IShuffleStrategy _modifierStrategy;
+        private readonly IShuffleStrategy _prenStrategy;
+
 
         public DocumentFormatter(
             IShuffleStrategy clauserUnitStrategy
             , IShuffleStrategy adverbUnitStrategy
-            , IShuffleStrategy timerUnitStrategy)
+            , IShuffleStrategy timerUnitStrategy
+            , IShuffleStrategy modifierStrategy
+            , IShuffleStrategy prenStrategy)
         {
             _clauserUnitStrategy = clauserUnitStrategy;
             _adverbUnitStrategy = adverbUnitStrategy;
             _timerUnitStrategy = timerUnitStrategy;
+            _modifierStrategy = modifierStrategy;
+            _prenStrategy = prenStrategy;
         }
 
         public List<OpenXmlElement> ProcessDocument(MainDocumentPart docPart)
@@ -119,6 +126,8 @@
             shuffledElement = _clauserUnitStrategy.ShuffleSentenceUnit(shuffledElement);
             shuffledElement = _adverbUnitStrategy.ShuffleSentenceUnit(shuffledElement);
             shuffledElement = _timerUnitStrategy.ShuffleSentenceUnit(shuffledElement);
+            shuffledElement = _modifierStrategy.ShuffleSentenceUnit(shuffledElement);
+            shuffledElement = _prenStrategy.ShuffleSentenceUnit(shuffledElement);
             return shuffledElement;
         }
 

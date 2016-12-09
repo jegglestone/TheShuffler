@@ -37,7 +37,7 @@
 
         public static bool IsPren(this string textElement)
         {
-            return textElement.RemoveWhiteSpaces() == TagMarks.Pren;
+            return textElement.RemoveWhiteSpaces().StartsWith(TagMarks.Pren);
         }
 
         public static bool IsDG(this OpenXmlLeafElement openXmlLeafElement)
