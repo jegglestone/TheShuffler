@@ -13,21 +13,9 @@ namespace Shuffler.Tests
         [Test]
         public void WhenNoModifier_Returns_Input()
         {
-            const string unShuffledSentence =
-                "TM1this time TM2last year BKP.";
-
-            Paragraph paragraph =
-                DocumentContentHelper.GetParagraphFromWordDocument(unShuffledSentence);
-
-            var modifierUnitStrategy = new ModifierStrategy();
-
-            //  act
-            var shufflerParagraph =
-                modifierUnitStrategy.ShuffleSentenceUnit(paragraph);
-
-            // assert
-            Assert.That(shufflerParagraph.InnerText, Is.EqualTo(
-                "TM1this time TM2last year BKP."));
+            AssertReturnIsEqualToExpected(
+                "TM1this time TM2last year BKP.",
+                "TM1this time TM2last year BKP.");
         }
 
         [TestCase(
@@ -36,38 +24,18 @@ namespace Shuffler.Tests
         public void ShufflesModifiersInDescendingOrderOfSerialNumber(
             string input, string expected)
         {
-            Paragraph paragraph =
-                DocumentContentHelper.GetParagraphFromWordDocument(input);
-
-            var modifierUnitStrategy = new ModifierStrategy();
-
-            //  act
-            var shuffledParagraph =
-                modifierUnitStrategy.ShuffleSentenceUnit(paragraph);
-
-            Assert.That(shuffledParagraph.InnerText,
-                Is.EqualTo(
-                    expected));
+            AssertReturnIsEqualToExpected(
+                input, expected);
         }
 
         [TestCase(
             "MD3in PRENthe NNcity NNcentre MD2of NNRiver NNStreet MD1on PRENthe NNcorner BKP.",
             "MD3in PRENthe NNcity NNcentre MD2of NNRiver NNStreet MD1on PRENthe NNcorner BKP.")]
-        public void ShufflesWhenModifiersInDescendingOrderOfSerialNumberDoesntReShuffle(
+        public void WhenModifiersInDescendingOrderOfSerialNumberDoesntReShuffle(
             string input, string expected)
         {
-            Paragraph paragraph =
-                DocumentContentHelper.GetParagraphFromWordDocument(input);
-
-            var modifierUnitStrategy = new ModifierStrategy();
-
-            //  act
-            var shuffledParagraph =
-                modifierUnitStrategy.ShuffleSentenceUnit(paragraph);
-
-            Assert.That(shuffledParagraph.InnerText,
-                Is.EqualTo(
-                    expected));
+            AssertReturnIsEqualToExpected(
+                input,expected);
         }
 
         [TestCase("They VBbombed PRENthe NNhouse MD1on PRENthe NNcorner MD2of NNRiver NNStreet MD3in PRENthe NNcity NNcentre BKP.")]
@@ -108,6 +76,21 @@ namespace Shuffler.Tests
            "They VBbombed MD3in PRENthe NNcity NNcentre MD2of NNRiver NNStreet MD1on PRENthe NNcorner PRENthe NNhouse BKP.")]  
         public void ShufflesMovesModifiersUnitsBeforePREN(
             string input, string expected)
+        {
+            AssertReturnIsEqualToExpected(
+                input, expected);
+        }
+
+        [TestCase(
+            "They VBbombed MD3in PRENthe NNcity NNcentre MD2of NNRiver NNStreet MD1on PRENthe NNcorner PRENthe NNhouse BKP.",
+            "They VBbombed NNcity NNcentre NNRiver NNStreet NNcorner of NNhouse BKP.")]
+        public void DoSomething(string input, string expected)
+        {
+            AssertReturnIsEqualToExpected(
+                input, expected);
+        }
+
+        private static void AssertReturnIsEqualToExpected(string input, string expected)
         {
             Paragraph paragraph =
                 DocumentContentHelper.GetParagraphFromWordDocument(input);

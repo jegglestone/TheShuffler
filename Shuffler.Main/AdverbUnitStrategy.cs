@@ -59,20 +59,25 @@
                     element => element.InnerText.IsVBA()))
                 {
                     xmlSentenceElement =
-                        MoveSingleAdverbBeforeVBOrPASTorPRESUnit(sentenceArray, AdverbIndexPosition);
+                        MoveSingleAdverbBeforeVBOrPASTorPRESUnit(
+                            sentenceArray, AdverbIndexPosition, breakerPosition);
                 }
             }
 
             return xmlSentenceElement;
         }
 
-        private Paragraph MoveSingleAdverbBeforeVBOrPASTorPRESUnit(Text[] sentenceArray, int adverbIndexPosition)
+        private Paragraph MoveSingleAdverbBeforeVBOrPASTorPRESUnit(
+            Text[] sentenceArray, int adverbIndexPosition, int adverbBreakerPosition)
         {
             var VbPastPresPosition = 
                 _sentence.GetPositionOfClosestSpecifiedUnit(
                     sentenceArray, adverbIndexPosition, text => text.IsVbPastPres());
-            var adverbTag = sentenceArray[adverbIndexPosition];
-            var adverb = sentenceArray[adverbIndexPosition + 1];
+
+            var adverbUnit = 
+                sentenceArray
+                .Skip(adverbIndexPosition)
+                .Take(adverbBreakerPosition - adverbIndexPosition);
 
             Text[] beforeVbPastPres;
             Text[] afterVbPastPres;
@@ -87,14 +92,21 @@
                 afterVbPastPres, adverbIndexPosition, out beforeADV, out afterADV);
 
             var vbPastPres =
-                OpenXmlTextHelper.RemoveUnitFromOriginalPosition(beforeADV);
+                OpenXmlTextHelper.RemoveUnitFromOriginalPosition(
+                    beforeADV, t=> t.IsAdverb());
 
             var arr =
                 beforeVbPastPres
-                .Concat(new[] { adverbTag })
-                .Concat(new[] { adverb, new Text(" ") })
+                .Concat(adverbUnit)
                 .Concat(vbPastPres)
                 .Concat(afterADV).ToArray();
+
+            if (arr[arr.Length - 3].Text == " "
+                && (arr[arr.Length - 4].Text == " "
+                    || arr[arr.Length - 4].Text.EndsWith(" ")))
+            {
+                arr = arr.RemoveAt(arr.Length - 3);
+            }
 
             var wordElements = OpenXmlHelper.BuildWordsIntoOpenXmlElement(arr);
 

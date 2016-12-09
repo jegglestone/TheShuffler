@@ -8,11 +8,11 @@
 
     public class OpenXmlTextHelper
     {
-        public static Text[] RemoveUnitFromOriginalPosition(Text[] unit)
+        public static Text[] RemoveUnitFromOriginalPosition(
+            Text[] unit, Predicate<Text> p)
         {
-            return unit.RemoveAt(unit.Length - 1)   //remove the tag unit
-                .RemoveAt(unit.Length - 2)          //remove the word itself
-                .RemoveAt(unit.Length - 3);         // remove the preceedingspace
+            return unit.Take(
+                Array.FindIndex(unit, p)).ToArray();
         }
 
         public static void UnderlineWordRun(RunProperties runProperties)

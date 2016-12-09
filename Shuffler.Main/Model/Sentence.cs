@@ -16,7 +16,8 @@
 
         public int ModifierCount { get; set; }
 
-        public Text[] SentenceArray {
+        public Text[] SentenceArray
+        {
             get
             {
                return _sentenceElement.Descendants<Text>().ToArray();
@@ -56,15 +57,10 @@
                     iterationCount++;
                 }
 
-                // if first part is space - remove it
-                // if last part is not a space and the last word doesnt end in space
-                // add a space element  {"dsds", "ss", "sfsf", " " } 
-                // unless it's the first one (which will be reversed and have " BKP." manually appended
-
                 arrayOfMoveableTextElements[index] = timerArray;
             }
 
-            if (arrayOfMoveableTextElements[0][0].Text.EndsWith("1"))
+            if (arrayOfUnitsInAscendingOrder(arrayOfMoveableTextElements))
                 Array.Reverse(arrayOfMoveableTextElements);
 
             Text[] reversedTimerUnit =
@@ -72,25 +68,6 @@
                     arrayOfMoveableTextElements, totalArrayWords);
 
             return reversedTimerUnit;
-        }
-
-        private static Text[] MergeJaggedUnitArrayIntoSingleArray(Text[][] arrayOfMoveableTextElements, int totalArrayWords)
-        {
-            var reversedUnitOfUnits = new Text[totalArrayWords];
-
-            int iteratorCount = -1;
-
-            foreach (var unitTextArray in arrayOfMoveableTextElements)
-            {
-                foreach (Text t in unitTextArray)
-                {
-                    iteratorCount++;
-                    var unitText = t;
-                    reversedUnitOfUnits[iteratorCount] = unitText;
-                }
-            }
-
-            return reversedUnitOfUnits;
         }
 
         public bool HasVBAToTheLeft(Text[] sentenceArray, int currentUnitIndexPosition)
@@ -130,7 +107,10 @@
                 sentenceArray, p);
         }
 
-        public int GetVBAPosition(out Text[] beforeCurrentUnit, Text[] sentenceArray, int currentUnitIndexPosition)
+        public int GetVBAPosition(
+            out Text[] beforeCurrentUnit, 
+            Text[] sentenceArray, 
+            int currentUnitIndexPosition)
         {
             beforeCurrentUnit = sentenceArray.Take(currentUnitIndexPosition).ToArray();
             int VBAPosition = Array.FindIndex(beforeCurrentUnit, text => text.InnerText == TagMarks.VBA);
@@ -141,12 +121,13 @@
         {
             var afterVBA = beforeCurrentUnit.Skip(VBAPosition).ToArray();
 
-            if (Array.Exists(afterVBA, text => text.InnerText.RemoveWhiteSpaces() == "PAST"))
-                return Array.FindIndex(afterVBA, text => text.InnerText.RemoveWhiteSpaces() == "PAST") + VBAPosition;
+            if (Array.Exists(afterVBA, text => text.InnerText.IsPast()))
+                return Array.FindIndex(afterVBA, text => text.InnerText.IsPast()) + VBAPosition;
             return Array.FindIndex(afterVBA, text => text.InnerText.RemoveWhiteSpaces() == "PRES") + VBAPosition;
         }
 
-        public int GetPositionOfClosestSpecifiedUnit(Text[] sentenceArray, int currentUnitIndexPosition, Predicate<Text> p)
+        public int GetPositionOfClosestSpecifiedUnit(
+            Text[] sentenceArray, int currentUnitIndexPosition, Predicate<Text> p)
         {
             Text[] beforeCurrentUnit;
             Text[] afterCurrentUnit;
@@ -198,8 +179,6 @@
                 else if (IsFullStopEndOfSentence(sentenceArray, index))
                 {
                     moveableUnits[moveableUnitCount - 1].EndPosition = index;
-                    if (sentenceArray[index].Text.IsBreakerPunctuation())
-                        moveableUnits[moveableUnitCount - 1].EndPosition--;
                     break;
                 }
             }
@@ -243,6 +222,30 @@
             }
 
             return sentence;
+        }
+
+        private static bool arrayOfUnitsInAscendingOrder(Text[][] arrayOfMoveableTextElements)
+        {
+            return arrayOfMoveableTextElements[0][0].Text.EndsWith("1");
+        }
+
+        private static Text[] MergeJaggedUnitArrayIntoSingleArray(Text[][] arrayOfMoveableTextElements, int totalArrayWords)
+        {
+            var reversedUnitOfUnits = new Text[totalArrayWords];
+
+            int iteratorCount = -1;
+
+            foreach (var unitTextArray in arrayOfMoveableTextElements)
+            {
+                foreach (Text t in unitTextArray)
+                {
+                    iteratorCount++;
+                    var unitText = t;
+                    reversedUnitOfUnits[iteratorCount] = unitText;
+                }
+            }
+
+            return reversedUnitOfUnits;
         }
     }
 }
