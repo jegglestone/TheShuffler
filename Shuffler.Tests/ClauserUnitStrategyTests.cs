@@ -4,6 +4,7 @@
     using Main;
     using DocumentFormat.OpenXml.Wordprocessing;
     using Helper;
+    using Main.Helper;
 
     [TestFixture]
     public class ClauserUnitStrategyTests

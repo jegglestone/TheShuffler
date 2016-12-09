@@ -11,6 +11,12 @@
     public class ModifierStrategy : IShuffleStrategy
     {
         private Sentence _sentence;
+        private readonly IModifierFormatter _modifierFormatter;
+
+        public ModifierStrategy(IModifierFormatter modifierFormatter)
+        {
+            _modifierFormatter = modifierFormatter;
+        }
 
         public Paragraph ShuffleSentenceUnit(Paragraph xmlSentenceElement)
         {
@@ -50,13 +56,15 @@
 
                 newSentence =
                     beforeModifier
-                    .Concat(modifierUnitsInSerialNumberOrder).ToArray();
+                    .Concat(_modifierFormatter.ApplyFormattingRules(
+                        modifierUnitsInSerialNumberOrder)).ToArray();
             }
 
             newSentence = _sentence.RemoveAnyBlankSpaceFromEndOfUnit
                 (newSentence
                     .Concat(
-                        _sentence.GetSentenceBreaker(sentenceArray)).ToArray());
+                        _sentence.GetSentenceBreaker(sentenceArray))
+                        .ToArray().RemoveAnyDoubleSpaces());
 
             return new Paragraph(
                 OpenXmlHelper.BuildWordsIntoOpenXmlElement(
@@ -83,6 +91,9 @@
                 sentenceArray
                     .Take(prenUnitPosition).ToArray();
 
+            modifierUnitsInSerialNumberOrder =
+                _modifierFormatter.ApplyFormattingRules(modifierUnitsInSerialNumberOrder);
+
             return
                 beforePrenUnitPosition
                     .Concat(modifierUnitsInSerialNumberOrder)
@@ -103,6 +114,6 @@
 
             _sentence.ModifierCount = modifierUnitCount;
             return modifierUnits;
-        }
+        } 
     }
 }

@@ -9,6 +9,7 @@ namespace Main
     using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Packaging;
     using DocumentFormat.OpenXml.Wordprocessing;
+    using Helper;
     using Services;
 
     public partial class MainForm : Form

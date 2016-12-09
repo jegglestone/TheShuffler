@@ -8,6 +8,7 @@
     using DocumentFormat.OpenXml.Wordprocessing;
     using Helper;
     using Main;
+    using Main.Helper;
     using Main.Services;
     using NUnit.Framework;
 

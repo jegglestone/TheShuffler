@@ -6,6 +6,8 @@ namespace Shuffler.Tests
     using Main;
     using System;
     using System.Linq;
+    using Fakes;
+    using Main.Interfaces;
 
     [TestFixture]
     public class ModifierStrategyTests
@@ -15,7 +17,8 @@ namespace Shuffler.Tests
         {
             AssertReturnIsEqualToExpected(
                 "TM1this time TM2last year BKP.",
-                "TM1this time TM2last year BKP.");
+                "TM1this time TM2last year BKP.",
+                new FakeModifierFormatter());
         }
 
         [TestCase(
@@ -25,7 +28,7 @@ namespace Shuffler.Tests
             string input, string expected)
         {
             AssertReturnIsEqualToExpected(
-                input, expected);
+                input, expected, new FakeModifierFormatter());
         }
 
         [TestCase(
@@ -35,7 +38,7 @@ namespace Shuffler.Tests
             string input, string expected)
         {
             AssertReturnIsEqualToExpected(
-                input,expected);
+                input,expected, new FakeModifierFormatter());
         }
 
         [TestCase("They VBbombed PRENthe NNhouse MD1on PRENthe NNcorner MD2of NNRiver NNStreet MD3in PRENthe NNcity NNcentre BKP.")]
@@ -47,7 +50,7 @@ namespace Shuffler.Tests
                 DocumentContentHelper
                     .GetParagraphFromWordDocument(unShuffledSentence);
 
-            var modifierStrategy = new ModifierStrategy();
+            var modifierStrategy = new ModifierStrategy(new FakeModifierFormatter());
 
             // act
             var shufflerParagraph =
@@ -78,24 +81,28 @@ namespace Shuffler.Tests
             string input, string expected)
         {
             AssertReturnIsEqualToExpected(
-                input, expected);
+                input, expected, new FakeModifierFormatter());
         }
 
         [TestCase(
             "They VBbombed MD3in PRENthe NNcity NNcentre MD2of NNRiver NNStreet MD1on PRENthe NNcorner PRENthe NNhouse BKP.",
             "They VBbombed NNcity NNcentre NNRiver NNStreet NNcorner of NNhouse BKP.")]
-        public void DoSomething(string input, string expected)
+        public void WhenRealModifierStrategyInjected_Removes_MDandPREN_Units(string input, string expected)
         {
             AssertReturnIsEqualToExpected(
-                input, expected);
+                input, expected, new ModifierFormatter());
+
+            // "They VBbombed NNcity NNcentre NNRiver NNStreet NNcorner of NNhouse BKP."
+            // "They VBbombed NNcity NNcentreNNRiver NNStreet NNcorner NNhouse Of BKP."
         }
 
-        private static void AssertReturnIsEqualToExpected(string input, string expected)
+        private static void AssertReturnIsEqualToExpected(
+            string input, string expected, IModifierFormatter modifierFormatter)
         {
             Paragraph paragraph =
                 DocumentContentHelper.GetParagraphFromWordDocument(input);
 
-            var modifierUnitStrategy = new ModifierStrategy();
+            var modifierUnitStrategy = new ModifierStrategy(modifierFormatter);
 
             //  act
             var shuffledParagraph =

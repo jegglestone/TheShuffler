@@ -4,6 +4,7 @@
     using System.Xml;
     using NUnit.Framework;
     using Helper;
+    using Main.Helper;
 
     [TestFixture]
     public class ClauserUnitCheckerTests

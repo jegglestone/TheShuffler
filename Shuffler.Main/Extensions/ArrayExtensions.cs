@@ -2,6 +2,8 @@
 
 namespace Main.Extensions
 {
+    using DocumentFormat.OpenXml.Wordprocessing;
+
     public static class ArrayExtensions
     {
         public static T[] RemoveAt<T>(this T[] source, int index)
@@ -36,7 +38,21 @@ namespace Main.Extensions
             }
             array[newIndex] = tmp;
         }
+
+        public static Text[] RemoveAnyDoubleSpaces(this Text[] sentence)
+        {
+            for (int i = 0; i < sentence.Length; i++)
+            {
+                if ((sentence[i].Text == " " || sentence[i].Text.EndsWith(" ")) 
+                    && sentence[i+1].Text == " ")
+                {
+                    sentence = sentence.RemoveAt(i+1);
+                    i--;
+                }
+                
+            }
+
+            return sentence;
+        }
     }
-
-
 }

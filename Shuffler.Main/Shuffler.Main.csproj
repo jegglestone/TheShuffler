@@ -78,11 +78,14 @@
     <Compile Include="Helper\ClauserUnitChecker.cs" />
     <Compile Include="Helper\OpenXmlTextHelper.cs" />
     <Compile Include="Interfaces\IShuffleStrategy.cs" />
+    <Compile Include="Interfaces\IModifierFormatter.cs" />
     <Compile Include="Model\IMoveableUnit.cs" />
     <Compile Include="Model\Sentence.cs" />
     <Compile Include="Model\MoveableUnit.cs" />
+    <Compile Include="ModifierFormatter.cs" />
     <Compile Include="ModifierStrategy.cs" />
     <Compile Include="Helper\OpenXmlHelper.cs" />
+    <Compile Include="PrenStrategy.cs" />
     <Compile Include="Services\DocumentFormatter.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

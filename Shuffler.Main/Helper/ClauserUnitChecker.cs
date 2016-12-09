@@ -1,6 +1,7 @@
-﻿namespace Shuffler.Helper
+﻿namespace Main.Helper
 {
     using System.Xml;
+    using Shuffler.Helper;
 
     // Example
 

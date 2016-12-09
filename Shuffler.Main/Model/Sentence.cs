@@ -223,7 +223,7 @@
 
             return sentence;
         }
-
+        
         private static bool arrayOfUnitsInAscendingOrder(Text[][] arrayOfMoveableTextElements)
         {
             return arrayOfMoveableTextElements[0][0].Text.EndsWith("1");
