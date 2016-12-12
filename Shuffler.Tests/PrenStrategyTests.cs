@@ -16,10 +16,10 @@
 
         [TestCase(
             "This VB1is PREN1a NNbook PREN2about NNwarBKP.",
-            "This VB1is PREN2about warPREN1a book BKP.")]
+            "This VB1is PREN2about war PREN1a book BKP.")]
         [TestCase(
             "PREN1a NNbook PREN2about NNwarBKP.",
-            "PREN2about warPREN1a book BKP.")]
+            "PREN2about war PREN1a book BKP.")]
         public void PrenUnits_Are_ShuffledInDescendingOrder(
             string input, string expected)
         {

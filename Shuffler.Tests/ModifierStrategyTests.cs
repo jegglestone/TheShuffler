@@ -87,13 +87,15 @@ namespace Shuffler.Tests
         [TestCase(
             "They VBbombed MD3in PRENthe NNcity NNcentre MD2of NNRiver NNStreet MD1on PRENthe NNcorner PRENthe NNhouse BKP.",
             "They VBbombed NNcity NNcentre NNRiver NNStreet NNcorner of NNhouse BKP.")]
+        //  "They VBbombed NNcity NNcentreNNRiver NNStreet NNcorner NNhouse Of BKP."
+        [TestCase(
+            "They VBbombed PRENthe NNhouse MD1on PRENthe NNcorner MD2of NNRiver NNStreet MD3in PRENthe NNcity NNcentre BKP.",
+            "They VBbombed NNcity NNcentre NNRiver NNStreet NNcorner OfPRENthe NNhouse BKP.")]
+        //  "They VBbombed NNcity NNcentreNNRiver NNStreet NNcorner NNhouse Of BKP."
         public void WhenRealModifierStrategyInjected_Removes_MDandPREN_Units(string input, string expected)
         {
             AssertReturnIsEqualToExpected(
                 input, expected, new ModifierFormatter());
-
-            // "They VBbombed NNcity NNcentre NNRiver NNStreet NNcorner of NNhouse BKP."
-            // "They VBbombed NNcity NNcentreNNRiver NNStreet NNcorner NNhouse Of BKP."
         }
 
         private static void AssertReturnIsEqualToExpected(

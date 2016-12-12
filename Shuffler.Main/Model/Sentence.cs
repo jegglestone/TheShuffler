@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Constants;
+    using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Wordprocessing;
     using Extensions;
     using Helper;
@@ -41,35 +42,48 @@
         }
 
         public Text[] GetMoveableUnitsInSerialNumberDescendingOrder(
-            int moveableUnitCount, IMoveableUnit[] moveableUnitsUnits, IList<Text> sentenceArray)
+            int moveableUnitCount, IMoveableUnit[] moveableUnits, IList<Text> sentenceArray)
         {
             Text[][] arrayOfMoveableTextElements = new Text[moveableUnitCount][];
             int totalArrayWords = 0;
-            for (int index = 0; index < moveableUnitsUnits.Length; index++)
+            for (int index = 0; index < moveableUnits.Length; index++)
             {
-                var moveableUnit = moveableUnitsUnits[index];
+                var moveableUnit = moveableUnits[index];
                 int moveableUnitSize = moveableUnit.EndPosition - moveableUnit.StartPosition;
-                Text[] timerArray = new Text[moveableUnitSize];
+                Text[] moveableUnitArray = new Text[moveableUnitSize];
                 totalArrayWords += moveableUnitSize;
 
                 int iterationCount = 0;
+    
+                //if (sentenceArray[moveableUnit.StartPosition].Text.StartsWith(" ")
+                //    && (sentenceArray[moveableUnit.StartPosition].Text.IsTimer()
+                //    || sentenceArray[moveableUnit.StartPosition].Text.IsModifier()
+                //    )) // Tagposition?
+                //{
+                //    sentenceArray[moveableUnit.StartPosition].Text = 
+                //        sentenceArray[moveableUnit.StartPosition].Text.RemoveWhiteSpaces(); // remove white spaces from tags
+                //}
+
                 for (int i = moveableUnit.StartPosition; i < moveableUnit.EndPosition; i++)
                 {
-                    timerArray[iterationCount] = sentenceArray[i];
+                    moveableUnitArray[iterationCount] = sentenceArray[i];
+
                     iterationCount++;
                 }
 
-                arrayOfMoveableTextElements[index] = timerArray;
+                arrayOfMoveableTextElements[index] = moveableUnitArray;
             }
 
             if (arrayOfUnitsInAscendingOrder(arrayOfMoveableTextElements))
                 Array.Reverse(arrayOfMoveableTextElements);
 
-            Text[] reversedTimerUnit =
+            Text[] reversedMoveableUnit =
                 MergeJaggedUnitArrayIntoSingleArray(
                     arrayOfMoveableTextElements, totalArrayWords);
+           
+            NormaliseWordSpaces(reversedMoveableUnit);
 
-            return reversedTimerUnit;
+            return reversedMoveableUnit;
         }
 
         public bool HasVBAToTheLeft(Text[] sentenceArray, int currentUnitIndexPosition)
@@ -247,6 +261,51 @@
             }
 
             return sentence;
+        }
+
+        private void NormaliseWordSpaces(Text[] reversedMoveableUnit)
+        {
+            for (int index = 0; index < reversedMoveableUnit.Length; index++)
+            {
+                var text = reversedMoveableUnit[index];
+
+                if (text.Text.StartsWith(" ")
+                    && IsScriptTag(text)
+                    && !text.Text.IsBreakerPunctuation()
+                    && index != reversedMoveableUnit.Length - 1)
+                {
+                    text.Text = text.Text.RemoveWhiteSpaces();
+                }
+
+                if (index != 0)
+                {
+                    if (!text.Text.StartsWith(" "))
+                    {
+                        var previousText = reversedMoveableUnit[index - 1];
+                        if (!IsScriptTag(previousText)
+                            && !previousText.Text.EndsWith(" "))
+                        {
+                            previousText.Text = previousText.Text + " ";
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool IsScriptTag(Text previousText)
+        {
+            if (previousText
+                .Parent.Descendants<RunProperties>().First()
+                .VerticalTextAlignment != null &&
+                previousText
+                .Parent.Descendants<RunProperties>().First()
+                .VerticalTextAlignment
+                .Val
+                == VerticalPositionValues.Superscript)
+            {
+                return true; // TODO: We could more
+            }
+            return false;
         }
         
         private static bool arrayOfUnitsInAscendingOrder(Text[][] arrayOfMoveableTextElements)
