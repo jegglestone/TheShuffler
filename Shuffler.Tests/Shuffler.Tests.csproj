@@ -112,6 +112,9 @@
     <None Include="TestFiles\MultiLineFiles\Adverbs and Clausers.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="TestFiles\MultiLineFiles\Adverbs, Timers, Prens, Modifiers and Clausers..docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestFiles\MultiLineFiles\They VBbombed MD3in PRENthe NNcity NNcentre MD2of NNRiver NNStreet MD1on PRENthe NNcorner PRENthe NNhouse BKP..docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

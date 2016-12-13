@@ -65,7 +65,7 @@
             if (value == string.Empty)
                 return false;
 
-            if (textElement.Length < 2)
+            if (value.Length < 2)
                 return false;
             
             var tagPrefix = value.Substring(0, 2);

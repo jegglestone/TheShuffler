@@ -15,7 +15,7 @@
     public class DocumentFormatterTests
     {
         [Test]
-        public void WhenGivenOpenXmlDocumentWithClauser_AndMultipleSentences_TheClauserParagraphIsShuffled()
+        public void WhenGivenOpenXmlDocumentWithClauser_AndMultipleSentences_TheParagraphIsShuffled()
         {
             //NNEconomic growth VBhas continued ADV1at a moderate rate TM1so far TM2this year BKP.
             //ADJReal NNgross domestic productNN(GDP)PASTrose ADV1at an annual rate of 
@@ -64,6 +64,30 @@
                 elementsArray[2].InnerText == "He TM2last year TM1this time VBAwas PRESleaving BKP.");
             Assert.That(
                 elementsArray[3].InnerText == "He TM2last year TM1this time PASTleft BKP.");
+        }
+
+        [Test]
+        public void
+            WhenGivenOpenXmlDocumentWithAdversTimerPrensModifiersAndClausers_AndMultipleSentences_TheParagraphIsShuffled()
+        {
+            /*
+             NNEconomic growth VBhas continued ADV1at a moderate rate TM1so far TM2this year BKP. 
+             ADJReal NNgross domestic product PASTrose ADV1at an annual rate of PREN1about DG2 NNpercent MD1in PREN2the TM1first 
+             quarter CSafter PRESincreasing MD2at PREN3a DG3 NNpercent NNpace MD3in PREN4the TM2fourth quarter MD4of TMY2011 BKP. 
+             NNGrowth TM1last quarter VBwas supportedBKby ADJfurther NNgains MD1in ADJprivate ADJdomestic NNdemand BKP, BKwhich 
+             BKmore than VBoffset NNa drag MD1from PREN1a NNdecline MD2in NNgovernment NNspending BKP.
+             */
+            string documentName = "Adverbs, Timers, Prens, Modifiers and Clausers.";
+            var elements = GetDocument(documentName);
+
+            // assert
+            Assert.That(elements != null, "Xml Document came back null");
+
+            OpenXmlElement[] elementsArray =
+                elements.Where(element => element.LocalName == "p").ToArray();
+
+            Assert.That(elementsArray.Length, Is.EqualTo(3));
+
         }
 
         [TestCase(

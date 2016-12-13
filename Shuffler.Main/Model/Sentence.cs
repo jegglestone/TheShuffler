@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using Constants;
-    using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Wordprocessing;
     using Extensions;
     using Helper;
@@ -292,19 +291,27 @@
             }
         }
 
-        private bool IsScriptTag(Text previousText)
+        private static bool IsScriptTag(Text previousText)
         {
-            if (previousText
-                .Parent.Descendants<RunProperties>().First()
-                .VerticalTextAlignment != null &&
-                previousText
-                .Parent.Descendants<RunProperties>().First()
-                .VerticalTextAlignment
-                .Val
-                == VerticalPositionValues.Superscript)
+            try
             {
-                return true; // TODO: We could more
+                if (previousText
+                    .Parent.Descendants<RunProperties>().First()
+                    .VerticalTextAlignment != null &&
+                    previousText
+                    .Parent.Descendants<RunProperties>().First()
+                    .VerticalTextAlignment
+                    .Val
+                    == VerticalPositionValues.Superscript)
+                {
+                    return true; // TODO: We could check through specific types also
+                }                
             }
+            catch
+            {
+                return false;
+            }
+
             return false;
         }
         
