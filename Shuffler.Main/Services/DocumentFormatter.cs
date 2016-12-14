@@ -17,7 +17,6 @@
         private readonly IShuffleStrategy _modifierStrategy;
         private readonly IShuffleStrategy _prenStrategy;
 
-
         public DocumentFormatter(
             IShuffleStrategy clauserUnitStrategy
             , IShuffleStrategy adverbUnitStrategy
@@ -55,17 +54,16 @@
         {
             if (ParagraphHasMultipleSentences(element))
             {
-                IEnumerable<OpenXmlElement> ShuffledSentences = ShuffleSentences(element);
-                shuffledElements.AddRange(new Paragraph(ShuffledSentences));
+                Paragraph ShuffledSentences = ShuffleSentences(element);
+                shuffledElements.Add(ShuffledSentences);
             }
             else
             {
-                Paragraph shuffledElement = ShuffleParagraph(element);
-                shuffledElements.Add(shuffledElement);
+                shuffledElements.Add(ShuffleParagraph(element));
             }
         }
 
-        private IEnumerable<OpenXmlElement> ShuffleSentences(OpenXmlElement element)
+        private Paragraph ShuffleSentences(OpenXmlElement element)
         {
             var strArray = element.Descendants<Text>().ToArray();
             int prevBKP = 0;
@@ -88,14 +86,45 @@
 
                     List<Run> words = beforeFullStop.Select(word => word.Parent.CloneNode(true) as Run).ToList();
 
-                    sentenceElement.Append(words.ToList());
+                    //Run previousRun = null;
+                    //foreach (var wordRun in words)
+                    //{
+                    //    if (previousRun != null)
+                    //    {
+                    //        if ((previousRun.InnerText == " " || previousRun.InnerText.EndsWith(" "))
+                    //            && wordRun.InnerText == " ")
+                    //        {
+                    //            words.Remove(wordRun);
+                    //            continue;
+                    //        }
+                    //        if (wordRun.InnerText.StartsWith(" ") && previousRun.InnerText == " ")
+                    //        {
+                    //            words.Remove(previousRun);
+                    //            continue;
+                    //        }
+                    //    }
+                    //    previousRun = wordRun;
+                    //}
 
-                    Paragraph shuffledSentence = ShuffleParagraph(sentenceElement);
+                    sentenceElement.Append(words);
+
+                    var shuffledSentence = ShuffleParagraph(sentenceElement);
+
                     ShuffledSentences.Add(shuffledSentence);
                 }
             }
 
-            return ShuffledSentences;
+            var paragraph = new Paragraph();
+            foreach (var sentence in ShuffledSentences)
+            {
+                foreach (var openXmlWordRun in sentence)
+                {
+                    paragraph.AppendChild(
+                        openXmlWordRun.CloneNode(true));
+                }
+            }
+            
+            return paragraph;
         }
 
         private static bool IsFullStop(int prevBKP, int i, string currentWord)

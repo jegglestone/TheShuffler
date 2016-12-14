@@ -53,15 +53,15 @@
                 totalArrayWords += moveableUnitSize;
 
                 int iterationCount = 0;
-    
-                //if (sentenceArray[moveableUnit.StartPosition].Text.StartsWith(" ")
-                //    && (sentenceArray[moveableUnit.StartPosition].Text.IsTimer()
-                //    || sentenceArray[moveableUnit.StartPosition].Text.IsModifier()
-                //    )) // Tagposition?
-                //{
-                //    sentenceArray[moveableUnit.StartPosition].Text = 
-                //        sentenceArray[moveableUnit.StartPosition].Text.RemoveWhiteSpaces(); // remove white spaces from tags
-                //}
+
+                if (sentenceArray[moveableUnit.StartPosition].Text.StartsWith(" ")
+                    && (sentenceArray[moveableUnit.StartPosition].Text.IsTimer()
+                    || sentenceArray[moveableUnit.StartPosition].Text.IsModifier()
+                    )) // Tagposition?
+                {
+                    sentenceArray[moveableUnit.StartPosition].Text =
+                        sentenceArray[moveableUnit.StartPosition].Text.RemoveWhiteSpaces(); // remove white spaces from tags
+                }
 
                 for (int i = moveableUnit.StartPosition; i < moveableUnit.EndPosition; i++)
                 {
@@ -304,7 +304,7 @@
                     .Val
                     == VerticalPositionValues.Superscript)
                 {
-                    return true; // TODO: We could check through specific types also
+                    return true; 
                 }                
             }
             catch

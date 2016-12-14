@@ -3,10 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Packaging;
     using DocumentFormat.OpenXml.Wordprocessing;
     using Main;
+    using Main.Extensions;
     using Main.Helper;
     using Main.Services;
     using NUnit.Framework;
@@ -83,11 +85,12 @@
             // assert
             Assert.That(elements != null, "Xml Document came back null");
 
-            OpenXmlElement[] elementsArray =
-                elements.Where(element => element.LocalName == "p").ToArray();
+            Assert.That(
+                elements[0].InnerText.CountTimesThisStringAppearsInThatString("BKP"), 
+                Is.EqualTo(5));
 
-            Assert.That(elementsArray.Length, Is.EqualTo(3));
-
+            Assert.That(elements[0].InnerText, Is.EqualTo(
+                "NNEconomic growth TM2this year TM1so far VBhas continued ADV1at a moderate rate BKP.CSafter PRESincreasing TM2fourth quarter TMY2011 BKP, ADJReal NNgross domestic product PASTrose ADV1at an annual rate of DG2 NNpercent TM1first quarter DG3OfBKP.NNGrowth TM1last quarter VBwas supportedBKby ADJfurther NNgains NNgovernment NNspending NNdecline ADJprivate ADJdomestic NNdemand BKP, BKwhich BKmore than VBoffset NNa drag OfBKP."));
         }
 
         [TestCase(
