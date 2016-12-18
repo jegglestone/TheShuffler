@@ -1,16 +1,20 @@
 ﻿namespace ShufflerLibrary
 {
+    using Repository;
+
     public class Shuffler : IShuffler
     {
+        private readonly IShufflerPhraseRepository _shufflerPhraseRepository;
+
+        public Shuffler()
+        {
+            _shufflerPhraseRepository = new ShufflerPhraseRepository();
+        }
+
         public bool ShuffleParagraph(int pe_pmd_id)
         {
-            
             // get the sentence from the database
-            /* 
-                SELECT * FROM [dbo].[v3_Phrase_Element]
-                WHERE pe_pmd_id = 2012
-                ORDER BY pe_order 
-            */
+            _shufflerPhraseRepository.GetShufflerDocument(2012);
 
             // split into sentences
 
