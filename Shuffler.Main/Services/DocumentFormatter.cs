@@ -86,26 +86,6 @@
 
                     List<Run> words = beforeFullStop.Select(word => word.Parent.CloneNode(true) as Run).ToList();
 
-                    //Run previousRun = null;
-                    //foreach (var wordRun in words)
-                    //{
-                    //    if (previousRun != null)
-                    //    {
-                    //        if ((previousRun.InnerText == " " || previousRun.InnerText.EndsWith(" "))
-                    //            && wordRun.InnerText == " ")
-                    //        {
-                    //            words.Remove(wordRun);
-                    //            continue;
-                    //        }
-                    //        if (wordRun.InnerText.StartsWith(" ") && previousRun.InnerText == " ")
-                    //        {
-                    //            words.Remove(previousRun);
-                    //            continue;
-                    //        }
-                    //    }
-                    //    previousRun = wordRun;
-                    //}
-
                     sentenceElement.Append(words);
 
                     var shuffledSentence = ShuffleParagraph(sentenceElement);
