@@ -1,34 +1,30 @@
 ﻿namespace ShufflerLibrary.Repository
 {
     using System.Collections.Generic;
-    using System.Configuration;
-    using System.Data;
-    using System.Data.SqlClient;
     using Model;
+    using DataAccess;
 
     public class ShufflerPhraseRepository : IShufflerPhraseRepository
     {
+        private object dr;
+        private readonly IDataAccess _dataAccess;
+
+        public ShufflerPhraseRepository(IDataAccess dataAccess)
+        {
+            _dataAccess = dataAccess;
+        }
+
         public Document GetShufflerDocument(int pe_pmd_id)
         {
             var document = new Document();
-
+            dr = _dataAccess.GetDataReader(pe_pmd_id);
             var texts = new List<Text>();
 
-            // todo: sort this into a sproc or something
-            var command = new SqlCommand(@"
-                SELECT * FROM [dbo].[v3_Phrase_Element]
-                WHERE pe_pmd_id = "  + pe_pmd_id +
-                "ORDER BY pe_order"); 
-
-            var cn = new SqlConnection(
-                ConfigurationManager.ConnectionStrings["ShufflerDatabaseConnection"].ConnectionString);
-            command.Connection = cn;
-            SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
             while (dr.Read())
             {
                 texts.Add(new Text
                 {
-                    pe_C_num = int.Parse(dr["pe_C_num"].ToString())
+                    pe_C_num =  int.Parse(dr["pe_C_num"].ToString())
                     , pe_merge_ahead = int.Parse(dr["pe_merge_ahead"].ToString())
                     , pe_order = int.Parse(dr["pe_order"].ToString())
                     , pe_para_no = int.Parse(dr["pe_para_no"].ToString()) // Inherited association key
