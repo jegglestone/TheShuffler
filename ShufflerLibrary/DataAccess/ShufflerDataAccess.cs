@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace ShufflerLibrary.DataAccess
 {
-    public class DataAccess : IDataAccess
+    public class ShufflerDataAccess : IDataAccess
     {
         public IDataReader GetDataReader(int pe_pmd_id)
         {
@@ -13,8 +13,10 @@ namespace ShufflerLibrary.DataAccess
                 SELECT * FROM [dbo].[v3_Phrase_Element]
                 WHERE pe_pmd_id = " + pe_pmd_id +
                 "ORDER BY pe_order");
+
             string connectionString = 
-                ConfigurationManager.ConnectionStrings["ShufflerDatabaseConnection"].ConnectionString;
+                ConfigurationManager.
+                    ConnectionStrings["ShufflerDatabaseConnection"].ConnectionString;
 
             var cn = new SqlConnection(
                 connectionString);

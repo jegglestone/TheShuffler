@@ -1,6 +1,7 @@
 ﻿namespace ShufflerLibrary
 {
     using Repository;
+    using DataAccess;
 
     public class Shuffler : IShuffler
     {
@@ -8,7 +9,9 @@
 
         public Shuffler()
         {
-            _shufflerPhraseRepository = new ShufflerPhraseRepository(new DataAccess);
+            _shufflerPhraseRepository = 
+                new ShufflerPhraseRepository(
+                    new ShufflerDataAccess());
         }
 
         public bool ShuffleParagraph(int pe_pmd_id)
