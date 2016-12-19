@@ -8,17 +8,23 @@ namespace ShufflerLibrary.DataAccess
     {
         public IDataReader GetDataReader(int pe_pmd_id)
         {
-
-            // todo: sort this into a sproc or something
+            // todo: sort this into a parameterised sproc or something
             var command = new SqlCommand(@"
                 SELECT * FROM [dbo].[v3_Phrase_Element]
                 WHERE pe_pmd_id = " + pe_pmd_id +
                 "ORDER BY pe_order");
+            string connectionString = 
+                ConfigurationManager.ConnectionStrings["ShufflerDatabaseConnection"].ConnectionString;
 
             var cn = new SqlConnection(
-                ConfigurationManager.ConnectionStrings["ShufflerDatabaseConnection"].ConnectionString);
+                connectionString);
+
             command.Connection = cn;
-            SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+            cn.Open();
+
+            SqlDataReader dr = command.ExecuteReader(
+                CommandBehavior.CloseConnection);
 
             return dr;
         }

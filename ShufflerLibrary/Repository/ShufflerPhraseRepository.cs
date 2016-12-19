@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using Model;
     using DataAccess;
+    using System.Data;
 
     public class ShufflerPhraseRepository : IShufflerPhraseRepository
     {
@@ -17,7 +18,7 @@
         public Document GetShufflerDocument(int pe_pmd_id)
         {
             var document = new Document();
-            dr = _dataAccess.GetDataReader(pe_pmd_id);
+            IDataReader dr = _dataAccess.GetDataReader(pe_pmd_id);
             var texts = new List<Text>();
 
             while (dr.Read())

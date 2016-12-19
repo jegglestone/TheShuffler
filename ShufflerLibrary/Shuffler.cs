@@ -8,7 +8,7 @@
 
         public Shuffler()
         {
-            _shufflerPhraseRepository = new ShufflerPhraseRepository();
+            _shufflerPhraseRepository = new ShufflerPhraseRepository(new DataAccess);
         }
 
         public bool ShuffleParagraph(int pe_pmd_id)
