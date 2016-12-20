@@ -1,6 +1,7 @@
 ﻿namespace ShufflerLibrary
 {
     using Repository;
+    using DataAccess;
 
     public class Shuffler : IShuffler
     {
@@ -8,17 +9,17 @@
 
         public Shuffler()
         {
-            _shufflerPhraseRepository = new ShufflerPhraseRepository();
+            _shufflerPhraseRepository = 
+                new ShufflerPhraseRepository(
+                    new ShufflerDataAccess());
         }
 
         public bool ShuffleParagraph(int pe_pmd_id)
         {
             // get the sentence from the database
-            _shufflerPhraseRepository.GetShufflerDocument(2012);
+            _shufflerPhraseRepository.GetShufflerDocument(pe_pmd_id);
 
-            // split into sentences
-
-            // run through our shuffle strategies 
+            // run each sentence through our shuffle strategies 
 
             // save the output back to the database
 

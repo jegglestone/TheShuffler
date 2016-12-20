@@ -14,7 +14,6 @@ C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Moq.xml
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\DocumentFormat.OpenXml.dll
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\CSbefore he VBhad a chance VBto speak BKP, PRENThe meeting VBwas over BKP..docx
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP..docx
-C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\He PASTshouted ADVloudlyBK, ADVemotionally BKand ADVnon-stop BKP_EXPECTATION.docx
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\PRENThe meeting VBwas over CSbefore he VBhad a chance VBto speak BKP..docx
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP..docx
 C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\Main.exe
@@ -65,3 +64,27 @@ C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuff
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\MultiLineFiles\They VBbombed PRENthe NNhouse MD1on PRENthe NNcorner MD2of NNRiver NNStreet MD3in PRENthe NNcity NNcentre BKP..docx
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\MultiLineFiles\Timers And Prens.docx
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuffler.Tests\bin\Debug\TestFiles\MultiLineFiles\Adverbs, Timers, Prens, Modifiers and Clausers..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\DG100 TMper month BKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\He PASTleft TM2last year TM1this time BKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\He VBAhas PASTplanned NNit ADVpatientlyBK, ADVquitely BKand ADVmeticulously BKP..DOCX
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\He VBAis PRESdoing NNit ADVconsistently BKand ADVcarefully BKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\He VBAwas PRESleaving TM2last year TM1this time BKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\He VBtries ADVhard BKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\MD1In TMMApril DYN2and TMMMay BKP, CShowever BKP, ADJthe reported NNpace MD1of NNjob NNgains PASTslowed BKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\MD1on PRENthe NNcorner MD2of NNRiver NNStreet MD3in PRENthe NNcity NNcentre BKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\MD3in PRENthe NNcity NNcentre MD2of NNRiver NNStreet MD1on PRENthe NNcorner BKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\MultiLineFiles\Adverbs and Clausers.docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\MultiLineFiles\Adverbs, Timers, Prens, Modifiers and Clausers..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\MultiLineFiles\They VBbombed MD3in PRENthe NNcity NNcentre MD2of NNRiver NNStreet MD1on PRENthe NNcorner PRENthe NNhouse BKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\MultiLineFiles\They VBbombed PRENthe NNhouse MD1on PRENthe NNcorner MD2of NNRiver NNStreet MD3in PRENthe NNcity NNcentre BKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\MultiLineFiles\Timers And Prens.docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\NNPayrollNNemployment PASTincreased DIG225,000 TM1per month ADVon average BKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\PREN1a NNbook PREN2about NNwarBKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\Real GDP VBrose TM1this time TM2last year BKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\Real GDP VBrose TM2last year TM1this time BKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\There were DG100 TMper month BKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\They VBbombed MD3in PRENthe NNcity NNcentre MD2of NNRiver NNStreet MD1on PRENthe NNcorner PRENthe NNhouse BKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\They VBbombed PRENthe NNhouse MD1on PRENthe NNcorner MD2of NNRiver NNStreet MD3in PRENthe NNcity NNcentre BKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\This VB1is PREN1a NNbook PREN2about NNwarBKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\TM1this time TM2last year BKP..docx
+C:\Users\jegglestone\TheShuffler\Shuffler.Tests\bin\Debug\TestFiles\TMIn April and May BKP, CShowever BKP, PRENthe NNreport VBwasn’t ADJgood BKP._DIFFERENT.docx

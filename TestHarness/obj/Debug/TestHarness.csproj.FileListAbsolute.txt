@@ -9,3 +9,14 @@ C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\TestH
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\TestHarness\bin\Debug\ShufflerLibrary.pdb
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\TestHarness\obj\Debug\TestHarness.exe
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\TestHarness\obj\Debug\TestHarness.pdb
+C:\Users\jegglestone\TheShuffler\TestHarness\bin\Debug\TestHarness.exe.config
+C:\Users\jegglestone\TheShuffler\TestHarness\obj\Debug\TestHarness.exe
+C:\Users\jegglestone\TheShuffler\TestHarness\obj\Debug\TestHarness.pdb
+C:\Users\jegglestone\TheShuffler\TestHarness\bin\Debug\TestHarness.exe
+C:\Users\jegglestone\TheShuffler\TestHarness\bin\Debug\TestHarness.pdb
+C:\Users\jegglestone\TheShuffler\TestHarness\bin\Debug\ShufflerLibrary.dll
+C:\Users\jegglestone\TheShuffler\TestHarness\bin\Debug\ShufflerLibrary.pdb
+C:\Users\jegglestone\TheShuffler\TestHarness\obj\Debug\TestHarness.csprojResolveAssemblyReference.cache
+C:\Users\jegglestone\TheShuffler\TestHarness\obj\Debug\TestHarness.Properties.Resources.resources
+C:\Users\jegglestone\TheShuffler\TestHarness\obj\Debug\TestHarness.TestHarness.resources
+C:\Users\jegglestone\TheShuffler\TestHarness\obj\Debug\TestHarness.csproj.GenerateResource.Cache
