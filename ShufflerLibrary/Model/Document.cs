@@ -6,6 +6,6 @@ namespace ShufflerLibrary.Model
     {
         public int pe_pmd_id { get; set; }
 
-        public List<Paragraph> Paragraphs { get; set; } 
+        public List<Paragraph> Paragraphs { get; set; } = new List<Paragraph>();
     }
 }

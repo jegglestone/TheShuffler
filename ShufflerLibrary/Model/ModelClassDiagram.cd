@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="ShufflerLibrary.Model.Document">
-    <Position X="1.5" Y="2.75" Width="1.5" />
+    <Position X="1" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Document.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -21,7 +21,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="ShufflerLibrary.Model.Sentence">
-    <Position X="5.75" Y="2.75" Width="1.5" />
+    <Position X="6" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Sentence.cs</FileName>
@@ -31,9 +31,9 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="ShufflerLibrary.Model.Text">
-    <Position X="7.75" Y="2.75" Width="1.5" />
+    <Position X="8.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAABAACACAAAACEAgBAAABAAAAAAAAABFAAAAAAA=</HashCode>
+      <HashCode>IAAAAAAAACACAAAACEAgBAAABAAAAAAAAABFAAAAAAA=</HashCode>
       <FileName>Model\Text.cs</FileName>
     </TypeIdentifier>
   </Class>

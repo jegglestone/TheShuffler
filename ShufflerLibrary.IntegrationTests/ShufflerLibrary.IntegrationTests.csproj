@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{925F2E1E-B2A4-4015-B030-C35018B41234}</ProjectGuid>
+    <ProjectGuid>{3C1C18DA-1472-4058-975C-0420387249AD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ShufflerLibrary</RootNamespace>
-    <AssemblyName>ShufflerLibrary</AssemblyName>
+    <RootNamespace>ShufflerLibrary.IntegrationTests</RootNamespace>
+    <AssemblyName>ShufflerLibrary.IntegrationTests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,11 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,24 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccess\IDataAccess.cs" />
-    <Compile Include="DataAccess\ShufflerDataAccess.cs" />
-    <Compile Include="Model\Document.cs" />
-    <Compile Include="Model\Paragraph.cs" />
-    <Compile Include="Model\Sentence.cs" />
-    <Compile Include="Model\Text.cs" />
-    <Compile Include="PhraseElement.cs" />
-    <Compile Include="Repository\ShufflerPhraseRepository.cs" />
-    <Compile Include="Shuffler.cs" />
-    <Compile Include="IShuffler.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="Model\ModelClassDiagram.cd" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Strategies\" />
+    <ProjectReference Include="..\ShufflerLibrary\ShufflerLibrary.csproj">
+      <Project>{925f2e1e-b2a4-4015-b030-c35018b41234}</Project>
+      <Name>ShufflerLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

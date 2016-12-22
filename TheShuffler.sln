@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShufflerLibrary", "Shuffler
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness", "TestHarness\TestHarness.csproj", "{DACA59C0-C29B-4F31-9D76-5698B9260BE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShufflerLibrary.IntegrationTests", "ShufflerLibrary.IntegrationTests\ShufflerLibrary.IntegrationTests.csproj", "{3C1C18DA-1472-4058-975C-0420387249AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,18 @@ Global
 		{DACA59C0-C29B-4F31-9D76-5698B9260BE2}.Release|x64.Build.0 = Release|Any CPU
 		{DACA59C0-C29B-4F31-9D76-5698B9260BE2}.Release|x86.ActiveCfg = Release|Any CPU
 		{DACA59C0-C29B-4F31-9D76-5698B9260BE2}.Release|x86.Build.0 = Release|Any CPU
+		{3C1C18DA-1472-4058-975C-0420387249AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C1C18DA-1472-4058-975C-0420387249AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C1C18DA-1472-4058-975C-0420387249AD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3C1C18DA-1472-4058-975C-0420387249AD}.Debug|x64.Build.0 = Debug|Any CPU
+		{3C1C18DA-1472-4058-975C-0420387249AD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3C1C18DA-1472-4058-975C-0420387249AD}.Debug|x86.Build.0 = Debug|Any CPU
+		{3C1C18DA-1472-4058-975C-0420387249AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C1C18DA-1472-4058-975C-0420387249AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C1C18DA-1472-4058-975C-0420387249AD}.Release|x64.ActiveCfg = Release|Any CPU
+		{3C1C18DA-1472-4058-975C-0420387249AD}.Release|x64.Build.0 = Release|Any CPU
+		{3C1C18DA-1472-4058-975C-0420387249AD}.Release|x86.ActiveCfg = Release|Any CPU
+		{3C1C18DA-1472-4058-975C-0420387249AD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

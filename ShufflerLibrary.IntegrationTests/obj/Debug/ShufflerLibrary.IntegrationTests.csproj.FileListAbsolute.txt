@@ -1,0 +1,9 @@
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\ShufflerLibrary.IntegrationTests\bin\Debug\ShufflerLibrary.IntegrationTests.dll
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\ShufflerLibrary.IntegrationTests\bin\Debug\ShufflerLibrary.IntegrationTests.pdb
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\ShufflerLibrary.IntegrationTests\bin\Debug\ShufflerLibrary.dll
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\ShufflerLibrary.IntegrationTests\bin\Debug\ShufflerLibrary.pdb
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\ShufflerLibrary.IntegrationTests\obj\Debug\ShufflerLibrary.IntegrationTests.csprojResolveAssemblyReference.cache
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\ShufflerLibrary.IntegrationTests\obj\Debug\ShufflerLibrary.IntegrationTests.dll
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\ShufflerLibrary.IntegrationTests\obj\Debug\ShufflerLibrary.IntegrationTests.pdb
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\ShufflerLibrary.IntegrationTests\bin\Debug\nunit.framework.dll
+C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\ShufflerLibrary.IntegrationTests\bin\Debug\nunit.framework.xml

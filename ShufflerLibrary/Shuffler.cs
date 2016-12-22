@@ -17,9 +17,10 @@
         public bool ShuffleParagraph(int pe_pmd_id)
         {
             // get the sentence from the database
-            _shufflerPhraseRepository.GetShufflerDocument(pe_pmd_id);
+            var document = _shufflerPhraseRepository.GetShufflerDocument(pe_pmd_id);
 
             // run each sentence through our shuffle strategies 
+
 
             // save the output back to the database
 
