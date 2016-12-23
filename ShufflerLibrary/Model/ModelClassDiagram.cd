@@ -44,5 +44,29 @@
       <FileName>PhraseElement.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="ShufflerLibrary.Repository.ShufflerPhraseRepository">
+    <Position X="3" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAIAAAgEAAAAA=</HashCode>
+      <FileName>Repository\ShufflerPhraseRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ShufflerLibrary.Shuffler">
+    <Position X="0.75" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Shuffler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ShufflerLibrary.DataAccess.ShufflerDataAccess">
+    <Position X="5.25" Y="6" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataAccess\ShufflerDataAccess.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
