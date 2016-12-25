@@ -50,14 +50,6 @@
                 }
             }
         
-
-
-
-
-            // TODO: AGGREGATE TEXTS INTO SENTENCES WHERE THERE IS A BKP.
-
-            // TODO: IF pe_para_no CHANGES THEN ADD A NEW PARAGRAPH
-
             return document;
         }
 

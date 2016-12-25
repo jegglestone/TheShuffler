@@ -21,3 +21,14 @@ C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\Shuff
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\ShufflerLibrary.Tests\obj\Debug\ShufflerLibrary.Tests.dll
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\ShufflerLibrary.Tests\obj\Debug\ShufflerLibrary.Tests.pdb
 C:\Users\jegglestone\Desktop\shuffler\How to remove blank pages in word\C#\ShufflerLibrary.Tests\bin\Debug\ShufflerLibrary.Tests.dll.config
+C:\Dev\TheShuffler\ShufflerLibrary.Tests\bin\Debug\ShufflerLibrary.Tests.dll.config
+C:\Dev\TheShuffler\ShufflerLibrary.Tests\bin\Debug\ShufflerLibrary.Tests.dll
+C:\Dev\TheShuffler\ShufflerLibrary.Tests\bin\Debug\ShufflerLibrary.Tests.pdb
+C:\Dev\TheShuffler\ShufflerLibrary.Tests\bin\Debug\Rhino.Mocks.dll
+C:\Dev\TheShuffler\ShufflerLibrary.Tests\bin\Debug\ShufflerLibrary.dll
+C:\Dev\TheShuffler\ShufflerLibrary.Tests\bin\Debug\ShufflerLibrary.pdb
+C:\Dev\TheShuffler\ShufflerLibrary.Tests\bin\Debug\nunit.framework.xml
+C:\Dev\TheShuffler\ShufflerLibrary.Tests\bin\Debug\Rhino.Mocks.xml
+C:\Dev\TheShuffler\ShufflerLibrary.Tests\obj\Debug\ShufflerLibrary.Tests.csprojResolveAssemblyReference.cache
+C:\Dev\TheShuffler\ShufflerLibrary.Tests\obj\Debug\ShufflerLibrary.Tests.dll
+C:\Dev\TheShuffler\ShufflerLibrary.Tests\obj\Debug\ShufflerLibrary.Tests.pdb

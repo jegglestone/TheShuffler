@@ -20,3 +20,14 @@ C:\Users\jegglestone\TheShuffler\TestHarness\obj\Debug\TestHarness.csprojResolve
 C:\Users\jegglestone\TheShuffler\TestHarness\obj\Debug\TestHarness.Properties.Resources.resources
 C:\Users\jegglestone\TheShuffler\TestHarness\obj\Debug\TestHarness.TestHarness.resources
 C:\Users\jegglestone\TheShuffler\TestHarness\obj\Debug\TestHarness.csproj.GenerateResource.Cache
+C:\Dev\TheShuffler\TestHarness\bin\Debug\TestHarness.exe.config
+C:\Dev\TheShuffler\TestHarness\obj\Debug\TestHarness.exe
+C:\Dev\TheShuffler\TestHarness\obj\Debug\TestHarness.pdb
+C:\Dev\TheShuffler\TestHarness\bin\Debug\TestHarness.exe
+C:\Dev\TheShuffler\TestHarness\bin\Debug\TestHarness.pdb
+C:\Dev\TheShuffler\TestHarness\bin\Debug\ShufflerLibrary.dll
+C:\Dev\TheShuffler\TestHarness\bin\Debug\ShufflerLibrary.pdb
+C:\Dev\TheShuffler\TestHarness\obj\Debug\TestHarness.csprojResolveAssemblyReference.cache
+C:\Dev\TheShuffler\TestHarness\obj\Debug\TestHarness.Properties.Resources.resources
+C:\Dev\TheShuffler\TestHarness\obj\Debug\TestHarness.TestHarness.resources
+C:\Dev\TheShuffler\TestHarness\obj\Debug\TestHarness.csproj.GenerateResource.Cache
