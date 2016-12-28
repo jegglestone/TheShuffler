@@ -1,4 +1,4 @@
-﻿namespace ShufflerLibrary.Strategies
+﻿namespace ShufflerLibrary.Strategy
 {
     using Model;
 

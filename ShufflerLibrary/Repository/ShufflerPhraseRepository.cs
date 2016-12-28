@@ -84,7 +84,24 @@
 
         public bool SaveShuffledDocument(Document document)
         {
-            throw new System.NotImplementedException();
+            foreach (var paragraph in document.Paragraphs)
+            {
+                foreach (var sentence in paragraph.Sentences)
+                {
+                    foreach (var text in sentence.Texts)
+                    {
+                        // call dal to insert
+                        _dataAccess.SaveText(document.pe_pmd_id,
+                            text.pe_user_id, paragraph.pe_para_no,
+                            text.pe_phrase_id, text.pe_word_id, text.pe_tag,
+                            text.pe_text, text.pe_tag_revised, text.pe_merge_ahead,
+                            text.pe_text_revised,
+                            text.pe_rule_applied, text.pe_order, text.pe_C_num);
+                    }
+                }
+            }
+
+            return true; // TODO: sort this out or make void
         }
 
 

@@ -51,11 +51,12 @@
     <Compile Include="Model\Text.cs" />
     <Compile Include="PhraseElement.cs" />
     <Compile Include="Repository\ShufflerPhraseRepository.cs" />
+    <Compile Include="Helper\SentenceOrderReSetter.cs" />
     <Compile Include="Shuffler.cs" />
     <Compile Include="IShuffler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Strategies\ClauserUnitStrategy.cs" />
-    <Compile Include="Strategies\IStrategy.cs" />
+    <Compile Include="Strategy\ClauserUnitStrategy.cs" />
+    <Compile Include="Strategy\IStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -10,9 +10,9 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "ShufflerInstall", "SetupPro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShufflerLibrary", "ShufflerLibrary\ShufflerLibrary.csproj", "{925F2E1E-B2A4-4015-B030-C35018B41234}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness", "TestHarness\TestHarness.csproj", "{DACA59C0-C29B-4F31-9D76-5698B9260BE2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShufflerLibrary.Tests", "ShufflerLibrary.Tests\ShufflerLibrary.Tests.csproj", "{3C1C18DA-1472-4058-975C-0420387249AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{F953192A-15ED-4970-BBC4-B6DF5606B166}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,18 +68,6 @@ Global
 		{925F2E1E-B2A4-4015-B030-C35018B41234}.Release|x64.Build.0 = Release|Any CPU
 		{925F2E1E-B2A4-4015-B030-C35018B41234}.Release|x86.ActiveCfg = Release|Any CPU
 		{925F2E1E-B2A4-4015-B030-C35018B41234}.Release|x86.Build.0 = Release|Any CPU
-		{DACA59C0-C29B-4F31-9D76-5698B9260BE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DACA59C0-C29B-4F31-9D76-5698B9260BE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DACA59C0-C29B-4F31-9D76-5698B9260BE2}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{DACA59C0-C29B-4F31-9D76-5698B9260BE2}.Debug|x64.Build.0 = Debug|Any CPU
-		{DACA59C0-C29B-4F31-9D76-5698B9260BE2}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{DACA59C0-C29B-4F31-9D76-5698B9260BE2}.Debug|x86.Build.0 = Debug|Any CPU
-		{DACA59C0-C29B-4F31-9D76-5698B9260BE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DACA59C0-C29B-4F31-9D76-5698B9260BE2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DACA59C0-C29B-4F31-9D76-5698B9260BE2}.Release|x64.ActiveCfg = Release|Any CPU
-		{DACA59C0-C29B-4F31-9D76-5698B9260BE2}.Release|x64.Build.0 = Release|Any CPU
-		{DACA59C0-C29B-4F31-9D76-5698B9260BE2}.Release|x86.ActiveCfg = Release|Any CPU
-		{DACA59C0-C29B-4F31-9D76-5698B9260BE2}.Release|x86.Build.0 = Release|Any CPU
 		{3C1C18DA-1472-4058-975C-0420387249AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3C1C18DA-1472-4058-975C-0420387249AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C1C18DA-1472-4058-975C-0420387249AD}.Debug|x64.ActiveCfg = Debug|Any CPU

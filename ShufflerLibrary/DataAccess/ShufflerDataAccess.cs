@@ -8,11 +8,13 @@ namespace ShufflerLibrary.DataAccess
     {
         public IDataReader GetDataReader(int pe_pmd_id)
         {
-            // todo: sort this into a parameterised sproc or something
-            var command = new SqlCommand(@"
-                SELECT * FROM [dbo].[v3_Phrase_Element]
-                WHERE pe_pmd_id = " + pe_pmd_id +
-                "ORDER BY pe_order");
+            var command = new SqlCommand
+            {
+                CommandType = CommandType.StoredProcedure,
+                CommandText = "dbo.GetDocumentById"
+            };
+            command.Parameters.AddWithValue(
+                "@pe_pmd_id", pe_pmd_id); 
 
             string connectionString = 
                 ConfigurationManager.
@@ -29,6 +31,12 @@ namespace ShufflerLibrary.DataAccess
                 CommandBehavior.CloseConnection);
 
             return dr;
+        }
+
+        public void SaveText(int pePmdID, int peUserID, int peParaNo, int pePhraseID, int? peWordID, string peTag, string peText,
+            string peTagRevised, int peMergeAhead, string peTextRevised, string peRuleApplied, int peOrder, int peCNum)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

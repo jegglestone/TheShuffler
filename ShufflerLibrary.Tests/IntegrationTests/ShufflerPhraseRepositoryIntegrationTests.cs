@@ -18,10 +18,5 @@
             Assert.That(document.Paragraphs.Count, Is.EqualTo(1));
             Assert.That(document.Paragraphs[0].Sentences.Count, Is.EqualTo(2));
         }
-
-        public void GetsMultipleParagraphsFromDataSource()
-        {
-            
-        }
     }
 }

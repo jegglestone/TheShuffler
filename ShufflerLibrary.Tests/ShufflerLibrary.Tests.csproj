@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="IntegrationTests\ClauserUnitStrategyTests.cs" />
     <Compile Include="IntegrationTests\ShufflerPhraseRepositoryIntegrationTests.cs" />
+    <Compile Include="Unit\SentenceOrderReSetterUnitTests.cs" />
     <Compile Include="Unit\ShufflerPhraseRepositoryUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
