@@ -8,14 +8,14 @@ DROP PROCEDURE dbo.GetDocumentById
 GO
 -- =============================================
 -- Author:		Joseph Egglestone
--- Create date: 28.16/2016
+-- Create date: 28/16/2016
 -- Description:	Gets all paragraphs, sentences
 --				and texts for a document by pe_pmd_id
 
 --	EXEC dbo.GetDocumentById 2012
 -- =============================================
 CREATE PROCEDURE [dbo].[GetDocumentById]
-	-- Add the parameters for the stored procedure here
+
 	@pe_pmd_id int
 AS
 BEGIN

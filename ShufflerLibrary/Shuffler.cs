@@ -43,9 +43,7 @@
             }
             
             // save the output back to the database
-            _shufflerPhraseRepository.SaveShuffledDocument(document);
-
-            return true;
+            return _shufflerPhraseRepository.SaveShuffledDocument(document);
         }
 
         private void ShuffleSentence(Paragraph paragraph, int index, Sentence sentence)

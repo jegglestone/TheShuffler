@@ -4,8 +4,18 @@ using System.Data.SqlClient;
 
 namespace ShufflerLibrary.DataAccess
 {
+    using System;
+
     public class ShufflerDataAccess : IDataAccess
     {
+        private readonly string connectionString =
+                ConfigurationManager.
+                    ConnectionStrings["ShufflerDatabaseConnection"].ConnectionString;
+
+        private SqlDataReader dataReader;
+
+        private SqlConnection cn;
+
         public IDataReader GetDataReader(int pe_pmd_id)
         {
             var command = new SqlCommand
@@ -14,29 +24,57 @@ namespace ShufflerLibrary.DataAccess
                 CommandText = "dbo.GetDocumentById"
             };
             command.Parameters.AddWithValue(
-                "@pe_pmd_id", pe_pmd_id); 
+                "@pe_pmd_id", pe_pmd_id);
 
-            string connectionString = 
-                ConfigurationManager.
-                    ConnectionStrings["ShufflerDatabaseConnection"].ConnectionString;
-
-            var cn = new SqlConnection(
+            cn = new SqlConnection(
                 connectionString);
 
             command.Connection = cn;
 
             cn.Open();
 
-            SqlDataReader dr = command.ExecuteReader(
+            dataReader = command.ExecuteReader(
                 CommandBehavior.CloseConnection);
-
-            return dr;
+            
+            return dataReader;
         }
 
-        public void SaveText(int pePmdID, int peUserID, int peParaNo, int pePhraseID, int? peWordID, string peTag, string peText,
+        public bool SaveText(int pePmdID, int peUserID, int peParaNo, int pePhraseID, int? peWordID, string peTag, string peText,
             string peTagRevised, int peMergeAhead, string peTextRevised, string peRuleApplied, int peOrder, int peCNum)
         {
-            throw new System.NotImplementedException();
+            
+            using (cn = new SqlConnection(connectionString))
+            {
+                var command = new SqlCommand
+                {
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "dbo.[SaveShuffledText]",
+                    Connection = cn,
+                };
+                command.Parameters.AddWithValue("@pe_pmd_id", pePmdID);
+                command.Parameters.AddWithValue("@pe_user_id", peUserID);
+                command.Parameters.AddWithValue("@pe_para_no", peParaNo);
+                command.Parameters.AddWithValue("@pe_phrase_id", pePhraseID);
+                command.Parameters.AddWithValue("@pe_word_id", peWordID);
+                command.Parameters.AddWithValue("@pe_tag", peTag);
+                command.Parameters.AddWithValue("@pe_text", peText);
+                command.Parameters.AddWithValue("@pe_tag_revised", peTagRevised);
+                command.Parameters.AddWithValue("@pe_merge_ahead", peMergeAhead);
+                command.Parameters.AddWithValue("@pe_text_revised", peTextRevised);
+                command.Parameters.AddWithValue("@pe_rule_applied", peRuleApplied);
+                command.Parameters.AddWithValue("@pe_order", peOrder);
+                command.Parameters.AddWithValue("@pe_C_num", peCNum);
+                cn.Open();
+
+                return command.ExecuteNonQuery() == 1;
+            }
+        }
+
+        public void Dispose()
+        {
+            // dispose connection and datareader etc
+            dataReader?.Dispose();
+            cn?.Dispose();
         }
     }
 }
