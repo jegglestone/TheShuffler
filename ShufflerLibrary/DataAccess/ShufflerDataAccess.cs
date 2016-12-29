@@ -4,8 +4,6 @@ using System.Data.SqlClient;
 
 namespace ShufflerLibrary.DataAccess
 {
-    using System;
-
     public class ShufflerDataAccess : IDataAccess
     {
         private readonly string connectionString =
