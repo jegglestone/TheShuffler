@@ -27,11 +27,9 @@
 
         public bool ShuffleParagraph(int pe_pmd_id)
         {
-            // get the sentence from the database
             var document = 
                 _shufflerPhraseRepository.GetShufflerDocument(pe_pmd_id);
-
-            // run each sentence through our shuffle strategies 
+            
             for (int i = 0; i < document.Paragraphs.Count; i++)
             {
                 var paragraph = document.Paragraphs[i];
