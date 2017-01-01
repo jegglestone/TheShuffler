@@ -10,7 +10,7 @@ namespace ShufflerLibrary.Tests.IntegrationTests
     public class ClauserUnitStrategyTests
     {
         [Test]
-        public void WhenClauserAndNBKPMoveToBeginningOfSentence()
+        public void When_Clauser_And_NBKP_MoveToBeginningOfSentence()
         {
             // TMIn April and May NBKP, CShowever NBKP, PRENthe NNreport VBwasn’t ADJgood BKP.
             
@@ -43,7 +43,7 @@ namespace ShufflerLibrary.Tests.IntegrationTests
         }
 
         [Test]
-        public void WhenClauserAndNBKPMoveToAfterNulThat()
+        public void When_Clauser_And_NulThat_WithoutNBKP_MoveToAfterNulThat()
         {
             // We were for PRENthe NNplan NULthat VBwas ADVwell PASTstructured CShowever long BKP.
 
@@ -73,6 +73,12 @@ namespace ShufflerLibrary.Tests.IntegrationTests
             Assert.That(sentenceReturned.Texts[9].pe_text, Is.EqualTo(" well "));
             Assert.That(sentenceReturned.Texts[10].pe_text, Is.EqualTo(" structured "));
             Assert.That(sentenceReturned.Texts[11].pe_text, Is.EqualTo(" . "));
+        }
+
+        [Test]
+        public void When_Clauser_WithoutNBKP_ShuffleClauserAndRestOfSentence_To_BeginningOfSentence()
+        {
+            
         }
     }
 }
