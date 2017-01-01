@@ -24,19 +24,14 @@
             return sentence.Texts.FindIndex(
                 text => text.pe_tag == UnitTypes.CS_ClauserUnit);
         }
-
-        private static int SentenceSize(Sentence sentence)
-        {
-            return sentence.Texts.Count;
-        }
-
+        
         private static int GetIndexPositionOfFirstNBKPAfterClauser(Sentence sentence, int clauserPosition)
         {
             //TODO: cater for pe_tag_revised
             return sentence
                     .Texts
                     .GetRange(
-                        clauserPosition, SentenceSize(sentence) - clauserPosition)
+                        clauserPosition, sentence.TextCount - clauserPosition)
                     .FindIndex(
                         text => text.pe_tag == UnitTypes.NBKP_NonBreakerPunctuation
                             || text.pe_tag_revised == UnitTypes.NBKP_NonBreakerPunctuation) + clauserPosition;
@@ -45,7 +40,7 @@
         private static int GetNulThatPosition(Sentence sentence)
         {
             return sentence.Texts.FindIndex(
-                IsNulThat);
+                text => text.IsNulThat);
         }
 
         public Sentence ShuffleSentence(Sentence sentence)
@@ -70,13 +65,13 @@
         {
             List<Text> newSentence;
 
-            int endOfSentencePosition = SentenceSize(sentence)- 2; // zero index and full stop
+            int endOfSentencePosition = sentence.TextCount - 2; // zero index and full stop
 
             List<Text> clauserTexts =
                 GetClauserUnit(sentence, clauserPosition, endOfSentencePosition);
 
             if (sentence.Texts.Take(clauserPosition).Any(
-                IsNulThat)) // TODO: Before CS only
+                text => text.IsNulThat)) // TODO: Before CS only
             {
                 //move to after nulThat
                 newSentence = 
@@ -107,7 +102,7 @@
                 GetClauserUnit(sentence, clauserPosition, nbkpPosition);
 
             if (sentence.Texts.Take(clauserPosition).Any(
-                IsNulThat))
+                text => text.IsNulThat))
             {
                 newSentence = MoveClauserAndNBKPToAfterNulThat(
                     sentence, clauserTexts, nbkpPosition);
@@ -138,7 +133,7 @@
         {
             return sentence.Texts.GetRange(
                             position + 1,
-                            SentenceSize(sentence) - position - 1);
+                            sentence.TextCount - position - 1);
         }
 
         //TODO: Test coverage needed
@@ -174,10 +169,10 @@
             newSentence.AddRange(
                 sentence.Texts.GetRange(
                     nulThatPosition + 1,
-                    SentenceSize(sentence) - newSentence.Count - 1)); // another minus one?
+                    sentence.TextCount - newSentence.Count - 1)); // another minus one?
             newSentence.AddRange(
                 sentence.Texts.GetRange(
-                    SentenceSize(sentence) - 1, 1)); // full stop position
+                    sentence.TextCount - 1, 1)); // full stop position
 
             return newSentence;
         }
@@ -190,7 +185,7 @@
                 clauserTexts);
             newSentence.AddRange(
                 sentence.Texts.GetRange(
-                    clauserPosition, SentenceSize(sentence) - 1 - clauserPosition));
+                    clauserPosition, sentence.TextCount - 1 - clauserPosition));
 
             return newSentence;
         }
@@ -206,18 +201,6 @@
             }
 
             return clauserTexts;
-        }
-
-        // TODO: property of Text class?
-        private static bool IsNulThat(Text text)
-        {
-            return text.pe_tag_revised == "NUL" &&
-                            (text.pe_text == " that " || text.pe_tag_revised == " that ");
-        }
-
-        private static void MoveClauserUnitAndNKBPToAfterNulThat(Sentence sentence)
-        {
-            
         }
 
         public class UnitTypes

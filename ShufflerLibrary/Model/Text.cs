@@ -13,5 +13,9 @@
         public string pe_rule_applied { get; set; }
         public int pe_order { get; set; }
         public int pe_C_num { get; set; }
+
+        public bool IsNulThat => 
+            pe_tag_revised == "NUL" 
+            && (pe_text == " that " || pe_tag_revised == " that ");
     }
 }
