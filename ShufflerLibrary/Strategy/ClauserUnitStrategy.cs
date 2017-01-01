@@ -25,13 +25,18 @@
                 text => text.pe_tag == UnitTypes.CS_ClauserUnit);
         }
 
+        private static int SentenceSize(Sentence sentence)
+        {
+            return sentence.Texts.Count;
+        }
+
         private static int GetIndexPositionOfFirstNBKPAfterClauser(Sentence sentence, int clauserPosition)
         {
             //TODO: cater for pe_tag_revised
             return sentence
                     .Texts
                     .GetRange(
-                        clauserPosition, sentence.Texts.Count - clauserPosition)
+                        clauserPosition, SentenceSize(sentence) - clauserPosition)
                     .FindIndex(
                         text => text.pe_tag == UnitTypes.NBKP_NonBreakerPunctuation
                             || text.pe_tag_revised == UnitTypes.NBKP_NonBreakerPunctuation) + clauserPosition;
@@ -65,7 +70,7 @@
         {
             List<Text> newSentence;
 
-            int endOfSentencePosition = sentence.Texts.Count - 2; // zero index and full stop
+            int endOfSentencePosition = SentenceSize(sentence)- 2; // zero index and full stop
 
             List<Text> clauserTexts =
                 GetClauserUnit(sentence, clauserPosition, endOfSentencePosition);
@@ -133,7 +138,7 @@
         {
             return sentence.Texts.GetRange(
                             position + 1,
-                            sentence.Texts.Count - position - 1);
+                            SentenceSize(sentence) - position - 1);
         }
 
         //TODO: Test coverage needed
@@ -169,10 +174,10 @@
             newSentence.AddRange(
                 sentence.Texts.GetRange(
                     nulThatPosition + 1,
-                    sentence.Texts.Count - newSentence.Count - 1)); // another minus one?
+                    SentenceSize(sentence) - newSentence.Count - 1)); // another minus one?
             newSentence.AddRange(
                 sentence.Texts.GetRange(
-                    sentence.Texts.Count - 1, 1)); // full stop position
+                    SentenceSize(sentence) - 1, 1)); // full stop position
 
             return newSentence;
         }
@@ -185,7 +190,7 @@
                 clauserTexts);
             newSentence.AddRange(
                 sentence.Texts.GetRange(
-                    clauserPosition, sentence.Texts.Count - 1 - clauserPosition));
+                    clauserPosition, SentenceSize(sentence) - 1 - clauserPosition));
 
             return newSentence;
         }
