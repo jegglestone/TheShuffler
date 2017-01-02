@@ -1,4 +1,4 @@
-﻿namespace ShufflerLibrary
+﻿namespace ShufflerLibrary.Model
 {
     public class PhraseElement
     {

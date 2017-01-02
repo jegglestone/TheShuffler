@@ -40,5 +40,11 @@
                                 (text.pe_tag_revised == "NULL" && text.pe_tag == UnitTypes.CS_ClauserUnit)
                                 || (text.pe_tag_revised == UnitTypes.CS_ClauserUnit));
         }
+
+        public bool HasAdverb()
+        {
+            return Texts.Any(
+                text => text.IsAdverb);
+        }
     }
 }

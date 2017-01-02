@@ -47,6 +47,7 @@
     <Compile Include="IntegrationTests\ClauserUnitStrategyTests.cs" />
     <Compile Include="IntegrationTests\ShufflerPhraseRepositoryIntegrationTests.cs" />
     <Compile Include="IntegrationTests\ShufflerTests.cs" />
+    <Compile Include="Unit\AdverbUnitStrategyTests.cs" />
     <Compile Include="Unit\SentenceOrderReSetterUnitTests.cs" />
     <Compile Include="Unit\SentenceUnitTests.cs" />
     <Compile Include="Unit\ShufflerPhraseRepositoryUnitTests.cs" />

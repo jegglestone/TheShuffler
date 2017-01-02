@@ -184,6 +184,7 @@ namespace ShufflerLibrary.Tests.IntegrationTests
             sentence.Texts.Add(new Text{pe_text = " I " });
             sentence.Texts.Add(new Text { pe_text = " think " });
             sentence.Texts.Add(new Text {pe_text = " . ", pe_tag="BKP"});
+            sentence.pe_para_no = 123;
 
             // act
             var sentenceReturned = clauserUnitStrategy.ShuffleSentence(
@@ -207,7 +208,8 @@ namespace ShufflerLibrary.Tests.IntegrationTests
             Assert.That(sentenceReturned.Texts[14].pe_text, Is.EqualTo(" I "));
             Assert.That(sentenceReturned.Texts[15].pe_text, Is.EqualTo(" think "));
             Assert.That(sentenceReturned.Texts[16].pe_text, Is.EqualTo(" . "));
-            
+
+            Assert.That(sentenceReturned.pe_para_no, Is.EqualTo(123));
         }
 
         [TearDown]
