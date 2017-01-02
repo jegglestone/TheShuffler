@@ -37,7 +37,9 @@ namespace ShufflerLibrary.Decorator
             get
             {
                 return Sentence.Texts.Skip(ClauserIndexPosition).Any(
-                    text => text.pe_tag == UnitTypes.NBKP_NonBreakerPunctuation);
+                            text =>
+                                (text.pe_tag_revised == "NULL" && text.pe_tag == UnitTypes.NBKP_NonBreakerPunctuation)
+                                || (text.pe_tag_revised == UnitTypes.NBKP_NonBreakerPunctuation));
             }
         }
 

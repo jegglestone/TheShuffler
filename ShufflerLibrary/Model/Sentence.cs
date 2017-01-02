@@ -11,6 +11,14 @@ namespace ShufflerLibrary.Model
 
         public int TextCount => Texts.Count;
 
+        public Text SentenceBreaker
+        {
+            get
+            {
+                return Texts.Last(text => text.pe_tag == "BKP");
+            }
+        }
+
         public string SentenceLine
         {
             get

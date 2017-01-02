@@ -98,7 +98,7 @@
                 text => text.IsNulThat))
             {
                 newSentence = MoveClauserAndNBKPToAfterNulThat(
-                    clauserSentence.Sentence, clauserTexts, nbkpPosition);
+                    clauserSentence.Sentence, clauserPosition, clauserTexts, nbkpPosition);
             }
             else
             {
@@ -122,22 +122,28 @@
             return newSentence;
         }
 
-        //TODO: Test coverage needed
         private static List<Text> MoveClauserAndNBKPToAfterNulThat(
             Sentence sentence,
+            int clauserPosition,
             IEnumerable<Text> clauserTexts,
             int nbkpPosition)
         {
             int nulThatPosition =
                 GetNulThatPosition(sentence);
+
             List<Text> newSentence = new List<Text>();
 
             newSentence.AddRange(
                 sentence.Texts.GetRange(0, nulThatPosition + 1));
             newSentence.AddRange(
                 clauserTexts);
-            newSentence.AddRange(
-                GetRemaingTextsCount(sentence, nbkpPosition));
+            newSentence.AddRange(sentence.Texts.GetRange(
+                nulThatPosition + 1,
+                clauserPosition - nulThatPosition -1));
+
+            var remainder = GetRemaingTextsCount(sentence, nbkpPosition);
+            newSentence.AddRange(remainder);
+            
             return newSentence;
         }
 
@@ -159,7 +165,7 @@
                     nulThatPosition + 1,
                     sentence.TextCount - newSentence.Count));
             newSentence.Add(
-                GetSentenceBreaker(sentence));
+                sentence.SentenceBreaker);
 
             return newSentence;
         }
@@ -175,7 +181,7 @@
             newSentence.AddRange(
                 sentence.Texts.GetRange(
                     0, clauserPosition));
-            newSentence.Add(GetSentenceBreaker(sentence));
+            newSentence.Add(sentence.SentenceBreaker);
 
             return newSentence;
         }
@@ -191,15 +197,6 @@
                 pe_text = " , ",
                 pe_user_id = unitTexts[0].pe_user_id
             };
-        }
-
-        private static Text GetSentenceBreaker(Sentence sentence)
-        {
-            // check tag is bkp
-            //return sentence.Texts.GetRange(
-            //    sentence.TextCount - 1, 1);
-
-            return sentence.Texts.Last(text => text.pe_tag == "BKP");
-        }
+        }        
     }
 }
