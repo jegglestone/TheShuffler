@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-
-namespace ShufflerLibrary.Model
+﻿namespace ShufflerLibrary.Model
 {
     using System.Linq;
     using System.Text;
+    using System.Collections.Generic;
 
     public class Sentence : PhraseElement
     {
         public List<Text> Texts { get; set; } = new List<Text>();
-
         public int TextCount => Texts.Count;
 
         public Text SentenceBreaker
@@ -23,7 +21,7 @@ namespace ShufflerLibrary.Model
         {
             get
             {
-                StringBuilder sentenceLine = new StringBuilder(TextCount);
+                var sentenceLine = new StringBuilder(TextCount);
                 foreach (var text in Texts)
                 {
                     sentenceLine.Append(

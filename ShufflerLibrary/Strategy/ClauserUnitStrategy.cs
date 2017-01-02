@@ -33,20 +33,30 @@
                             sentence.TextCount - position - 1);
         }
 
+        private static bool ClauserIsAlreadyAtBeginningOf(Sentence sentence)
+        {
+            return sentence.Texts.First().pe_tag_revised == UnitTypes.CS_ClauserUnit ||
+                            (sentence.Texts.First().pe_tag_revised == "NULL"
+                                && sentence.Texts.First().pe_tag == UnitTypes.CS_ClauserUnit);
+        }
+
         public Sentence ShuffleSentence(Sentence sentence)
         {
             if (!sentence.HasClauser())
                 return sentence;
 
+            if (ClauserIsAlreadyAtBeginningOf(sentence))
+                return sentence;
+
             _clauserSentence = new ClauserSentenceDecorator(sentence);
-            
+
             if (_clauserSentence.ClauserProceededByNBKP)
             {
                 ShuffleClauserUnitAndNBKP(
                     _clauserSentence, _clauserSentence.ClauserIndexPosition);
                 return _clauserSentence.Sentence;
             }
-            
+
             ShuffleClauserUnitAndRestOfSentence(
                 _clauserSentence, _clauserSentence.ClauserIndexPosition);
 
@@ -64,7 +74,7 @@
                 clauserSentence.GetClauserUnit(clauserPosition, endOfSentencePosition);
 
             if (clauserSentence.Sentence.Texts.Take(clauserPosition).Any(
-                text => text.IsNulThat)) // TODO: Before CS only
+                text => text.IsNulThat)) 
             {
                 //move to after nulThat
                 newSentence = 
