@@ -45,10 +45,12 @@
   <ItemGroup>
     <Compile Include="DataAccess\IDataAccess.cs" />
     <Compile Include="DataAccess\ShufflerDataAccess.cs" />
+    <Compile Include="Decorator\ClauserSentenceDecorator.cs" />
     <Compile Include="Model\Document.cs" />
     <Compile Include="Model\Paragraph.cs" />
     <Compile Include="Model\Sentence.cs" />
     <Compile Include="Model\Text.cs" />
+    <Compile Include="Model\UnitTypes.cs" />
     <Compile Include="PhraseElement.cs" />
     <Compile Include="Repository\ShufflerPhraseRepository.cs" />
     <Compile Include="Helper\SentenceOrderReSetter.cs" />

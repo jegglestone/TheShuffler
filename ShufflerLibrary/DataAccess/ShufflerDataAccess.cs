@@ -40,7 +40,6 @@ namespace ShufflerLibrary.DataAccess
         public bool SaveText(int pePmdID, int peUserID, int peParaNo, int pePhraseID, int? peWordID, string peTag, string peText,
             string peTagRevised, int peMergeAhead, string peTextRevised, string peRuleApplied, int peOrder, int peCNum)
         {
-            
             using (cn = new SqlConnection(connectionString))
             {
                 var command = new SqlCommand
@@ -64,6 +63,7 @@ namespace ShufflerLibrary.DataAccess
                 command.Parameters.AddWithValue("@pe_C_num", peCNum);
                 cn.Open();
 
+                command.Dispose();
                 return command.ExecuteNonQuery() == 1;
             }
         }
@@ -71,6 +71,8 @@ namespace ShufflerLibrary.DataAccess
         public void Dispose()
         {
             // dispose connection and datareader etc
+            if (!dataReader.IsClosed)
+                dataReader.Close();
             dataReader?.Dispose();
             cn?.Dispose();
         }

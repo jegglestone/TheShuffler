@@ -48,6 +48,7 @@
     <Compile Include="IntegrationTests\ShufflerPhraseRepositoryIntegrationTests.cs" />
     <Compile Include="IntegrationTests\ShufflerTests.cs" />
     <Compile Include="Unit\SentenceOrderReSetterUnitTests.cs" />
+    <Compile Include="Unit\SentenceUnitTests.cs" />
     <Compile Include="Unit\ShufflerPhraseRepositoryUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

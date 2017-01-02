@@ -5,7 +5,6 @@
     using Model;
     using DataAccess;
     using System.Data;
-    using System.Linq;
 
     public class ShufflerPhraseRepository : IShufflerPhraseRepository
     {
@@ -31,7 +30,7 @@
                 var text = CreateText(dr);
                 texts.Add(text);
 
-                if (text.pe_text.Replace(" ", "") == ".")//TOTO: Could be ! or ? in future
+                if (text.pe_text.Replace(" ", "") == ".")//TOTO: Could be ! or ? in future.Maybe test for BKP
                 {
                     paragraph.Sentences.Add(
                         new Sentence()
@@ -43,7 +42,6 @@
                     texts = new List<Text>();
                 }
 
-
                 if (paragraph.pe_para_no != text.pe_para_no)
                 {
                     paragraph = new Paragraph {pe_para_no = text.pe_para_no};
@@ -51,6 +49,8 @@
                 }
             }
             _dataAccess.Dispose();
+            dr.Close();
+            dr.Dispose();
             return document;
         }
 
@@ -91,22 +91,29 @@
                 {
                     foreach (var text in sentence.Texts)
                     {
-                        if (
-                            _dataAccess.SaveText(
-                                document.pe_pmd_id, 
-                                text.pe_user_id, 
-                                paragraph.pe_para_no, 
-                                text.pe_phrase_id,
-                                text.pe_word_id, 
-                                text.pe_tag, 
-                                text.pe_text, 
-                                text.pe_tag_revised, 
-                                text.pe_merge_ahead,
-                                text.pe_text_revised, 
-                                text.pe_rule_applied, 
-                                text.pe_order, 
-                                text.pe_C_num) == false)
-                            return false;
+                        try
+                        {
+                            if (
+                                _dataAccess.SaveText(
+                                    document.pe_pmd_id,
+                                    text.pe_user_id,
+                                    paragraph.pe_para_no,
+                                    text.pe_phrase_id,
+                                    text.pe_word_id,
+                                    text.pe_tag,
+                                    text.pe_text,
+                                    text.pe_tag_revised,
+                                    text.pe_merge_ahead,
+                                    text.pe_text_revised,
+                                    text.pe_rule_applied,
+                                    text.pe_order,
+                                    text.pe_C_num) == false)
+                                return false;
+                        }
+                        finally
+                        {
+                            _dataAccess.Dispose();
+                        }
                     }
                 }
             }
