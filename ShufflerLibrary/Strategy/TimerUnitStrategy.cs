@@ -32,7 +32,12 @@
             InsertReversedTimerUnit(
                 timerSentenceDecorator, reversedTexts, firstTimerIndexPosition);
 
-            // TODO: underline with merge_ahead
+            // TODO: underlineTimerUnit
+            int newFirstTimerIndexPosition =
+                timerSentenceDecorator.TimerIndexPosition;
+
+            UnderlineTimerUnit(
+                timerSentenceDecorator, newFirstTimerIndexPosition, reversedTexts.Count);
 
             
 
@@ -65,11 +70,19 @@
                             reversedTexts);
         }
 
-        private static void RemoveTimerUnit(TimerSentenceDecorator timerSentenceDecorator, int firstTimerIndexPosition)
+        private static void RemoveTimerUnit(
+            TimerSentenceDecorator timerSentenceDecorator, int firstTimerIndexPosition)
         {
             timerSentenceDecorator.Texts.RemoveRange(
                             timerSentenceDecorator.TimerIndexPosition,
                             timerSentenceDecorator.LastTimerIndexPosition - firstTimerIndexPosition + 1);
+        }
+
+        private static void UnderlineTimerUnit(
+            TimerSentenceDecorator timerSentenceDecorator, int newFirstTimerIndexPosition, int timerUnitCount)
+        {
+            timerSentenceDecorator.Texts[newFirstTimerIndexPosition].pe_merge_ahead
+                = timerUnitCount - 1;
         }
 
         private static MoveableUnit[] GetTimerUnitPositions(TimerSentenceDecorator timerSentenceDecorator)

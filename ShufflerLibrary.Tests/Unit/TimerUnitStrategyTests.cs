@@ -73,6 +73,8 @@ namespace ShufflerLibrary.Tests.Unit
             Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo(" this "));
             Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo(" time "));
             Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo(" . "));
+
+            Assert.That(returnedSentence.Texts[3].pe_merge_ahead, Is.EqualTo(2));
         }
 
         [Test]
@@ -108,6 +110,8 @@ namespace ShufflerLibrary.Tests.Unit
             Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo(" rose "));
             Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo(" . "));
 
+            Assert.That(returnedSentence.Texts[2].pe_merge_ahead, Is.EqualTo(2));
+
             Assert.That(returnedSentence.pe_para_no, Is.EqualTo(123));
         }
 
@@ -138,12 +142,13 @@ namespace ShufflerLibrary.Tests.Unit
 
             
               //  Real  GPD  rose  by  per month  100
-
+            
             Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo(" Real "));
             Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo(" GDP "));
             Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo(" rose "));
             Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo(" by "));
             Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo(" per month "));
+            Assert.That(returnedSentence.Texts[4].pe_merge_ahead, Is.EqualTo(0));
             Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo(" 100 "));
             Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo(" . "));
         }
