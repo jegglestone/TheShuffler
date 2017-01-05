@@ -9,15 +9,16 @@
     {
         private ClauserSentenceDecorator _clauserSentence;
 
-        private static int GetIndexPositionOfFirstNBKPAfterClauser(Sentence sentence, int clauserPosition)
+        private static int GetIndexPositionOfFirstBKPAfterClauser(Sentence sentence, int clauserPosition)
         {
             return sentence
                     .Texts
                     .GetRange(
                         clauserPosition, sentence.TextCount - clauserPosition)
                     .FindIndex(
-                        text => text.pe_tag == UnitTypes.NBKP_NonBreakerPunctuation
-                            || text.pe_tag_revised == UnitTypes.NBKP_NonBreakerPunctuation) + clauserPosition;
+                        text => (text.pe_tag == UnitTypes.BKP_BreakerPunctuation
+                            || text.pe_tag_revised == UnitTypes.BKP_BreakerPunctuation) 
+                            && text.pe_text == " , ") + clauserPosition;
         }
 
         private static int GetNulThatPosition(Sentence sentence)
@@ -50,9 +51,9 @@
 
             _clauserSentence = new ClauserSentenceDecorator(sentence);
 
-            if (_clauserSentence.ClauserProceededByNBKP)
+            if (_clauserSentence.ClauserProceededByComma)
             {
-                ShuffleClauserUnitAndNBKP(
+                ShuffleClauserUnitAndBKP(
                     _clauserSentence, _clauserSentence.ClauserIndexPosition);
                 return _clauserSentence.Sentence;
             }
@@ -93,12 +94,13 @@
             clauserSentence.Sentence.Texts = newSentence;
         }
 
-        private static void ShuffleClauserUnitAndNBKP(ClauserSentenceDecorator clauserSentence, int clauserPosition)
+        private static void ShuffleClauserUnitAndBKP(
+            ClauserSentenceDecorator clauserSentence, int clauserPosition)
         {
             List<Text> newSentence;
 
             int nbkpPosition =
-                GetIndexPositionOfFirstNBKPAfterClauser(
+                GetIndexPositionOfFirstBKPAfterClauser(
                     clauserSentence.Sentence, clauserPosition);
 
             List<Text> clauserTexts =
@@ -203,7 +205,7 @@
             {
                 pe_para_no = pe_para_no,
                 pe_order = unitTexts[unitTexts.Count - 1].pe_order + 5,
-                pe_tag = UnitTypes.NBKP_NonBreakerPunctuation,
+                pe_tag = UnitTypes.BKP_BreakerPunctuation,
                 pe_text = " , ",
                 pe_user_id = unitTexts[0].pe_user_id
             };

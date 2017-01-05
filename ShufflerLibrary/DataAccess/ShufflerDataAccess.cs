@@ -4,6 +4,8 @@ using System.Data.SqlClient;
 
 namespace ShufflerLibrary.DataAccess
 {
+    using System;
+
     public class ShufflerDataAccess : IDataAccess
     {
         private readonly string connectionString =
@@ -57,7 +59,11 @@ namespace ShufflerLibrary.DataAccess
                 command.Parameters.AddWithValue("@pe_text", peText);
                 command.Parameters.AddWithValue("@pe_tag_revised", peTagRevised);
                 command.Parameters.AddWithValue("@pe_merge_ahead", peMergeAhead);
-                command.Parameters.AddWithValue("@pe_text_revised", peTextRevised);
+
+                if (peTextRevised == "NULL")
+                    command.Parameters.AddWithValue("@pe_text_revised", DBNull.Value);
+                else command.Parameters.AddWithValue("@pe_text_revised", peTextRevised);
+
                 command.Parameters.AddWithValue("@pe_rule_applied", peRuleApplied);
                 command.Parameters.AddWithValue("@pe_order", peOrder);
                 command.Parameters.AddWithValue("@pe_C_num", peCNum);

@@ -7,6 +7,7 @@
     public class Sentence : PhraseElement
     {
         public List<Text> Texts { get; set; } = new List<Text>();
+
         public int TextCount => Texts.Count;
 
         public Text SentenceBreaker
@@ -37,14 +38,19 @@
         {
             return Texts.Any(
                             text =>
-                                (text.pe_tag_revised == "NULL" && text.pe_tag == UnitTypes.CS_ClauserUnit)
-                                || (text.pe_tag_revised == UnitTypes.CS_ClauserUnit));
+                                text.IsClauser);
         }
 
         public bool HasAdverb()
         {
             return Texts.Any(
                 text => text.IsAdverb);
+        }
+
+        public bool HasTimer()
+        {
+            return Texts.Any(
+                text => text.IsTimer);
         }
     }
 }

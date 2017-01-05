@@ -29,7 +29,7 @@ namespace ShufflerLibrary.Tests.IntegrationTests
             });
             sentence.Texts.Add(new Text()
             {
-                pe_tag_revised="NBKP",
+                pe_tag_revised="BKP",
                 pe_text = " , "
             });
             sentence.Texts.Add(new Text()
@@ -179,7 +179,7 @@ namespace ShufflerLibrary.Tests.IntegrationTests
                 pe_text = " that ",
                 pe_tag_revised = "NUL"
             });
-            sentence.Texts[13].pe_tag_revised = "NBKP";
+            sentence.Texts[13].pe_tag_revised = "BKP";
             sentence.Texts[13].pe_text = " , ";
             sentence.Texts.Add(new Text{pe_text = " I " });
             sentence.Texts.Add(new Text { pe_text = " think " });

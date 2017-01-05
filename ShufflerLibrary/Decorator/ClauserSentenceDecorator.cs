@@ -32,14 +32,15 @@ namespace ShufflerLibrary.Decorator
             }
         }
 
-        public bool ClauserProceededByNBKP
+        public bool ClauserProceededByComma
         {
             get
             {
                 return Sentence.Texts.Skip(ClauserIndexPosition).Any(
                             text =>
-                                (text.pe_tag_revised == "NULL" && text.pe_tag == UnitTypes.NBKP_NonBreakerPunctuation)
-                                || (text.pe_tag_revised == UnitTypes.NBKP_NonBreakerPunctuation));
+                                ((text.pe_tag_revised.IsNull() && text.pe_tag == UnitTypes.BKP_BreakerPunctuation)
+                                || (text.pe_tag_revised == UnitTypes.BKP_BreakerPunctuation))
+                                && text.pe_text==" , ");
             }
         }
 

@@ -14,6 +14,12 @@
         private readonly IStrategy
             _clauserUnitStrategy;
 
+        private readonly IStrategy
+            _adverbUnitStrategy;
+
+        private readonly IStrategy
+            _timerUnitStrategy;
+
 
         public Shuffler()
         {
@@ -23,6 +29,12 @@
 
             _clauserUnitStrategy = 
                 new ClauserUnitStrategy();
+
+            _adverbUnitStrategy =
+                new AdverbUnitStrategy();
+
+            _timerUnitStrategy = 
+                new TimerUnitStrategy();
         }
 
         public bool ShuffleParagraph(int pe_pmd_id)
@@ -48,7 +60,11 @@
         {
             sentence =
                 _clauserUnitStrategy.ShuffleSentence(sentence);
-
+            sentence =
+                _adverbUnitStrategy.ShuffleSentence(sentence);
+           sentence =
+               _timerUnitStrategy.ShuffleSentence(sentence);
+              
             // more strategies here
 
 
