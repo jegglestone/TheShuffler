@@ -30,5 +30,26 @@
             Assert.That(text.IsTimer, Is.EqualTo(false));
         }
 
+        [Test]
+        public void When_tag_IsNull_Returns_false()
+        {
+            var text = new Text() {pe_tag="BKP", pe_tag_revised=null};
+
+            var texts = new Text() { pe_tag=null, pe_tag_revised = "BKP"};
+
+            Assert.That(text.IsTimer, Is.EqualTo(false));
+            Assert.That(text.IsTimer, Is.EqualTo(false));
+        }
+
+        [Test]
+        public void When_tag_IsNull_but_other_Is_TM_Returns_true()
+        {
+            var text = new Text() { pe_tag = "TM2", pe_tag_revised = null };
+
+            var texts = new Text() { pe_tag = null, pe_tag_revised = "TM" };
+
+            Assert.That(text.IsTimer, Is.EqualTo(true));
+            Assert.That(text.IsTimer, Is.EqualTo(true));
+        }
     }
 }

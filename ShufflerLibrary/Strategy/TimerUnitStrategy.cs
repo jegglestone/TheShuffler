@@ -32,15 +32,36 @@
             InsertReversedTimerUnit(
                 timerSentenceDecorator, reversedTexts, firstTimerIndexPosition);
 
-            // underline with merge_ahead
+            // TODO: underline with merge_ahead
+
+            
 
             return sentence;
         }
 
-        private static void InsertReversedTimerUnit(TimerSentenceDecorator timerSentenceDecorator, List<Text> reversedTexts, int firstTimerIndexPosition)
+        private static void InsertReversedTimerUnit(
+            TimerSentenceDecorator timerSentenceDecorator, 
+            List<Text> reversedTexts, 
+            int firstTimerIndexPosition)
         {
+            int positionToInsert = firstTimerIndexPosition;
+
+            if (timerSentenceDecorator.HasVBVBAPAST)
+            {
+                positionToInsert = 
+                    timerSentenceDecorator.FirstVbVbaPastPosition;
+            }
+            // check for DG before Timer Unit
+            if (timerSentenceDecorator.Texts.Exists(
+                text => text.pe_tag == "DG"))
+            {
+                // refactor checking both tag and revised tag and move to Text property etc
+                positionToInsert =
+                    timerSentenceDecorator.Texts.FindIndex(text => text.pe_tag == "DG"); //TODO: property in decorator
+            }
+
             timerSentenceDecorator.Texts.InsertRange(
-                            firstTimerIndexPosition,
+                            positionToInsert,
                             reversedTexts);
         }
 

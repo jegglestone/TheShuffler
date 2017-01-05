@@ -28,6 +28,26 @@
             }
         }
 
+        public bool HasVBVBAPAST
+        {
+            get
+            {
+                return
+                    Sentence.HasVbVerb() || Sentence.HasVbaVerb() || Sentence.HasPastParticiple();
+            }
+        }
+
+        public int FirstVbVbaPastPosition
+        {
+            get
+            {
+                return HasVBVBAPAST
+                    ? Sentence.Texts.FindIndex(
+                        t => t.IsVbVbaPast)
+                    : -1;
+            }
+        }
+
         public TimerSentenceDecorator(Sentence sentence)
         {
             Sentence = sentence;

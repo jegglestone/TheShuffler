@@ -27,6 +27,7 @@
                 {
                     sentenceLine.Append(
                         text.pe_text_revised != "NULL" 
+                        && text.pe_text_revised != ""
                             ? text.pe_text_revised 
                             : text.pe_text);
                 }
@@ -51,6 +52,24 @@
         {
             return Texts.Any(
                 text => text.IsTimer);
+        }
+
+        public bool HasVbVerb()
+        {
+            return Texts.Any(
+                text => text.IsType(UnitTypes.VB_Verb));
+        }
+
+        public bool HasVbaVerb()
+        {
+            return Texts.Any(
+                text => text.IsType(UnitTypes.VBA_AuxilliaryVerb));
+        }
+
+        public bool HasPastParticiple()
+        {
+            return Texts.Any(
+                text => text.IsType(UnitTypes.PAST_Participle));
         }
     }
 }

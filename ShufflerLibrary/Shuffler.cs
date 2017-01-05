@@ -1,5 +1,6 @@
 ﻿namespace ShufflerLibrary
 {
+    using System.Diagnostics;
     using Repository;
     using DataAccess;
     using Helper;
@@ -60,13 +61,14 @@
         {
             sentence =
                 _clauserUnitStrategy.ShuffleSentence(sentence);
+   
             sentence =
                 _adverbUnitStrategy.ShuffleSentence(sentence);
+            
            sentence =
                _timerUnitStrategy.ShuffleSentence(sentence);
               
             // more strategies here
-
 
             //finally
             sentence =
