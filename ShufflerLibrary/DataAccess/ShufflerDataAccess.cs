@@ -39,8 +39,10 @@ namespace ShufflerLibrary.DataAccess
             return dataReader;
         }
 
-        public bool SaveText(int pePmdID, int peUserID, int peParaNo, int pePhraseID, int? peWordID, string peTag, string peText,
-            string peTagRevised, int peMergeAhead, string peTextRevised, string peRuleApplied, int peOrder, int peCNum)
+        public bool SaveText(
+            int pePmdID, int peUserID, int peParaNo, int pePhraseID, int? peWordID, string peTag, string peText,
+            string peTagRevised, int peMergeAhead, string peTextRevised, string peRuleApplied, int peOrder, int peCNum
+            , int sentenceNumber, int sentenceOption, int selectedOptionSelected)
         {
             using (cn = new SqlConnection(connectionString))
             {
@@ -67,6 +69,11 @@ namespace ShufflerLibrary.DataAccess
                 command.Parameters.AddWithValue("@pe_rule_applied", peRuleApplied);
                 command.Parameters.AddWithValue("@pe_order", peOrder);
                 command.Parameters.AddWithValue("@pe_C_num", peCNum);
+
+                command.Parameters.AddWithValue("@sentence_no", sentenceNumber);
+                command.Parameters.AddWithValue("@sentence_option", sentenceOption);
+                command.Parameters.AddWithValue("@sentence_option_selected", selectedOptionSelected);
+
                 cn.Open();
 
                 command.Dispose();

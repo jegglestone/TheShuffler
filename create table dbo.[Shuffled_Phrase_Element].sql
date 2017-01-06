@@ -26,6 +26,9 @@ CREATE TABLE [dbo].[Shuffled_Phrase_Element](
 	[pe_rule_applied] [nvarchar](500) NULL,
 	[pe_order] [int] NULL,
 	[pe_C_num] [int] NULL,
+	[sentence_no][int] NULL,
+	[sentence_option][int] NULL,
+	[sentence_option_selected][int] NULL,
  CONSTRAINT [PK_Shuffled] PRIMARY KEY CLUSTERED 
 (
 	[pe_id] ASC

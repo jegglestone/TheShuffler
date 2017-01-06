@@ -11,6 +11,7 @@ namespace ShufflerLibrary.DataAccess
             int pePhraseID, int? peWordID, string peTag, 
             string peText, string peTagRevised, int peMergeAhead, 
             string peTextRevised, string peRuleApplied, 
-            int peOrder, int peCNum);
+            int peOrder, int peCNum, int sentenceNumber, 
+            int sentenceOption, int selectedOptionSelected);
     }
 }

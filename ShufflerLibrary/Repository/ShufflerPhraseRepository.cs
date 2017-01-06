@@ -107,7 +107,10 @@
                                     text.pe_text_revised,
                                     text.pe_rule_applied,
                                     text.pe_order,
-                                    text.pe_C_num) == false)
+                                    text.pe_C_num,
+                                    sentence.Sentence_No,
+                                    sentence.Sentence_Option,
+                                    sentence.Sentence_Option_Selected) == false)
                                 return false;
                         }
                         finally

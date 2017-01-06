@@ -6,6 +6,13 @@
 
     public class Sentence : PhraseElement
     {
+        public int Sentence_No { get; set; } = 1;
+
+        public int Sentence_Option { get; set; } = 1;
+
+        private const int sentenceOptionSelected = 1;
+        public int Sentence_Option_Selected => sentenceOptionSelected;
+
         public List<Text> Texts { get; set; } = new List<Text>();
 
         public int TextCount => Texts.Count;
@@ -58,6 +65,25 @@
         {
             return Texts.Any(
                 text => text.IsType(UnitTypes.VB_Verb));
+        }
+
+        public bool HasVBVBAPAST
+        {
+            get
+            {
+                return
+                    HasVbVerb() || HasVbaVerb() || HasPastParticiple();
+            }
+        }
+    
+        public bool HasDG
+        {
+            get
+            {
+                 return Texts.Any(
+                   text => text.IsType(UnitTypes.DG_Digit));  
+            }
+            
         }
 
         public bool HasVbaVerb()

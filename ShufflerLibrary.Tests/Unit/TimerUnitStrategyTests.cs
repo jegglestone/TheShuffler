@@ -120,9 +120,41 @@ namespace ShufflerLibrary.Tests.Unit
         {
             // Real GDP PASTrose by DG100 TMper month 
 
-            // Real GPD rose by per month DG100   <= ignore PAST as there is a DG, just swap TM and DG instead
-            // Real GDP TMper month DG100 PASTrose by  <= swap TM and DG then move both before PAST
-            // Real GDP TMper month PASTrose by DG100  <= Move the TM before DG bringing DG to the end. Then move TM before PAST
+            
+            var sentence = new Sentence()
+            {
+                Texts = new List<Text>(){
+                    new Text(){ pe_text = " Real ",    pe_tag="ADJ",  pe_tag_revised="NULL", pe_order=1663970 },
+                    new Text(){ pe_text = " GDP ",     pe_tag="NN",   pe_tag_revised="NULL", pe_order=1663980 },
+                    new Text(){ pe_text = " rose ",    pe_tag="NULL", pe_tag_revised="NULL", pe_order=1663990 },
+                    new Text(){ pe_text = " by ",      pe_tag="BK", pe_tag_revised="NULL", pe_order=1663990 },
+                    new Text(){ pe_text = " 100 ",    pe_tag="DG",   pe_tag_revised="NULL", pe_order=1664010 },
+                    new Text(){ pe_text = " per month ", pe_tag="TM", pe_tag_revised="TM1",   pe_order=1664020 },
+                    new Text(){ pe_text = " . ",         pe_tag="BKP", pe_tag_revised="NULL", pe_order=1664030 },
+                }
+            };
+
+            var timerUnitStrategy = new TimerUnitStrategy();
+            var returnedSentence = timerUnitStrategy.ShuffleSentence(sentence);
+
+            
+              //  Real  GPD  rose  by  per month  100
+
+            
+            Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo(" Real "));
+            Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo(" GDP "));
+            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo(" rose "));
+            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo(" by "));
+            Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo(" per month "));
+            Assert.That(returnedSentence.Texts[4].pe_merge_ahead, Is.EqualTo(0));
+            Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo(" 100 "));
+            Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo(" . "));
+        }
+
+        [Test]
+        public void When_DG_And_VBVBAPAST_Found_Move_TM_before_DG_Then_TM_Before_VBVBAPAST()
+        {
+            // Real GDP PASTrose by DG100 TMper month
 
             var sentence = new Sentence()
             {
@@ -140,19 +172,15 @@ namespace ShufflerLibrary.Tests.Unit
             var timerUnitStrategy = new TimerUnitStrategy();
             var returnedSentence = timerUnitStrategy.ShuffleSentence(sentence);
 
-            
-              //  Real  GPD  rose  by  per month  100
+            // Real GDP TMper month PASTrose by DG100  <= Move the TM before DG bringing DG to the end. Then move TM before PAST
             
             Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo(" Real "));
             Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo(" GDP "));
-            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo(" rose "));
-            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo(" by "));
-            Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo(" per month "));
-            Assert.That(returnedSentence.Texts[4].pe_merge_ahead, Is.EqualTo(0));
+            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo(" per month "));
+            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo(" rose "));
+            Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo(" by "));
             Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo(" 100 "));
             Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo(" . "));
         }
-
-        //TODO: Timer unit is underlined
     }
 }

@@ -16,65 +16,89 @@
             var timerSentenceDecorator =
                 new TimerSentenceDecorator(sentence);
 
+            List<Text> reversedTimerUnit = 
+                GetTimerUnitsInReverse(timerSentenceDecorator);
+
+            int firstTimerIndexPositionBeforeShuffling =
+                timerSentenceDecorator.TimerIndexPosition;
+                        
+            ShuffleReversedTimerUnit(
+                timerSentenceDecorator, reversedTimerUnit, firstTimerIndexPositionBeforeShuffling);
+            
+            UnderlineTimerUnit(
+                timerSentenceDecorator, timerSentenceDecorator.TimerIndexPosition, reversedTimerUnit.Count);
+            
+            return sentence;
+        }
+
+        private static List<Text> GetTimerUnitsInReverse(
+            TimerSentenceDecorator timerSentenceDecorator)
+        {
             MoveableUnit[] timerPositions =
                 GetTimerUnitPositions(timerSentenceDecorator);
 
             Array.Reverse(timerPositions);
-            List<Text> reversedTexts = MoveableUnitHelper.GetTextsFromMoveablePositionsList(
-                timerSentenceDecorator.Texts, timerPositions);
 
-            int firstTimerIndexPosition =
-                timerSentenceDecorator.TimerIndexPosition;
+            List<Text> reversedTimerUnit =
+                MoveableUnitHelper.GetTextsFromMoveablePositionsList(
+                    timerSentenceDecorator.Texts, timerPositions);
 
-            RemoveTimerUnit(
-                timerSentenceDecorator, firstTimerIndexPosition);
-
-            InsertReversedTimerUnit(
-                timerSentenceDecorator, reversedTexts, firstTimerIndexPosition);
-
-            // TODO: underlineTimerUnit
-            int newFirstTimerIndexPosition =
-                timerSentenceDecorator.TimerIndexPosition;
-
-            UnderlineTimerUnit(
-                timerSentenceDecorator, newFirstTimerIndexPosition, reversedTexts.Count);
-
-            
-
-            return sentence;
+            return reversedTimerUnit;
         }
 
-        private static void InsertReversedTimerUnit(
+        private static void ShuffleReversedTimerUnit(
             TimerSentenceDecorator timerSentenceDecorator, 
             List<Text> reversedTexts, 
-            int firstTimerIndexPosition)
+            int originalTimerIndexPosition)
         {
-            int positionToInsert = firstTimerIndexPosition;
+            bool shuffled = false;
+            if (timerSentenceDecorator.HasDG)
+            {
+                MoveTimerUnitToPosition(
+                    timerSentenceDecorator.DGPosition,
+                    reversedTexts,
+                    timerSentenceDecorator);
+                
+                shuffled = true;
+            }
 
             if (timerSentenceDecorator.HasVBVBAPAST)
             {
-                positionToInsert = 
-                    timerSentenceDecorator.FirstVbVbaPastPosition;
-            }
-            // check for DG before Timer Unit
-            if (timerSentenceDecorator.Texts.Exists(
-                text => text.pe_tag == "DG"))
-            {
-                // refactor checking both tag and revised tag and move to Text property etc
-                positionToInsert =
-                    timerSentenceDecorator.Texts.FindIndex(text => text.pe_tag == "DG"); //TODO: property in decorator
+                MoveTimerUnitToPosition(
+                    timerSentenceDecorator.FirstVbVbaPastPosition,
+                    reversedTexts,
+                    timerSentenceDecorator);
+               
+                shuffled = true;
             }
 
+            if (shuffled == false)
+            {
+                MoveTimerUnitToPosition(
+                    originalTimerIndexPosition,
+                    reversedTexts, 
+                    timerSentenceDecorator);
+            }
+        }
+
+        public static void MoveTimerUnitToPosition(
+            int newPosition, 
+            List<Text> reversedTexts, 
+            TimerSentenceDecorator timerSentenceDecorator)
+        {
+            RemoveCurrentTimerUnit(
+                timerSentenceDecorator);
             timerSentenceDecorator.Texts.InsertRange(
-                            positionToInsert,
+                            newPosition,
                             reversedTexts);
         }
 
-        private static void RemoveTimerUnit(
-            TimerSentenceDecorator timerSentenceDecorator, int firstTimerIndexPosition)
+        private static void RemoveCurrentTimerUnit(
+            TimerSentenceDecorator timerSentenceDecorator)
         {
+            int firstTimerIndexPosition = timerSentenceDecorator.TimerIndexPosition;
             timerSentenceDecorator.Texts.RemoveRange(
-                            timerSentenceDecorator.TimerIndexPosition,
+                            firstTimerIndexPosition,
                             timerSentenceDecorator.LastTimerIndexPosition - firstTimerIndexPosition + 1);
         }
 
@@ -84,7 +108,7 @@
             timerSentenceDecorator.Texts[newFirstTimerIndexPosition].pe_merge_ahead
                 = timerUnitCount - 1;
         }
-
+        
         private static MoveableUnit[] GetTimerUnitPositions(TimerSentenceDecorator timerSentenceDecorator)
         {
             return MoveableUnitHelper.GetMoveableUnitPositions(

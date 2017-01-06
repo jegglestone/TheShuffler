@@ -14,5 +14,9 @@
         public int Pe_para_no => Sentence.pe_para_no;
 
         public int TextCount => Sentence.TextCount;
+
+        public bool HasVBVBAPAST => Sentence.HasVBVBAPAST;
+
+        public bool HasDG => Sentence.HasDG;
     }
 }

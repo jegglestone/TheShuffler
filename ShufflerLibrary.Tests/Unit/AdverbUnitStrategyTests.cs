@@ -19,7 +19,7 @@
                 {
                     new Model.Text(){ pe_text = " He ",          pe_tag="NN",   pe_tag_revised="NULL", pe_order=1663970 },
                     new Model.Text(){ pe_text = " shouted ",     pe_tag="PAST", pe_tag_revised="NULL", pe_order=1663980 },
-                    new Model.Text(){ pe_text = " loudly ",      pe_tag="ADV", pe_tag_revised="NULL", pe_order=1663990 },
+                    new Model.Text(){ pe_text = " loudly ",      pe_tag="ADV", pe_tag_revised="ADV1", pe_order=1663990 },
                     new Model.Text(){ pe_text = " , ",           pe_tag="NBKP", pe_tag_revised="NULL", pe_order=1664000 },
                     new Model.Text(){ pe_text = " emotionally ", pe_tag="ADV", pe_tag_revised="NULL", pe_order=1664010 },
                     new Model.Text(){ pe_text = " and ",         pe_tag="DYN2", pe_tag_revised="BK", pe_order=1664020 },
@@ -59,9 +59,9 @@
                     new Model.Text(){ pe_text = " is ",     pe_tag="DYN7", pe_tag_revised="NULL", pe_order=1663980 },
                     new Model.Text(){ pe_text = " doing ",      pe_tag="PRES", pe_tag_revised="NULL", pe_order=1663990 },
                     new Model.Text(){ pe_text = " it ",           pe_tag="NN", pe_tag_revised="NULL", pe_order=1664000 },
-                    new Model.Text(){ pe_text = " consistently ", pe_tag="ADV", pe_tag_revised="NULL", pe_order=1664010 },
+                    new Model.Text(){ pe_text = " consistently ", pe_tag="ADV", pe_tag_revised="ADV1", pe_order=1664010 },
                     new Model.Text(){ pe_text = " and ",         pe_tag="", pe_tag_revised="NN", pe_order=1664020 },
-                    new Model.Text(){ pe_text = " carefully ",    pe_tag="ADV", pe_tag_revised="NULL", pe_order=1664030 },
+                    new Model.Text(){ pe_text = " carefully ",    pe_tag="ADV", pe_tag_revised="ADV2", pe_order=1664030 },
                     new Model.Text(){ pe_text = " . ",           pe_tag="BKP",  pe_tag_revised="NULL", pe_order=1664040 },
                 }
             };

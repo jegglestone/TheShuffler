@@ -27,24 +27,24 @@
                         text => text.IsTimer);
             }
         }
-
-        public bool HasVBVBAPAST
-        {
-            get
-            {
-                return
-                    Sentence.HasVbVerb() || Sentence.HasVbaVerb() || Sentence.HasPastParticiple();
-            }
-        }
-
+        
         public int FirstVbVbaPastPosition
         {
             get
             {
-                return HasVBVBAPAST
+                return Sentence.HasVBVBAPAST
                     ? Sentence.Texts.FindIndex(
                         t => t.IsVbVbaPast)
                     : -1;
+            }
+        }
+
+        public int DGPosition
+        {
+            get
+            {
+                return Sentence.Texts.FindIndex(
+                    text => text.IsType(UnitTypes.DG_Digit));
             }
         }
 

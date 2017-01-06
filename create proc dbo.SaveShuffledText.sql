@@ -3,7 +3,11 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SaveShuffledText]') AND type in (N'P', N'PC'))
+IF  EXISTS (
+	SELECT * 
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[dbo].[SaveShuffledText]') 
+	AND type in (N'P', N'PC'))
 DROP PROCEDURE [dbo].[SaveShuffledText]
 GO
 -- =============================================
@@ -28,6 +32,9 @@ CREATE PROCEDURE [dbo].[SaveShuffledText]
     ,@pe_rule_applied nvarchar(500) = null
     ,@pe_order int = null
     ,@pe_C_num int = null
+	,@sentence_no int
+	,@sentence_option int
+	,@sentence_option_selected int
 	
 AS
 BEGIN
@@ -47,7 +54,10 @@ BEGIN
 			   ,[pe_text_revised]
 			   ,[pe_rule_applied]
 			   ,[pe_order]
-			   ,[pe_C_num])
+			   ,[pe_C_num]
+			   ,[sentence_no]
+			   ,[sentence_option]
+			   ,[sentence_option_selected])
 		 VALUES
 			   (@pe_pmd_id
 			   ,@pe_user_id
@@ -61,7 +71,10 @@ BEGIN
 			   ,@pe_text_revised
 			   ,@pe_rule_applied
 			   ,@pe_order
-			   ,@pe_C_num)
+			   ,@pe_C_num
+			   ,@sentence_no
+			   ,@sentence_option
+			   ,@sentence_option_selected)
 END
 GO
 

@@ -36,13 +36,8 @@
             IsType(UnitTypes.CS_ClauserUnit);
 
         public bool IsAdverb =>
-            IsType(UnitTypes.ADV_Adverb);
-
-        public bool IsType(string unitType)
-        {
-            return (pe_tag_revised.IsNull() && pe_tag == unitType)
-            || (pe_tag_revised == unitType);
-        }
+            IsType(UnitTypes.ADV_Adverb)
+            || IsNumberedType(UnitTypes.ADV_Adverb);
 
         public bool IsVbVbaPast =>
             IsType(UnitTypes.VB_Verb) 
@@ -55,12 +50,25 @@
             || IsType("PRES");
 
         public bool IsTimer =>
-            (pe_tag_revised.IsNull()  && 
-            pe_tag.StartsWith(UnitTypes.TM_TimerPrefix) && 
-            (pe_tag.Length <= 2 || pe_tag.Substring(2, 1).IsNumeric()))
-            || 
-            (!pe_tag_revised.IsNull() && pe_tag_revised.StartsWith(UnitTypes.TM_TimerPrefix) &&
-            (pe_tag_revised.Length <= 2 || pe_tag_revised.Substring(2, 1).IsNumeric()));
+            IsType(UnitTypes.TM_TimerPrefix)
+            || IsNumberedType(UnitTypes.TM_TimerPrefix);
+
+        public bool IsType(string unitType)
+        {
+            return (pe_tag_revised.IsNull() && pe_tag == unitType)
+            || (pe_tag_revised == unitType);
+        }
+
+        private bool IsNumberedType(string unitType) =>
+            (pe_tag_revised.IsNull() &&
+                pe_tag.StartsWith(unitType) 
+                && (pe_tag.Length <= 2 
+                    || pe_tag.Substring(pe_tag.Length-1, 1).IsNumeric()))
+            ||
+            (!pe_tag_revised.IsNull() 
+                && pe_tag_revised.StartsWith(unitType) 
+                && (pe_tag_revised.Length <= 2 
+                    || pe_tag_revised.Substring(pe_tag_revised.Length-1, 1).IsNumeric()));
     }
 
     public static class FieldValidationStringExtensions
