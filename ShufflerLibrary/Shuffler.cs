@@ -1,6 +1,5 @@
 ﻿namespace ShufflerLibrary
 {
-    using System.Diagnostics;
     using Repository;
     using DataAccess;
     using Helper;
@@ -21,6 +20,8 @@
         private readonly IStrategy
             _timerUnitStrategy;
 
+        private readonly IStrategy
+            _bkByStrategy;
 
         public Shuffler()
         {
@@ -36,6 +37,9 @@
 
             _timerUnitStrategy = 
                 new TimerUnitStrategy();
+
+            _bkByStrategy = 
+                new BKByUnitStrategy();
         }
 
         public bool ShuffleParagraph(int pe_pmd_id)
@@ -57,7 +61,8 @@
             return _shufflerPhraseRepository.SaveShuffledDocument(document);
         }
 
-        private void ShuffleSentence(Paragraph paragraph, int index, Sentence sentence)
+        private void ShuffleSentence(
+            Paragraph paragraph, int index, Sentence sentence)
         {
             sentence =
                 _clauserUnitStrategy.ShuffleSentence(sentence);
@@ -67,6 +72,9 @@
             
            sentence =
                _timerUnitStrategy.ShuffleSentence(sentence);
+
+            sentence =
+                _bkByStrategy.ShuffleSentence(sentence);
               
             // more strategies here
 

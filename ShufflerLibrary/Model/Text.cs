@@ -4,6 +4,16 @@
 
     public class Text : PhraseElement
     {
+        public string tag_used
+        {
+            get
+            {
+                if (pe_tag_revised.IsNull())
+                    return pe_tag;
+                return pe_tag_revised;
+            }
+        }
+
         public int pe_user_id { get; set; }
         public int pe_phrase_id { get; set; }
         public int? pe_word_id { get; set; }
@@ -52,6 +62,10 @@
         public bool IsTimer =>
             IsType(UnitTypes.TM_TimerPrefix)
             || IsNumberedType(UnitTypes.TM_TimerPrefix);
+
+        public bool IsBKBy =>
+            IsType(UnitTypes.BK_Breaker)
+            && pe_text == " by ";
 
         public bool IsType(string unitType)
         {

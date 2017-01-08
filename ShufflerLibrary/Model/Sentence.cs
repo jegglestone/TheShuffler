@@ -97,5 +97,14 @@
             return Texts.Any(
                 text => text.IsType(UnitTypes.PAST_Participle));
         }
+
+        public bool HasBKBy
+        {
+            get
+            {
+                return Texts.Any(
+                    text => text.IsBKBy);
+            }
+        }
     }
 }
