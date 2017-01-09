@@ -15,7 +15,8 @@
             var bKBySentenceDecorator = 
                 new BKBySentenceDecorator(sentence);
 
-            int bkByPosition = bKBySentenceDecorator.BKByIndexPosition;
+            int bkByPosition = 
+                bKBySentenceDecorator.BKByIndexPosition;
 
             var bKBYUnit = bKBySentenceDecorator.Texts.GetRange(
                 bkByPosition,
@@ -28,47 +29,84 @@
             }
             else if (bKBySentenceDecorator.HasNN(bKBYUnit))
             {
-                // search left in front of By for a PAST until reaching NN
-                 var textsPreceedingBy = 
-                    GetTextsPreceedingBy(bKBySentenceDecorator);
-
-                if (textsPreceedingBy.Any(text => text.IsType(UnitTypes.NN)))
-                {
-                    int nnPosition = bKBySentenceDecorator.NNPosition;
-
-                    if (textsPreceedingBy.Skip(nnPosition).Any(
-                        text => text.IsType(UnitTypes.PAST_Participle)))
-                    {
-                        //3.1.Add ‘de’ to before NN1 and underline ‘de’ together with NN1 to form one unit
-                        InsertDeParticleAndUnderline(bKBySentenceDecorator, nnPosition);
-                        //3.2.Add ‘de’ to after PAST and underline ‘de’ together with PAST to form one unit
-                        int pastPosition = textsPreceedingBy.Skip(nnPosition).ToList().FindIndex(
-                            text => text.IsType(UnitTypes.PAST_Participle));
-                        InsertDeParticleAndUnderline(bKBySentenceDecorator, pastPosition + 1);
-
-                    }
-                }
-
-                //Before
-
-                //PREN1An NN1investigation PASTconducted BKby PREN2an NN2expert MD1of PREN3the 
-                //NN3bank MD2of PREN4the NN4company MD3into NN5mal - practice VBAwas PASTcompleted BKP.
-
-                //After
-                //PREN1An de NN1investigation PASTconducted de BKby PREN2an NN2expert MD1of 
-                //PREN3the NN3bank MD2of PREN4the NN4company MD3into NN5mal - practice VBAwas 
-                //PASTcompleted BKP.
-
-
+                ApplyDeParticles(
+                    bKBySentenceDecorator);
             }
-
-
+            
             return sentence;
         }
 
-        private void InsertDeParticleAndUnderline(object timerSentenceDecorator, int nnPosition)
+        private void ApplyDeParticlesWhereNNThenPASTThenBKBy(BKBySentenceDecorator bKBySentenceDecorator)
         {
-            throw new System.NotImplementedException();
+            var textsBeforeBy =
+                GetTextsPreceedingBy(bKBySentenceDecorator);
+
+            if (NNUnitBeforeBkBy(textsBeforeBy))
+            {
+                int nnPosition = bKBySentenceDecorator.NNPosition;
+
+                if (IsPASTUnitBetweenNNandBKBy(textsBeforeBy, nnPosition))
+                {
+                    InsertDeParticleBeforeAndUnderline(
+                        bKBySentenceDecorator, nnPosition);
+
+                    int pastPosition =
+                        GetFirstPASTUnitPositionAfterNN(bKBySentenceDecorator, nnPosition);
+
+                    InsertDeParticleAfterAndUnderline(bKBySentenceDecorator, pastPosition + 1);
+                }
+            }
+        }
+
+        private static int GetFirstPASTUnitPositionAfterNN(
+            SentenceDecorator bKBySentenceDecorator, int nnPosition)
+        {
+            return bKBySentenceDecorator.Texts.Skip(nnPosition).ToList().FindIndex(
+                                        text => text.IsType(UnitTypes.PAST_Participle));
+        }
+
+        private static bool IsPASTUnitBetweenNNandBKBy(
+            List<Text> textsBeforeBy, int nnPosition)
+        {
+            return textsBeforeBy.Skip(nnPosition).Any(
+                                text => text.IsType(UnitTypes.PAST_Participle));
+        }
+
+        private static bool NNUnitBeforeBkBy(
+            List<Text> textsBeforeBy)
+        {
+            return textsBeforeBy.Any(
+                            text => text.IsType(UnitTypes.NN));
+        }
+
+        private void InsertDeParticleBeforeAndUnderline(
+            SentenceDecorator bkBySentenceDecorator, int i)
+        {
+            bkBySentenceDecorator.Texts.Insert(
+                i,
+                CreateNewDeParticle(bkBySentenceDecorator.Texts[i-1].pe_order, 1));
+            
+        }
+
+        private void InsertDeParticleAfterAndUnderline(
+            SentenceDecorator bKBySentenceDecorator, int i)
+        {
+            bKBySentenceDecorator.Texts.Insert(
+                i+1,
+                CreateNewDeParticle(
+                    bKBySentenceDecorator.Texts[i].pe_order, 0));
+
+            bKBySentenceDecorator.Texts[i].pe_merge_ahead = 1;
+        }
+
+        private static Text CreateNewDeParticle(int previous_pe_order, int pe_merge_ahead)
+        {
+            return new Text()
+            {
+                pe_text_revised = " de "
+                , pe_order = previous_pe_order + 5
+                , pe_merge_ahead = pe_merge_ahead
+            };
         }
 
         private List<Text> GetTextsPreceedingBy(
@@ -86,7 +124,5 @@
             var bkByText = bKBySentenceDecorator.BkByText;
             bkByText.pe_text_revised = " fangfashi ";
         }
-
-
     }
 }
