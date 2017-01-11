@@ -109,7 +109,8 @@
                 = timerUnitCount - 1;
         }
         
-        private static MoveableUnit[] GetTimerUnitPositions(TimerSentenceDecorator timerSentenceDecorator)
+        private static MoveableUnit[] GetTimerUnitPositions(
+            TimerSentenceDecorator timerSentenceDecorator)
         {
             return MoveableUnitHelper.GetMoveableUnitPositions(
                 timerSentenceDecorator.Texts, 

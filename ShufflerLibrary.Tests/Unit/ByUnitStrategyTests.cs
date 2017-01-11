@@ -115,7 +115,8 @@
                     new Text() { pe_tag = "DYN7", pe_text = " was ", pe_tag_revised = "VB"},
                     new Text() { pe_tag = "PAST", pe_text = " completed ", pe_tag_revised = "NULL"},
                     new Text() { pe_tag = "BKP", pe_text = " . ", pe_tag_revised = "NULL"}
-                }
+                },
+                pe_para_no = 123
             };
 
             var bkByUnitStrategy = new BKByUnitStrategy();
@@ -140,17 +141,113 @@
             Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo(" by "));
             Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo(" an "));
             Assert.That(returnedSentence.Texts[7].pe_text, Is.EqualTo(" expert "));
+
             Assert.That(returnedSentence.Texts[8].pe_text, Is.EqualTo(" of "));
             Assert.That(returnedSentence.Texts[9].pe_text, Is.EqualTo(" the "));
-            Assert.That(returnedSentence.Texts[10].pe_text, Is.EqualTo(" bank "));
+            Assert.That(returnedSentence.Texts[10].pe_text, Is.EqualTo(" company "));
+
             Assert.That(returnedSentence.Texts[11].pe_text, Is.EqualTo(" of "));
             Assert.That(returnedSentence.Texts[12].pe_text, Is.EqualTo(" the "));
-            Assert.That(returnedSentence.Texts[13].pe_text, Is.EqualTo(" company "));
+            Assert.That(returnedSentence.Texts[13].pe_text, Is.EqualTo(" bank "));
+
             Assert.That(returnedSentence.Texts[14].pe_text, Is.EqualTo(" into "));
+            Assert.That(returnedSentence.Texts[14].pe_tag_revised_by_Shuffler, Is.EqualTo("MDBK"));
+
             Assert.That(returnedSentence.Texts[15].pe_text, Is.EqualTo(" mal-practice "));
             Assert.That(returnedSentence.Texts[16].pe_text, Is.EqualTo(" was "));
             Assert.That(returnedSentence.Texts[17].pe_text, Is.EqualTo(" completed "));
             Assert.That(returnedSentence.Texts[18].pe_text, Is.EqualTo(" . "));
+
+            Assert.That(returnedSentence.pe_para_no, Is.EqualTo(123));
+        }
+
+        [Test]
+        public void When_MBKY_Then_MD_Units_Before_And_After_Are_Shuffled()
+        {
+            var sentence = new Sentence()
+            {
+                Texts = new List<Text>()
+                {
+                    new Text() { pe_tag = "PREN", pe_text = " An ", pe_tag_revised = "PREN1", pe_order = 10},
+                    new Text() { pe_tag = "NULL", pe_text = " investigation ", pe_tag_revised = "NN", pe_order = 20},
+                    new Text() { pe_tag = "PAST", pe_text = " conducted ", pe_tag_revised = "NULL", pe_order = 30},
+                    new Text() { pe_tag = "BK", pe_text = " by ", pe_tag_revised = "NULL", pe_order = 40},
+                    new Text() { pe_tag = "PREN", pe_text = " an ", pe_tag_revised = "PREN2", pe_order = 50},
+                    new Text() { pe_tag = "NN", pe_text = " expert ", pe_tag_revised = "NULL"},
+                    new Text() { pe_tag = "MD", pe_text = " of ", pe_tag_revised = "MD1"},
+                    new Text() { pe_tag = "PREN", pe_text = " the ", pe_tag_revised = "PREN3"},
+                    new Text() { pe_tag = "NN", pe_text = " bank ", pe_tag_revised = "NULL"},
+                    new Text() { pe_tag = "MD", pe_text = " of ", pe_tag_revised = "MD2"},
+                    new Text() { pe_tag = "PREN", pe_text = " the ", pe_tag_revised = "PREN4"},
+                    new Text() { pe_tag = "NN", pe_text = " company ", pe_tag_revised = "NULL"},
+                    new Text() { pe_tag = "MD", pe_text = " into ", pe_tag_revised = "MD3"},
+                    new Text() { pe_tag = "PREN", pe_text = " the ", pe_tag_revised = "PREN5" },
+                    new Text() { pe_tag = "TEST", pe_text = " operations ", pe_tag_revised = "NULL"},
+                    new Text() { pe_tag = "MD", pe_text = " of ", pe_tag_revised =  "MD4" },
+                    new Text() { pe_tag = "PREN", pe_text = " the ",pe_tag_revised = "PREN6"},
+                    new Text() { pe_tag = "NN", pe_text = " department ", pe_tag_revised = "NN6"},
+                    new Text() { pe_tag = "MD", pe_text = " of ", pe_tag_revised = "MD5"},
+                    new Text() { pe_tag = "PREN", pe_text = " the ", pe_tag_revised = "PREN7"},
+                    new Text() { pe_tag = "NN", pe_text = " company ",  pe_tag_revised = "NN5" },
+                    new Text() { pe_tag = "DYN7", pe_text = " was ", pe_tag_revised = "VBA"},
+                    new Text() { pe_tag = "PAST", pe_text = " completed ", pe_tag_revised = "NULL"},
+                    new Text() { pe_tag = "BKP", pe_text = " . ", pe_tag_revised = "NULL"}
+                }
+            };
+            BKByUnitStrategy bkByUnitStrategy = new BKByUnitStrategy();
+            var returnedSentence = bkByUnitStrategy.ShuffleSentence(sentence);
+
+            Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo(" An "));
+
+            Assert.That(returnedSentence.Texts[1].pe_text_revised, Is.EqualTo(" de "));
+            Assert.That(returnedSentence.Texts[1].pe_order, Is.EqualTo(15));
+            Assert.That(returnedSentence.Texts[1].pe_merge_ahead, Is.EqualTo(1));
+
+            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo(" investigation "));
+            Assert.That(returnedSentence.Texts[2].pe_order, Is.EqualTo(20));
+
+            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo(" conducted "));
+            Assert.That(returnedSentence.Texts[3].pe_merge_ahead, Is.EqualTo(1));
+            Assert.That(returnedSentence.Texts[3].pe_order, Is.EqualTo(30));
+
+            Assert.That(returnedSentence.Texts[4].pe_text_revised, Is.EqualTo(" de "));
+            Assert.That(returnedSentence.Texts[4].pe_order, Is.EqualTo(35));
+
+            Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo(" by "));
+            Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo(" an "));
+            Assert.That(returnedSentence.Texts[7].pe_text, Is.EqualTo(" expert "));
+
+            Assert.That(returnedSentence.Texts[8].pe_tag_revised, Is.EqualTo("MD2"));
+            Assert.That(returnedSentence.Texts[8].pe_text, Is.EqualTo(" of "));
+
+            Assert.That(returnedSentence.Texts[9].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[10].pe_text, Is.EqualTo(" company "));
+
+            Assert.That(returnedSentence.Texts[11].pe_tag_revised, Is.EqualTo("MD1"));
+            Assert.That(returnedSentence.Texts[11].pe_text, Is.EqualTo(" of "));
+
+            Assert.That(returnedSentence.Texts[12].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[13].pe_text, Is.EqualTo(" bank "));
+
+            Assert.That(returnedSentence.Texts[14].pe_text, Is.EqualTo(" into "));
+            Assert.That(returnedSentence.Texts[14].pe_tag_revised_by_Shuffler, Is.EqualTo("MDBK"));
+
+            Assert.That(returnedSentence.Texts[15].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[16].pe_text, Is.EqualTo(" operations "));
+
+            Assert.That(returnedSentence.Texts[17].pe_tag_revised, Is.EqualTo("MD5"));
+            Assert.That(returnedSentence.Texts[17].pe_text, Is.EqualTo(" of "));
+            Assert.That(returnedSentence.Texts[18].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[19].pe_text, Is.EqualTo(" company "));
+
+            Assert.That(returnedSentence.Texts[20].pe_tag_revised, Is.EqualTo("MD4"));
+            Assert.That(returnedSentence.Texts[20].pe_text, Is.EqualTo(" of "));
+
+            Assert.That(returnedSentence.Texts[21].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[22].pe_text, Is.EqualTo(" department "));
+            Assert.That(returnedSentence.Texts[23].pe_text, Is.EqualTo(" was "));
+            Assert.That(returnedSentence.Texts[24].pe_text, Is.EqualTo(" completed "));
+            Assert.That(returnedSentence.Texts[25].pe_text, Is.EqualTo(" . "));
         }
     }
 }

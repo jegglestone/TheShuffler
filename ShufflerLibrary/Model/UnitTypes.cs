@@ -7,6 +7,8 @@
         public const string BK_Breaker = "BK";
         public const string CS_ClauserUnit = "CS";
         public const string DG_Digit = "DG";
+        public const string MD_Modifier = "MD";
+        public const string MDBK = "MDBK";
         public const string NBKP_NonBreakerPunctuation = "NBKP";
         public const string NN = "NN";
         public const string PAST_Participle = "PAST";

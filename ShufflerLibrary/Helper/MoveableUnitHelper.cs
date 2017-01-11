@@ -8,6 +8,7 @@ namespace ShufflerLibrary.Helper
         public enum NumberableUnitType
         {
             Adverb,
+            Modifier,
             Timer
         };
 
@@ -20,7 +21,8 @@ namespace ShufflerLibrary.Helper
             int unitCounter = -1;
             for (int i = 0; i < texts.Count; i++)
             {
-                if (numberableUnitType == NumberableUnitType.Timer && texts[i].IsTimer)
+                if ((numberableUnitType == NumberableUnitType.Timer && texts[i].IsTimer)
+                    || (numberableUnitType == NumberableUnitType.Modifier && texts[i].IsModifier))
                 {
                     unitCounter++;
                     unitPositions[unitCounter] =
@@ -28,17 +30,47 @@ namespace ShufflerLibrary.Helper
 
                     if (unitCounter > 0)
                         unitPositions[unitCounter - 1].EndPosition = i - 1;
+
+                    if (IsLastUnit(
+                        unitCount, unitCounter))
+                    {
+                        SetEndPositionOfLastItem(
+                            texts, unitPositions);
+
+                    }
                 }
             }
-            unitPositions[unitPositions.Length - 1].EndPosition =
-                unitPositions[unitPositions.Length - 1].StartPosition;
+            
             return unitPositions;
+        }
+
+        private static bool IsLastUnit(
+            int unitCount, int unitCounter)
+        {
+            return unitCounter == unitCount - 1;
+        }
+
+        private static void SetEndPositionOfLastItem(
+            List<Text> texts, MoveableUnit[] unitPositions)
+        {
+            int endPosition = 
+                texts.FindLastIndex(
+                    text => text.IsType(UnitTypes.BKP_BreakerPunctuation)
+                            || text.IsType(UnitTypes.BK_Breaker)) - 1;
+
+            // should be greater than start position
+            if (endPosition <= -1)
+                endPosition = texts.Count - 1;
+
+            unitPositions[unitPositions.Length - 1].EndPosition
+                = endPosition;
         }
 
         public static List<Text> GetTextsFromMoveablePositionsList(
             List<Text> texts, MoveableUnit[] unitPositions)
         {
             var reversedTexts = new List<Text>();
+            
             for (int i = 0; i < unitPositions.Length; i++)
             {
                 reversedTexts.AddRange(texts.GetRange(

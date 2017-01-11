@@ -1,6 +1,7 @@
 ﻿namespace ShufflerLibrary.Model
 {
     using System.Linq;
+    using System.Security.Policy;
 
     public class Text : PhraseElement
     {
@@ -14,12 +15,23 @@
             }
         }
 
+        public string text_used
+        {
+            get
+            {
+                if( pe_text_revised.IsNull())
+                    return pe_text;
+                return pe_text_revised;
+            }
+        }
+
         public int pe_user_id { get; set; }
         public int pe_phrase_id { get; set; }
         public int? pe_word_id { get; set; }
         public string pe_tag { get; set; }
         public string pe_text { get; set; }
         public string pe_tag_revised { get; set; }
+        public string pe_tag_revised_by_Shuffler { get; set; }
         public int pe_merge_ahead { get; set; }
        
         private string _peTextRevised;
@@ -63,6 +75,11 @@
             IsType(UnitTypes.TM_TimerPrefix)
             || IsNumberedType(UnitTypes.TM_TimerPrefix);
 
+        public bool IsModifier =>
+            IsType(UnitTypes.MD_Modifier)
+            || IsNumberedType(UnitTypes.MD_Modifier);
+    
+
         public bool IsBKBy =>
             IsType(UnitTypes.BK_Breaker)
             && pe_text == " by ";
@@ -73,7 +90,7 @@
             || (pe_tag_revised == unitType);
         }
 
-        private bool IsNumberedType(string unitType) =>
+        public bool IsNumberedType(string unitType) =>
             (pe_tag_revised.IsNull() &&
                 pe_tag.StartsWith(unitType) 
                 && (pe_tag.Length <= 2 

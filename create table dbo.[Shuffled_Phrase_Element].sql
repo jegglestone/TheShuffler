@@ -21,6 +21,7 @@ CREATE TABLE [dbo].[Shuffled_Phrase_Element](
 	[pe_tag] [nvarchar](10) NULL,
 	[pe_text] [nvarchar](2000) NOT NULL,
 	[pe_tag_revised] [nvarchar](10) NULL,
+	[pe_tag_revised_by_Shuffler](10) NULL,
 	[pe_merge_ahead] [int] NOT NULL DEFAULT ((0)),
 	[pe_text_revised] [nvarchar](2000) NULL,
 	[pe_rule_applied] [nvarchar](500) NULL,
