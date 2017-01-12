@@ -34,30 +34,45 @@
                 ApplyDeParticlesWhereNNThenPASTThenBKBy(
                     bKBySentenceDecorator);
             }
-
-            //search to the right of ‘BKby’ for MD units until reaching VB/VBA/PAST/PRES
+           
             List<Text> textsAfterBkByBeforeVB_VBA_PAST_PRES = 
                 GetTextsAfterBkByBeforeVB_VBA_PAST_PRES(bKBySentenceDecorator);
 
             if (textsAfterBkByBeforeVB_VBA_PAST_PRES.Any(
                 text => text.IsModifier))
             {
-                SetFirstMDThatIsNotOfToMDBK(
-                    textsAfterBkByBeforeVB_VBA_PAST_PRES);
-                
-                ShuffleMDUnitsBeforeMDBKInDescendingOrder(
-                    textsAfterBkByBeforeVB_VBA_PAST_PRES,
-                    bKBySentenceDecorator);
-                
-                ShuffleMDUnitsAfterMDBKInDescendingOrder(
-                    textsAfterBkByBeforeVB_VBA_PAST_PRES,
-                    bKBySentenceDecorator);
+                if (textsAfterBkByBeforeVB_VBA_PAST_PRES.Where(
+                    text => text.IsModifier).All(text => text.text_used == " of "))
+                {
+                    var modifiers = textsAfterBkByBeforeVB_VBA_PAST_PRES.Where(
+                        text => text.IsModifier).ToList();
+
+                    foreach (var modifier in modifiers)
+                    {
+                        modifier.pe_tag_revised_by_Shuffler 
+                            = UnitTypes.MDBK;
+                    }
+                }
+                else
+                {
+                    SetFirstMDThatIsNotOfToMDBK(
+                        textsAfterBkByBeforeVB_VBA_PAST_PRES);
+
+                    ShuffleMDUnitsBeforeMDBKInDescendingOrder(
+                        textsAfterBkByBeforeVB_VBA_PAST_PRES,
+                        bKBySentenceDecorator);
+
+                    ShuffleMDUnitsAfterMDBKInDescendingOrder(
+                        textsAfterBkByBeforeVB_VBA_PAST_PRES,
+                        bKBySentenceDecorator);
+                }
             }
 
             return sentence;
         }
 
-        private static void SetFirstMDThatIsNotOfToMDBK(List<Text> textsAfterBkByBeforeVB_VBA_PAST_PRES)
+        private static void SetFirstMDThatIsNotOfToMDBK(
+            List<Text> textsAfterBkByBeforeVB_VBA_PAST_PRES)
         {
             foreach (var text in textsAfterBkByBeforeVB_VBA_PAST_PRES)
             {
@@ -117,7 +132,7 @@
                    afterMDBK, MDPositions);
 
             ReplaceMDUnitAfterMDBKWithReversedMDUnit(
-                bKBySentenceDecorator, MDPositions, reversedMDUnit);
+                bKBySentenceDecorator, reversedMDUnit);
         }
 
         private static void ReplaceMDUnitBeforeMDBKWithReversedMDUnit(
@@ -125,23 +140,28 @@
             MoveableUnit[] MDPositions, 
             List<Text> reversedMDUnit)
         {
-            int firstModifierIndexAfterBKBy = bkBySentenceDecorator.FirstModifierIndexAfterBKBy;
+            int firstModifierIndexAfterBKBy = 
+                bkBySentenceDecorator.FirstModifierIndexAfterBKBy;
 
-            RemoveCurrentMDUnit(bkBySentenceDecorator, MDPositions, firstModifierIndexAfterBKBy);
+            RemoveCurrentMDUnit(
+                bkBySentenceDecorator, MDPositions, firstModifierIndexAfterBKBy);
             
-            InsertReversedMDUnitBeforeMDBK(bkBySentenceDecorator, reversedMDUnit, firstModifierIndexAfterBKBy);
+            InsertReversedMDUnitBeforeMDBK(
+                bkBySentenceDecorator, reversedMDUnit, firstModifierIndexAfterBKBy);
         }
 
         private void ReplaceMDUnitAfterMDBKWithReversedMDUnit(
              BKBySentenceDecorator bKBySentenceDecorator,
-             MoveableUnit[] mdPositions,
              List<Text> reversedMdUnit)
         {
-            int firstModifierAfterMDBK = bKBySentenceDecorator.FirstModifierAfterMDBK;
+            int firstModifierAfterMDBK = 
+                bKBySentenceDecorator.FirstModifierAfterMDBK;
 
-            bKBySentenceDecorator.Texts.RemoveRange(firstModifierAfterMDBK, reversedMdUnit.Count);
+            bKBySentenceDecorator.Texts.RemoveRange(
+                firstModifierAfterMDBK, reversedMdUnit.Count);
 
-            InsertReversedMDUnitBeforeMDBK(bKBySentenceDecorator, reversedMdUnit, firstModifierAfterMDBK);
+            InsertReversedMDUnitBeforeMDBK(
+                bKBySentenceDecorator, reversedMdUnit, firstModifierAfterMDBK);
         }
 
         private static void InsertReversedMDUnitBeforeMDBK(
@@ -172,7 +192,7 @@
                 modifierUnitTexts.Count(text => text.IsNumberedType(UnitTypes.MD_Modifier)));
         }
 
-        private List<Text> GetTextsAfterBkByBeforeVB_VBA_PAST_PRES(BKBySentenceDecorator bkBySentenceDecorator)
+        private static List<Text> GetTextsAfterBkByBeforeVB_VBA_PAST_PRES(BKBySentenceDecorator bkBySentenceDecorator)
         {
             int bkByPos = bkBySentenceDecorator.BKByIndexPosition;
             int VB_VBA_PAST_PRES_position = bkBySentenceDecorator.First_VB_VBA_PAST_PRES_PositionAfterBkBy;
@@ -188,42 +208,23 @@
             var textsBeforeBy =
                 bKBySentenceDecorator.TextsBeforeBy;
 
-            if (NNUnitBeforeBkBy(textsBeforeBy))
+            if (bKBySentenceDecorator.NNUnitBeforeBkBy(textsBeforeBy))
             {
                 int nnPosition = bKBySentenceDecorator.NNPosition;
 
-                if (IsPASTUnitBetweenNNandBKBy(textsBeforeBy, nnPosition))
+                if (bKBySentenceDecorator.IsPASTUnitBetweenNNandBKBy(textsBeforeBy, nnPosition))
                 {
                     InsertDeParticleBeforeAndUnderline(
                         bKBySentenceDecorator, nnPosition);
 
-                    int pastPosition =
-                        GetFirstPASTUnitPositionAfterNN(bKBySentenceDecorator, nnPosition);
+                    int pastPosition = bKBySentenceDecorator
+                        .GetFirstPASTUnitPositionAfterNN(
+                            bKBySentenceDecorator, nnPosition);
 
-                    InsertDeParticleAfterAndUnderline(bKBySentenceDecorator, pastPosition + 1);
+                    InsertDeParticleAfterAndUnderline(
+                        bKBySentenceDecorator, pastPosition + 1);
                 }
             }
-        }
-
-        private static int GetFirstPASTUnitPositionAfterNN(
-            SentenceDecorator bKBySentenceDecorator, int nnPosition)
-        {
-            return bKBySentenceDecorator.Texts.Skip(nnPosition).ToList().FindIndex(
-                                        text => text.IsType(UnitTypes.PAST_Participle));
-        }
-
-        private static bool IsPASTUnitBetweenNNandBKBy(
-            List<Text> textsBeforeBy, int nnPosition)
-        {
-            return textsBeforeBy.Skip(nnPosition).Any(
-                                text => text.IsType(UnitTypes.PAST_Participle));
-        }
-
-        private static bool NNUnitBeforeBkBy(
-            List<Text> textsBeforeBy)
-        {
-            return textsBeforeBy.Any(
-                            text => text.IsType(UnitTypes.NN));
         }
 
         private void InsertDeParticleBeforeAndUnderline(

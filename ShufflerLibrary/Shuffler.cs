@@ -23,6 +23,9 @@
         private readonly IStrategy
             _bkByStrategy;
 
+        private readonly IStrategy
+            _bkByMDBKStrategy;
+
         public Shuffler()
         {
             _shufflerPhraseRepository = 
@@ -40,6 +43,9 @@
 
             _bkByStrategy = 
                 new BKByUnitStrategy();
+
+            _bkByMDBKStrategy =
+                new BKByMDBKStrategy();
         }
 
         public bool ShuffleParagraph(int pe_pmd_id)
@@ -75,6 +81,9 @@
 
             sentence =
                 _bkByStrategy.ShuffleSentence(sentence);
+
+            sentence =
+                _bkByMDBKStrategy.ShuffleSentence(sentence);
               
             // more strategies here
 

@@ -249,5 +249,55 @@
             Assert.That(returnedSentence.Texts[24].pe_text, Is.EqualTo(" completed "));
             Assert.That(returnedSentence.Texts[25].pe_text, Is.EqualTo(" . "));
         }
+
+        [Test]
+        public void When_All_MD_Units_After_BkBy_Are_Of_Replace_All_With_MDBK()
+        {
+            var sentence = new Sentence()
+            {
+                Texts = new List<Text>()
+                {
+                    new Text() { pe_text = "And", pe_tag = "" },
+                    new Text() { pe_text = " by ", pe_tag = "BK" },
+                    new Text() { pe_text = "then", pe_tag = "" },
+                    new Text() { pe_text = "three", pe_tag = "" },
+                    new Text() { pe_text = " of ", pe_tag = "MD1" },
+                    new Text() { pe_text = "the", pe_tag = "" },
+                    new Text() { pe_text = "people", pe_tag = "" },
+                    new Text() { pe_text = " of ", pe_tag = "MD2" },
+                    new Text() { pe_text = "the", pe_tag = "" },
+                    new Text() { pe_text = "house", pe_tag = "" },
+                    new Text() { pe_text = " of ", pe_tag = "MD3" },
+                    new Text() { pe_text = "commons", pe_tag = "" },
+                    new Text() { pe_text = "complained", pe_tag = "PAST" },
+                    new Text() { pe_text = " . ", pe_tag = "BKP" },
+                }
+            };
+            
+            var bkByUnitStrategy = new BKByUnitStrategy();
+            var returnedSentence = bkByUnitStrategy.ShuffleSentence(sentence);
+
+            Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo("And"));
+            Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo(" by "));
+            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo("then"));
+            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo("three"));
+
+            Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo(" of ")); //MD1
+            Assert.That(returnedSentence.Texts[4].pe_tag_revised_by_Shuffler, Is.EqualTo("MDBK"));
+            Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo("the"));
+            Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo("people"));
+
+            Assert.That(returnedSentence.Texts[7].pe_text, Is.EqualTo(" of ")); //MD2
+            Assert.That(returnedSentence.Texts[7].pe_tag_revised_by_Shuffler, Is.EqualTo("MDBK"));
+
+            Assert.That(returnedSentence.Texts[8].pe_text, Is.EqualTo("the"));
+            Assert.That(returnedSentence.Texts[9].pe_text, Is.EqualTo("house"));
+            Assert.That(returnedSentence.Texts[10].pe_text, Is.EqualTo(" of ")); //MD3
+            Assert.That(returnedSentence.Texts[10].pe_tag_revised_by_Shuffler, Is.EqualTo("MDBK"));
+            Assert.That(returnedSentence.Texts[11].pe_text, Is.EqualTo("commons"));
+
+            Assert.That(returnedSentence.Texts[12].pe_text, Is.EqualTo("complained"));
+            Assert.That(returnedSentence.Texts[13].pe_text, Is.EqualTo(" . "));
+        }
     }
 }

@@ -16,6 +16,7 @@
             var text2 = new Text {pe_tag_revised = timerUnitTag, pe_tag = "null"};
 
             Assert.That(text.IsTimer);
+            Assert.That(text2.IsTimer);
         }
 
         [TestCase("TMM")]
@@ -28,6 +29,7 @@
             var text2 = new Text { pe_tag_revised = nonTimerTag, pe_tag = "null"};
 
             Assert.That(text.IsTimer, Is.EqualTo(false));
+            Assert.That(text2.IsTimer, Is.EqualTo(false));
         }
 
         [Test]
@@ -35,10 +37,10 @@
         {
             var text = new Text() {pe_tag="BKP", pe_tag_revised=null};
 
-            var texts = new Text() { pe_tag=null, pe_tag_revised = "BKP"};
+            var text2 = new Text() { pe_tag=null, pe_tag_revised = "BKP"};
 
             Assert.That(text.IsTimer, Is.EqualTo(false));
-            Assert.That(text.IsTimer, Is.EqualTo(false));
+            Assert.That(text2.IsTimer, Is.EqualTo(false));
         }
 
         [Test]
@@ -46,10 +48,18 @@
         {
             var text = new Text() { pe_tag = "TM2", pe_tag_revised = null };
 
-            var texts = new Text() { pe_tag = null, pe_tag_revised = "TM" };
+            var text2 = new Text() { pe_tag = null, pe_tag_revised = "TM" };
 
             Assert.That(text.IsTimer, Is.EqualTo(true));
-            Assert.That(text.IsTimer, Is.EqualTo(true));
+            Assert.That(text2.IsTimer, Is.EqualTo(true));
+        }
+
+        [Test]
+        public void When_Both_Tags_Null_return_false()
+        {
+            var text = new Text {pe_tag = null, pe_tag_revised = null};
+
+            Assert.That(text.IsModifier, Is.EqualTo(false));
         }
     }
 }

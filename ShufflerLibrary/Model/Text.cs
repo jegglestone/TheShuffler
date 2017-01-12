@@ -1,7 +1,6 @@
 ﻿namespace ShufflerLibrary.Model
 {
     using System.Linq;
-    using System.Security.Policy;
 
     public class Text : PhraseElement
     {
@@ -78,11 +77,19 @@
         public bool IsModifier =>
             IsType(UnitTypes.MD_Modifier)
             || IsNumberedType(UnitTypes.MD_Modifier);
-    
+
+        public bool IsNN =>
+            IsType(UnitTypes.NN) 
+            || IsNumberedType(UnitTypes.NN);
 
         public bool IsBKBy =>
             IsType(UnitTypes.BK_Breaker)
             && pe_text == " by ";
+
+        public bool IsMDBK()
+        {
+            return pe_tag_revised_by_Shuffler == "MDBK";
+        }
 
         public bool IsType(string unitType)
         {
@@ -90,16 +97,21 @@
             || (pe_tag_revised == unitType);
         }
 
-        public bool IsNumberedType(string unitType) =>
-            (pe_tag_revised.IsNull() &&
-                pe_tag.StartsWith(unitType) 
-                && (pe_tag.Length <= 2 
-                    || pe_tag.Substring(pe_tag.Length-1, 1).IsNumeric()))
-            ||
-            (!pe_tag_revised.IsNull() 
-                && pe_tag_revised.StartsWith(unitType) 
-                && (pe_tag_revised.Length <= 2 
-                    || pe_tag_revised.Substring(pe_tag_revised.Length-1, 1).IsNumeric()));
+        public bool IsNumberedType(string unitType)
+        {
+            if (pe_tag_revised.IsNull() && pe_tag.IsNull())
+                return false;
+
+            return (pe_tag_revised.IsNull() &&
+                    pe_tag.StartsWith(unitType)
+                    && (pe_tag.Length <= 2
+                        || pe_tag.Substring(pe_tag.Length - 1, 1).IsNumeric()))
+                   ||
+                   (!pe_tag_revised.IsNull()
+                    && pe_tag_revised.StartsWith(unitType)
+                    && (pe_tag_revised.Length <= 2
+                        || pe_tag_revised.Substring(pe_tag_revised.Length - 1, 1).IsNumeric()));
+        }
     }
 
     public static class FieldValidationStringExtensions

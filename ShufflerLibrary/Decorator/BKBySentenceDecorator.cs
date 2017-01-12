@@ -87,6 +87,19 @@
                 text => text.IsType(UnitTypes.NN));
         }
 
+        public bool IsPASTUnitBetweenNNandBKBy(
+            List<Text> textsBeforeBy, int nnPosition)
+        {
+            return textsBeforeBy.Skip(nnPosition).Any(
+                                text => text.IsType(UnitTypes.PAST_Participle));
+        }
+
+        public bool NNUnitBeforeBkBy(
+            List<Text> textsBeforeBy)
+        {
+            return textsBeforeBy.Any(
+                            text => text.IsType(UnitTypes.NN));
+        }
 
         public int GetMDBKPosition(List<Text> textsAfterBkByBeforeVbVbaPastPres)
         {
@@ -119,6 +132,13 @@
                 return Texts.Take(BKByIndexPosition).ToList();
             }
             
+        }
+
+        public int GetFirstPASTUnitPositionAfterNN(
+            SentenceDecorator bKBySentenceDecorator, int nnPosition)
+        {
+            return bKBySentenceDecorator.Texts.Skip(nnPosition).ToList().FindIndex(
+                                        text => text.IsType(UnitTypes.PAST_Participle));
         }
 
         public BKBySentenceDecorator(Sentence sentence)
