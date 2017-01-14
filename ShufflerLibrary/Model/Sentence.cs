@@ -8,9 +8,8 @@
     {
         public int Sentence_No { get; set; } = 1;
 
-        public int Sentence_Option { get; set; } = 1;
-
         private const int sentenceOptionSelected = 1;
+
         public int Sentence_Option_Selected => sentenceOptionSelected;
 
         public List<Text> Texts { get; set; } = new List<Text>();

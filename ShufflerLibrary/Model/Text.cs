@@ -32,7 +32,8 @@
         public string pe_tag_revised { get; set; }
         public string pe_tag_revised_by_Shuffler { get; set; }
         public int pe_merge_ahead { get; set; }
-       
+        public int Sentence_Option { get; set; } = 1;
+
         private string _peTextRevised;
         public string pe_text_revised
         {

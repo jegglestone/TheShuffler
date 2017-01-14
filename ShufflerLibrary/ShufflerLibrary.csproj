@@ -48,6 +48,7 @@
     <Compile Include="Decorator\AdverbSentenceDecorator.cs" />
     <Compile Include="Decorator\BKBySentenceDecorator.cs" />
     <Compile Include="Decorator\ClauserSentenceDecorator.cs" />
+    <Compile Include="Decorator\MDSentenceDecorator.cs" />
     <Compile Include="Decorator\SentenceDecorator.cs" />
     <Compile Include="Decorator\TimerSentenceDecorator.cs" />
     <Compile Include="Helper\MoveableUnitHelper.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Strategy\BKByUnitStrategy.cs" />
     <Compile Include="Strategy\ClauserUnitStrategy.cs" />
     <Compile Include="Strategy\IStrategy.cs" />
+    <Compile Include="Strategy\MDUnitStrategy.cs" />
     <Compile Include="Strategy\TimerUnitStrategy.cs" />
   </ItemGroup>
   <ItemGroup>

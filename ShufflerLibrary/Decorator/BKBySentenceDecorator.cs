@@ -107,6 +107,12 @@
                     text => text.pe_tag_revised_by_Shuffler == UnitTypes.MDBK);
         }
 
+        public int YouguanPosition
+        {
+            get { return Texts.FindIndex(
+                text => text.pe_tag_revised_by_Shuffler == "youguan"); }
+        }
+
         public int NNPosition
         {
             get

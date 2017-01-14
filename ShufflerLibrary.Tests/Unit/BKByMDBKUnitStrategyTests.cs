@@ -193,7 +193,8 @@
             PRENAn  
             BKby PRENan NN2expert PASTconducted de
             youguan 
-            PRENthe NN3bank PRENthe NN7company MD4of DIGtwo NN6departments PRENthe NN5operations PRENthe NN4company de NN1iknvestigation 
+            PRENthe NN3bank PRENthe NN7company MD4of DIGtwo NN6departments PRENthe NN5operations PRENthe NN4company 
+            de NN1iknvestigation 
             VBAwas PASTcompleted BKP.
             */
 
@@ -232,39 +233,151 @@
             BKByMDBKStrategy bkbyMdbkStrategy = new BKByMDBKStrategy();
 
             var returnedSentence = bkByUnitStrategy.ShuffleSentence(sentence);
-            //returnedSentence = bkbyMdbkStrategy.ShuffleSentence(returnedSentence);
+            returnedSentence = bkbyMdbkStrategy.ShuffleSentence(returnedSentence);
 
+
+            /*
+            PRENAn  
+            BKby PRENan NN2expert PASTconducted de
+            youguan 
+            PRENthe NN3bank PRENthe NN7company MD4of DIGtwo NN6departments PRENthe NN5operations PRENthe NN4company 
+            de NN1iknvestigation 
+            VBAwas PASTcompleted BKP.
+            
+            Move de + NN1 unit to after MDBK unit or the last MD unit after MDBK if there are any such MD units after MDBK. 
+
+            Move PAST + de to before youguan
+
+            DELETE MDs except youguan
+
+             */
+
+            Assert.That(returnedSentence.Texts[0].Sentence_Option, Is.EqualTo(1));
             Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo(" An "));
-            Assert.That(returnedSentence.Texts[1].pe_text_revised, Is.EqualTo(" de "));
-            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo(" investigation "));
-            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo(" conducted "));
-            Assert.That(returnedSentence.Texts[4].pe_text_revised, Is.EqualTo(" de "));
-            Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo(" by "));
-            Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo(" an "));
-            Assert.That(returnedSentence.Texts[7].pe_text, Is.EqualTo(" expert "));
-            Assert.That(returnedSentence.Texts[8].pe_text, Is.EqualTo(" of "));
-            Assert.That(returnedSentence.Texts[8].pe_tag_revised_by_Shuffler, Is.EqualTo("MDBK"));
+            Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo(" by "));
+            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo(" an "));
+            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo(" expert "));
+            Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo(" conducted "));
+            Assert.That(returnedSentence.Texts[5].pe_text_revised, Is.EqualTo(" de "));
+            Assert.That(returnedSentence.Texts[6].pe_tag_revised_by_Shuffler, Is.EqualTo("youguan"));
+            Assert.That(returnedSentence.Texts[6].pe_text_revised, Is.EqualTo(" youguan "));
+            Assert.That(returnedSentence.Texts[7].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[8].pe_text, Is.EqualTo(" bank "));
             Assert.That(returnedSentence.Texts[9].pe_text, Is.EqualTo(" the "));
-            Assert.That(returnedSentence.Texts[10].pe_text, Is.EqualTo(" bank "));
-            Assert.That(returnedSentence.Texts[11].pe_text, Is.EqualTo(" of "));
-            Assert.That(returnedSentence.Texts[11].pe_tag_revised_by_Shuffler, Is.EqualTo("MDBK"));
-            Assert.That(returnedSentence.Texts[12].pe_text, Is.EqualTo(" the "));
-            Assert.That(returnedSentence.Texts[13].pe_text, Is.EqualTo(" company "));
-            Assert.That(returnedSentence.Texts[14].pe_text, Is.EqualTo(" of "));
-            Assert.That(returnedSentence.Texts[14].pe_tag_revised_by_Shuffler, Is.EqualTo("MDBK"));
+            Assert.That(returnedSentence.Texts[10].pe_text, Is.EqualTo(" company "));
+            Assert.That(returnedSentence.Texts[11].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[12].pe_text, Is.EqualTo(" operations "));
+            Assert.That(returnedSentence.Texts[13].pe_text, Is.EqualTo(" two "));
+            Assert.That(returnedSentence.Texts[14].pe_text, Is.EqualTo(" departments "));
             Assert.That(returnedSentence.Texts[15].pe_text, Is.EqualTo(" the "));
-            Assert.That(returnedSentence.Texts[16].pe_text, Is.EqualTo(" operations "));
-            Assert.That(returnedSentence.Texts[17].pe_text, Is.EqualTo(" of "));
-            Assert.That(returnedSentence.Texts[17].pe_tag_revised_by_Shuffler, Is.EqualTo("MDBK"));
-            Assert.That(returnedSentence.Texts[18].pe_text, Is.EqualTo(" two "));
-            Assert.That(returnedSentence.Texts[19].pe_text, Is.EqualTo(" departments "));
-            Assert.That(returnedSentence.Texts[20].pe_text, Is.EqualTo(" of "));
-            Assert.That(returnedSentence.Texts[20].pe_tag_revised_by_Shuffler, Is.EqualTo("MDBK"));
-            Assert.That(returnedSentence.Texts[21].pe_text, Is.EqualTo(" the "));
-            Assert.That(returnedSentence.Texts[22].pe_text, Is.EqualTo(" company "));
-            Assert.That(returnedSentence.Texts[23].pe_text, Is.EqualTo(" was "));
-            Assert.That(returnedSentence.Texts[24].pe_text, Is.EqualTo(" completed "));
-            Assert.That(returnedSentence.Texts[25].pe_text, Is.EqualTo(" . "));
+            Assert.That(returnedSentence.Texts[16].pe_text, Is.EqualTo(" company "));
+            Assert.That(returnedSentence.Texts[17].pe_text_revised, Is.EqualTo(" de "));
+            Assert.That(returnedSentence.Texts[18].pe_text, Is.EqualTo(" investigation "));
+            Assert.That(returnedSentence.Texts[19].pe_text, Is.EqualTo(" was "));
+            Assert.That(returnedSentence.Texts[20].pe_text, Is.EqualTo(" completed "));
+            Assert.That(returnedSentence.Texts[20].Sentence_Option, Is.EqualTo(1));
+            Assert.That(returnedSentence.Texts[21].pe_text, Is.EqualTo(" . "));
+
+            Assert.That(returnedSentence.Texts[22].Sentence_Option, Is.EqualTo(2));
+            Assert.That(returnedSentence.Texts[22].pe_text, Is.EqualTo(" An "));
+            Assert.That(returnedSentence.Texts[23].pe_text, Is.EqualTo(" by "));
+            Assert.That(returnedSentence.Texts[24].pe_text, Is.EqualTo(" an "));
+            Assert.That(returnedSentence.Texts[25].pe_text, Is.EqualTo(" expert "));
+            Assert.That(returnedSentence.Texts[26].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[27].pe_text, Is.EqualTo(" bank "));
+            Assert.That(returnedSentence.Texts[28].pe_text, Is.EqualTo(" conducted "));
+            Assert.That(returnedSentence.Texts[29].pe_text_revised, Is.EqualTo(" de "));
+            Assert.That(returnedSentence.Texts[30].pe_tag_revised_by_Shuffler, Is.EqualTo("youguan"));
+            Assert.That(returnedSentence.Texts[30].pe_text_revised, Is.EqualTo(" youguan "));
+            Assert.That(returnedSentence.Texts[31].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[32].pe_text, Is.EqualTo(" company "));
+            Assert.That(returnedSentence.Texts[33].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[34].pe_text, Is.EqualTo(" operations "));
+            Assert.That(returnedSentence.Texts[35].pe_text, Is.EqualTo(" two "));
+            Assert.That(returnedSentence.Texts[36].pe_text, Is.EqualTo(" departments "));
+            Assert.That(returnedSentence.Texts[37].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[38].pe_text, Is.EqualTo(" company "));
+            Assert.That(returnedSentence.Texts[39].pe_text_revised, Is.EqualTo(" de "));
+            Assert.That(returnedSentence.Texts[40].pe_text, Is.EqualTo(" investigation "));
+            Assert.That(returnedSentence.Texts[41].pe_text, Is.EqualTo(" was "));
+            Assert.That(returnedSentence.Texts[42].pe_text, Is.EqualTo(" completed "));
+            Assert.That(returnedSentence.Texts[43].Sentence_Option, Is.EqualTo(2));
+            Assert.That(returnedSentence.Texts[43].pe_text, Is.EqualTo(" . "));
+
+            Assert.That(returnedSentence.Texts[44].Sentence_Option, Is.EqualTo(3));
+            Assert.That(returnedSentence.Texts[44].pe_text, Is.EqualTo(" An "));
+            Assert.That(returnedSentence.Texts[45].pe_text, Is.EqualTo(" by "));
+            Assert.That(returnedSentence.Texts[46].pe_text, Is.EqualTo(" an "));
+            Assert.That(returnedSentence.Texts[47].pe_text, Is.EqualTo(" expert "));
+            Assert.That(returnedSentence.Texts[48].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[49].pe_text, Is.EqualTo(" bank "));
+            Assert.That(returnedSentence.Texts[50].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[51].pe_text, Is.EqualTo(" company "));
+            Assert.That(returnedSentence.Texts[52].pe_text, Is.EqualTo(" conducted "));
+            Assert.That(returnedSentence.Texts[53].pe_text_revised, Is.EqualTo(" de "));
+            Assert.That(returnedSentence.Texts[54].pe_tag_revised_by_Shuffler, Is.EqualTo("youguan"));
+            Assert.That(returnedSentence.Texts[54].pe_text_revised, Is.EqualTo(" youguan "));
+            Assert.That(returnedSentence.Texts[55].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[56].pe_text, Is.EqualTo(" operations "));
+            Assert.That(returnedSentence.Texts[57].pe_text, Is.EqualTo(" two "));
+            Assert.That(returnedSentence.Texts[58].pe_text, Is.EqualTo(" departments "));
+            Assert.That(returnedSentence.Texts[59].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[60].pe_text, Is.EqualTo(" company "));
+            Assert.That(returnedSentence.Texts[61].pe_text_revised, Is.EqualTo(" de "));
+            Assert.That(returnedSentence.Texts[62].pe_text, Is.EqualTo(" investigation "));
+            Assert.That(returnedSentence.Texts[63].pe_text, Is.EqualTo(" was "));
+            Assert.That(returnedSentence.Texts[64].pe_text, Is.EqualTo(" completed "));
+            Assert.That(returnedSentence.Texts[65].pe_text, Is.EqualTo(" . "));
+
+            Assert.That(returnedSentence.Texts[66].Sentence_Option, Is.EqualTo(4));
+            Assert.That(returnedSentence.Texts[66].pe_text, Is.EqualTo(" An "));
+            Assert.That(returnedSentence.Texts[67].pe_text, Is.EqualTo(" by "));
+            Assert.That(returnedSentence.Texts[68].pe_text, Is.EqualTo(" an "));
+            Assert.That(returnedSentence.Texts[69].pe_text, Is.EqualTo(" expert "));
+            Assert.That(returnedSentence.Texts[70].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[71].pe_text, Is.EqualTo(" bank "));
+            Assert.That(returnedSentence.Texts[72].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[73].pe_text, Is.EqualTo(" company "));
+            Assert.That(returnedSentence.Texts[74].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[75].pe_text, Is.EqualTo(" operations "));
+            Assert.That(returnedSentence.Texts[76].pe_text, Is.EqualTo(" conducted "));
+            Assert.That(returnedSentence.Texts[77].pe_text_revised, Is.EqualTo(" de "));
+            Assert.That(returnedSentence.Texts[78].pe_tag_revised_by_Shuffler, Is.EqualTo("youguan"));
+            Assert.That(returnedSentence.Texts[78].pe_text_revised, Is.EqualTo(" youguan "));
+            Assert.That(returnedSentence.Texts[79].pe_text, Is.EqualTo(" two "));
+            Assert.That(returnedSentence.Texts[80].pe_text, Is.EqualTo(" departments "));
+            Assert.That(returnedSentence.Texts[81].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[82].pe_text, Is.EqualTo(" company "));
+            Assert.That(returnedSentence.Texts[83].pe_text_revised, Is.EqualTo(" de "));
+            Assert.That(returnedSentence.Texts[84].pe_text, Is.EqualTo(" investigation "));
+            Assert.That(returnedSentence.Texts[85].pe_text, Is.EqualTo(" was "));
+            Assert.That(returnedSentence.Texts[86].pe_text, Is.EqualTo(" completed "));
+            Assert.That(returnedSentence.Texts[87].pe_text, Is.EqualTo(" . "));
+
+            Assert.That(returnedSentence.Texts[88].Sentence_Option, Is.EqualTo(5));
+            Assert.That(returnedSentence.Texts[88].pe_text, Is.EqualTo(" An "));
+            Assert.That(returnedSentence.Texts[89].pe_text, Is.EqualTo(" by "));
+            Assert.That(returnedSentence.Texts[90].pe_text, Is.EqualTo(" an "));
+            Assert.That(returnedSentence.Texts[91].pe_text, Is.EqualTo(" expert "));
+            Assert.That(returnedSentence.Texts[92].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[93].pe_text, Is.EqualTo(" bank "));
+            Assert.That(returnedSentence.Texts[94].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[95].pe_text, Is.EqualTo(" company "));
+            Assert.That(returnedSentence.Texts[96].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[97].pe_text, Is.EqualTo(" operations "));
+            Assert.That(returnedSentence.Texts[98].pe_text, Is.EqualTo(" two "));
+            Assert.That(returnedSentence.Texts[99].pe_text, Is.EqualTo(" departments "));
+            Assert.That(returnedSentence.Texts[100].pe_text, Is.EqualTo(" conducted "));
+            Assert.That(returnedSentence.Texts[101].pe_text_revised, Is.EqualTo(" de "));
+            Assert.That(returnedSentence.Texts[102].pe_tag_revised_by_Shuffler, Is.EqualTo("youguan"));
+            Assert.That(returnedSentence.Texts[102].pe_text_revised, Is.EqualTo(" youguan "));
+            Assert.That(returnedSentence.Texts[103].pe_text, Is.EqualTo(" the "));
+            Assert.That(returnedSentence.Texts[104].pe_text, Is.EqualTo(" company "));
+            Assert.That(returnedSentence.Texts[105].pe_text_revised, Is.EqualTo(" de "));
+            Assert.That(returnedSentence.Texts[106].pe_text, Is.EqualTo(" investigation "));
+            Assert.That(returnedSentence.Texts[107].pe_text, Is.EqualTo(" was "));
+            Assert.That(returnedSentence.Texts[108].pe_text, Is.EqualTo(" completed "));
+            Assert.That(returnedSentence.Texts[109].pe_text, Is.EqualTo(" . "));
         }
     }
 }

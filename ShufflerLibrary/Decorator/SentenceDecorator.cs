@@ -7,7 +7,11 @@
     {
         protected Sentence Sentence { get; set; }
 
-        public List<Text> Texts => Sentence.Texts;
+        public List<Text> Texts
+        {
+            get { return Sentence.Texts; }
+            set { Sentence.Texts = value; }
+        }
 
         public Text SentenceBreaker => Sentence.SentenceBreaker;
 

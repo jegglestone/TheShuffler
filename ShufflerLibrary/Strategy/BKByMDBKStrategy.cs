@@ -1,5 +1,6 @@
 ﻿namespace ShufflerLibrary.Strategy
 {
+    using System.Collections.Generic;
     using System.Linq;
     using Decorator;
     using Model;
@@ -11,29 +12,38 @@
 
         public Sentence ShuffleSentence(Sentence sentence)
         {
-            if (!sentence.Texts.Any(text => text.IsMDBK()))
+            if (!sentence.Texts.Any(text => text.IsMDBK()|| text.pe_tag_revised_by_Shuffler == UnitTypes.MDBK))
                 return sentence;
 
             _bKBySentenceDecorator =
                 new BKBySentenceDecorator(sentence);
 
-            ShuffleMDUnitsFromMDBKToBeforeFirstNNAfterBKBy();
+            if (sentence.Texts.Count(text => text.IsMDBK()) == 1)
+            {
+                ShuffleMDUnitsFromMDBKToBeforeFirstNNAfterBKBy();
 
-            ShuffleMDUnitsFromAfterMDBKToImmediatelyAfterMDBK();
+                ShuffleMDUnitsFromAfterMDBKToImmediatelyAfterMDBK();
 
-            ShufflePAST_DE_UnitToBeforeMDBKUnit();
+                ShufflePAST_DE_UnitToBeforeMDBKUnit();
 
-            Shuffle_De_NNUnitAfterMDBKUnit();
+                Shuffle_De_NNUnitAfterMDBKUnit();
 
-            DeleteModifiers();
+                DeleteModifiers();
 
-            ReplaceMDBKWithYouguan();
+                ReplaceMDBKWithYouguan();
+            }
+            else
+            {
+                Shuffle_De_NNUnitAfterMDBKUnit();
+
+                CreateSentenceOptions();
+            }
 
             return sentence;
         }
 
-        private void ShuffleMDUnitsFromMDBKToBeforeFirstNNAfterBKBy(
-            )
+ 
+        private void ShuffleMDUnitsFromMDBKToBeforeFirstNNAfterBKBy()
         {
             int bkByPosition = _bKBySentenceDecorator.BKByIndexPosition;
             int mdbkposition = _bKBySentenceDecorator.GetMDBKPosition(
@@ -71,7 +81,6 @@
                     //Insert before the NN
                     _bKBySentenceDecorator.Texts.InsertRange(
                         NNPosition, modifierUnitToShuffle);
-
                 }
             }
         }
@@ -101,16 +110,16 @@
 
             _bKBySentenceDecorator.Texts.InsertRange(mdbkPosition+1, mdUnit);
         }
-        
+
         private void ShufflePAST_DE_UnitToBeforeMDBKUnit()
         {
             if (_bKBySentenceDecorator.NNUnitBeforeBkBy(
-                    _bKBySentenceDecorator.TextsBeforeBy))
+                _bKBySentenceDecorator.TextsBeforeBy))
             {
                 int nnPosition = _bKBySentenceDecorator.NNPosition;
 
                 if (_bKBySentenceDecorator.IsPASTUnitBetweenNNandBKBy(
-                        _bKBySentenceDecorator.TextsBeforeBy, nnPosition))
+                    _bKBySentenceDecorator.TextsBeforeBy, nnPosition))
                 {
                     // remove PAST+de
                     int pastPosition = _bKBySentenceDecorator
@@ -122,7 +131,7 @@
                         _bKBySentenceDecorator.Texts[pastPosition].pe_merge_ahead + 1);
 
                     _bKBySentenceDecorator.Texts.RemoveRange(
-                        pastPosition, 
+                        pastPosition,
                         _bKBySentenceDecorator.Texts[pastPosition].pe_merge_ahead + 1);
 
                     // insert PAST+de before mdbk
@@ -130,6 +139,34 @@
                         _bKBySentenceDecorator.GetMDBKPosition(_bKBySentenceDecorator.Texts),
                         PAST_deUnit);
                 }
+            }
+        }
+
+        private void ShufflePAST_DE_UnitToBeforeYouguanUnit(List<Text> newSentenceTexts)
+        {
+            var textsBeforeBy = newSentenceTexts.Take(newSentenceTexts.FindIndex(text => text.IsBKBy)).ToList();
+            
+            if (textsBeforeBy.Any(text => text.IsType(UnitTypes.PAST_Participle)))
+            {
+                int pastPosition =
+                    textsBeforeBy.FindIndex(text => text.IsType(UnitTypes.PAST_Participle));
+
+                if(newSentenceTexts[pastPosition + 1].pe_text_revised != " de ") return;
+
+                const int PAST_deUnitSize = 2;
+
+                var PAST_deUnit = newSentenceTexts.GetRange(
+                        pastPosition,
+                        PAST_deUnitSize);
+
+                newSentenceTexts.RemoveRange(
+                    pastPosition,
+                    PAST_deUnitSize);
+
+                // insert PAST+de before youguan
+                newSentenceTexts.InsertRange(
+                    newSentenceTexts.FindIndex(text => text.pe_tag_revised_by_Shuffler=="youguan"),
+                    PAST_deUnit);
             }
         }
 
@@ -215,6 +252,80 @@
             mdbkText.pe_tag_revised_by_Shuffler = "youguan";
         }
 
+        private void CreateSentenceOptions()
+        {
+            int mofifierCount = _bKBySentenceDecorator.Texts.Count(text => text.IsModifier);
+            for (int i = 0; i < mofifierCount; i++)
+            {
+                List<Text> newSentenceTexts = new List<Text>();
+                newSentenceTexts.Clear();
+                MapExistingSentenceTextsToNewSentence(newSentenceTexts, i + 1);
+
+                List<Text> modifiers = new List<Text>();
+                modifiers.Clear();
+                modifiers = newSentenceTexts.Where(
+                    text => text.IsModifier).ToList();
+
+                modifiers[i].pe_tag_revised_by_Shuffler = "youguan";
+                modifiers[i].pe_text_revised = " youguan ";
+
+                ShufflePAST_DE_UnitToBeforeYouguanUnit(newSentenceTexts);
+                
+                DeleteAllMDsExceptYouguan(newSentenceTexts);
+
+                if (i == 0)
+                    _bKBySentenceDecorator.Texts = newSentenceTexts;
+                else
+                    _bKBySentenceDecorator.Texts.AddRange(newSentenceTexts);
+            }
+        }
+
+        private static void DeleteAllMDsExceptYouguan(List<Text> newSentenceTexts)
+        {
+            for (int j = 0; j < newSentenceTexts.Count; j++)
+            {
+                if (newSentenceTexts[j].IsModifier
+                    && newSentenceTexts[j].pe_tag_revised_by_Shuffler != "youguan")
+                {
+                    newSentenceTexts.Remove(newSentenceTexts[j]);
+                    j--;
+                }
+            }
+        }
+
+
+        //TODO: Move to static mapper class
+        private List<Text> sentenceTexts;
+
+        private void MapExistingSentenceTextsToNewSentence(
+            List<Text> newSentenceTexts, int sentenceOption)
+        {
+            if (sentenceTexts == null)
+                sentenceTexts = _bKBySentenceDecorator.Texts;
+
+            foreach (var text in sentenceTexts)  
+            {
+                newSentenceTexts.Add(new Text()
+                {
+                    pe_tag_revised = text.pe_tag_revised,
+                    pe_tag = text.pe_tag,
+                    pe_text = text.pe_text,
+                    pe_para_no = text.pe_para_no,
+                    pe_text_revised = text.pe_text_revised,
+                    pe_tag_revised_by_Shuffler = text.pe_tag_revised_by_Shuffler,
+                    pe_order = text.pe_order,
+                    pe_merge_ahead = text.pe_merge_ahead,
+                    pe_user_id = text.pe_user_id,
+                    pe_C_num = text.pe_C_num,
+                    pe_phrase_id = text.pe_phrase_id,
+                    pe_rule_applied = text.pe_rule_applied,
+                    pe_word_id = text.pe_word_id,
+                    Sentence_Option = sentenceOption
+                });
+            }
+        }
+
+        // TODO: Move to Decorator
         private static bool ThereIsAnNNUnitBetweenBKByAndMDBK(
             BKBySentenceDecorator bKBySentenceDecorator, int bkByPosition, int mdbkposition)
         {

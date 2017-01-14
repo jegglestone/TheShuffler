@@ -250,7 +250,8 @@
         {
             return new Text()
             {
-                pe_text_revised = " de "
+                pe_text = " de "
+                , pe_text_revised = " de "
                 , pe_order = previous_pe_order + 5
                 , pe_merge_ahead = pe_merge_ahead
             };

@@ -30,7 +30,7 @@
                 var text = CreateText(dr);
                 texts.Add(text);
 
-                if (text.pe_text.Replace(" ", "") == ".")//TOTO: Could be ! or ? in future.Maybe test for BKP
+                if (text.pe_text.Replace(" ", "") == ".")//TODO: Could be ! or ? in future.Maybe test for BKP
                 {
                     paragraph.Sentences.Add(
                         new Sentence()
@@ -109,7 +109,7 @@
                                     text.pe_order,
                                     text.pe_C_num,
                                     sentence.Sentence_No,
-                                    sentence.Sentence_Option,
+                                    text.Sentence_Option,
                                     sentence.Sentence_Option_Selected) == false)
                                 return false;
                         }
