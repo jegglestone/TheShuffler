@@ -4,7 +4,7 @@
 
     public class Text : PhraseElement
     {
-        public string tag_used
+        public string actual_tag_used
         {
             get
             {
@@ -14,7 +14,7 @@
             }
         }
 
-        public string text_used
+        public string actual_text_used
         {
             get
             {
@@ -52,7 +52,7 @@
 
         public bool IsNulThat => 
             pe_tag_revised == "NUL" 
-            && (pe_text == " that " || pe_tag_revised == " that ");
+            && (pe_text == " that " || pe_text_revised == " that ");
 
         public bool IsClauser =>
             IsType(UnitTypes.CS_ClauserUnit);
@@ -87,10 +87,18 @@
             IsType(UnitTypes.BK_Breaker)
             && pe_text == " by ";
 
+        public bool IsSentenceEnd => 
+            actual_text_used.Replace(" ", "") == "."
+            && actual_tag_used == UnitTypes.BKP_BreakerPunctuation;
+
         public bool IsMDBK()
         {
             return pe_tag_revised_by_Shuffler == "MDBK";
         }
+
+        public bool IsPyXuyao =>
+            actual_text_used.ToLower().Replace(" ", "") == "xuyao"
+            && actual_tag_used == UnitTypes.PY_ChineseWord;
 
         public bool IsType(string unitType)
         {
@@ -120,6 +128,8 @@
         public static bool IsNull(this string textField)
         {
             if (textField == null)
+                return true;
+            if (textField == string.Empty)
                 return true;
             return textField.ToLower() == "null";
         }

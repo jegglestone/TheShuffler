@@ -147,6 +147,17 @@
                                         text => text.IsType(UnitTypes.PAST_Participle));
         }
 
+        public bool ThereIsAnNNUnitBetweenBKByAndMDBK(
+            BKBySentenceDecorator bKBySentenceDecorator, int bkByPosition, int mdbkposition)
+        {
+            return bKBySentenceDecorator
+                .Texts
+                .Skip(bkByPosition)
+                .Take(mdbkposition - bkByPosition)
+                .ToList()
+                .Any(text => text.IsNN);
+        }
+
         public BKBySentenceDecorator(Sentence sentence)
         {
             Sentence = sentence;

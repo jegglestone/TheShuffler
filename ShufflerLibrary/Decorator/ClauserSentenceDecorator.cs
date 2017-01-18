@@ -28,7 +28,7 @@ namespace ShufflerLibrary.Decorator
 
                 return Sentence.Texts.FindIndex(
                     text => text.pe_tag == UnitTypes.CS_ClauserUnit &&
-                            text.pe_tag_revised == "NULL");
+                            text.pe_tag_revised.IsNull());
             }
         }
 

@@ -30,6 +30,8 @@
             Assert.That(returnedSentence.Texts[1].pe_tag_revised, Is.EqualTo("NN"));
             Assert.That(returnedSentence.Texts[2].pe_tag_revised, Is.EqualTo("MD3"));
             Assert.That(returnedSentence.Texts[3].pe_tag_revised, Is.EqualTo("MD2"));
+
+            Assert.That(returnedSentence.SentenceHasMultipleOptions, Is.EqualTo(false));
         }
 
         [Test]
@@ -173,6 +175,8 @@
             Assert.That(returnedSentence.Texts[21].pe_text, Is.EqualTo(" . "));
 
             Assert.That(returnedSentence.pe_para_no, Is.EqualTo(123));
+
+            Assert.That(returnedSentence.SentenceHasMultipleOptions, Is.EqualTo(false));
         }
 
         [Test]
@@ -378,6 +382,87 @@
             Assert.That(returnedSentence.Texts[107].pe_text, Is.EqualTo(" was "));
             Assert.That(returnedSentence.Texts[108].pe_text, Is.EqualTo(" completed "));
             Assert.That(returnedSentence.Texts[109].pe_text, Is.EqualTo(" . "));
+
+
+            Assert.That(returnedSentence.SentenceHasMultipleOptions, Is.EqualTo(true));
+        }
+
+
+        [Test]
+        public void MassiveSentenceWithMDUnits()
+        {
+            var sentence = new Sentence()
+            {
+                Texts = new List<Model.Text>()
+                {
+                    new Model.Text() { pe_tag_revised = "", pe_text = " In addition "},
+                    new Model.Text() { pe_tag_revised = "BKP", pe_text = " , "},
+                    new Model.Text() { pe_tag_revised = "", pe_text = " the federal reserve "},
+                    new Model.Text() { pe_tag_revised = "", pe_text = " has been "},
+                    new Model.Text() { pe_tag_revised = "PRES", pe_text = " conducting "},
+                    new Model.Text() { pe_tag_revised = "PREN1", pe_text = "a"},
+                    new Model.Text() { pe_tag_revised = "NN", pe_text = "program"},
+                    new Model.Text() { pe_tag_revised = "BKP", pe_text = " , "},
+                    new Model.Text() { pe_tag_revised = "TM1", pe_text = " last september "},
+                    new Model.Text() { pe_tag_revised = "BKP", pe_text = " , "},
+                    new Model.Text() { pe_tag_revised = "MD1", pe_text = " to "},
+                    new Model.Text() { pe_tag_revised = "VB", pe_text = "lengthen"},
+                    new Model.Text() { pe_tag_revised = "PREN1", pe_text = "the"},
+                    new Model.Text() { pe_tag_revised = "NN", pe_text = "average"},
+                    new Model.Text() { pe_tag_revised = "NN", pe_text = "maturity"},
+                    new Model.Text() { pe_tag_revised = "MD1", pe_text = " of "},
+                    new Model.Text() { pe_tag_revised = "PREN2", pe_text = " its "},
+                    new Model.Text() { pe_tag_revised = "NN", pe_text = " securities "},
+                    new Model.Text() { pe_tag_revised = "NN", pe_text = " holdings "},
+                    new Model.Text() { pe_tag_revised = "BK", pe_text = " by "},
+                    new Model.Text() { pe_tag_revised = "", pe_text = "purchasing"},
+                    new Model.Text() { pe_tag_revised = "CURR", pe_text = "$"},
+                    new Model.Text() { pe_tag_revised = "NN", pe_text = "400"},
+                    new Model.Text() { pe_tag_revised = "", pe_text = "billion"},
+                    new Model.Text() { pe_tag_revised = "MD1", pe_text = " of "},
+                    new Model.Text() { pe_tag_revised = "", pe_text = " longer-term "},
+                    new Model.Text() { pe_tag_revised = "NN", pe_text = " treasury securities "},
+                    new Model.Text() { pe_tag_revised = "BK", pe_text = "and"},
+                    new Model.Text() { pe_tag_revised = "PRES", pe_text = "selling"},
+                    new Model.Text() { pe_tag_revised = "NN", pe_text = " an equal amount "},
+                    new Model.Text() { pe_tag_revised = "MD1", pe_text = " of "},
+                    new Model.Text() { pe_tag_revised = "", pe_text = " shorter-term "},
+                    new Model.Text() { pe_tag_revised = "NN", pe_text = " treasury securities "},
+                    new Model.Text() { pe_tag_revised = "PAST", pe_text = "announced"},
+                    new Model.Text() { pe_tag_revised = "BKP", pe_text = " , "},
+                    new Model.Text() { pe_tag_revised = "MD1", pe_text = " to "},
+                    new Model.Text() { pe_tag_revised = "VB", pe_text = "lengthen"},
+                    new Model.Text() { pe_tag_revised = "PREN1", pe_text = "the"},
+                    new Model.Text() { pe_tag_revised = "NN", pe_text = "average"},
+                    new Model.Text() { pe_tag_revised = "", pe_text = "maturity"},
+                    new Model.Text() { pe_tag_revised = "MD1", pe_text = " of "},
+                    new Model.Text() { pe_tag_revised = "PREN2", pe_text = "its"},
+                    new Model.Text() { pe_tag_revised = "", pe_text = "securities"},
+                    new Model.Text() { pe_tag_revised = "", pe_text = "holdings"},
+                    new Model.Text() { pe_tag_revised = "BK", pe_text = " by "},
+                    new Model.Text() { pe_tag_revised = "ADJ", pe_text = "purchasing"},
+                    new Model.Text() { pe_tag_revised = "CURR", pe_text = ""},
+                    new Model.Text() { pe_tag_revised = "", pe_text = "$"},
+                    new Model.Text() { pe_tag_revised = "", pe_text = "400"},
+                    new Model.Text() { pe_tag_revised = "NN", pe_text = "billion"},
+                    new Model.Text() { pe_tag_revised = "MD1", pe_text = " of "},
+                    new Model.Text() { pe_tag_revised = "", pe_text = " longer-term "},
+                    new Model.Text() { pe_tag_revised = "", pe_text = " treasury securities "},
+                    new Model.Text() { pe_tag_revised = "BK", pe_text = "and"},
+                    new Model.Text() { pe_tag_revised = "PRES", pe_text = "selling"},
+                    new Model.Text() { pe_tag_revised = "", pe_text = "an equal amount"},
+                    new Model.Text() { pe_tag_revised = "MD1", pe_text = " of "},
+                    new Model.Text() { pe_tag_revised = "", pe_text = " shorter-term "},
+                    new Model.Text() { pe_tag_revised = "NN", pe_text = " treasury securities "},
+                    new Model.Text() { pe_tag_revised = "BKP", pe_text = " . "}
+                }
+            };
+
+            BKByUnitStrategy bkByUnitStrategy = new BKByUnitStrategy();
+            BKByMDBKStrategy bkbyMdbkStrategy = new BKByMDBKStrategy();
+            var returnedSentence = bkbyMdbkStrategy.ShuffleSentence(bkByUnitStrategy.ShuffleSentence(sentence));
+
+            Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo(" In addition "));
         }
     }
 }

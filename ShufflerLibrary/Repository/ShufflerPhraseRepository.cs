@@ -32,6 +32,7 @@
 
                 if (text.pe_text.Replace(" ", "") == ".")//TODO: Could be ! or ? in future.Maybe test for BKP
                 {
+
                     paragraph.Sentences.Add(
                         new Sentence()
                         {

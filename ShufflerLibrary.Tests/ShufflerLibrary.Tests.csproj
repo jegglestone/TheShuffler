@@ -50,11 +50,15 @@
     <Compile Include="Unit\AdverbUnitStrategyTests.cs" />
     <Compile Include="Unit\BKByMDBKUnitStrategyTests.cs" />
     <Compile Include="Unit\ByUnitStrategyTests.cs" />
+    <Compile Include="Unit\MDUnitStrategyTests.cs" />
+    <Compile Include="Unit\MoveableUnitHelperTests.cs" />
+    <Compile Include="Unit\SentenceHelperTests.cs" />
     <Compile Include="Unit\SentenceOrderReSetterUnitTests.cs" />
     <Compile Include="Unit\SentenceUnitTests.cs" />
     <Compile Include="Unit\ShufflerPhraseRepositoryUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit\TextTests.cs" />
+    <Compile Include="Unit\ThatUnitStrategyTests.cs" />
     <Compile Include="Unit\TimerUnitStrategyTests.cs" />
   </ItemGroup>
   <ItemGroup>

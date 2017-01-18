@@ -88,7 +88,11 @@
         {
             RemoveCurrentTimerUnit(
                 timerSentenceDecorator);
-            timerSentenceDecorator.Texts.InsertRange(
+
+            if (newPosition > timerSentenceDecorator.TextCount - 1)
+                timerSentenceDecorator.Texts.AddRange(reversedTexts);
+            else
+                timerSentenceDecorator.Texts.InsertRange(
                             newPosition,
                             reversedTexts);
         }

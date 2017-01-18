@@ -51,6 +51,8 @@
     <Compile Include="Decorator\MDSentenceDecorator.cs" />
     <Compile Include="Decorator\SentenceDecorator.cs" />
     <Compile Include="Decorator\TimerSentenceDecorator.cs" />
+    <Compile Include="Helper\DeParticleHelper.cs" />
+    <Compile Include="Helper\ModifierPositionHelper.cs" />
     <Compile Include="Helper\MoveableUnitHelper.cs" />
     <Compile Include="Model\Document.cs" />
     <Compile Include="Model\MoveableUnit.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="Model\PhraseElement.cs" />
     <Compile Include="Repository\ShufflerPhraseRepository.cs" />
     <Compile Include="Helper\SentenceOrderReSetter.cs" />
+    <Compile Include="Helper\SentenceHelper.cs" />
     <Compile Include="Shuffler.cs" />
     <Compile Include="IShuffler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,6 +73,7 @@
     <Compile Include="Strategy\ClauserUnitStrategy.cs" />
     <Compile Include="Strategy\IStrategy.cs" />
     <Compile Include="Strategy\MDUnitStrategy.cs" />
+    <Compile Include="Strategy\ThatUnitStrategy.cs" />
     <Compile Include="Strategy\TimerUnitStrategy.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -26,6 +26,9 @@
         private readonly IStrategy
             _bkByMDBKStrategy;
 
+        private readonly IStrategy
+            _mDUnitStrategy;
+
         public Shuffler()
         {
             _shufflerPhraseRepository = 
@@ -46,6 +49,9 @@
 
             _bkByMDBKStrategy =
                 new BKByMDBKStrategy();
+
+            _mDUnitStrategy = 
+                new MDUnitStrategy();
         }
 
         public bool ShuffleParagraph(int pe_pmd_id)
@@ -56,9 +62,11 @@
             for (int i = 0; i < document.Paragraphs.Count; i++)
             {
                 var paragraph = document.Paragraphs[i];
-                for (int index = 0; index < paragraph.Sentences.Count; index++)
+                for (int index = 0; index < 
+                    paragraph.Sentences.Count; index++)
                 {
                     var sentence = paragraph.Sentences[index];
+                    sentence.Sentence_No = index + 1;
                     ShuffleSentence(paragraph, index, sentence);
                 }
             }
@@ -84,8 +92,17 @@
 
             sentence =
                 _bkByMDBKStrategy.ShuffleSentence(sentence);
-              
-            // more strategies here
+            
+            if (sentence.SentenceHasMultipleOptions)
+            {
+                ApplySubsequentStrategiesToMultipleSentences(
+                    sentence);
+            }
+            else
+            {
+                ApplySubsequentStrategiesToSentence(
+                    sentence);
+            }
 
             //finally
             sentence =
@@ -93,6 +110,27 @@
 
             paragraph.Sentences[index] =
                 sentence;
+        }
+
+        private void ApplySubsequentStrategiesToMultipleSentences(Sentence sentence)
+        {
+            var sentences =
+                SentenceHelper.SplitSentenceOptions(sentence);
+
+            sentence.Texts.Clear();
+
+            foreach (var optionSentence in sentences)
+            {
+                ApplySubsequentStrategiesToSentence(
+                    optionSentence);
+
+                sentence.Texts.AddRange(optionSentence.Texts);
+            }
+        }
+
+        private void ApplySubsequentStrategiesToSentence(Sentence sentence)
+        {
+            _mDUnitStrategy.ShuffleSentence(sentence);
         }
     }
 }

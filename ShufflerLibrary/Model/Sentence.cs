@@ -16,28 +16,13 @@
 
         public int TextCount => Texts.Count;
 
+        public bool SentenceHasMultipleOptions { get; set; } = false;
+
         public Text SentenceBreaker
         {
             get
             {
                 return Texts.Last(text => text.pe_tag == "BKP");
-            }
-        }
-
-        public string SentenceLine
-        {
-            get
-            {
-                var sentenceLine = new StringBuilder(TextCount);
-                foreach (var text in Texts)
-                {
-                    sentenceLine.Append(
-                        text.pe_text_revised != "NULL" 
-                        && text.pe_text_revised != ""
-                            ? text.pe_text_revised 
-                            : text.pe_text);
-                }
-                return sentenceLine.ToString();
             }
         }
 
