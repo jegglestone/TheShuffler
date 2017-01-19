@@ -50,9 +50,13 @@
         public int pe_order { get; set; }
         public int pe_C_num { get; set; }
 
+        public bool IsComma =>
+            IsType(UnitTypes.BKP_BreakerPunctuation)
+            && actual_text_used.Replace(" ", "") == ",";
+
         public bool IsNulThat => 
-            pe_tag_revised == "NUL" 
-            && (pe_text == " that " || pe_text_revised == " that ");
+            IsType(UnitTypes.NUL)
+            && actual_text_used.Replace(" ", "").ToLower() == "that";
 
         public bool IsClauser =>
             IsType(UnitTypes.CS_ClauserUnit);

@@ -1,5 +1,7 @@
 ﻿namespace ShufflerLibrary.Model
 {
+    using System.Runtime.InteropServices;
+
     public class UnitTypes
     {
         public const string ADJ_Adjective = "ADJ";
@@ -13,6 +15,7 @@
         public const string MDBK = "MDBK";
         public const string NBKP_NonBreakerPunctuation = "NBKP";
         public const string NN = "NN";
+        public const string NUL = "NUL";
         public const string PAST_Participle = "PAST";
         public const string PREN_Pronoun = "PREN";
         public const string PRES_Participle = "PRES";

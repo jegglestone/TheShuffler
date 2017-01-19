@@ -26,19 +26,32 @@
         private static void ShuffleNulThatBeforeNN(
             Sentence sentence, int nulThatPosition, int nnPosition)
         {
-            int nulThatEndPosition =
-                sentence
-                .Texts
-                .Skip(nulThatPosition).ToList().FindIndex(text => text.IsSentenceEnd); //TODO: logic here for commas etc. Extract nethod
+            int nulThatEndPosition = GetNulThatEndPosition(sentence, nulThatPosition);
 
             var nulThatUnit =
-                sentence.Texts.Skip(nulThatPosition).Take(nulThatEndPosition);
+                sentence.Texts.Skip(nulThatPosition).Take(nulThatEndPosition).ToList();
 
             sentence.Texts.RemoveRange(
                 nulThatPosition, nulThatEndPosition);
 
-                sentence.Texts.InsertRange(
-                    nnPosition, nulThatUnit);
+            sentence.Texts.InsertRange(
+                nnPosition, nulThatUnit);
+        }
+
+        private static int GetNulThatEndPosition(Sentence sentence, int nulThatPosition)
+        {
+            var textsAfterNulThat = sentence.Texts.Skip(nulThatPosition);
+            if (sentence.Texts.Count(text => text.IsComma) == 0
+                || sentence.Texts.Count(text => text.IsComma) > 1)
+            {
+                return sentence
+                .Texts
+                .Skip(nulThatPosition).ToList().FindIndex(text => text.IsSentenceEnd);
+            }
+
+            return sentence
+                .Texts
+                .Skip(nulThatPosition).ToList().FindIndex(text => text.IsType(UnitTypes.BKP_BreakerPunctuation));
         }
     }
 }
