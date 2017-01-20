@@ -30,7 +30,8 @@
                 var text = CreateText(dr);
                 texts.Add(text);
 
-                if (text.pe_text.Replace(" ", "") == ".")//TODO: Could be ! or ? in future.Maybe test for BKP
+                //TODO: Could be ! or ? in future requirements. 
+                if (text.pe_text.Replace(" ", "") == ".") 
                 {
 
                     paragraph.Sentences.Add(
@@ -81,6 +82,9 @@
                 text.pe_word_id = int.Parse(dr["pe_word_id"].ToString());
             if (!(dr["pe_C_num"] is DBNull))
                 text.pe_C_num = int.Parse(dr["pe_C_num"].ToString());
+
+            if (dr["pe_text_revised"] is DBNull)
+                text.pe_text_revised = null;
             return text;
         }
 

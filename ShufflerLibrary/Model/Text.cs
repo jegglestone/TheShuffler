@@ -33,19 +33,7 @@
         public string pe_tag_revised_by_Shuffler { get; set; }
         public int pe_merge_ahead { get; set; }
         public int Sentence_Option { get; set; } = 1;
-
-        private string _peTextRevised;
-        public string pe_text_revised
-        {
-            get
-            {
-                if (_peTextRevised == "")
-                    _peTextRevised = null;
-                return _peTextRevised;
-            }
-            set { _peTextRevised = value; }
-        }
-
+        public string pe_text_revised { get; set; }
         public string pe_rule_applied { get; set; }
         public int pe_order { get; set; }
         public int pe_C_num { get; set; }
@@ -86,6 +74,13 @@
         public bool IsNN =>
             IsType(UnitTypes.NN) 
             || IsNumberedType(UnitTypes.NN);
+
+        public bool IsPren =>
+            IsType(UnitTypes.PREN_Pronoun)
+            || IsNumberedType(UnitTypes.PREN_Pronoun);
+
+        public bool IsPast =>
+            IsType(UnitTypes.PAST_Participle);
 
         public bool IsBKBy =>
             IsType(UnitTypes.BK_Breaker)

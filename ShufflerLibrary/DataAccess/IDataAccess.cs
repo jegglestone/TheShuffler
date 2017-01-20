@@ -8,10 +8,18 @@ namespace ShufflerLibrary.DataAccess
         IDataReader GetDataReader(int pe_pmd_id);
 
         bool SaveText(int pePmdID, int peUserID, int peParaNo, 
-            int pePhraseID, int? peWordID, string peTag, 
-            string peText, string peTagRevised, int peMergeAhead, 
-            string peTextRevised, string peRuleApplied, 
-            int peOrder, int peCNum, int sentenceNumber, 
-            int sentenceOption, int selectedOptionSelected);
+            int pePhraseID, 
+            int? peWordID, 
+            string peTag, 
+            string peText, 
+            string peTagRevised, 
+            int peMergeAhead, 
+            string peTextRevised, 
+            string peRuleApplied, 
+            int peOrder, 
+            int peCNum, 
+            int sentenceNumber, 
+            int sentenceOption, 
+            int selectedOptionSelected);
     }
 }

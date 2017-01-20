@@ -182,5 +182,51 @@ namespace ShufflerLibrary.Tests.Unit
             Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo(" 100 "));
             Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo(" . "));
         }
+
+        [Test]
+        public void When_Many_Units_To_Shuffle_Items_Dont_Get_Duplicated()
+        {
+            var sentence = new Sentence()
+            {
+                Texts = new List<Text>()
+                {
+                    new Text() { pe_tag = "ADJ", pe_text = "Real"},
+                    new Text() { pe_tag = "NN", pe_text = "gross domestic product "},
+                    new Text() { pe_tag = null, pe_text = "( "},
+                    new Text() { pe_tag = "NN", pe_text = "(GDP) "},
+                    new Text() { pe_tag = "", pe_text = "~)"},
+                    new Text() { pe_tag = "PAST", pe_text = "rose"},
+                    new Text() { pe_tag = "MD1", pe_text = "at"},
+                    new Text() { pe_tag = "PREN1", pe_text = "an"},
+                    new Text() { pe_tag = "NN", pe_text = "annual rate"},
+                    new Text() { pe_tag = "MD2", pe_text = " of "},
+                    new Text() { pe_tag = "PREN2", pe_text = "about"},
+                    new Text() { pe_tag = "DG", pe_text = "2"},
+                    new Text() { pe_tag = "NN", pe_text = "percent"},
+                    new Text() { pe_tag = "MD3", pe_text = "in"},
+                    new Text() { pe_tag = "PREN3", pe_text = "the"},
+                    new Text() { pe_tag = "TM1", pe_text = "first quarter"},
+                    new Text() { pe_tag = "CS", pe_text = "after"},
+                    new Text() { pe_tag = "PRES", pe_text = "increasing"},
+                    new Text() { pe_tag = "MD4", pe_text = "at"},
+                    new Text() { pe_tag = "PREN4", pe_text = "a"},
+                    new Text() { pe_tag = "DG", pe_text = "3"},
+                    new Text() { pe_tag = "NN", pe_text = "percent"},
+                    new Text() { pe_tag = "NN", pe_text = "pace"},
+                    new Text() { pe_tag = "MD5", pe_text = "in"},
+                    new Text() { pe_tag = "PREN5", pe_text = "the"},
+                    new Text() { pe_tag = "TM2", pe_text = "fourth quarter"},
+                    new Text() { pe_tag = "MD6", pe_text = " of "},
+                    new Text() { pe_tag = "TMY", pe_text = "2011"},
+                    new Text() { pe_tag = "PY", pe_text = "zhihou"},
+                    new Text() { pe_tag = "BKP", pe_text = " . "}
+                }
+            };
+            TimerUnitStrategy timerUnitStrategy = new TimerUnitStrategy();
+            timerUnitStrategy.ShuffleSentence(sentence);
+
+            Assert.That(sentence.TextCount, Is.EqualTo(30));
+            Assert.That(sentence.Texts[29].pe_text == " . ");
+        }
     }
 }

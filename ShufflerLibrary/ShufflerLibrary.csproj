@@ -71,9 +71,11 @@
     <Compile Include="Strategy\BKByMDBKStrategy.cs" />
     <Compile Include="Strategy\BKByUnitStrategy.cs" />
     <Compile Include="Strategy\ClauserUnitStrategy.cs" />
+    <Compile Include="Strategy\DoublePrenStrategy.cs" />
     <Compile Include="Strategy\IStrategy.cs" />
     <Compile Include="Strategy\MDUnitStrategy.cs" />
-    <Compile Include="Strategy\ThatUnitStrategy.cs" />
+    <Compile Include="Strategy\NulThatUnitStrategy.cs" />
+    <Compile Include="Strategy\PrenNNPastUnitStrategy.cs" />
     <Compile Include="Strategy\TimerUnitStrategy.cs" />
   </ItemGroup>
   <ItemGroup>

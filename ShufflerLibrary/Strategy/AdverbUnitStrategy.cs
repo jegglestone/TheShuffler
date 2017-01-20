@@ -23,29 +23,20 @@
             if (adverbSentenceDecorator.Texts.Take(adverbPosition).Any(
                 text => text.IsVbPastPres))
             {
-                var newSentence = new Sentence {pe_para_no = adverbSentenceDecorator.Pe_para_no};
-
+                //move adverb unit before VBPastPres
                 int vbPastPresPosition = 
                     adverbSentenceDecorator.Texts.Take(adverbPosition).ToList().FindLastIndex(
                     text => text.IsVbPastPres);
 
-                var beforeVbPastPresUnit = adverbSentenceDecorator.Texts.GetRange(
-                    0, vbPastPresPosition);
+                var adverbUnit = adverbSentenceDecorator.Texts.GetRange(
+                    adverbPosition, lastAdverbPosition - (adverbPosition - 1)).ToList();
 
-                var adverbUnit = adverbSentenceDecorator.Texts.GetRange(adverbPosition,
-                    lastAdverbPosition - (adverbPosition - 1));
+                adverbSentenceDecorator.Texts.RemoveRange(
+                    adverbPosition, lastAdverbPosition - (adverbPosition - 1));
 
-                var pastPresUnit = adverbSentenceDecorator.Texts.GetRange(
+                adverbSentenceDecorator.Texts.InsertRange(
                     vbPastPresPosition,
-                    adverbSentenceDecorator.TextCount - adverbUnit.Count - beforeVbPastPresUnit.Count - 1);
-
-                newSentence.Texts.AddRange(beforeVbPastPresUnit);
-                newSentence.Texts.AddRange(adverbUnit);
-                newSentence.Texts.AddRange(pastPresUnit);
-                newSentence.Texts.Add(
-                    adverbSentenceDecorator.SentenceBreaker);
-
-                return newSentence;
+                    adverbUnit);
             }
 
             return sentence;

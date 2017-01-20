@@ -1,7 +1,6 @@
 ﻿namespace ShufflerLibrary.Model
 {
     using System.Linq;
-    using System.Text;
     using System.Collections.Generic;
 
     public class Sentence : PhraseElement

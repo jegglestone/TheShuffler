@@ -36,6 +36,7 @@
                 pe_text = " de ",
                 pe_text_revised = " de ",
                 pe_tag = "PY",
+                pe_tag_revised = "PY",
                 pe_order = previous_pe_order + 5,
                 pe_merge_ahead = pe_merge_ahead
             };

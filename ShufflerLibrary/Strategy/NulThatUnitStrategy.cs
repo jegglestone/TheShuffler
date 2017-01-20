@@ -3,7 +3,7 @@
     using System.Linq;
     using Model;
 
-    public class ThatUnitStrategy : IStrategy
+    public class NulThatUnitStrategy : IStrategy
     {
         public Sentence ShuffleSentence(Sentence sentence)
         {
@@ -26,7 +26,8 @@
         private static void ShuffleNulThatBeforeNN(
             Sentence sentence, int nulThatPosition, int nnPosition)
         {
-            int nulThatEndPosition = GetNulThatEndPosition(sentence, nulThatPosition);
+            int nulThatEndPosition = 
+                GetNulThatEndPosition(sentence, nulThatPosition);
 
             var nulThatUnit =
                 sentence.Texts.Skip(nulThatPosition).Take(nulThatEndPosition).ToList();
@@ -40,7 +41,6 @@
 
         private static int GetNulThatEndPosition(Sentence sentence, int nulThatPosition)
         {
-            var textsAfterNulThat = sentence.Texts.Skip(nulThatPosition);
             if (sentence.Texts.Count(text => text.IsComma) == 0
                 || sentence.Texts.Count(text => text.IsComma) > 1)
             {

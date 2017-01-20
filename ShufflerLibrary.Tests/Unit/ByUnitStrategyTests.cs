@@ -42,7 +42,7 @@
         }
 
         [Test]
-        public void When_PRES_Betwwen_By_And_NBKP_BKP_VB_VBA_PAST_Replace_With_fangfashi() //TODO: more examples
+        public void When_PRES_Betwwen_By_And_NBKP_BKP_VB_VBA_PAST_Replace_With_fangfashi()
         {
             var sentence = new Sentence()
             {

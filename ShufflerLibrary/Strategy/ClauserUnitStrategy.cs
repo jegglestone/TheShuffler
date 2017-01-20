@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Runtime.CompilerServices;
     using Decorator;
     using Model;
 
@@ -207,7 +206,9 @@
                 pe_para_no = pe_para_no,
                 pe_order = unitTexts[unitTexts.Count - 1].pe_order + 5,
                 pe_tag = UnitTypes.BKP_BreakerPunctuation,
+                pe_tag_revised = UnitTypes.BKP_BreakerPunctuation,
                 pe_text = " , ",
+                pe_text_revised = " , ",
                 pe_user_id = unitTexts[0].pe_user_id
             };
         }        

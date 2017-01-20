@@ -164,8 +164,7 @@
             for (int i = firstModifierCurrentPosition;
                  i < firstModifierCurrentPosition + modifierEndPosition; i++)
             {
-                if (_mdSentenceDecorator.Texts[i].IsType(UnitTypes.PREN_Pronoun)
-                    || _mdSentenceDecorator.Texts[i].IsNumberedType(UnitTypes.PREN_Pronoun))
+                if (_mdSentenceDecorator.Texts[i].IsPren)
                 {
                     _mdSentenceDecorator.Texts.RemoveAt(i);
                     modifierEndPosition--;

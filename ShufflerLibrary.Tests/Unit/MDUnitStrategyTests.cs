@@ -221,8 +221,6 @@
             Assert.That(sentenceWithMDUnits.Texts[9].pe_tag_revised, Is.EqualTo("BKP"));//.
         }
 
-
-        // TODO: Another identical test without TM1 first quarter - make sure BKP doesn't get shuffled
         [Test]
         public void WhenPrenDigAdjPlusNNUnitBeforeModifier()
         {

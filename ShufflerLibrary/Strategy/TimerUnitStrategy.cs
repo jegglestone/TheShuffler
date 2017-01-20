@@ -87,7 +87,7 @@
             TimerSentenceDecorator timerSentenceDecorator)
         {
             RemoveCurrentTimerUnit(
-                timerSentenceDecorator);
+                timerSentenceDecorator, reversedTexts.Count);
 
             if (newPosition > timerSentenceDecorator.TextCount - 1)
                 timerSentenceDecorator.Texts.AddRange(reversedTexts);
@@ -98,12 +98,13 @@
         }
 
         private static void RemoveCurrentTimerUnit(
-            TimerSentenceDecorator timerSentenceDecorator)
+            TimerSentenceDecorator timerSentenceDecorator, int timerUnitSize)
         {
             int firstTimerIndexPosition = timerSentenceDecorator.TimerIndexPosition;
             timerSentenceDecorator.Texts.RemoveRange(
                             firstTimerIndexPosition,
-                            timerSentenceDecorator.LastTimerIndexPosition - firstTimerIndexPosition + 1);
+                            timerUnitSize);
+            //timerSentenceDecorator.LastTimerIndexPosition - firstTimerIndexPosition + 1);// TODO: try reversedTimers.count
         }
 
         private static void UnderlineTimerUnit(

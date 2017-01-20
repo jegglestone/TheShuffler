@@ -97,7 +97,7 @@
         {
             return Texts[nnPosition - 1].IsType(UnitTypes.ADJ_Adjective)
                    || Texts[nnPosition - 1].IsType(UnitTypes.DIG_Digit)
-                   || Texts[nnPosition - 1].IsType(UnitTypes.PREN_Pronoun);
+                   || Texts[nnPosition - 1].IsPren;
         }
 
         public List<Text> GetModifierUnitUpToVBorBK(int firstModifierPosition)

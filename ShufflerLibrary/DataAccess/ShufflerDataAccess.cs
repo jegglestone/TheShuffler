@@ -39,6 +39,7 @@ namespace ShufflerLibrary.DataAccess
             return dataReader;
         }
 
+        // TODO: Refactor to pass DataTransferObject
         public bool SaveText(
             int pePmdID, int peUserID, int peParaNo, int pePhraseID, int? peWordID, string peTag, string peText,
             string peTagRevised, int peMergeAhead, string peTextRevised, string peRuleApplied, int peOrder, int peCNum
@@ -52,6 +53,7 @@ namespace ShufflerLibrary.DataAccess
                     CommandText = "dbo.[SaveShuffledText]",
                     Connection = cn,
                 };
+                
                 command.Parameters.AddWithValue("@pe_pmd_id", pePmdID);
                 command.Parameters.AddWithValue("@pe_user_id", peUserID);
                 command.Parameters.AddWithValue("@pe_para_no", peParaNo);
@@ -59,10 +61,13 @@ namespace ShufflerLibrary.DataAccess
                 command.Parameters.AddWithValue("@pe_word_id", peWordID);
                 command.Parameters.AddWithValue("@pe_tag", peTag);
                 command.Parameters.AddWithValue("@pe_text", peText);
-                command.Parameters.AddWithValue("@pe_tag_revised", peTagRevised);
                 command.Parameters.AddWithValue("@pe_merge_ahead", peMergeAhead);
 
-                if (peTextRevised == "NULL")
+                if (peTagRevised == null || peTagRevised.ToLower() == "null")
+                    command.Parameters.AddWithValue("@pe_tag_revised", DBNull.Value);
+                else command.Parameters.AddWithValue("@pe_tag_revised", peTagRevised);
+
+                if (peTextRevised == null || peTextRevised.ToLower() == "null")
                     command.Parameters.AddWithValue("@pe_text_revised", DBNull.Value);
                 else command.Parameters.AddWithValue("@pe_text_revised", peTextRevised);
 
@@ -83,7 +88,6 @@ namespace ShufflerLibrary.DataAccess
 
         public void Dispose()
         {
-            // dispose connection and datareader etc
             if (!dataReader.IsClosed)
                 dataReader.Close();
             dataReader?.Dispose();

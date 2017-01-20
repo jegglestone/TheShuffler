@@ -7,7 +7,7 @@
     using Text = Model.Text;
 
     [TestFixture]
-    public class ThatUnitStrategyTests
+    public class NulThatUnitStrategyTests
     {
         [Test]
         public void ShufflesNulThatUnitBeforeNN()
@@ -42,7 +42,7 @@
                     new Text() { pe_tag="BKP", pe_text = " . "},
                 }
             };
-            var thatUnitStrategy = new ThatUnitStrategy();
+            var thatUnitStrategy = new NulThatUnitStrategy();
             sentenceWithNulThat = thatUnitStrategy.ShuffleSentence(sentenceWithNulThat);
 
             /*
@@ -79,7 +79,7 @@
                     new Text() { pe_tag="BKP", pe_text = " . "}
                 }
             };
-            var thatUnitStrategy = new ThatUnitStrategy();
+            var thatUnitStrategy = new NulThatUnitStrategy();
             sentenceWithNulThat = thatUnitStrategy.ShuffleSentence(sentenceWithNulThat);
 
             /*
@@ -119,7 +119,7 @@
                     new Text() { pe_tag="BKP", pe_text = " . "},
                 }
             };
-            var thatUnitStrategy = new ThatUnitStrategy();
+            var thatUnitStrategy = new NulThatUnitStrategy();
             sentenceWithNulThat = thatUnitStrategy.ShuffleSentence(sentenceWithNulThat);
 
             /*
@@ -167,7 +167,7 @@
 
                 }
             };
-            var thatUnitStrategy = new ThatUnitStrategy();
+            var thatUnitStrategy = new NulThatUnitStrategy();
             sentenceWithNulThat = thatUnitStrategy.ShuffleSentence(sentenceWithNulThat);
 
             /*

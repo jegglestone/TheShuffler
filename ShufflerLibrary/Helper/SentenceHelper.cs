@@ -19,8 +19,8 @@
                     && sentence.Texts[i].actual_tag_used == "BKP")
                 {
                     var newSentence = new Sentence();
-                    
-                    if(sentences.Count == 0)  // first sentence
+
+                    if (IsFirstSentence(sentences))  // first sentence
                     {
                         newSentence.Texts.AddRange(
                         sentence.Texts.GetRange(
@@ -40,19 +40,15 @@
                         sentenceStartPosition = i + 1;
                         AssignSentenceProperties(sentence, newSentence);
                     }
-                    //else if (sentences.Count == sentenceCount - 1) // last sentence - ever called?
-                    //{
-                    //    newSentence.Texts.AddRange(
-                    //    sentence.Texts.GetRange(
-                    //        sentenceStartPosition, i + 1 - sentenceStartPosition));
-                    //    sentences.Add(newSentence);
-                    //    AssignSentenceProperties(sentence, newSentence);
-                    //}
-                    
                 }
             }
 
             return sentences;
+        }
+
+        private static bool IsFirstSentence(List<Sentence> sentences)
+        {
+            return sentences.Count == 0;
         }
 
         private static void AssignSentenceProperties(Sentence sentence, Sentence newSentence)

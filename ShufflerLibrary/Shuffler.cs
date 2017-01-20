@@ -29,6 +29,15 @@
         private readonly IStrategy
             _mDUnitStrategy;
 
+        private readonly IStrategy
+            _nulThatStrategy;
+
+        private readonly IStrategy
+            _doublePrenStrategy;
+
+        private readonly IStrategy
+            _prenNnPastUnitStrategy;
+
         public Shuffler()
         {
             _shufflerPhraseRepository = 
@@ -52,6 +61,15 @@
 
             _mDUnitStrategy = 
                 new MDUnitStrategy();
+
+            _nulThatStrategy = 
+                new NulThatUnitStrategy();
+
+            _doublePrenStrategy = 
+                new DoublePrenStrategy();
+
+            _prenNnPastUnitStrategy = 
+                new PrenNNPastUnitStrategy();
         }
 
         public bool ShuffleParagraph(int pe_pmd_id)
@@ -79,20 +97,20 @@
             Paragraph paragraph, int index, Sentence sentence)
         {
             sentence =
-                _clauserUnitStrategy.ShuffleSentence(sentence);
-   
+               _clauserUnitStrategy.ShuffleSentence(sentence);
+
             sentence =
                 _adverbUnitStrategy.ShuffleSentence(sentence);
-            
-           sentence =
-               _timerUnitStrategy.ShuffleSentence(sentence);
+
+            sentence =
+                _timerUnitStrategy.ShuffleSentence(sentence);
 
             sentence =
                 _bkByStrategy.ShuffleSentence(sentence);
 
             sentence =
                 _bkByMDBKStrategy.ShuffleSentence(sentence);
-            
+
             if (sentence.SentenceHasMultipleOptions)
             {
                 ApplySubsequentStrategiesToMultipleSentences(
@@ -104,7 +122,6 @@
                     sentence);
             }
 
-            //finally
             sentence =
                 SentenceOrderReSetter.SetPeOrderAsc(sentence);
 
@@ -130,7 +147,10 @@
 
         private void ApplySubsequentStrategiesToSentence(Sentence sentence)
         {
-            _mDUnitStrategy.ShuffleSentence(sentence);
+            _prenNnPastUnitStrategy.ShuffleSentence(
+                _doublePrenStrategy.ShuffleSentence(
+                    _nulThatStrategy.ShuffleSentence(
+                        _mDUnitStrategy.ShuffleSentence(sentence))));
         }
     }
 }

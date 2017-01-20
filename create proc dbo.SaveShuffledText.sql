@@ -26,9 +26,9 @@ CREATE PROCEDURE [dbo].[SaveShuffledText]
     ,@pe_word_id int = null
     ,@pe_tag nvarchar(10) = null
     ,@pe_text nvarchar(2000)
-    ,@pe_tag_revised nvarchar(10) = null
+    ,@pe_tag_revised nvarchar(10) 
     ,@pe_merge_ahead int
-    ,@pe_text_revised nvarchar(2000) = null
+    ,@pe_text_revised nvarchar(2000)
     ,@pe_rule_applied nvarchar(500) = null
     ,@pe_order int = null
     ,@pe_C_num int = null

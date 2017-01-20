@@ -43,7 +43,6 @@
 
             return sentence;
         }
-
  
         private void ShuffleMDUnitsFromMDBKToBeforeFirstNNAfterBKBy()
         {
@@ -147,7 +146,7 @@
             }
         }
 
-        private void ShufflePAST_DE_UnitToBeforeYouguanUnit(List<Text> newSentenceTexts)
+        private static void ShufflePAST_DE_UnitToBeforeYouguanUnit(List<Text> newSentenceTexts)
         {
             var textsBeforeBy = newSentenceTexts.Take(newSentenceTexts.FindIndex(text => text.IsBKBy)).ToList();
             
@@ -223,7 +222,7 @@
                 else
                 {
                     // TODO: need a test for this path
-                    // if no modifiers put striaght after MDBK
+                    // if no modifiers put straight after MDBK
                     // move straight after MDBK
                     _bKBySentenceDecorator.Texts.InsertRange(
                         _bKBySentenceDecorator

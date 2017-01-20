@@ -3,7 +3,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class ShufflerTests
+    public class ShufflerIntegrationsTests
     {
         [TestCase(2012, TestName = "General including DG units")]
         [TestCase(2015, TestName = "Short BKBy sentence")]
@@ -16,6 +16,8 @@
         [TestCase(2022, TestName = "Real GDP long sentence")]
         [TestCase(2023, TestName = "Multiple timers, MDs and commas")]
         [TestCase(2024, TestName = "Multiple MDs seperated by many breakers")]
+        [TestCase(2025, TestName = "Real GDP rose percent")]
+        [TestCase(2027, TestName = "Long sentence with NulThat")]
         public void Document_Can_Be_Retrieved_Shuffled_and_Saved(int documentId)
         {
             var shuffler = new Shuffler();
