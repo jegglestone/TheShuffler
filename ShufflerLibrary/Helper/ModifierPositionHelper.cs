@@ -6,6 +6,19 @@ namespace ShufflerLibrary.Helper
     using Decorator;
     using Model;
 
+    public static class TimerPositionHelper
+    {
+        public static MoveableUnit[] GetTMUnitPositions(
+             List<Text> timerUnitTexts)
+        {
+            return MoveableUnitHelper.GetMoveableUnitPositions(
+                timerUnitTexts,
+                MoveableUnitHelper.NumberableUnitType.Timer,
+                timerUnitTexts.Count(text =>
+                text.IsNumberedType(UnitTypes.TM_TimerPrefix)));
+        }
+    }
+
     public static class ModifierPositionHelper
     { 
         public static MoveableUnit[] GetMDUnitPositions(

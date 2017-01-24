@@ -44,6 +44,9 @@ namespace ShufflerLibrary.Decorator
             }
         }
 
+        public int EndOfSentencePosition => 
+            Sentence.TextCount - 2;
+
         public List<Text> GetClauserUnit(
             int clauserPosition, int lastIndexPosition)
         {

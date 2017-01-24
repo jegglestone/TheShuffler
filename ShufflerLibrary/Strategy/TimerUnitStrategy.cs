@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Decorator;
     using Helper;
     using Model;
@@ -37,6 +38,14 @@
             MoveableUnit[] timerPositions =
                 GetTimerUnitPositions(timerSentenceDecorator);
 
+            timerPositions[timerPositions.Length-1].EndPosition =
+                timerSentenceDecorator
+                    .Texts
+                    .Skip(timerSentenceDecorator.TimerIndexPosition)
+                    .ToList()
+                    .FindIndex(text => text.IsType(UnitTypes.BKP_BreakerPunctuation))
+                    +timerSentenceDecorator.TimerIndexPosition - 1;
+
             Array.Reverse(timerPositions);
 
             List<Text> reversedTimerUnit =
@@ -58,18 +67,22 @@
                     timerSentenceDecorator.DGPosition,
                     reversedTexts,
                     timerSentenceDecorator);
-                
+
                 shuffled = true;
             }
-
-            if (timerSentenceDecorator.HasVBVBAPAST)
+            else if (timerSentenceDecorator.HasVBVBAPAST)
             {
-                MoveTimerUnitToPosition(
-                    timerSentenceDecorator.FirstVbVbaPastPosition,
-                    reversedTexts,
-                    timerSentenceDecorator);
-               
-                shuffled = true;
+
+                if (timerSentenceDecorator.FirstVbVbaPastPosition
+                    < timerSentenceDecorator.TimerIndexPosition)
+                {
+                    MoveTimerUnitToPosition(
+                        timerSentenceDecorator.FirstVbVbaPastPosition,
+                        reversedTexts,
+                        timerSentenceDecorator);
+
+                    shuffled = true;
+                }
             }
 
             if (shuffled == false)

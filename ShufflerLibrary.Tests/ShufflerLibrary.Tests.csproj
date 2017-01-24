@@ -50,6 +50,7 @@
     <Compile Include="Unit\AdverbUnitStrategyTests.cs" />
     <Compile Include="Unit\BKByMDBKUnitStrategyTests.cs" />
     <Compile Include="Unit\ByUnitStrategyTests.cs" />
+    <Compile Include="Unit\CommaUnitStrategyTests.cs" />
     <Compile Include="Unit\DoublePrenUnitStrategyTests.cs" />
     <Compile Include="Unit\MDUnitStrategyTests.cs" />
     <Compile Include="Unit\MoveableUnitHelperTests.cs" />

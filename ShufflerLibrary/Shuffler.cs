@@ -38,6 +38,9 @@
         private readonly IStrategy
             _prenNnPastUnitStrategy;
 
+        private readonly IStrategy
+            _commaUnitStrategy;
+
         public Shuffler()
         {
             _shufflerPhraseRepository = 
@@ -70,6 +73,9 @@
 
             _prenNnPastUnitStrategy = 
                 new PrenNNPastUnitStrategy();
+
+            _commaUnitStrategy = 
+                new CommaUnitStrategy();
         }
 
         public bool ShuffleParagraph(int pe_pmd_id)
@@ -96,20 +102,15 @@
         private void ShuffleSentence(
             Paragraph paragraph, int index, Sentence sentence)
         {
-            sentence =
-               _clauserUnitStrategy.ShuffleSentence(sentence);
+            sentence = _clauserUnitStrategy.ShuffleSentence(sentence);
 
-            sentence =
-                _adverbUnitStrategy.ShuffleSentence(sentence);
+            sentence = _adverbUnitStrategy.ShuffleSentence(sentence);
 
-            sentence =
-                _timerUnitStrategy.ShuffleSentence(sentence);
+            sentence = _timerUnitStrategy.ShuffleSentence(sentence);
 
-            sentence =
-                _bkByStrategy.ShuffleSentence(sentence);
+            sentence = _bkByStrategy.ShuffleSentence(sentence);
 
-            sentence =
-                _bkByMDBKStrategy.ShuffleSentence(sentence);
+            sentence = _bkByMDBKStrategy.ShuffleSentence(sentence);
 
             if (sentence.SentenceHasMultipleOptions)
             {
@@ -147,10 +148,11 @@
 
         private void ApplySubsequentStrategiesToSentence(Sentence sentence)
         {
-            _prenNnPastUnitStrategy.ShuffleSentence(
-                _doublePrenStrategy.ShuffleSentence(
-                    _nulThatStrategy.ShuffleSentence(
-                        _mDUnitStrategy.ShuffleSentence(sentence))));
+            _commaUnitStrategy.ShuffleSentence(
+                _prenNnPastUnitStrategy.ShuffleSentence(
+                    _doublePrenStrategy.ShuffleSentence(
+                        _nulThatStrategy.ShuffleSentence(
+                            _mDUnitStrategy.ShuffleSentence(sentence)))));
         }
     }
 }

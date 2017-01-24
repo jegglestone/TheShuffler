@@ -32,7 +32,8 @@
                     var mdPositions = ModifierPositionHelper.GetMDUnitPositions(
                         modifiersUpToVBorBK);
 
-                    if (_mdSentenceDecorator.ModifiersAreSortedAscending(modifiersUpToVBorBK))
+                    if (_mdSentenceDecorator.ReversableUnitsAreSortedAscending(
+                        modifiersUpToVBorBK, text => text.IsModifier))
                     {
                         SortModifiersInDescendingNumericOrder(
                             modifiersUpToVBorBK, firstModifierPosition, mdPositions);
@@ -184,7 +185,9 @@
             _mdSentenceDecorator.Texts.RemoveAll(text => text.IsModifier);
         }
 
-        private void MoveModifiersBeforeVbVbaPast(MoveableUnit[] mdPositions, int firstModifierPosition,
+        private void MoveModifiersBeforeVbVbaPast(
+            MoveableUnit[] mdPositions, 
+            int firstModifierPosition,
             List<Text> modifiersUpToVBorBK)
         {
             ModifierPositionHelper.RemoveCurrentMDUnit(

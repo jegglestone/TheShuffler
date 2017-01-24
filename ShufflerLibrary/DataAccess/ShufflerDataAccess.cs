@@ -39,11 +39,23 @@ namespace ShufflerLibrary.DataAccess
             return dataReader;
         }
 
-        // TODO: Refactor to pass DataTransferObject
         public bool SaveText(
-            int pePmdID, int peUserID, int peParaNo, int pePhraseID, int? peWordID, string peTag, string peText,
-            string peTagRevised, int peMergeAhead, string peTextRevised, string peRuleApplied, int peOrder, int peCNum
-            , int sentenceNumber, int sentenceOption, int selectedOptionSelected)
+            int pePmdID, 
+            int peUserID, 
+            int peParaNo, 
+            int pePhraseID, 
+            int? peWordID, 
+            string peTag, 
+            string peText,
+            string peTagRevised, 
+            int peMergeAhead, 
+            string peTextRevised, 
+            string peRuleApplied, 
+            int peOrder, 
+            int peCNum, 
+            int sentenceNumber, 
+            int sentenceOption, 
+            int selectedOptionSelected)
         {
             using (cn = new SqlConnection(connectionString))
             {

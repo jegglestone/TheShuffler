@@ -67,38 +67,31 @@
         private void ShuffleClauserUnitAndRestOfSentence(
             ClauserSentenceDecorator clauserSentence, int clauserPosition)
         {
-            List<Text> newSentence;
-
-            int endOfSentencePosition = clauserSentence.Sentence.TextCount - 2; // zero index and full stop
+            int endOfSentencePosition = clauserSentence.EndOfSentencePosition;
 
             List<Text> clauserTexts =
-                clauserSentence.GetClauserUnit(clauserPosition, endOfSentencePosition);
+                clauserSentence.GetClauserUnit(
+                    clauserPosition, endOfSentencePosition);
 
             if (clauserSentence.Sentence.Texts.Take(clauserPosition).Any(
-                text => text.IsNulThat)) 
+                text => text.IsNulThat))
             {
-                //move to after nulThat
-                newSentence = 
-                    MoveClauserUnitAndRestOfSentenceToAfterNulThat(
-                        clauserSentence.Sentence, GetNulThatPosition(clauserSentence.Sentence), clauserTexts);
+                MoveClauserUnitAndRestOfSentenceToAfterNulThat(
+                    GetNulThatPosition(clauserSentence.Sentence),
+                    clauserTexts,
+                    clauserSentence);
             }
             else
             {
-                //move to beginning of sentence
-                newSentence = 
-                    MoveClauserUnitAndRestOfSentenceToBeginningOfSentence(
-                        clauserSentence.Sentence  , clauserTexts, clauserPosition);
+                MoveClauserUnitAndRestOfSentenceToBeginningOfSentence(
+                    clauserSentence.Sentence, clauserTexts, clauserPosition);
 
             }
-
-            clauserSentence.Sentence.Texts = newSentence;
         }
 
         private static void ShuffleClauserUnitAndBKP(
             ClauserSentenceDecorator clauserSentence, int clauserPosition)
         {
-            List<Text> newSentence;
-
             int nbkpPosition =
                 GetIndexPositionOfFirstBKPAfterClauser(
                     clauserSentence.Sentence, clauserPosition);
@@ -109,97 +102,76 @@
             if (clauserSentence.Sentence.Texts.Take(clauserPosition).Any(
                 text => text.IsNulThat))
             {
-                newSentence = MoveClauserAndNBKPToAfterNulThat(
-                    clauserSentence.Sentence, clauserPosition, clauserTexts, nbkpPosition);
+                MoveClauserAndNBKPToAfterNulThat(
+                    clauserSentence.Sentence, clauserPosition, clauserTexts);
             }
             else
             {
-                newSentence = MoveClauserAndNBKPToBeginningOfSentence(
-                    clauserSentence.Sentence, clauserPosition, clauserTexts, nbkpPosition);
+                MoveClauserAndNBKPToBeginningOfSentence(
+                    clauserSentence.Sentence, clauserPosition, clauserTexts);
             }
-            clauserSentence.Sentence.Texts = newSentence;
         }
 
-        private static List<Text> MoveClauserAndNBKPToBeginningOfSentence(
+        private static void MoveClauserAndNBKPToBeginningOfSentence(
             Sentence sentence, 
             int clauserPosition, 
-            List<Text> clauserTexts, 
-            int nbkpPosition)
+            List<Text> clauserTexts)
         {
-            List<Text> newSentence = new List<Text>();
-            newSentence.AddRange(clauserTexts);
-            newSentence.AddRange(sentence.Texts.GetRange(
-                0, clauserPosition));
-            newSentence.AddRange(GetRemaingTextsCount(sentence, nbkpPosition));
-            return newSentence;
+            sentence.Texts.RemoveRange(
+                clauserPosition, clauserTexts.Count);
+
+            sentence.Texts.InsertRange(
+                0, clauserTexts);
         }
 
-        private static List<Text> MoveClauserAndNBKPToAfterNulThat(
+        private static void MoveClauserAndNBKPToAfterNulThat(
             Sentence sentence,
             int clauserPosition,
-            IEnumerable<Text> clauserTexts,
-            int nbkpPosition)
+            IList<Text> clauserTexts)
         {
+            sentence.Texts.RemoveRange(
+                clauserPosition, clauserTexts.Count);
+
             int nulThatPosition =
                 GetNulThatPosition(sentence);
 
-            List<Text> newSentence = new List<Text>();
-
-            newSentence.AddRange(
-                sentence.Texts.GetRange(0, nulThatPosition + 1));
-            newSentence.AddRange(
-                clauserTexts);
-            newSentence.AddRange(sentence.Texts.GetRange(
-                nulThatPosition + 1,
-                clauserPosition - nulThatPosition -1));
-
-            var remainder = GetRemaingTextsCount(sentence, nbkpPosition);
-            newSentence.AddRange(remainder);
-            
-            return newSentence;
+            sentence.Texts.InsertRange(nulThatPosition+1, clauserTexts);
         }
 
-        private static List<Text> MoveClauserUnitAndRestOfSentenceToAfterNulThat(
-            Sentence sentence, 
+        private void MoveClauserUnitAndRestOfSentenceToAfterNulThat(
             int nulThatPosition,
-            IReadOnlyList<Text> clauserTexts)
+            IList<Text> clauserTexts,
+            ClauserSentenceDecorator clauserSentence)
         {
-            var newSentence = new List<Text>();
+            clauserSentence.Sentence.Texts.RemoveRange(
+                clauserSentence.ClauserIndexPosition, clauserTexts.Count);
 
-            newSentence.AddRange(
-                sentence.Texts.GetRange(0, nulThatPosition + 1));
-            newSentence.AddRange(
-                clauserTexts);
-            newSentence.Add(
-                CreateUnitProceedingCommaText(sentence.pe_para_no, clauserTexts));
-            newSentence.AddRange(
-                sentence.Texts.GetRange(
-                    nulThatPosition + 1,
-                    sentence.TextCount - newSentence.Count));
-            newSentence.Add(
-                sentence.SentenceBreaker);
+            clauserTexts.Add(
+                CreateUnitProceedingCommaText(
+                    clauserSentence.Sentence.pe_para_no, clauserTexts));
 
-            return newSentence;
+            clauserSentence.Sentence.Texts.InsertRange(
+                nulThatPosition+1, clauserTexts);
         }
 
-        private List<Text> MoveClauserUnitAndRestOfSentenceToBeginningOfSentence(
-            Sentence sentence, IReadOnlyList<Text> clauserTexts, int clauserPosition)
+        private static void MoveClauserUnitAndRestOfSentenceToBeginningOfSentence(
+            Sentence sentence, IList<Text> clauserTexts, int clauserPosition)
         {
-            List<Text> newSentence = new List<Text>();
-            newSentence.AddRange(
-                clauserTexts);
-            newSentence.Add(CreateUnitProceedingCommaText(
-                sentence.pe_para_no, clauserTexts));
-            newSentence.AddRange(
-                sentence.Texts.GetRange(
-                    0, clauserPosition));
-            newSentence.Add(sentence.SentenceBreaker);
+            sentence.Texts.RemoveRange(
+                clauserPosition,
+                clauserTexts.Count);
 
-            return newSentence;
+            sentence.Texts.Insert(
+                0,
+                CreateUnitProceedingCommaText(
+                    sentence.pe_para_no, clauserTexts));
+
+            sentence.Texts.InsertRange(
+                0, clauserTexts);
         }
 
         private static Text CreateUnitProceedingCommaText(
-            int pe_para_no, IReadOnlyList<Text> unitTexts)
+            int pe_para_no, IList<Text> unitTexts)
         {
             return new Text
             {

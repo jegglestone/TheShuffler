@@ -21,7 +21,8 @@
         {
             get
             {
-                return Texts.Last(text => text.pe_tag == "BKP");
+                return Texts.Last(
+                    text => text.IsType(UnitTypes.BKP_BreakerPunctuation));
             }
         }
 
