@@ -69,7 +69,7 @@
                         .ToList()
                         .FindIndex(
                             text => text.IsType(UnitTypes.MD_Modifier)
-                            || text.IsNumberedType(UnitTypes.MD_Modifier)) ;
+                            || text.IsNumberedType(UnitTypes.MD_Modifier));
 
                 return positionWithinSubset + MDBKIndex;
             }

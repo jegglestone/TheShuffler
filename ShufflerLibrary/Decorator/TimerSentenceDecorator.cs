@@ -7,17 +7,6 @@
     {
         public int TimerUnitCount => Texts.Count(text => text.IsTimer);
 
-        public int TimerIndexPosition
-        {
-            get
-            {
-                if (!Sentence.HasTimer()) return -1;
-
-                return Sentence.Texts.FindIndex(
-                    text => text.IsTimer);
-            }
-        }
-
         public int LastTimerIndexPosition
         {
             get

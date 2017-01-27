@@ -16,11 +16,6 @@
             get { return Texts.Count(text => text.IsTimer) > 1; }
         }
 
-        public int FirstTimerPosition
-        {
-            get { return Texts.FindIndex(text => text.IsTimer); }
-        }
-
         public int FirstVBorBKPPositionAfterFirstTimer
         {
             get

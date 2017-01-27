@@ -9,7 +9,8 @@
     {
         private ClauserSentenceDecorator _clauserSentence;
 
-        private static int GetIndexPositionOfFirstBKPAfterClauser(Sentence sentence, int clauserPosition)
+        private static int GetIndexPositionOfFirstBKPAfterClauser(
+            Sentence sentence, int clauserPosition)
         {
             return sentence
                     .Texts
@@ -25,13 +26,6 @@
         {
             return sentence.Texts.FindIndex(
                 text => text.IsNulThat);
-        }
-        
-        private static IEnumerable<Text> GetRemaingTextsCount(Sentence sentence, int position)
-        {
-            return sentence.Texts.GetRange(
-                            position + 1,
-                            sentence.TextCount - position - 1);
         }
 
         private static bool ClauserIsAlreadyAtBeginningOf(Sentence sentence)
@@ -54,61 +48,61 @@
             if (_clauserSentence.ClauserProceededByComma)
             {
                 ShuffleClauserUnitAndBKP(
-                    _clauserSentence, _clauserSentence.ClauserIndexPosition);
-                return _clauserSentence.Sentence;
+                    _clauserSentence, _clauserSentence.ClauserIndexPosition, sentence);
+                return sentence;
             }
 
             ShuffleClauserUnitAndRestOfSentence(
-                _clauserSentence, _clauserSentence.ClauserIndexPosition);
+                _clauserSentence, sentence, _clauserSentence.ClauserIndexPosition);
 
-            return _clauserSentence.Sentence;
+            return sentence;
         }
 
         private void ShuffleClauserUnitAndRestOfSentence(
-            ClauserSentenceDecorator clauserSentence, int clauserPosition)
+            ClauserSentenceDecorator clauserSentenceDecorator, Sentence sentence, int clauserPosition)
         {
-            int endOfSentencePosition = clauserSentence.EndOfSentencePosition;
+            int endOfSentencePosition = clauserSentenceDecorator.EndOfSentencePosition;
 
             List<Text> clauserTexts =
-                clauserSentence.GetClauserUnit(
+                clauserSentenceDecorator.GetClauserUnit(
                     clauserPosition, endOfSentencePosition);
 
-            if (clauserSentence.Sentence.Texts.Take(clauserPosition).Any(
+            if (sentence.Texts.Take(clauserPosition).Any(
                 text => text.IsNulThat))
             {
                 MoveClauserUnitAndRestOfSentenceToAfterNulThat(
-                    GetNulThatPosition(clauserSentence.Sentence),
+                    GetNulThatPosition(sentence),
                     clauserTexts,
-                    clauserSentence);
+                    sentence,
+                    clauserSentenceDecorator);
             }
             else
             {
                 MoveClauserUnitAndRestOfSentenceToBeginningOfSentence(
-                    clauserSentence.Sentence, clauserTexts, clauserPosition);
-
+                    sentence, clauserTexts, clauserPosition);
             }
         }
 
         private static void ShuffleClauserUnitAndBKP(
-            ClauserSentenceDecorator clauserSentence, int clauserPosition)
+            ClauserSentenceDecorator clauserSentenceDecorator, int clauserPosition, Sentence sentence)
         {
             int nbkpPosition =
                 GetIndexPositionOfFirstBKPAfterClauser(
-                    clauserSentence.Sentence, clauserPosition);
+                    sentence, clauserPosition);
 
             List<Text> clauserTexts =
-                clauserSentence.GetClauserUnit(clauserPosition, nbkpPosition);
+                clauserSentenceDecorator.GetClauserUnit(clauserPosition, nbkpPosition);
 
-            if (clauserSentence.Sentence.Texts.Take(clauserPosition).Any(
+            if (sentence.Texts.Take(clauserPosition).Any(
                 text => text.IsNulThat))
             {
                 MoveClauserAndNBKPToAfterNulThat(
-                    clauserSentence.Sentence, clauserPosition, clauserTexts);
+                    sentence, clauserPosition, clauserTexts);
             }
             else
             {
                 MoveClauserAndNBKPToBeginningOfSentence(
-                    clauserSentence.Sentence, clauserPosition, clauserTexts);
+                    sentence, clauserPosition, clauserTexts);
             }
         }
 
@@ -141,16 +135,17 @@
         private void MoveClauserUnitAndRestOfSentenceToAfterNulThat(
             int nulThatPosition,
             IList<Text> clauserTexts,
-            ClauserSentenceDecorator clauserSentence)
+            Sentence sentence,
+            ClauserSentenceDecorator clauserSentenceDecorator)
         {
-            clauserSentence.Sentence.Texts.RemoveRange(
-                clauserSentence.ClauserIndexPosition, clauserTexts.Count);
+            sentence.Texts.RemoveRange(
+                clauserSentenceDecorator.ClauserIndexPosition, clauserTexts.Count);
 
             clauserTexts.Add(
                 CreateUnitProceedingCommaText(
-                    clauserSentence.Sentence.pe_para_no, clauserTexts));
+                    sentence.pe_para_no, clauserTexts));
 
-            clauserSentence.Sentence.Texts.InsertRange(
+            sentence.Texts.InsertRange(
                 nulThatPosition+1, clauserTexts);
         }
 

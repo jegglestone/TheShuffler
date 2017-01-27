@@ -86,31 +86,36 @@
             for (int i = 0; i < document.Paragraphs.Count; i++)
             {
                 var paragraph = document.Paragraphs[i];
-                for (int index = 0; index < 
-                    paragraph.Sentences.Count; index++)
+
+                for (int j = 0; j < paragraph.Sentences.Count; j++)
                 {
-                    var sentence = paragraph.Sentences[index];
-                    sentence.Sentence_No = index + 1;
-                    ShuffleSentence(paragraph, index, sentence);
+                    var sentence = paragraph.Sentences[j];
+                    sentence.Sentence_No = j + 1;
+                    ShuffleSentence(paragraph, j, sentence);
                 }
             }
             
-            // save the output back to the database
-            return _shufflerPhraseRepository.SaveShuffledDocument(document);
+            return _shufflerPhraseRepository
+                .SaveShuffledDocument(document);
         }
 
         private void ShuffleSentence(
             Paragraph paragraph, int index, Sentence sentence)
         {
-            sentence = _clauserUnitStrategy.ShuffleSentence(sentence);
+            sentence = 
+                _clauserUnitStrategy.ShuffleSentence(sentence);
 
-            sentence = _adverbUnitStrategy.ShuffleSentence(sentence);
+            sentence = 
+                _adverbUnitStrategy.ShuffleSentence(sentence);
 
-            sentence = _timerUnitStrategy.ShuffleSentence(sentence);
+            sentence = 
+                _timerUnitStrategy.ShuffleSentence(sentence);
 
-            sentence = _bkByStrategy.ShuffleSentence(sentence);
+            sentence = 
+                _bkByStrategy.ShuffleSentence(sentence);
 
-            sentence = _bkByMDBKStrategy.ShuffleSentence(sentence);
+            sentence = 
+                _bkByMDBKStrategy.ShuffleSentence(sentence);
 
             if (sentence.SentenceHasMultipleOptions)
             {

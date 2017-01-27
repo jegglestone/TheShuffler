@@ -163,15 +163,28 @@
                         pastPosition,
                         PAST_deUnitSize);
 
-                newSentenceTexts.RemoveRange(
-                    pastPosition,
-                    PAST_deUnitSize);
+                RemovePAST_De_UnitFromCurrentPosition(
+                    newSentenceTexts, pastPosition, PAST_deUnitSize);
 
-                // insert PAST+de before youguan
-                newSentenceTexts.InsertRange(
-                    newSentenceTexts.FindIndex(text => text.pe_tag_revised_by_Shuffler=="youguan"),
-                    PAST_deUnit);
+                InsertPAST_De_UnitBeforeYouguan(
+                    newSentenceTexts, PAST_deUnit);
             }
+        }
+
+        private static void RemovePAST_De_UnitFromCurrentPosition(List<Text> newSentenceTexts, int pastPosition, int PAST_deUnitSize)
+        {
+            newSentenceTexts.RemoveRange(
+                pastPosition,
+                PAST_deUnitSize);
+        }
+
+        private static void InsertPAST_De_UnitBeforeYouguan(
+            List<Text> newSentenceTexts, List<Text> PAST_deUnit)
+        {
+            newSentenceTexts.InsertRange(
+                newSentenceTexts.FindIndex(
+                    text => text.pe_tag_revised_by_Shuffler == "youguan"),
+                PAST_deUnit);
         }
 
         private void Shuffle_De_NNUnitAfterMDBKUnit()
@@ -190,7 +203,7 @@
                     .FindIndex(text => text.pe_text_revised == " de "
                                        && text.pe_merge_ahead == 1);
 
-                if (!_bKBySentenceDecorator.Texts[dePosition + 1].IsType(UnitTypes.NN))
+                if (DeUnitIsNotFollowedByNNUnit(dePosition))
                     return;
 
                 int unitSize = _bKBySentenceDecorator.Texts[dePosition].pe_merge_ahead + 1;
@@ -230,6 +243,11 @@
                         deNNUnit);
                 }
             }
+        }
+
+        private bool DeUnitIsNotFollowedByNNUnit(int dePosition)
+        {
+            return !_bKBySentenceDecorator.Texts[dePosition + 1].IsType(UnitTypes.NN);
         }
 
         private void DeleteModifiers()

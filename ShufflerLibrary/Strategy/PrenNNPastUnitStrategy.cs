@@ -110,7 +110,6 @@
         {
             int reversedUnitPosition;
 
-            //TODO: Make this better
             if (unitType == UnitTypes.TM_TimerPrefix)
                 reversedUnitPosition = _prenNNPastSentenceDecorator.FirstTimerPosition;
             else if (unitType == UnitTypes.MD_Modifier)
