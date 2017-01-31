@@ -81,7 +81,6 @@ namespace ShufflerLibrary.Tests.Unit
         [Test]
         public void WhenMultipleTimerReverseOrder_and_VBVBAPAST_Move_Timers_Before_VBVBAPAST()
         {
-            //Before Shuffling
             //Real GDP PASTrose TM1this time TM2last year BKP.
 
             var sentence = new Sentence()
@@ -102,7 +101,6 @@ namespace ShufflerLibrary.Tests.Unit
             var tmUnitStrategy = new TimerUnitStrategy();
             var returnedSentence = tmUnitStrategy.ShuffleSentence(sentence);
 
-            //After Shuffling
             //Real GDP TM2last year TM1this time PASTrose BKP.
             Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo(" Real "));
             Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo(" GDP "));

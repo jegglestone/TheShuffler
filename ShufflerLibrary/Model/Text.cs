@@ -61,7 +61,7 @@
         public bool IsVbPastPres =>
             IsType(UnitTypes.VB_Verb)
             || IsType(UnitTypes.PAST_Participle)
-            || IsType("PRES");
+            || IsType(UnitTypes.PRES_Participle);
 
         public bool IsTimer =>
             IsType(UnitTypes.TM_TimerPrefix)
@@ -84,7 +84,7 @@
 
         public bool IsBKBy =>
             IsType(UnitTypes.BK_Breaker)
-            && pe_text == " by ";
+            && actual_text_used == " by ";
 
         public bool IsSentenceEnd => 
             actual_text_used.Replace(" ", "") == "."
@@ -98,6 +98,11 @@
         public bool IsPyXuyao =>
             actual_text_used.ToLower().Replace(" ", "") == "xuyao"
             && actual_tag_used == UnitTypes.PY_ChineseWord;
+
+        public bool IsPercent =>
+              actual_text_used.ToLower().Replace(" ", "") == "percent"
+              || actual_text_used.ToLower().Replace(" ", "") == "%";
+      
 
         public bool IsType(string unitType)
         {

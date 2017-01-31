@@ -1,11 +1,11 @@
 ﻿namespace ShufflerLibrary.Tests.Unit
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Model;
     using NUnit.Framework;
     using Strategy;
     using Text = Model.Text;
-    using System.Linq;
 
     [TestFixture]
     public class AdverbUnitStrategyTests
@@ -17,16 +17,16 @@
 
             var sentence = new Sentence()
             {
-                Texts = new List<Model.Text>
+                Texts = new List<Text>
                 {
-                    new Model.Text(){ pe_text = " He ",          pe_tag="NN",   pe_tag_revised="NULL", pe_order=1663970 },
-                    new Model.Text(){ pe_text = " shouted ",     pe_tag="PAST", pe_tag_revised="NULL", pe_order=1663980 },
-                    new Model.Text(){ pe_text = " loudly ",      pe_tag="ADV", pe_tag_revised="ADV1", pe_order=1663990 },
-                    new Model.Text(){ pe_text = " , ",           pe_tag="NBKP", pe_tag_revised="NULL", pe_order=1664000 },
-                    new Model.Text(){ pe_text = " emotionally ", pe_tag="ADV", pe_tag_revised="NULL", pe_order=1664010 },
-                    new Model.Text(){ pe_text = " and ",         pe_tag="DYN2", pe_tag_revised="BK", pe_order=1664020 },
-                    new Model.Text(){ pe_text = " non-stop ",    pe_tag="ADV", pe_tag_revised="NULL", pe_order=1664030 },
-                    new Model.Text(){ pe_text = " . ",           pe_tag="BKP",  pe_tag_revised="NULL", pe_order=1664040 },
+                    new Text(){ pe_text = " He ",          pe_tag="NN",   pe_tag_revised="NULL", pe_order=1663970 },
+                    new Text(){ pe_text = " shouted ",     pe_tag="PAST", pe_tag_revised="NULL", pe_order=1663980 },
+                    new Text(){ pe_text = " loudly ",      pe_tag="ADV", pe_tag_revised="ADV1", pe_order=1663990 },
+                    new Text(){ pe_text = " , ",           pe_tag="NBKP", pe_tag_revised="NULL", pe_order=1664000 },
+                    new Text(){ pe_text = " emotionally ", pe_tag="ADV", pe_tag_revised="NULL", pe_order=1664010 },
+                    new Text(){ pe_text = " and ",         pe_tag="DYN2", pe_tag_revised="BK", pe_order=1664020 },
+                    new Text(){ pe_text = " non-stop ",    pe_tag="ADV", pe_tag_revised="NULL", pe_order=1664030 },
+                    new Text(){ pe_text = " . ",           pe_tag="BKP",  pe_tag_revised="NULL", pe_order=1664040 }
                 },
                 pe_para_no = 123
             };
@@ -55,7 +55,7 @@
 
             var sentence = new Sentence()
             {
-                Texts = new List<Model.Text>
+                Texts = new List<Text>
                 {
                     new Text(){ pe_text = " He ",          pe_tag="NN",   pe_tag_revised="NULL", pe_order=1663970 },
                     new Text(){ pe_text = " is ",     pe_tag="DYN7", pe_tag_revised="NULL", pe_order=1663980 },
@@ -64,7 +64,7 @@
                     new Text(){ pe_text = " consistently ", pe_tag="ADV", pe_tag_revised="ADV1", pe_order=1664010 },
                     new Text(){ pe_text = " and ",         pe_tag="", pe_tag_revised="NN", pe_order=1664020 },
                     new Text(){ pe_text = " carefully ",    pe_tag="ADV", pe_tag_revised="ADV2", pe_order=1664030 },
-                    new Text(){ pe_text = " . ",           pe_tag="BKP",  pe_tag_revised="NULL", pe_order=1664040 },
+                    new Text(){ pe_text = " . ",           pe_tag="BKP",  pe_tag_revised="NULL", pe_order=1664040 }
                 }
             };
 
@@ -89,7 +89,7 @@
             // He PASTshouted loudlyNBKP, emotionally BKand non-stop BKP.
             var sentence = new Sentence()
             {
-                Texts = new List<Model.Text>
+                Texts = new List<Text>
                 {
                     new Text(){ pe_text = " He ",          pe_tag="NN",   pe_tag_revised="NULL", pe_order=1663970 },
                     new Text(){ pe_text = " shouted ",     pe_tag="PAST", pe_tag_revised="NULL", pe_order=1663980 },
@@ -98,7 +98,7 @@
                     new Text(){ pe_text = " emotionally ", pe_tag="NULL", pe_tag_revised="VB", pe_order=1664010 },
                     new Text(){ pe_text = " and ",         pe_tag="DYN2", pe_tag_revised="BK", pe_order=1664020 },
                     new Text(){ pe_text = " non-stop ",    pe_tag="ADV", pe_tag_revised="VB", pe_order=1664030 },
-                    new Text(){ pe_text = " . ",           pe_tag="BKP",  pe_tag_revised="NULL", pe_order=1664040 },
+                    new Text(){ pe_text = " . ",           pe_tag="BKP",  pe_tag_revised="NULL", pe_order=1664040 }
                 },
                 pe_para_no = 123
             };

@@ -24,6 +24,17 @@
 
         public bool HasDG => Sentence.HasDG;
 
+        public int FirstTimerPosition
+        {
+            get
+            {
+                if (!Sentence.HasTimer()) return -1;
+
+                return Sentence.Texts.FindIndex(
+                    text => text.IsTimer);
+            }
+        }
+
         //TODO - these need moving into a ModifierSentenceDecorator
         // or use composition here
         public int ModifierCount

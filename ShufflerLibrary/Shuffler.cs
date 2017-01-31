@@ -21,23 +21,17 @@
             _timerUnitStrategy;
 
         private readonly IStrategy
-            _bkByStrategy;
-
-        private readonly IStrategy
-            _bkByMDBKStrategy;
-
-        private readonly IStrategy
             _mDUnitStrategy;
+
+        private readonly IStrategy
+              _percentUnitStrategy;
 
         private readonly IStrategy
             _nulThatStrategy;
 
         private readonly IStrategy
             _doublePrenStrategy;
-
-        private readonly IStrategy
-            _prenNnPastUnitStrategy;
-
+    
         private readonly IStrategy
             _commaUnitStrategy;
 
@@ -55,106 +49,133 @@
 
             _timerUnitStrategy = 
                 new TimerUnitStrategy();
-
-            _bkByStrategy = 
-                new BKByUnitStrategy();
-
-            _bkByMDBKStrategy =
-                new BKByMDBKStrategy();
-
+      
             _mDUnitStrategy = 
                 new MDUnitStrategy();
+
+            _percentUnitStrategy =
+                new PercentUnitStrategy();
 
             _nulThatStrategy = 
                 new NulThatUnitStrategy();
 
             _doublePrenStrategy = 
                 new DoublePrenStrategy();
-
-            _prenNnPastUnitStrategy = 
-                new PrenNNPastUnitStrategy();
-
+      
             _commaUnitStrategy = 
                 new CommaUnitStrategy();
         }
 
-        public bool ShuffleParagraph(int pe_pmd_id)
+        public bool ShuffleParagraph(int pePmdId)
         {
             var document = 
-                _shufflerPhraseRepository.GetShufflerDocument(pe_pmd_id);
+                _shufflerPhraseRepository.GetShufflerDocument(pePmdId);
             
             for (int i = 0; i < document.Paragraphs.Count; i++)
             {
                 var paragraph = document.Paragraphs[i];
-                for (int index = 0; index < 
-                    paragraph.Sentences.Count; index++)
+
+                for (int j = 0; j < paragraph.Sentences.Count; j++)
                 {
-                    var sentence = paragraph.Sentences[index];
-                    sentence.Sentence_No = index + 1;
-                    ShuffleSentence(paragraph, index, sentence);
+                    var sentence = paragraph.Sentences[j];
+                    sentence.Sentence_No = j + 1;
+                    ShuffleSentence(paragraph, j, sentence);
                 }
             }
             
-            // save the output back to the database
-            return _shufflerPhraseRepository.SaveShuffledDocument(document);
+            return _shufflerPhraseRepository
+                .SaveShuffledDocument(document);
         }
 
         private void ShuffleSentence(
             Paragraph paragraph, int index, Sentence sentence)
         {
-            sentence = _clauserUnitStrategy.ShuffleSentence(sentence);
+            sentence = 
+                _clauserUnitStrategy.ShuffleSentence(sentence);
 
-            sentence = _adverbUnitStrategy.ShuffleSentence(sentence);
+            // LinkAnd
 
-            sentence = _timerUnitStrategy.ShuffleSentence(sentence);
+            sentence = 
+                _adverbUnitStrategy.ShuffleSentence(sentence);
 
-            sentence = _bkByStrategy.ShuffleSentence(sentence);
+            // PAST
 
-            sentence = _bkByMDBKStrategy.ShuffleSentence(sentence);
+            sentence = 
+                _timerUnitStrategy.ShuffleSentence(sentence);
 
-            if (sentence.SentenceHasMultipleOptions)
-            {
-                ApplySubsequentStrategiesToMultipleSentences(
-                    sentence);
-            }
-            else
-            {
-                ApplySubsequentStrategiesToSentence(
-                    sentence);
-            }
+            //MDBK
+
+            //By
+
+
+            #region not in use
+            //if (sentence.SentenceHasMultipleOptions)
+            //{
+            //    ApplySubsequentStrategiesToMultipleSentences(
+            //        sentence);
+            //}
+            //else
+            //{
+            //    sentence = ApplySubsequentStrategiesToSentence(
+            //        sentence);
+            //}
+      #endregion
+
+            sentence = 
+                _mDUnitStrategy.ShuffleSentence(sentence);
 
             sentence =
+                _percentUnitStrategy.ShuffleSentence(sentence);
+
+            sentence = 
+                _nulThatStrategy.ShuffleSentence(sentence);
+
+            sentence = 
+                _doublePrenStrategy.ShuffleSentence(sentence);
+
+            sentence = 
+                  _commaUnitStrategy.ShuffleSentence(sentence);
+
+            sentence = 
                 SentenceOrderReSetter.SetPeOrderAsc(sentence);
 
             paragraph.Sentences[index] =
                 sentence;
         }
 
-        private void ApplySubsequentStrategiesToMultipleSentences(Sentence sentence)
-        {
-            var sentences =
-                SentenceHelper.SplitSentenceOptions(sentence);
+    #region multi sentence options
+    //private void ApplySubsequentStrategiesToMultipleSentences(Sentence sentence)
+    //{
+    //    var sentences =
+    //        SentenceHelper.SplitSentenceOptions(sentence);
 
-            sentence.Texts.Clear();
+    //    sentence.Texts.Clear();
 
-            foreach (var optionSentence in sentences)
-            {
-                ApplySubsequentStrategiesToSentence(
-                    optionSentence);
+    //    foreach (var optionSentence in sentences)
+    //    {
+    //        ApplySubsequentStrategiesToSentence(
+    //            optionSentence);
 
-                sentence.Texts.AddRange(optionSentence.Texts);
-            }
-        }
+    //        sentence.Texts.AddRange(optionSentence.Texts);
+    //    }
+    //}
 
-        private void ApplySubsequentStrategiesToSentence(Sentence sentence)
-        {
-            _commaUnitStrategy.ShuffleSentence(
-                _prenNnPastUnitStrategy.ShuffleSentence(
-                    _doublePrenStrategy.ShuffleSentence(
-                        _nulThatStrategy.ShuffleSentence(
-                            _mDUnitStrategy.ShuffleSentence(sentence)))));
-        }
-    }
+    //private Sentence ApplySubsequentStrategiesToSentence(Sentence sentence)
+    //{
+    //    sentence = _mDUnitStrategy.ShuffleSentence(sentence);
+
+    //    sentence = _nulThatStrategy.ShuffleSentence(sentence);
+
+    //    sentence = _doublePrenStrategy.ShuffleSentence(sentence);
+
+    //    sentence = _prenNnPastUnitStrategy.ShuffleSentence(sentence);
+
+    //    sentence = _commaUnitStrategy.ShuffleSentence(sentence);
+
+    //    return sentence;
+    //}
+    #endregion
+  }
 }
 
 /*

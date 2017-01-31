@@ -4,9 +4,8 @@ namespace ShufflerLibrary.Decorator
     using System.Linq;
     using Model;
 
-    public class ClauserSentenceDecorator
+    public class ClauserSentenceDecorator : SentenceDecorator
     {
-        public Sentence Sentence { get; }
 
         public ClauserSentenceDecorator(Sentence sentence)
         {

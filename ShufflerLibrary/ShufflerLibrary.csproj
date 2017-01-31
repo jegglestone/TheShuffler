@@ -46,10 +46,10 @@
     <Compile Include="DataAccess\IDataAccess.cs" />
     <Compile Include="DataAccess\ShufflerDataAccess.cs" />
     <Compile Include="Decorator\AdverbSentenceDecorator.cs" />
-    <Compile Include="Decorator\BKBySentenceDecorator.cs" />
+    <Compile Include="Obsolete\BKBySentenceDecorator.cs" />
     <Compile Include="Decorator\ClauserSentenceDecorator.cs" />
     <Compile Include="Decorator\MDSentenceDecorator.cs" />
-    <Compile Include="Decorator\PrenNNPastSentenceDecorator.cs" />
+    <Compile Include="Obsolete\PrenNNPastSentenceDecorator.cs" />
     <Compile Include="Decorator\SentenceDecorator.cs" />
     <Compile Include="Decorator\TimerSentenceDecorator.cs" />
     <Compile Include="Helper\DeParticleHelper.cs" />
@@ -69,15 +69,16 @@
     <Compile Include="IShuffler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategy\AdverbUnitStrategy.cs" />
-    <Compile Include="Strategy\BKByMDBKStrategy.cs" />
-    <Compile Include="Strategy\BKByUnitStrategy.cs" />
+    <Compile Include="Obsolete\BKByMDBKStrategy.cs" />
+    <Compile Include="Obsolete\BKByUnitStrategy.cs" />
     <Compile Include="Strategy\ClauserUnitStrategy.cs" />
     <Compile Include="Strategy\CommaUnitStrategy.cs" />
     <Compile Include="Strategy\DoublePrenStrategy.cs" />
     <Compile Include="Strategy\IStrategy.cs" />
     <Compile Include="Strategy\MDUnitStrategy.cs" />
     <Compile Include="Strategy\NulThatUnitStrategy.cs" />
-    <Compile Include="Strategy\PrenNNPastUnitStrategy.cs" />
+    <Compile Include="Obsolete\PrenNNPastUnitStrategy.cs" />
+    <Compile Include="Strategy\PercentUnitStrategy.cs" />
     <Compile Include="Strategy\TimerUnitStrategy.cs" />
   </ItemGroup>
   <ItemGroup>

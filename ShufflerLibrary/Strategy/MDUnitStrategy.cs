@@ -42,7 +42,6 @@
                     if (_mdSentenceDecorator.
                         ModifierUnitHasTimerUnit(modifiersUpToVBorBK))
                     {
-
                         if (TextsBefore(firstModifierPosition)
                             .Any(text => text.IsVbVbaPast))
                         {
@@ -114,7 +113,10 @@
             DeleteModifiers();
         }
 
-        private void ApplyPrenDigAdjPlusNNRules(int firstModifierPosition, MoveableUnit[] mdPositions, int nnPosition)
+        private void ApplyPrenDigAdjPlusNNRules(
+            int firstModifierPosition, 
+            MoveableUnit[] mdPositions, 
+            int nnPosition)
         {
             int lastPrenDigAdjPosition = nnPosition - 1;
 
@@ -128,7 +130,7 @@
                 RemovePrensFromUnitAndDecrementEndPosition(
                     firstModifierCurrentPosition, modifierEndPosition);
 
-            MoveModifierUnitAfterPrenDigAdjAndAddDeParticle(
+            MoveModifierUnitAfter_PrenDigAdj_AndAddDeParticle(
                 firstModifierPosition,
                 modifierEndPosition,
                 firstModifierCurrentPosition,
@@ -137,8 +139,11 @@
             DeleteModifiers();
         }
 
-        private void MoveModifierUnitAfterPrenDigAdjAndAddDeParticle(int firstModifierPosition, int modifierEndPosition,
-            int firstModifierCurrentPosition, int lastPrenDigAdjPosition)
+        private void MoveModifierUnitAfter_PrenDigAdj_AndAddDeParticle(
+            int firstModifierPosition, 
+            int modifierEndPosition,
+            int firstModifierCurrentPosition, 
+            int lastPrenDigAdjPosition)
         {
             var modifierUnit =
                 _mdSentenceDecorator

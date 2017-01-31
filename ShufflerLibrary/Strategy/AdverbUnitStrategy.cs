@@ -23,23 +23,29 @@
             if (adverbSentenceDecorator.Texts.Take(adverbPosition).Any(
                 text => text.IsVbPastPres))
             {
-                //move adverb unit before VBPastPres
-                int vbPastPresPosition = 
-                    adverbSentenceDecorator.Texts.Take(adverbPosition).ToList().FindLastIndex(
-                    text => text.IsVbPastPres);
-
-                var adverbUnit = adverbSentenceDecorator.Texts.GetRange(
-                    adverbPosition, lastAdverbPosition - (adverbPosition - 1)).ToList();
-
-                adverbSentenceDecorator.Texts.RemoveRange(
-                    adverbPosition, lastAdverbPosition - (adverbPosition - 1));
-
-                adverbSentenceDecorator.Texts.InsertRange(
-                    vbPastPresPosition,
-                    adverbUnit);
+                MoveAdverbBeforeVbPastPres(
+                    adverbSentenceDecorator, adverbPosition, lastAdverbPosition);
             }
 
             return sentence;
+        }
+
+        private static void MoveAdverbBeforeVbPastPres(AdverbSentenceDecorator adverbSentenceDecorator, int adverbPosition,
+            int lastAdverbPosition)
+        {
+            int vbPastPresPosition =
+                adverbSentenceDecorator.Texts.Take(adverbPosition).ToList().FindLastIndex(
+                    text => text.IsVbPastPres);
+
+            var adverbUnit = adverbSentenceDecorator.Texts.GetRange(
+                adverbPosition, lastAdverbPosition - (adverbPosition - 1)).ToList();
+
+            adverbSentenceDecorator.Texts.RemoveRange(
+                adverbPosition, lastAdverbPosition - (adverbPosition - 1));
+
+            adverbSentenceDecorator.Texts.InsertRange(
+                vbPastPresPosition,
+                adverbUnit);
         }
     }
 }

@@ -21,13 +21,13 @@
                 GetTimerUnitsInReverse(timerSentenceDecorator);
 
             int firstTimerIndexPositionBeforeShuffling =
-                timerSentenceDecorator.TimerIndexPosition;
+                timerSentenceDecorator.FirstTimerPosition;
                         
             ShuffleReversedTimerUnit(
                 timerSentenceDecorator, reversedTimerUnit, firstTimerIndexPositionBeforeShuffling);
             
             UnderlineTimerUnit(
-                timerSentenceDecorator, timerSentenceDecorator.TimerIndexPosition, reversedTimerUnit.Count);
+                timerSentenceDecorator, timerSentenceDecorator.FirstTimerPosition, reversedTimerUnit.Count);
             
             return sentence;
         }
@@ -41,10 +41,10 @@
             timerPositions[timerPositions.Length-1].EndPosition =
                 timerSentenceDecorator
                     .Texts
-                    .Skip(timerSentenceDecorator.TimerIndexPosition)
+                    .Skip(timerSentenceDecorator.FirstTimerPosition)
                     .ToList()
                     .FindIndex(text => text.IsType(UnitTypes.BKP_BreakerPunctuation))
-                    +timerSentenceDecorator.TimerIndexPosition - 1;
+                    +timerSentenceDecorator.FirstTimerPosition - 1;
 
             Array.Reverse(timerPositions);
 
@@ -72,9 +72,8 @@
             }
             else if (timerSentenceDecorator.HasVBVBAPAST)
             {
-
                 if (timerSentenceDecorator.FirstVbVbaPastPosition
-                    < timerSentenceDecorator.TimerIndexPosition)
+                    < timerSentenceDecorator.FirstTimerPosition)
                 {
                     MoveTimerUnitToPosition(
                         timerSentenceDecorator.FirstVbVbaPastPosition,
@@ -111,17 +110,16 @@
         }
 
         private static void RemoveCurrentTimerUnit(
-            TimerSentenceDecorator timerSentenceDecorator, int timerUnitSize)
+            SentenceDecorator timerSentenceDecorator, int timerUnitSize)
         {
-            int firstTimerIndexPosition = timerSentenceDecorator.TimerIndexPosition;
+            int firstTimerIndexPosition = timerSentenceDecorator.FirstTimerPosition;
             timerSentenceDecorator.Texts.RemoveRange(
                             firstTimerIndexPosition,
                             timerUnitSize);
-            //timerSentenceDecorator.LastTimerIndexPosition - firstTimerIndexPosition + 1);// TODO: try reversedTimers.count
         }
 
         private static void UnderlineTimerUnit(
-            TimerSentenceDecorator timerSentenceDecorator, int newFirstTimerIndexPosition, int timerUnitCount)
+            SentenceDecorator timerSentenceDecorator, int newFirstTimerIndexPosition, int timerUnitCount)
         {
             timerSentenceDecorator.Texts[newFirstTimerIndexPosition].pe_merge_ahead
                 = timerUnitCount - 1;

@@ -48,13 +48,14 @@
     <Compile Include="IntegrationTests\ShufflerPhraseRepositoryIntegrationTests.cs" />
     <Compile Include="IntegrationTests\ShufflerIntegrationsTests.cs" />
     <Compile Include="Unit\AdverbUnitStrategyTests.cs" />
-    <Compile Include="Unit\BKByMDBKUnitStrategyTests.cs" />
-    <Compile Include="Unit\ByUnitStrategyTests.cs" />
+    <Compile Include="Unit\PercentUnitStrategyTests.cs" />
+    <Compile Include="Unit\removed\BKByMDBKUnitStrategyTests.cs" />
+    <Compile Include="Unit\removed\ByUnitStrategyTests.cs" />
     <Compile Include="Unit\CommaUnitStrategyTests.cs" />
     <Compile Include="Unit\DoublePrenUnitStrategyTests.cs" />
     <Compile Include="Unit\MDUnitStrategyTests.cs" />
     <Compile Include="Unit\MoveableUnitHelperTests.cs" />
-    <Compile Include="Unit\PrenNNPastUnitStrategyTests.cs" />
+    <Compile Include="Unit\removed\PrenNNPastUnitStrategyTests.cs" />
     <Compile Include="Unit\SentenceHelperTests.cs" />
     <Compile Include="Unit\SentenceOrderReSetterUnitTests.cs" />
     <Compile Include="Unit\SentenceUnitTests.cs" />
