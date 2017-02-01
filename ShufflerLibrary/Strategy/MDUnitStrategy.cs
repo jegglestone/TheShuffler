@@ -24,61 +24,54 @@
                 int firstModifierPosition = 
                     _mdSentenceDecorator.FirstModifierPosition;
 
-                List<Text> modifiersUpToVBorBK = 
-                    _mdSentenceDecorator.GetModifierUnitUpToVBorBK(firstModifierPosition);
+                List<Text> modifiersUpToVbPastPresOrBkp = //VB/PAST/PRES/BKP
+                    _mdSentenceDecorator.GetModifierUnitUpToVbPastPresBkp(firstModifierPosition);
 
-                if (modifiersUpToVBorBK.Count > 1)
+                if (modifiersUpToVbPastPresOrBkp.Count > 1)
                 {
                     var mdPositions = ModifierPositionHelper.GetMDUnitPositions(
-                        modifiersUpToVBorBK);
+                        modifiersUpToVbPastPresOrBkp);
 
                     if (_mdSentenceDecorator.ReversableUnitsAreSortedAscending(
-                        modifiersUpToVBorBK, text => text.IsModifier))
+                        modifiersUpToVbPastPresOrBkp, text => text.IsModifier))
                     {
-                        SortModifiersInDescendingNumericOrder(
-                            modifiersUpToVBorBK, firstModifierPosition, mdPositions);
+                      SortModifiersInDescendingNumericOrder(
+                          modifiersUpToVbPastPresOrBkp, firstModifierPosition, mdPositions);
                     }
 
-                    if (_mdSentenceDecorator.
-                        ModifierUnitHasTimerUnit(modifiersUpToVBorBK))
-                    {
-                        if (TextsBefore(firstModifierPosition)
-                            .Any(text => text.IsVbVbaPast))
-                        {
-                            MoveModifiersBeforeVbVbaPast(
-                                mdPositions, firstModifierPosition, modifiersUpToVBorBK);
+                    sentence.Texts.Insert(
+                      _mdSentenceDecorator.FirstVbPastPresBkpPositionAfterFirstModifier, 
+                      DeParticleHelper.CreateNewDeParticle(mdPositions.Last().EndPosition, 0));
+                    
+                    //    //the structure of PREN/DIG/ADJ + NN is found 
+          //    else if (TextsBefore(firstModifierPosition)
+          //        .Any(text => text.IsNN))
+          //    {
+          //        int nnPosition = TextsBefore(firstModifierPosition).ToList().FindLastIndex(
+          //            text => text.IsNN);
 
-                            DeleteModifiers();
-                        }
-                        //the structure of PREN/DIG/ADJ + NN is found 
-                        else if (TextsBefore(firstModifierPosition)
-                            .Any(text => text.IsNN))
-                        {
-                            int nnPosition = TextsBefore(firstModifierPosition).ToList().FindLastIndex(
-                                text => text.IsNN);
-
-                            if (_mdSentenceDecorator.PrenAdjOrDigBeforeNN(nnPosition))
-                            {
-                                ApplyPrenDigAdjPlusNNRules(
-                                    firstModifierPosition, mdPositions, nnPosition);
-                            }
-                        }
-                    }
-                }
+          //        if (_mdSentenceDecorator.PrenAdjOrDigBeforeNN(nnPosition))
+          //        {
+          //            ApplyPrenDigAdjPlusNNRules(
+          //                firstModifierPosition, mdPositions, nnPosition);
+          //        }
+          //    }
+          //}
+        }
             }
 
             if (_mdSentenceDecorator.SentenceHasSingleModifierAndPyXuyaoUnit())
             {
-                int PyXuyaoPosition =
-                    _mdSentenceDecorator.Texts.FindIndex(
-                        text => text.IsPyXuyao);
+                //int PyXuyaoPosition =
+                //    _mdSentenceDecorator.Texts.FindIndex(
+                //        text => text.IsPyXuyao);
 
-                if (_mdSentenceDecorator.PyXuyaoIsWithinMDandPreceededByNN(
-                    PyXuyaoPosition))
-                {
-                    ApplyMDPlusPYXuyaoRules(
-                        PyXuyaoPosition);
-                }
+                //if (_mdSentenceDecorator.PyXuyaoIsWithinMDandPreceededByNN(
+                //    PyXuyaoPosition))
+                //{
+                //    ApplyMDPlusPYXuyaoRules(
+                //        PyXuyaoPosition);
+                //}
             }
 
             return sentence;
@@ -213,7 +206,7 @@
         }
 
         private void SortModifiersInDescendingNumericOrder(
-            List<Text> modifiersUpToVBorBK, 
+            List<Text> modifiers, 
             int firstModifierPosition,
             MoveableUnit[] mdPositions)
         {
@@ -226,7 +219,7 @@
 
             List<Text> reversedMDUnit =
                 MoveableUnitHelper.GetTextsFromMoveablePositionsList(
-                    modifiersUpToVBorBK, mdPositions);
+                    modifiers, mdPositions);
 
             ModifierPositionHelper.InsertReversedMDUnitBeforePosition(
                 _mdSentenceDecorator,

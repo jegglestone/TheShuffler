@@ -52,8 +52,8 @@
             return ModifierCount > 1;
         }
 
-        public int FirstVBorBKPPositionAfterFirstModifier
-        {
+        public int FirstVbPastPresBkpPositionAfterFirstModifier
+    {
             get
             {
                 return Texts
@@ -61,18 +61,19 @@
                     .ToList()
                     .FindIndex(text => text.IsType(UnitTypes.VB_Verb)
                                        || text.IsType(UnitTypes.BKP_BreakerPunctuation)
-                                       || text.IsType(UnitTypes.NBKP_NonBreakerPunctuation))
+                                       || text.IsType(UnitTypes.PAST_Participle)
+                                       || text.IsType(UnitTypes.PRES_Participle))
                        + FirstModifierPosition;
             }
         }
 
-        public List<Text> GetModifierUnitUpToVBorBK(
+        public List<Text> GetModifierUnitUpToVbPastPresBkp(
             int firstModifierPosition)
         {
             List<Text> modifiersUpToVBorBK = new List<Text>();
 
             for (int i = firstModifierPosition;
-                i < FirstVBorBKPPositionAfterFirstModifier; i++)
+                i < FirstVbPastPresBkpPositionAfterFirstModifier; i++)
             {
                 modifiersUpToVBorBK.Add(Texts[i]);
             }

@@ -85,8 +85,8 @@
             int firstModifierPosition =
                 _prenNNPastSentenceDecorator.FirstModifierPosition;
 
-            List<Text> modifiersUpToVBorBK =
-                _prenNNPastSentenceDecorator.GetModifierUnitUpToVBorBK(firstModifierPosition);
+            List<Text> modifiersUpToVBorBK = new List<Text>();
+               // _prenNNPastSentenceDecorator.GetModifierUnitUpToVBorBK(firstModifierPosition);
 
             if (modifiersUpToVBorBK.Count > 1)
             {
