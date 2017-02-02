@@ -33,34 +33,41 @@
                     var mdPositions = ModifierPositionHelper.GetMDUnitPositions(
                         modifiersUpToVbPastPresOrBkp);
 
-                    if (_mdSentenceDecorator.ReversableUnitsAreSortedAscending(
-                        modifiersUpToVbPastPresOrBkp, text => text.IsModifier))
-                    {
-                        SortModifiersInDescendingNumericOrder(
-                            modifiersUpToVbPastPresOrBkp, firstModifierPosition, mdPositions);
-                    }
+                    ReverseModifierUnit(modifiersUpToVbPastPresOrBkp, firstModifierPosition, mdPositions);
 
                     AddDeParticleToMDUnit(sentence, mdPositions);
                 }
             }
             else  // one modifier unit
             {
-                modifiersUpToVbPastPresOrBkp = _mdSentenceDecorator.GetModifierUnitUpToVbPastPresBkp(firstModifierPosition);
+                modifiersUpToVbPastPresOrBkp = 
+                  _mdSentenceDecorator.GetModifierUnitUpToVbPastPresBkp(firstModifierPosition);
             }
 
-            // search before MD unit for NN, BKP, By and VB/PAST/PRES - whichever is closest
-            var textsbeforeMdUnit = TextsBefore(firstModifierPosition).ToList();
+            var textsbeforeMdUnit = 
+                TextsBefore(firstModifierPosition).ToList();
 
             if (textsbeforeMdUnit.Any())
             {
-                // apply search left rules
-                ApplySearchLeftRules(sentence, textsbeforeMdUnit, firstModifierPosition, modifiersUpToVbPastPresOrBkp);
+                ApplySearchLeftRules(
+                  sentence, textsbeforeMdUnit, firstModifierPosition, modifiersUpToVbPastPresOrBkp);
             }
 
             return sentence;
         }
 
-        private static void ApplySearchLeftRules(Sentence sentence, List<Text> textsbeforeMdUnit, int firstModifierPosition,
+      private void ReverseModifierUnit(List<Text> modifiersUpToVbPastPresOrBkp, int firstModifierPosition,
+        MoveableUnit[] mdPositions)
+      {
+        if (_mdSentenceDecorator.ReversableUnitsAreSortedAscending(
+          modifiersUpToVbPastPresOrBkp, text => text.IsModifier))
+        {
+          SortModifiersInDescendingNumericOrder(
+            modifiersUpToVbPastPresOrBkp, firstModifierPosition, mdPositions);
+        }
+      }
+
+      private static void ApplySearchLeftRules(Sentence sentence, List<Text> textsbeforeMdUnit, int firstModifierPosition,
             List<Text> modifiersUpToVbPastPresOrBkp)
         {
             if(!textsbeforeMdUnit.Any(text => text.IsType(UnitTypes.VB_Verb)
@@ -69,18 +76,18 @@
                            || text.IsNN))
                 return;
 
-            var firstTextToImmediateLeftOfMDUnit = textsbeforeMdUnit.Last(
+            var firstTextToImmediateLeftOfMdUnit = textsbeforeMdUnit.Last(
                 text => text.IsType(UnitTypes.VB_Verb)
                            || text.IsType(UnitTypes.PAST_Participle)
                            || text.IsType(UnitTypes.PRES_Participle)
                            || text.IsNN);
 
-            if (firstTextToImmediateLeftOfMDUnit.IsNN)
+            if (firstTextToImmediateLeftOfMdUnit.IsNN)
             {
                 SearchForPrenAndMoveMDBeforeIt(
                     sentence, textsbeforeMdUnit, firstModifierPosition, modifiersUpToVbPastPresOrBkp);
             }
-            else if (firstTextToImmediateLeftOfMDUnit.IsVbPastPres)
+            else if (firstTextToImmediateLeftOfMdUnit.IsVbPastPres)
             {
                 MoveMDBeforeVbPastPres(
                     sentence, textsbeforeMdUnit, firstModifierPosition, modifiersUpToVbPastPresOrBkp);
@@ -90,22 +97,20 @@
         private static void SearchForPrenAndMoveMDBeforeIt(Sentence sentence, List<Text> textsbeforeMdUnit, int firstModifierPosition,
             List<Text> modifiersUpToVbPastPresOrBkp)
         {
-            bool hasVbPastPresOrBkpBeforeMD = textsbeforeMdUnit.Any(
+            bool hasVbPastPresOrBkpBeforeMd = textsbeforeMdUnit.Any(
                 PredicateTextIsVbPastPresBkp()); 
 
-            if (hasVbPastPresOrBkpBeforeMD)
+            if (hasVbPastPresOrBkpBeforeMd)
                 textsbeforeMdUnit =
                     textsbeforeMdUnit.Skip(
                         textsbeforeMdUnit.FindLastIndex(
                             TextIsVbPastPresBkp())).ToList();
 
-            // 2.1.1 search for PREN
             if (textsbeforeMdUnit.Any(text => text.IsPren))
             {
                 MoveMDBeforePren(
                     sentence, textsbeforeMdUnit, firstModifierPosition, modifiersUpToVbPastPresOrBkp);
             }
-            //2.1.2.If PREN is not found, search for an ADJ unit.If found, move MD to before the ADJ unit.If not found, move MD to before NN:
             else if (textsbeforeMdUnit.Any(text => text.IsType(UnitTypes.ADJ_Adjective)))
             {
                 MoveMDBeforeADJ(
@@ -186,7 +191,6 @@
 
             sentence.Texts.InsertRange(nnPositionInSentence, mdUnitPlusDe);
         }
-
         
        private static void MoveMDBeforeVbPastPres(
             Sentence sentence,
@@ -255,13 +259,13 @@
 
             Array.Reverse(mdPositions);
 
-            List<Text> reversedMDUnit =
+            List<Text> reversedMdUnit =
                 MoveableUnitHelper.GetTextsFromMoveablePositionsList(
                     modifiers, mdPositions);
 
             ModifierPositionHelper.InsertReversedMDUnitBeforePosition(
                 _mdSentenceDecorator,
-                reversedMDUnit,
+                reversedMdUnit,
                 firstModifierPosition);
         }
 
