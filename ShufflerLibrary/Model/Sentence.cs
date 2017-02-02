@@ -1,4 +1,6 @@
-﻿namespace ShufflerLibrary.Model
+﻿using System;
+
+namespace ShufflerLibrary.Model
 {
     using System.Linq;
     using System.Collections.Generic;
@@ -10,6 +12,10 @@
         private const int sentenceOptionSelected = 1;
 
         public int Sentence_Option_Selected => sentenceOptionSelected;
+
+        public Guid Sentence_Identifier { get; set; }
+
+        public List<ShuffledState> ShuffledStates { get; set; } = new List<ShuffledState>();
 
         public List<Text> Texts { get; set; } = new List<Text>();
 

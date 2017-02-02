@@ -15,7 +15,6 @@ GO
 -- Create date: 28/16/2016
 -- Description:	Insert a text item of a shuffled document
 
--- EXEC dbo.[SaveShuffledText] 2012, 
 -- =============================================
 CREATE PROCEDURE [dbo].[SaveShuffledText]
 
@@ -35,6 +34,7 @@ CREATE PROCEDURE [dbo].[SaveShuffledText]
 	,@sentence_no int
 	,@sentence_option int
 	,@sentence_option_selected int
+	,@sentence_identifier [uniqueidentifier]
 	
 AS
 BEGIN
@@ -55,6 +55,7 @@ BEGIN
 			   ,[pe_rule_applied]
 			   ,[pe_order]
 			   ,[pe_C_num]
+			   ,[Sentence_Identifier]
 			   ,[sentence_no]
 			   ,[sentence_option]
 			   ,[sentence_option_selected])
@@ -72,6 +73,7 @@ BEGIN
 			   ,@pe_rule_applied
 			   ,@pe_order
 			   ,@pe_C_num
+			   ,@sentence_identifier
 			   ,@sentence_no
 			   ,@sentence_option
 			   ,@sentence_option_selected)

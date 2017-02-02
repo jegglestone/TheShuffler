@@ -15,17 +15,17 @@
             _dataAccess = dataAccess;
         }
 
-        public Document GetShufflerDocument(int pe_pmd_id)
+        public Document GetShufflerDocument(int pePmdId)
         {
             var document = new Document();
-            IDataReader dr = _dataAccess.GetDataReader(pe_pmd_id);
+            IDataReader dr = _dataAccess.GetDataReader(pePmdId);
             var texts = new List<Text>();
 
             var paragraph = new Paragraph();
 
             while (dr.Read())
             {
-                SetDocumentId(pe_pmd_id, document);
+                SetDocumentId(pePmdId, document);
 
                 var text = CreateText(dr);
                 texts.Add(text);
@@ -56,10 +56,10 @@
             return document;
         }
 
-        private static void SetDocumentId(int pe_pmd_id, Document document)
+        private static void SetDocumentId(int pePmdId, Document document)
         {
             if (document.pe_pmd_id == 0)
-                document.pe_pmd_id = pe_pmd_id;
+                document.pe_pmd_id = pePmdId;
         }
 
         private static Text CreateText(IDataRecord dr)
@@ -113,6 +113,7 @@
                                     text.pe_rule_applied,
                                     text.pe_order,
                                     text.pe_C_num,
+                                    sentence.Sentence_Identifier,
                                     sentence.Sentence_No,
                                     text.Sentence_Option,
                                     sentence.Sentence_Option_Selected) == false)
@@ -123,6 +124,22 @@
                             _dataAccess.Dispose();
                         }
                     }
+
+                    foreach (var shuffledState in sentence.ShuffledStates)
+                    {
+                        try
+                        {
+                            if (_dataAccess.SaveShuffledState(
+                                    shuffledState.SentenceIdentifier,
+                                    shuffledState.SentenceState,
+                                    shuffledState.StrategyApplied) == false)
+                            return false;
+                        }
+                        finally
+                        {
+                            _dataAccess.Dispose();
+                        }
+                   }
                 }
             }
             return true;
@@ -131,7 +148,7 @@
 
     public interface IShufflerPhraseRepository
     {
-        Document GetShufflerDocument(int pe_pmd_id);
+        Document GetShufflerDocument(int pePmdId);
 
         bool SaveShuffledDocument(Document document);
     }

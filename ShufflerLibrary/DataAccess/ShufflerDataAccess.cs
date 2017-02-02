@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 
 namespace ShufflerLibrary.DataAccess
 {
@@ -16,7 +17,7 @@ namespace ShufflerLibrary.DataAccess
 
         private SqlConnection cn;
 
-        public IDataReader GetDataReader(int pe_pmd_id)
+        public IDataReader GetDataReader(int pePmdId)
         {
             var command = new SqlCommand
             {
@@ -24,7 +25,7 @@ namespace ShufflerLibrary.DataAccess
                 CommandText = "dbo.GetDocumentById"
             };
             command.Parameters.AddWithValue(
-                "@pe_pmd_id", pe_pmd_id);
+                "@pe_pmd_id", pePmdId);
 
             cn = new SqlConnection(
                 connectionString);
@@ -40,11 +41,11 @@ namespace ShufflerLibrary.DataAccess
         }
 
         public bool SaveText(
-            int pePmdID, 
-            int peUserID, 
+            int pePmdId, 
+            int peUserId, 
             int peParaNo, 
-            int pePhraseID, 
-            int? peWordID, 
+            int pePhraseId, 
+            int? peWordId, 
             string peTag, 
             string peText,
             string peTagRevised, 
@@ -53,6 +54,7 @@ namespace ShufflerLibrary.DataAccess
             string peRuleApplied, 
             int peOrder, 
             int peCNum, 
+            Guid sentenceIdentifier,
             int sentenceNumber, 
             int sentenceOption, 
             int selectedOptionSelected)
@@ -66,11 +68,11 @@ namespace ShufflerLibrary.DataAccess
                     Connection = cn,
                 };
                 
-                command.Parameters.AddWithValue("@pe_pmd_id", pePmdID);
-                command.Parameters.AddWithValue("@pe_user_id", peUserID);
+                command.Parameters.AddWithValue("@pe_pmd_id", pePmdId);
+                command.Parameters.AddWithValue("@pe_user_id", peUserId);
                 command.Parameters.AddWithValue("@pe_para_no", peParaNo);
-                command.Parameters.AddWithValue("@pe_phrase_id", pePhraseID);
-                command.Parameters.AddWithValue("@pe_word_id", peWordID);
+                command.Parameters.AddWithValue("@pe_phrase_id", pePhraseId);
+                command.Parameters.AddWithValue("@pe_word_id", peWordId);
                 command.Parameters.AddWithValue("@pe_tag", peTag);
                 command.Parameters.AddWithValue("@pe_text", peText);
                 command.Parameters.AddWithValue("@pe_merge_ahead", peMergeAhead);
@@ -86,15 +88,40 @@ namespace ShufflerLibrary.DataAccess
                 command.Parameters.AddWithValue("@pe_rule_applied", peRuleApplied);
                 command.Parameters.AddWithValue("@pe_order", peOrder);
                 command.Parameters.AddWithValue("@pe_C_num", peCNum);
-
+        
                 command.Parameters.AddWithValue("@sentence_no", sentenceNumber);
                 command.Parameters.AddWithValue("@sentence_option", sentenceOption);
                 command.Parameters.AddWithValue("@sentence_option_selected", selectedOptionSelected);
+
+                command.Parameters.AddWithValue("@sentence_identifier", sentenceIdentifier);
 
                 cn.Open();
 
                 command.Dispose();
                 return command.ExecuteNonQuery() == 1;
+            }
+        }
+
+        public bool SaveShuffledState(
+          Guid sentenceIdentifier, string sentenceStructure, string ruleApplied)
+        {
+            using (cn = new SqlConnection(connectionString))
+            {
+              var command = new SqlCommand
+              {
+                CommandType = CommandType.StoredProcedure,
+                CommandText = "dbo.[SaveShuffledState]",
+                Connection = cn,
+              };
+
+              command.Parameters.AddWithValue("@sentenceIdentifier", sentenceIdentifier);
+              command.Parameters.AddWithValue("@sentenceStructure", sentenceStructure);
+              command.Parameters.AddWithValue("@ruleApplied", ruleApplied);
+
+              cn.Open();
+
+              command.Dispose();
+              return command.ExecuteNonQuery() == 1;
             }
         }
 
@@ -105,5 +132,6 @@ namespace ShufflerLibrary.DataAccess
             dataReader?.Dispose();
             cn?.Dispose();
         }
+
     }
 }

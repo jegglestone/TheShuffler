@@ -1,15 +1,19 @@
 ﻿using System.Data;
+using System.Data.SqlTypes;
 
 namespace ShufflerLibrary.DataAccess
 {
     using System;
     public interface IDataAccess : IDisposable
     {
-        IDataReader GetDataReader(int pe_pmd_id);
+        IDataReader GetDataReader(int pePmdId);
 
-        bool SaveText(int pePmdID, int peUserID, int peParaNo, 
-            int pePhraseID, 
-            int? peWordID, 
+        bool SaveText(
+            int pePmdId, 
+            int peUserId, 
+            int peParaNo, 
+            int pePhraseId, 
+            int? peWordId, 
             string peTag, 
             string peText, 
             string peTagRevised, 
@@ -18,8 +22,14 @@ namespace ShufflerLibrary.DataAccess
             string peRuleApplied, 
             int peOrder, 
             int peCNum, 
+            Guid sentenceIdentifier,
             int sentenceNumber, 
             int sentenceOption, 
             int selectedOptionSelected);
+
+      bool SaveShuffledState(
+          Guid sentenceIdentifier,
+          string sentenceStructure,
+          string ruleApplied);
     }
 }

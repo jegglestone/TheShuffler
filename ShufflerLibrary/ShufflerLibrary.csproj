@@ -46,6 +46,7 @@
     <Compile Include="DataAccess\IDataAccess.cs" />
     <Compile Include="DataAccess\ShufflerDataAccess.cs" />
     <Compile Include="Decorator\AdverbSentenceDecorator.cs" />
+    <Compile Include="Model\ShuffledState.cs" />
     <Compile Include="Obsolete\BKBySentenceDecorator.cs" />
     <Compile Include="Decorator\ClauserSentenceDecorator.cs" />
     <Compile Include="Decorator\MDSentenceDecorator.cs" />

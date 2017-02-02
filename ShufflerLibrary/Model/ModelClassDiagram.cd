@@ -23,11 +23,12 @@
   <Class Name="ShufflerLibrary.Model.Sentence">
     <Position X="6" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>UAEDQBAAAAAACQAQAAAAAAgAAAAAAAAEBgAACAAAgAA=</HashCode>
+      <HashCode>UAEDQBAAAAAACQAQAAAAAAgAAAAAAAAEBggACAAAggA=</HashCode>
       <FileName>Model\Sentence.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="Texts" />
+      <Property Name="ShuffledStates" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="ShufflerLibrary.Model.Text">
@@ -175,6 +176,13 @@
       <FileName>Obsolete\PrenNNPastUnitStrategy.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ShufflerLibrary.Model.ShuffledState">
+    <Position X="6.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\ShuffledState.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

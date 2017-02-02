@@ -1,4 +1,8 @@
-﻿namespace ShufflerLibrary
+﻿using System;
+using System.Data.SqlTypes;
+using System.Text;
+
+namespace ShufflerLibrary
 {
     using Repository;
     using DataAccess;
@@ -79,6 +83,7 @@
                 {
                     var sentence = paragraph.Sentences[j];
                     sentence.Sentence_No = j + 1;
+                    sentence.Sentence_Identifier = Guid.NewGuid();
                     ShuffleSentence(paragraph, j, sentence);
                 }
             }
@@ -90,23 +95,16 @@
         private void ShuffleSentence(
             Paragraph paragraph, int index, Sentence sentence)
         {
-            sentence = 
-                _clauserUnitStrategy.ShuffleSentence(sentence);
+            AddShuffledState(sentence, "Before_Shuffling");
 
-            // LinkAnd
+            sentence = _clauserUnitStrategy.ShuffleSentence(sentence);
+            AddShuffledState(sentence, "Shuffler_CS");
 
-            sentence = 
-                _adverbUnitStrategy.ShuffleSentence(sentence);
+            sentence = _adverbUnitStrategy.ShuffleSentence(sentence);
+            AddShuffledState(sentence, "Shuffler_ADV");
 
-            // PAST
-
-            sentence = 
-                _timerUnitStrategy.ShuffleSentence(sentence);
-
-            //MDBK
-
-            //By
-
+            sentence = _timerUnitStrategy.ShuffleSentence(sentence);
+            AddShuffledState(sentence, "Shuffler_TM");
 
             #region not in use
             //if (sentence.SentenceHasMultipleOptions)
@@ -119,31 +117,45 @@
             //    sentence = ApplySubsequentStrategiesToSentence(
             //        sentence);
             //}
-      #endregion
+            #endregion
 
-            sentence = 
-                _mDUnitStrategy.ShuffleSentence(sentence);
+            sentence = _mDUnitStrategy.ShuffleSentence(sentence);
+            AddShuffledState(sentence, "Shuffler_MD");
 
-            sentence =
-                _percentUnitStrategy.ShuffleSentence(sentence);
+            sentence = _percentUnitStrategy.ShuffleSentence(sentence);
+            AddShuffledState(sentence, "Shuffler_Percent");
 
-            sentence = 
-                _nulThatStrategy.ShuffleSentence(sentence);
+            sentence = _nulThatStrategy.ShuffleSentence(sentence);
+            AddShuffledState(sentence, "Shuffler_That");
 
-            sentence = 
-                _doublePrenStrategy.ShuffleSentence(sentence);
+            sentence = _doublePrenStrategy.ShuffleSentence(sentence);
+            AddShuffledState(sentence, "Shuffler_DoublePREN");
 
-            sentence = 
-                  _commaUnitStrategy.ShuffleSentence(sentence);
+            sentence = _commaUnitStrategy.ShuffleSentence(sentence);
+            AddShuffledState(sentence, "Shuffler_Commas");
 
-            sentence = 
-                SentenceOrderReSetter.SetPeOrderAsc(sentence);
+            sentence = SentenceOrderReSetter.SetPeOrderAsc(sentence);
 
-            paragraph.Sentences[index] =
-                sentence;
+            paragraph.Sentences[index] = sentence;
         }
 
-    #region multi sentence options
+      private static void AddShuffledState(Sentence sentence, string ruleApplied)
+      {
+        StringBuilder sentenceLineStringBuilder = new StringBuilder();
+        foreach (var text in sentence.Texts)
+        {
+          sentenceLineStringBuilder.Append(text.actual_text_used);
+        }
+
+        sentence.ShuffledStates.Add(new ShuffledState()
+        {
+          SentenceIdentifier = sentence.Sentence_Identifier,
+          SentenceState = sentenceLineStringBuilder.ToString(),
+          StrategyApplied = ruleApplied
+        });
+      }
+
+      #region multi sentence options
     //private void ApplySubsequentStrategiesToMultipleSentences(Sentence sentence)
     //{
     //    var sentences =
