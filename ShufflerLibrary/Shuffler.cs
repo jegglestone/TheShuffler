@@ -51,7 +51,7 @@
                 new TimerUnitStrategy();
       
             _mDUnitStrategy = 
-                new MDUnitStrategy();
+                new MdUnitStrategy();
 
             _percentUnitStrategy =
                 new PercentUnitStrategy();

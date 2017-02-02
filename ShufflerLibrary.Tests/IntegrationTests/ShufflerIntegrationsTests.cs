@@ -61,7 +61,7 @@
             Assert.That(sentence.Texts.Last().IsSentenceEnd);
 
             var mDUnitStrategy =
-                new MDUnitStrategy();
+                new MdUnitStrategy();
             sentence = mDUnitStrategy.ShuffleSentence(sentence);
             Assert.That(sentence.Texts.Last().IsSentenceEnd);
 

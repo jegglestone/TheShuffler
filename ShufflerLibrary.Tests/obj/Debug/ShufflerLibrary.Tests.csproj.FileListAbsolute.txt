@@ -27,7 +27,6 @@ C:\Dev\TheShuffler\ShufflerLibrary.Tests\bin\Debug\ShufflerLibrary.Tests.pdb
 C:\Dev\TheShuffler\ShufflerLibrary.Tests\bin\Debug\Rhino.Mocks.dll
 C:\Dev\TheShuffler\ShufflerLibrary.Tests\bin\Debug\ShufflerLibrary.dll
 C:\Dev\TheShuffler\ShufflerLibrary.Tests\bin\Debug\ShufflerLibrary.pdb
-C:\Dev\TheShuffler\ShufflerLibrary.Tests\bin\Debug\nunit.framework.xml
 C:\Dev\TheShuffler\ShufflerLibrary.Tests\bin\Debug\Rhino.Mocks.xml
 C:\Dev\TheShuffler\ShufflerLibrary.Tests\obj\Debug\ShufflerLibrary.Tests.csprojResolveAssemblyReference.cache
 C:\Dev\TheShuffler\ShufflerLibrary.Tests\obj\Debug\ShufflerLibrary.Tests.dll

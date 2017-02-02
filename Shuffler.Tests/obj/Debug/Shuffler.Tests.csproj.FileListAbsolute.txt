@@ -125,7 +125,6 @@ C:\Dev\TheShuffler\Shuffler.Tests\bin\Debug\nunit.framework.dll
 C:\Dev\TheShuffler\Shuffler.Tests\bin\Debug\Rhino.Mocks.dll
 C:\Dev\TheShuffler\Shuffler.Tests\bin\Debug\Main.pdb
 C:\Dev\TheShuffler\Shuffler.Tests\bin\Debug\Castle.Core.xml
-C:\Dev\TheShuffler\Shuffler.Tests\bin\Debug\DocumentFormat.OpenXml.xml
 C:\Dev\TheShuffler\Shuffler.Tests\bin\Debug\Moq.xml
 C:\Dev\TheShuffler\Shuffler.Tests\bin\Debug\nunit.framework.xml
 C:\Dev\TheShuffler\Shuffler.Tests\bin\Debug\Rhino.Mocks.xml

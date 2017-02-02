@@ -7,7 +7,7 @@
     using Helper;
     using Model;
 
-    public class MDUnitStrategy : IStrategy
+    public class MdUnitStrategy : IStrategy
     {
         private MDSentenceDecorator _mdSentenceDecorator;
 
@@ -19,7 +19,7 @@
             _mdSentenceDecorator = 
                 new MDSentenceDecorator(sentence);
 
-            List<Text> modifiersUpToVbPastPresOrBkp; //VB/PAST/PRES/BKP
+            List<Text> modifiersUpToVbPastPresOrBkp;
 
             int firstModifierPosition = _mdSentenceDecorator.FirstModifierPosition;
 

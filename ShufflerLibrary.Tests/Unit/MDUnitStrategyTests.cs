@@ -25,7 +25,7 @@
                 }
             };
 
-            var strategy = new MDUnitStrategy();
+            var strategy = new MdUnitStrategy();
             sentenceWithAscendingMDUnits = 
                 strategy.ShuffleSentence(sentenceWithAscendingMDUnits);
 
@@ -54,7 +54,7 @@
                 }
             };
 
-            var strategy = new MDUnitStrategy();
+            var strategy = new MdUnitStrategy();
             sentenceWithDescendingMDUnits =
                 strategy.ShuffleSentence(sentenceWithDescendingMDUnits);
 
@@ -90,7 +90,7 @@
               }
             };
 
-          var strategy = new MDUnitStrategy();
+          var strategy = new MdUnitStrategy();
           sentence =
               strategy.ShuffleSentence(sentence);
 
@@ -127,7 +127,7 @@
                 }
             };
 
-            var strategy = new MDUnitStrategy();
+            var strategy = new MdUnitStrategy();
             sentenceWithVBUnit =
                 strategy.ShuffleSentence(sentenceWithVBUnit);
 
@@ -162,7 +162,7 @@
                 }
             };
 
-            var strategy = new MDUnitStrategy();
+            var strategy = new MdUnitStrategy();
             sentenceWithLargeMDUnits =
                 strategy.ShuffleSentence(sentenceWithLargeMDUnits);
 
@@ -197,7 +197,7 @@
                 }
             };
 
-            var strategy = new MDUnitStrategy();
+            var strategy = new MdUnitStrategy();
             sentenceWithMDUnits =
                 strategy.ShuffleSentence(sentenceWithMDUnits);
 
@@ -237,7 +237,7 @@
                 }
             };
 
-            var strategy = new MDUnitStrategy();
+            var strategy = new MdUnitStrategy();
             sentenceWithMDUnits =
                 strategy.ShuffleSentence(sentenceWithMDUnits);
 
@@ -283,7 +283,7 @@
                 }
             };
 
-            var strategy = new MDUnitStrategy();
+            var strategy = new MdUnitStrategy();
             sentenceWithMDUnits =
                 strategy.ShuffleSentence(sentenceWithMDUnits);
 
@@ -322,7 +322,7 @@
                 }
             };
 
-            var strategy = new MDUnitStrategy();
+            var strategy = new MdUnitStrategy();
             sentenceWithMDUnits =
                 strategy.ShuffleSentence(sentenceWithMDUnits);
             Assert.That(sentenceWithMDUnits.Texts[0].pe_text, Is.EqualTo("However")); 
@@ -355,7 +355,7 @@
                 }
             };
 
-            var strategy = new MDUnitStrategy();
+            var strategy = new MdUnitStrategy();
             sentenceWithMDUnits =
                 strategy.ShuffleSentence(sentenceWithMDUnits);
 
@@ -384,7 +384,7 @@
                 }
             };
 
-            var strategy = new MDUnitStrategy();
+            var strategy = new MdUnitStrategy();
             sentenceWithMDUnits =
                 strategy.ShuffleSentence(sentenceWithMDUnits);
 
@@ -419,7 +419,7 @@
                 }
             };
 
-            var strategy = new MDUnitStrategy();
+            var strategy = new MdUnitStrategy();
             sentenceWithMDUnits =
                 strategy.ShuffleSentence(sentenceWithMDUnits);
 

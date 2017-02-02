@@ -38,7 +38,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="ShufflerLibrary.Repository.ShufflerPhraseRepository">
-    <Position X="13.25" Y="5.25" Width="2" />
+    <Position X="13.25" Y="4.5" Width="2" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAIAAAgEAAAAA=</HashCode>
       <FileName>Repository\ShufflerPhraseRepository.cs</FileName>
@@ -48,13 +48,13 @@
   <Class Name="ShufflerLibrary.Shuffler">
     <Position X="13.25" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AUAQAAQIAAAAADAAAAAAEAAAABQAggAAQIEAAAAAAAA=</HashCode>
+      <HashCode>AQCQAAAIAAAAACAAAAAAAAAAABQAgAAAQIEAAAAAAAA=</HashCode>
       <FileName>Shuffler.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ShufflerLibrary.DataAccess.ShufflerDataAccess">
-    <Position X="13.5" Y="8" Width="1.75" />
+    <Position X="13.5" Y="7.25" Width="1.75" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
@@ -116,25 +116,17 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="ShufflerLibrary.Strategy.BKByUnitStrategy" Collapsed="true">
-    <Position X="11.5" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AwARAAAAAQBgIggAAAAAAAAAAAAAAAAAABAAAABAAAA=</HashCode>
-      <FileName>Strategy\BKByUnitStrategy.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="ShufflerLibrary.Decorator.BKBySentenceDecorator">
     <Position X="9.75" Y="10" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AgACEBAAAAAEAAACABAgAAABAAAgACgAAAAAQIAAggA=</HashCode>
-      <FileName>Decorator\BKBySentenceDecorator.cs</FileName>
+      <FileName>Obsolete\BKBySentenceDecorator.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ShufflerLibrary.Decorator.SentenceDecorator">
     <Position X="2.25" Y="4.75" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>EwUCAAAAAAAAAQAQAgAEAAAAAAABAAAAAQAAAACAQAA=</HashCode>
+      <HashCode>EgUCAAAAAAAAAQAQAgAGAAAAAAgBAAAAAQAAAAAAQAA=</HashCode>
       <FileName>Decorator\SentenceDecorator.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -149,19 +141,11 @@
     <Position X="0.5" Y="10" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAABAAAAAAAAAAAAAAAAAAIABAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Decorator\PrenNNPastSentenceDecorator.cs</FileName>
+      <FileName>Obsolete\PrenNNPastSentenceDecorator.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="ShufflerLibrary.Strategy.BKByMDBKStrategy" Collapsed="true">
-    <Position X="11.5" Y="4.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AQAwAAAQAAAEAANAAAAAIggABAAAAAQAAQAAEQAAAAA=</HashCode>
-      <FileName>Strategy\BKByMDBKStrategy.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="ShufflerLibrary.Strategy.CommaUnitStrategy" Collapsed="true">
-    <Position X="11.5" Y="5" Width="1.5" />
+    <Position X="11.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Strategy\CommaUnitStrategy.cs</FileName>
@@ -169,23 +153,15 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ShufflerLibrary.Strategy.DoublePrenStrategy" Collapsed="true">
-    <Position X="11.5" Y="5.75" Width="1.5" />
+    <Position X="11.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Strategy\DoublePrenStrategy.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="ShufflerLibrary.Strategy.MDUnitStrategy" Collapsed="true">
-    <Position X="11.5" Y="6.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AQAgAAABAAAEAIEAAAAAAAAAAAAAAACAhAAAgAAAAAA=</HashCode>
-      <FileName>Strategy\MDUnitStrategy.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="ShufflerLibrary.Strategy.NulThatUnitStrategy" Collapsed="true">
-    <Position X="11.5" Y="7.25" Width="1.5" />
+    <Position X="11.5" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAAAAAAAAAAAAAgAABAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Strategy\NulThatUnitStrategy.cs</FileName>
@@ -193,10 +169,10 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ShufflerLibrary.Strategy.PrenNNPastUnitStrategy" Collapsed="true">
-    <Position X="11.5" Y="8" Width="1.5" />
+    <Position X="11.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AYAAAAAAAAAAIAgAAAAIAAgAACAAAIAAAAEABAQAAAA=</HashCode>
-      <FileName>Strategy\PrenNNPastUnitStrategy.cs</FileName>
+      <FileName>Obsolete\PrenNNPastUnitStrategy.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
