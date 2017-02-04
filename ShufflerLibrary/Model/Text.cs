@@ -134,7 +134,7 @@
             if (textField == null)
                 return true;
             if (textField == string.Empty)
-                return true;
+                return false;
             return textField.ToLower() == "null";
         }
 

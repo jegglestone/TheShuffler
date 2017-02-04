@@ -1,7 +1,6 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Data.SqlTypes;
 
 namespace ShufflerLibrary.DataAccess
 {
@@ -77,14 +76,16 @@ namespace ShufflerLibrary.DataAccess
                 command.Parameters.AddWithValue("@pe_text", peText);
                 command.Parameters.AddWithValue("@pe_merge_ahead", peMergeAhead);
 
-                if (peTagRevised == null || peTagRevised.ToLower() == "null")
-                    command.Parameters.AddWithValue("@pe_tag_revised", DBNull.Value);
-                else command.Parameters.AddWithValue("@pe_tag_revised", peTagRevised);
+                if (peTagRevised != null && peTagRevised.ToLower() != "null")
+                {
+                  command.Parameters.AddWithValue("@pe_tag_revised", peTagRevised);
+                }
 
-                if (peTextRevised == null || peTextRevised.ToLower() == "null")
-                    command.Parameters.AddWithValue("@pe_text_revised", DBNull.Value);
-                else command.Parameters.AddWithValue("@pe_text_revised", peTextRevised);
-
+                if (peTextRevised != null && peTextRevised.ToLower() != "null")
+                {
+                  command.Parameters.AddWithValue("@pe_text_revised", peTextRevised);
+                }
+             
                 command.Parameters.AddWithValue("@pe_rule_applied", peRuleApplied);
                 command.Parameters.AddWithValue("@pe_order", peOrder);
                 command.Parameters.AddWithValue("@pe_C_num", peCNum);
