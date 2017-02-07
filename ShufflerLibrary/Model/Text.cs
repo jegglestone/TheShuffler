@@ -92,8 +92,15 @@
 
         public bool IsMDBK()
         {
-            return pe_tag_revised_by_Shuffler == "MDBK";
+            return pe_tag_revised_by_Shuffler == UnitTypes.MDBK
+              || IsType(UnitTypes.MDBK);
         }
+
+      public bool IsDe()
+      {
+        return IsType(UnitTypes.PY_ChineseWord)
+           && actual_text_used == " de ";
+      }
 
         public bool IsPyXuyao =>
             actual_text_used.ToLower().Replace(" ", "") == "xuyao"

@@ -76,6 +76,7 @@
     <Compile Include="Strategy\CommaUnitStrategy.cs" />
     <Compile Include="Strategy\DoublePrenStrategy.cs" />
     <Compile Include="Strategy\IStrategy.cs" />
+    <Compile Include="Strategy\MdbkUnitStrategy.cs" />
     <Compile Include="Strategy\MDUnitStrategy.cs" />
     <Compile Include="Strategy\NulThatUnitStrategy.cs" />
     <Compile Include="Obsolete\PrenNNPastUnitStrategy.cs" />

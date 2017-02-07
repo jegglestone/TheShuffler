@@ -13,7 +13,7 @@
 
         public Sentence ShuffleSentence(Sentence sentence)
         {
-            if (!sentence.Texts.Any(text => text.IsModifier))
+            if (!sentence.HasModifier())
                 return sentence;
 
             _mdSentenceDecorator = 
@@ -243,7 +243,9 @@
         {
             sentence.Texts.Insert(
                 _mdSentenceDecorator.FirstVbPastPresBkpPositionAfterFirstModifier,
-                DeParticleHelper.CreateNewDeParticle(mdPositions.Last().EndPosition, 0));
+                DeParticleHelper.CreateNewDeParticle(
+                  sentence.Texts[mdPositions.Last().EndPosition].pe_order, 
+                  0));
         }
 
 

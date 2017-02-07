@@ -29,7 +29,7 @@
             bKBySentenceDecorator.Texts[i].pe_merge_ahead = 1;
         }
 
-        public static Text CreateNewDeParticle(int previous_pe_order, int pe_merge_ahead)
+        public static Text CreateNewDeParticle(int previousPeOrder, int peMergeAhead)
         {
             return new Text()
             {
@@ -37,8 +37,8 @@
                 pe_text_revised = " de ",
                 pe_tag = "PY",
                 pe_tag_revised = "PY",
-                pe_order = previous_pe_order + 5,
-                pe_merge_ahead = pe_merge_ahead
+                pe_order = previousPeOrder + 5,
+                pe_merge_ahead = peMergeAhead
             };
         }
     }

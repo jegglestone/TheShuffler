@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.SqlTypes;
 using System.Text;
 
 namespace ShufflerLibrary
@@ -28,7 +27,10 @@ namespace ShufflerLibrary
             _mDUnitStrategy;
 
         private readonly IStrategy
-              _percentUnitStrategy;
+            _mdbkUnitStrategy;
+
+        private readonly IStrategy
+            _percentUnitStrategy;
 
         private readonly IStrategy
             _nulThatStrategy;
@@ -56,6 +58,9 @@ namespace ShufflerLibrary
       
             _mDUnitStrategy = 
                 new MdUnitStrategy();
+
+            _mdbkUnitStrategy = 
+                new MdbkUnitStrategy();
 
             _percentUnitStrategy =
                 new PercentUnitStrategy();
@@ -121,6 +126,9 @@ namespace ShufflerLibrary
 
             sentence = _mDUnitStrategy.ShuffleSentence(sentence);
             AddShuffledState(sentence, "Shuffler_MD");
+
+            sentence = _mdbkUnitStrategy.ShuffleSentence(sentence);
+            AddShuffledState(sentence, "Shuffler_MDBK");
 
             sentence = _percentUnitStrategy.ShuffleSentence(sentence);
             AddShuffledState(sentence, "Shuffler_Percent");

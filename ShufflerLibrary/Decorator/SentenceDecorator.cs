@@ -53,7 +53,7 @@
         }
 
         public int FirstVbPastPresBkpPositionAfterFirstModifier
-    {
+        {
             get
             {
                 return Texts
@@ -70,15 +70,15 @@
         public List<Text> GetModifierUnitUpToVbPastPresBkp(
             int firstModifierPosition)
         {
-            List<Text> modifiersUpToVBorBK = new List<Text>();
+            List<Text> modifiersUpToVBorBk = new List<Text>();
 
             for (int i = firstModifierPosition;
                 i < FirstVbPastPresBkpPositionAfterFirstModifier; i++)
             {
-                modifiersUpToVBorBK.Add(Texts[i]);
+                modifiersUpToVBorBk.Add(Texts[i]);
             }
 
-            return modifiersUpToVBorBK;
+            return modifiersUpToVBorBk;
         }
 
         public bool ReversableUnitsAreSortedAscending(

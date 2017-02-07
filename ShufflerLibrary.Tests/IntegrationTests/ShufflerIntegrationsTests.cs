@@ -50,21 +50,22 @@
             sentence = timerUnitStrategy.ShuffleSentence(sentence);
             Assert.That(sentence.Texts.Last().IsSentenceEnd);
 
-            var bkByStrategy =
-                new BKByUnitStrategy();
-            sentence = bkByStrategy.ShuffleSentence(sentence);
-            Assert.That(sentence.Texts.Last().IsSentenceEnd);
-
-            var bkByMDBKStrategy =
-                new BKByMDBKStrategy();
-            sentence = bkByMDBKStrategy.ShuffleSentence(sentence);
-            Assert.That(sentence.Texts.Last().IsSentenceEnd);
-
             var mDUnitStrategy =
                 new MdUnitStrategy();
             sentence = mDUnitStrategy.ShuffleSentence(sentence);
             Assert.That(sentence.Texts.Last().IsSentenceEnd);
 
+
+            var mdbkUnitStrategy =
+                new MdbkUnitStrategy();
+            sentence = mdbkUnitStrategy.ShuffleSentence(sentence);
+            Assert.That(sentence.Texts.Last().IsSentenceEnd);
+
+            var percentUnitStrategy =
+                new PercentUnitStrategy();
+            sentence = percentUnitStrategy.ShuffleSentence(sentence);
+            Assert.That(sentence.Texts.Last().IsSentenceEnd);
+      
             var nulThatStrategy =
                 new NulThatUnitStrategy();
             sentence = nulThatStrategy.ShuffleSentence(sentence);
@@ -79,9 +80,16 @@
                 new PrenNNPastUnitStrategy();
             sentence = prenNnPastUnitStrategy.ShuffleSentence(sentence);
             Assert.That(sentence.Texts.Last().IsSentenceEnd);
-        }
 
-        private Sentence LargeSentence => new Sentence()
+            var commaUnitStrategy =
+                 new CommaUnitStrategy();
+            sentence = commaUnitStrategy.ShuffleSentence(sentence);
+            Assert.That(sentence.Texts.Last().IsSentenceEnd);
+
+
+    }
+
+    private Sentence LargeSentence => new Sentence()
         {
             Texts = new List<Text>()
             {

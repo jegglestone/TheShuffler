@@ -88,6 +88,12 @@ namespace ShufflerLibrary.Model
                 text => text.IsType(UnitTypes.PAST_Participle));
         }
 
+        public bool HasModifier()
+        {
+            return Texts.Any(
+                text => text.IsModifier);
+        }
+
         public bool HasBKBy
         {
             get
