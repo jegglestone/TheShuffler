@@ -55,7 +55,6 @@
             sentence = mDUnitStrategy.ShuffleSentence(sentence);
             Assert.That(sentence.Texts.Last().IsSentenceEnd);
 
-
             var mdbkUnitStrategy =
                 new MdbkUnitStrategy();
             sentence = mdbkUnitStrategy.ShuffleSentence(sentence);

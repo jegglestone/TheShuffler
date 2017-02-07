@@ -1,7 +1,5 @@
 ﻿namespace ShufflerLibrary.Model
 {
-    using System.Runtime.InteropServices;
-
     public class UnitTypes
     {
         public const string ADJ_Adjective = "ADJ";
