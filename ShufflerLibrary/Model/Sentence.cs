@@ -66,12 +66,12 @@ namespace ShufflerLibrary.Model
             }
         }
     
-        public bool HasDG
+        public bool HasDIG
         {
             get
             {
                  return Texts.Any(
-                   text => text.IsType(UnitTypes.DG_Digit));  
+                   text => text.IsType(UnitTypes.DIG_Digit));  
             }
             
         }

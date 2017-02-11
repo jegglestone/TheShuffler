@@ -22,7 +22,7 @@
 
         public bool HasVBVBAPAST => Sentence.HasVBVBAPAST;
 
-        public bool HasDG => Sentence.HasDG;
+        public bool HasDIG => Sentence.HasDIG;
 
         public int FirstTimerPosition
         {

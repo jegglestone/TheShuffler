@@ -7,7 +7,7 @@
         public const string BKP_BreakerPunctuation = "BKP";
         public const string BK_Breaker = "BK";
         public const string CS_ClauserUnit = "CS";
-        public const string DG_Digit = "DG";
+        public const string DG_Digit = "DG"; //TODO: Deprecate
         public const string DIG_Digit = "DIG";
         public const string MD_Modifier = "MD";
         public const string MDBK = "MDBK";
