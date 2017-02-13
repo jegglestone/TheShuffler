@@ -48,7 +48,7 @@
                 timerSentenceDecorator, originalTimerIndexPosition))
             {
                 var firstVbVbaPastDig =
-                    GetFirstVbVbaPastDigNotImmeditaleyBeforeTMUnit(
+                    GetFirstVbVbaPastDigNotImmediatleyBeforeTMUnit(
                         timerSentenceDecorator, originalTimerIndexPosition);
 
                 if (firstVbVbaPastDig.IsType(UnitTypes.DIG_Digit))
@@ -271,12 +271,11 @@
             int firstBreakerPosition =
                 timerSentenceDecorator.Texts.Take(originalTimerIndexPosition - 1)
                     .ToList().FindLastIndex(text => text.IsComma) + 1;
-            if (firstBreakerPosition == -1) firstBreakerPosition = 0;
 
             var textsAfterBreakerBeforeTimer = timerSentenceDecorator
                             .Texts
                             .Skip(firstBreakerPosition)
-                            .Take((originalTimerIndexPosition + 1) - firstBreakerPosition);
+                            .Take((originalTimerIndexPosition - 1) - firstBreakerPosition);
 
             return 
                 textsAfterBreakerBeforeTimer
@@ -310,15 +309,21 @@
                 .FindLastIndex(text => text.IsVbVbaPast);
         }
 
-        private static Text GetFirstVbVbaPastDigNotImmeditaleyBeforeTMUnit(TimerSentenceDecorator timerSentenceDecorator, int originalTimerIndexPosition)
+        private static Text GetFirstVbVbaPastDigNotImmediatleyBeforeTMUnit(TimerSentenceDecorator timerSentenceDecorator, int originalTimerIndexPosition)
         {
-            //TODO: Need a skip NBKP
+            int firstBreakerPosition =
+                timerSentenceDecorator.Texts.Take(originalTimerIndexPosition - 1)
+                    .ToList().FindLastIndex(text => text.IsComma) + 1;
+            if (firstBreakerPosition == -1) firstBreakerPosition = 0;
+
             return timerSentenceDecorator.Texts[
                 timerSentenceDecorator
                     .Texts
-                    .Take(originalTimerIndexPosition - 1)
+                    .Skip(firstBreakerPosition)
+                    .Take(originalTimerIndexPosition - firstBreakerPosition)
                     .ToList()
-                    .FindLastIndex(text => text.IsVbVbaPast || text.IsType(UnitTypes.DIG_Digit))];
+                    .FindLastIndex(text => text.IsVbVbaPast || text.IsType(UnitTypes.DIG_Digit)) 
+                    + firstBreakerPosition];
         }
 
         private static List<Text> GetTimerUnitsInReverse(

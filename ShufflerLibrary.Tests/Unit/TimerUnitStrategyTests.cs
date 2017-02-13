@@ -323,6 +323,63 @@ namespace ShufflerLibrary.Tests.Unit
         }
 
         [Test]
+        public void WhenNnAdvTm_ShufflesTmBeforeNn()
+        {
+            var sentence = new Sentence()
+            {
+                Texts = new List<Text>()
+                {
+                    new Text() {pe_text = "Economic growth", pe_tag = "NN"},
+                    new Text() {pe_text = "has continued", pe_tag = "VB"},
+                    new Text() {pe_text = "at a moderate rate", pe_tag = "ADV1"},
+                    new Text() {pe_text = "so far", pe_tag = "TM1"},
+                    new Text() {pe_text = "this year", pe_tag = "TM2"},
+                    new Text() {pe_text = " . ", pe_tag = "BKP"}
+                }
+            };
+
+
+            var timerUnitStrategy = new TimerUnitStrategy();
+            var returnedSentence = timerUnitStrategy.ShuffleSentence(sentence);
+
+            //Economic growth at a moderate rate  has continued  this year  so far  .
+            Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo("this year")); //TM2
+            Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo("so far")); //TM1 
+            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo("Economic growth")); //NN
+            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo("has continued")); //VB
+            Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo("at a moderate rate")); //ADV1
+            Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo(" . "));
+        }
+
+        [Test]
+        public void WhenNnAdvTm_shufflesUnit()
+        {
+            //"Economic growth at a moderate rate  has continued  so far  this year  . "
+            var sentence = new Sentence()
+            {
+                Texts = new List<Text>()
+                {
+                    new Text() {pe_text = "Economic growth", pe_tag = "NN"},
+                    new Text() {pe_text = "at a moderate rate", pe_tag = "ADV1"},
+                    new Text() {pe_text = "has continued", pe_tag = "VB"},
+                    new Text() {pe_text = "so far", pe_tag = "TM1"},
+                    new Text() {pe_text = "this year", pe_tag = "TM2"},
+                    new Text() {pe_text = " . ", pe_tag = "BKP"}
+                }
+            };
+
+            var timerUnitStrategy = new TimerUnitStrategy();
+            var returnedSentence = timerUnitStrategy.ShuffleSentence(sentence);
+
+            Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo("this year")); //TM2
+            Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo("so far")); //TM1 
+            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo("Economic growth")); //NN
+            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo("at a moderate rate")); //ADV1
+            Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo("has continued")); //VB
+            Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo(" . "));
+        }
+
+        [Test]
         public void When_DG_And_PAST_Shuffles_Keeps_DGAfter_TImer()
         {
             var sentence = new Sentence()
@@ -565,11 +622,11 @@ namespace ShufflerLibrary.Tests.Unit
             var returnedSentence = timerUnitStrategy.ShuffleSentence(sentence);
 
             // He went out and TM1this past winter the warm weather was poor
-            Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo("He"));
-            Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo("went"));
-            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo("out"));
-            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo("and")); 
-            Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo("this")); 
+            Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo("However"));
+            Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo("150"));
+            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo("journalists"));
+            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo("noted")); 
+            Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo(" , ")); 
 
             Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo("He"));
             Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo("went"));
