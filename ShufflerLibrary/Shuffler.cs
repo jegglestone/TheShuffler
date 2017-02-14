@@ -33,7 +33,7 @@ namespace ShufflerLibrary
             _percentUnitStrategy;
 
         private readonly IStrategy
-            _nulThatStrategy;
+            _mdNulThatStrategy;
 
         private readonly IStrategy
             _doublePrenStrategy;
@@ -65,8 +65,8 @@ namespace ShufflerLibrary
             _percentUnitStrategy =
                 new PercentUnitStrategy();
 
-            _nulThatStrategy = 
-                new NulThatUnitStrategy();
+            _mdNulThatStrategy = 
+                new MdNulThatUnitStrategy();
 
             _doublePrenStrategy = 
                 new DoublePrenStrategy();
@@ -133,7 +133,7 @@ namespace ShufflerLibrary
             sentence = _percentUnitStrategy.ShuffleSentence(sentence);
             AddShuffledState(sentence, "Shuffler_Percent");
 
-            sentence = _nulThatStrategy.ShuffleSentence(sentence);
+            sentence = _mdNulThatStrategy.ShuffleSentence(sentence);
             AddShuffledState(sentence, "Shuffler_That");
 
             sentence = _doublePrenStrategy.ShuffleSentence(sentence);

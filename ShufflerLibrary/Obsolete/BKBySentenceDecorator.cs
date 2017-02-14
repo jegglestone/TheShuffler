@@ -25,7 +25,7 @@
                     Sentence.Texts.Skip(BKByIndexPosition).ToList().FindIndex(
                         text => text.IsVbVbaPast
                             || text.IsType(UnitTypes.BKP_BreakerPunctuation)
-                            || text.IsType(UnitTypes.NBKP_NonBreakerPunctuation));
+                            || text.IsType(UnitTypes.NbkpNonBreakerPunctuation));
             }
         }
 

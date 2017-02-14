@@ -42,8 +42,8 @@
             IsType(UnitTypes.BKP_BreakerPunctuation)
             && actual_text_used.Replace(" ", "") == ",";
 
-        public bool IsNulThat => 
-            IsType(UnitTypes.NUL)
+        public bool IsMdNulThat => 
+            IsType(UnitTypes.MDNUL)
             && actual_text_used.Replace(" ", "").ToLower() == "that";
 
         public bool IsClauser =>

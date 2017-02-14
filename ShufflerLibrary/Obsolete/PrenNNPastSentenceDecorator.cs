@@ -25,7 +25,7 @@
                     .ToList()
                     .FindIndex(text => text.IsType(UnitTypes.VB_Verb)
                                        || text.IsType(UnitTypes.BKP_BreakerPunctuation)
-                                       || text.IsType(UnitTypes.NBKP_NonBreakerPunctuation))
+                                       || text.IsType(UnitTypes.NbkpNonBreakerPunctuation))
                        + FirstTimerPosition;
             }
         }

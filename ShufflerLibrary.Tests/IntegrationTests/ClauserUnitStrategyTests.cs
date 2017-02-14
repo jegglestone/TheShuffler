@@ -177,7 +177,7 @@ namespace ShufflerLibrary.Tests.IntegrationTests
             sentence.Texts.Insert(2, new Text
             {
                 pe_text = " that ",
-                pe_tag_revised = "NUL"
+                pe_tag_revised = "MDNUL"
             });
             sentence.Texts[13].pe_tag_revised = "BKP";
             sentence.Texts[13].pe_text = " , ";

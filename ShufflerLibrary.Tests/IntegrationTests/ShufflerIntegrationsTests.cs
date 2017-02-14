@@ -67,7 +67,7 @@
             Assert.That(sentence.Texts.Last().IsSentenceEnd);
       
             var nulThatStrategy =
-                new NulThatUnitStrategy();
+                new MdNulThatUnitStrategy();
             sentence = nulThatStrategy.ShuffleSentence(sentence);
             Assert.That(sentence.Texts.Last().IsSentenceEnd);
 

@@ -158,7 +158,7 @@
                                    .Take(originalTimerIndexPosition)
                                    .ToList()
                                    .FindLastIndex(text => text.IsType(UnitTypes.BKP_BreakerPunctuation)
-                                                          || text.IsType(UnitTypes.NBKP_NonBreakerPunctuation)
+                                                          || text.IsType(UnitTypes.NbkpNonBreakerPunctuation)
                                                           || text.IsType(UnitTypes.BK_Breaker))
                    + 1;
         }

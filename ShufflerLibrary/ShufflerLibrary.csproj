@@ -78,7 +78,7 @@
     <Compile Include="Strategy\IStrategy.cs" />
     <Compile Include="Strategy\MdbkUnitStrategy.cs" />
     <Compile Include="Strategy\MDUnitStrategy.cs" />
-    <Compile Include="Strategy\NulThatUnitStrategy.cs" />
+    <Compile Include="Strategy\MdNulThatUnitStrategy.cs" />
     <Compile Include="Obsolete\PrenNNPastUnitStrategy.cs" />
     <Compile Include="Strategy\PercentUnitStrategy.cs" />
     <Compile Include="Strategy\TimerUnitStrategy.cs" />
