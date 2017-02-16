@@ -27,6 +27,9 @@ namespace ShufflerLibrary
             _mDUnitStrategy;
 
         private readonly IStrategy
+            _pyYoUnitStrategy;
+
+        private readonly IStrategy
             _mdbkUnitStrategy;
 
         private readonly IStrategy
@@ -58,6 +61,9 @@ namespace ShufflerLibrary
       
             _mDUnitStrategy = 
                 new MdUnitStrategy();
+
+            _pyYoUnitStrategy =
+                new PyYouUnitStrategy();
 
             _mdbkUnitStrategy = 
                 new MdbkUnitStrategy();
@@ -126,6 +132,9 @@ namespace ShufflerLibrary
 
             sentence = _mDUnitStrategy.ShuffleSentence(sentence);
             AddShuffledState(sentence, "Shuffler_MD");
+
+            sentence = _pyYoUnitStrategy.ShuffleSentence(sentence);
+            AddShuffledState(sentence, "Shuffler_YO");
 
             sentence = _mdbkUnitStrategy.ShuffleSentence(sentence);
             AddShuffledState(sentence, "Shuffler_MDBK");

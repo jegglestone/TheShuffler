@@ -174,7 +174,7 @@ namespace ShufflerLibrary.Strategy
             sentence.Texts.RemoveRange(modifierPosition, mdUnit.Count);
 
             sentence.Texts.InsertRange(
-                mdbkPosition + 1 + sentence.Texts[mdbkPosition].pe_merge_ahead, // TODO: After MDBK which is 2 words?
+                mdbkPosition + 1 + sentence.Texts[mdbkPosition].pe_merge_ahead,
                 mdUnit);
         }
 

@@ -34,9 +34,8 @@ namespace ShufflerLibrary.Tests.Unit
         public void WhenPyJinxindePrenNNYo_AndNoMdBk_Move_PyJinxingdePrenNnAfterPyYo()
         {
             var sentence = new Sentence()
-            {//Bef: PYjinxingde  PRENA NNsurvey PYyo PRENthe NNuniversity PASTfound that…
-
-
+            {
+                //Bef: PYjinxingde  PRENA NNsurvey PYyo PRENthe NNuniversity PASTfound that…
                 Texts = new List<Text>()
                 {
                     new Text() { pe_tag = "PY", pe_text = " jinxingde "},
@@ -83,7 +82,6 @@ namespace ShufflerLibrary.Tests.Unit
             {
                 Texts = new List<Text>()
                 {
-
                     //Bef: PYjinxingde  PRENA NNsurvey PYyo PRENthe NNuniversity MDBKon students PASTfound that…
 
                     new Text() { pe_tag = "PY", pe_text = "jinxingde"}, //jxd pren nn

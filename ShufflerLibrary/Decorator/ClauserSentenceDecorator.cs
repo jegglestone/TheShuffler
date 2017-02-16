@@ -6,7 +6,6 @@ namespace ShufflerLibrary.Decorator
 
     public class ClauserSentenceDecorator : SentenceDecorator
     {
-
         public ClauserSentenceDecorator(Sentence sentence)
         {
             Sentence = sentence;

@@ -234,9 +234,6 @@
                 }
                 else
                 {
-                    // TODO: need a test for this path
-                    // if no modifiers put straight after MDBK
-                    // move straight after MDBK
                     _bKBySentenceDecorator.Texts.InsertRange(
                         _bKBySentenceDecorator
                             .GetMDBKPosition(_bKBySentenceDecorator.Texts) + 1,
