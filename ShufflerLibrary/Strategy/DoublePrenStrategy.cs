@@ -18,19 +18,8 @@
                         sentence, firstPrenPosition))
                     return sentence;
 
-                int secondPrenPosition = firstPrenPosition + 2;
-
-                var secondPrenUnit = sentence.Texts.GetRange(
-                    secondPrenPosition,
-                    2).ToList();
-
-                sentence.Texts.RemoveRange(
-                    secondPrenPosition,
-                    2);
-
-                sentence.Texts.InsertRange(
-                    firstPrenPosition,
-                    secondPrenUnit);
+                MoveSecondPrenBeforeFirstPren(
+                    sentence, firstPrenPosition);
             }
 
             return sentence;
@@ -42,6 +31,23 @@
                 .IsPren
                    || sentence.Texts[firstPrenPosition + 2]
                        .IsPren;
+        }
+
+        private static void MoveSecondPrenBeforeFirstPren(Sentence sentence, int firstPrenPosition)
+        {
+            int secondPrenPosition = firstPrenPosition + 2;
+
+            var secondPrenUnit = sentence.Texts.GetRange(
+                secondPrenPosition,
+                2).ToList();
+
+            sentence.Texts.RemoveRange(
+                secondPrenPosition,
+                2);
+
+            sentence.Texts.InsertRange(
+                firstPrenPosition,
+                secondPrenUnit);
         }
     }
 }

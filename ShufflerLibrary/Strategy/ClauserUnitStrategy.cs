@@ -9,30 +9,13 @@
     {
         private ClauserSentenceDecorator _clauserSentence;
 
-        private static int GetIndexPositionOfFirstBKPAfterClauser(
-            Sentence sentence, int clauserPosition)
-        {
-            return sentence
-                    .Texts
-                    .GetRange(
-                        clauserPosition, sentence.TextCount - clauserPosition)
-                    .FindIndex(
-                        text => (text.pe_tag == UnitTypes.BKP_BreakerPunctuation
-                            || text.pe_tag_revised == UnitTypes.BKP_BreakerPunctuation) 
-                            && text.pe_text == " , ") + clauserPosition;
-        }
-
-        private static int GetNulThatPosition(Sentence sentence)
-        {
-            return sentence.Texts.FindIndex(
-                text => text.IsMdNulThat);
-        }
-
         private static bool ClauserIsAlreadyAtBeginningOf(Sentence sentence)
         {
-            return sentence.Texts.First().pe_tag_revised == UnitTypes.CS_ClauserUnit ||
-                            (sentence.Texts.First().pe_tag_revised == "NULL"
-                                && sentence.Texts.First().pe_tag == UnitTypes.CS_ClauserUnit);
+            return 
+                sentence.Texts.First().pe_tag_revised == 
+                    UnitTypes.CS_ClauserUnit ||
+                    (sentence.Texts.First().pe_tag_revised == "NULL"
+                        && sentence.Texts.First().pe_tag == UnitTypes.CS_ClauserUnit);
         }
 
         public Sentence ShuffleSentence(Sentence sentence)
@@ -71,7 +54,7 @@
                 text => text.IsMdNulThat))
             {
                 MoveClauserUnitAndRestOfSentenceToAfterNulThat(
-                    GetNulThatPosition(sentence),
+                    clauserSentenceDecorator.NulThatPosition,
                     clauserTexts,
                     sentence,
                     clauserSentenceDecorator);
@@ -87,8 +70,8 @@
             ClauserSentenceDecorator clauserSentenceDecorator, int clauserPosition, Sentence sentence)
         {
             int nbkpPosition =
-                GetIndexPositionOfFirstBKPAfterClauser(
-                    sentence, clauserPosition);
+                clauserSentenceDecorator.GetIndexPositionOfFirstBKPAfterClauser(
+                    clauserPosition);
 
             List<Text> clauserTexts =
                 clauserSentenceDecorator.GetClauserUnit(clauserPosition, nbkpPosition);
@@ -97,7 +80,7 @@
                 text => text.IsMdNulThat))
             {
                 MoveClauserAndNBKPToAfterNulThat(
-                    sentence, clauserPosition, clauserTexts);
+                    sentence, clauserPosition, clauserTexts, clauserSentenceDecorator);
             }
             else
             {
@@ -121,13 +104,14 @@
         private static void MoveClauserAndNBKPToAfterNulThat(
             Sentence sentence,
             int clauserPosition,
-            IList<Text> clauserTexts)
+            IList<Text> clauserTexts,
+            ClauserSentenceDecorator clauserSentenceDecorator)
         {
             sentence.Texts.RemoveRange(
                 clauserPosition, clauserTexts.Count);
 
             int nulThatPosition =
-                GetNulThatPosition(sentence);
+                clauserSentenceDecorator.NulThatPosition;
 
             sentence.Texts.InsertRange(nulThatPosition+1, clauserTexts);
         }

@@ -14,25 +14,24 @@
             var adverbSentenceDecorator = 
                 new AdverbSentenceDecorator(sentence);
 
-            int adverbPosition = 
-                adverbSentenceDecorator.AdverbIndexPosition;
-
-            int lastAdverbPosition =
-                adverbSentenceDecorator.LastAdverbIndexPosition;
-
-            if (adverbSentenceDecorator.Texts.Take(adverbPosition).Any(
-                text => text.IsVbPastPres))
+            if (adverbSentenceDecorator
+                .Texts
+                .Take(adverbSentenceDecorator.AdverbIndexPosition)
+                .Any(text => text.IsVbPastPres))
             {
                 MoveAdverbBeforeVbPastPres(
-                    adverbSentenceDecorator, adverbPosition, lastAdverbPosition);
+                    adverbSentenceDecorator);
             }
 
             return sentence;
         }
 
-        private static void MoveAdverbBeforeVbPastPres(AdverbSentenceDecorator adverbSentenceDecorator, int adverbPosition,
-            int lastAdverbPosition)
+        private static void MoveAdverbBeforeVbPastPres(
+            AdverbSentenceDecorator adverbSentenceDecorator)
         {
+            int adverbPosition = adverbSentenceDecorator.AdverbIndexPosition;
+            int lastAdverbPosition = adverbSentenceDecorator.LastAdverbIndexPosition;
+
             int vbPastPresPosition =
                 adverbSentenceDecorator.Texts.Take(adverbPosition).ToList().FindLastIndex(
                     text => text.IsVbPastPres);

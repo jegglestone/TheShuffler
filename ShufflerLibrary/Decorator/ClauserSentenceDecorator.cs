@@ -26,7 +26,7 @@ namespace ShufflerLibrary.Decorator
 
                 return Sentence.Texts.FindIndex(
                     text => text.pe_tag == UnitTypes.CS_ClauserUnit &&
-                            text.pe_tag_revised.IsNull());
+                        text.pe_tag_revised.IsNull());
             }
         }
 
@@ -35,11 +35,32 @@ namespace ShufflerLibrary.Decorator
             get
             {
                 return Sentence.Texts.Skip(ClauserIndexPosition).Any(
-                            text =>
-                                ((text.pe_tag_revised.IsNull() && text.pe_tag == UnitTypes.BKP_BreakerPunctuation)
-                                || (text.pe_tag_revised == UnitTypes.BKP_BreakerPunctuation))
-                                && text.pe_text==" , ");
+                    text =>
+                        ((text.pe_tag_revised.IsNull() && text.pe_tag == UnitTypes.BKP_BreakerPunctuation)
+                        || (text.pe_tag_revised == UnitTypes.BKP_BreakerPunctuation))
+                        && text.pe_text==" , ");
             }
+        }
+
+        public int NulThatPosition
+        {
+            get
+            {
+                return Texts.FindIndex(
+                    text => text.IsMdNulThat);                
+            }
+        }
+
+        public int GetIndexPositionOfFirstBKPAfterClauser(
+            int clauserPosition)
+        {
+            return Texts
+                    .GetRange(
+                        clauserPosition, Sentence.TextCount - clauserPosition)
+                    .FindIndex(
+                        text => (text.pe_tag == UnitTypes.BKP_BreakerPunctuation
+                            || text.pe_tag_revised == UnitTypes.BKP_BreakerPunctuation)
+                            && text.pe_text == " , ") + clauserPosition;
         }
 
         public int EndOfSentencePosition => 
