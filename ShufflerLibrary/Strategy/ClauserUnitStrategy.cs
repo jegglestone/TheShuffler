@@ -25,7 +25,7 @@
         private static int GetNulThatPosition(Sentence sentence)
         {
             return sentence.Texts.FindIndex(
-                text => text.IsNulThat);
+                text => text.IsMdNulThat);
         }
 
         private static bool ClauserIsAlreadyAtBeginningOf(Sentence sentence)
@@ -68,7 +68,7 @@
                     clauserPosition, endOfSentencePosition);
 
             if (sentence.Texts.Take(clauserPosition).Any(
-                text => text.IsNulThat))
+                text => text.IsMdNulThat))
             {
                 MoveClauserUnitAndRestOfSentenceToAfterNulThat(
                     GetNulThatPosition(sentence),
@@ -94,7 +94,7 @@
                 clauserSentenceDecorator.GetClauserUnit(clauserPosition, nbkpPosition);
 
             if (sentence.Texts.Take(clauserPosition).Any(
-                text => text.IsNulThat))
+                text => text.IsMdNulThat))
             {
                 MoveClauserAndNBKPToAfterNulThat(
                     sentence, clauserPosition, clauserTexts);

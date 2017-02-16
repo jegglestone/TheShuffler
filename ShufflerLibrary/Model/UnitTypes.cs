@@ -7,13 +7,13 @@
         public const string BKP_BreakerPunctuation = "BKP";
         public const string BK_Breaker = "BK";
         public const string CS_ClauserUnit = "CS";
-        public const string DG_Digit = "DG";
         public const string DIG_Digit = "DIG";
         public const string MD_Modifier = "MD";
         public const string MDBK = "MDBK";
-        public const string NBKP_NonBreakerPunctuation = "NBKP";
+        public const string MDNUL = "MDNUL";
+        public const string NbkpNonBreakerPunctuation = "NBKP";
         public const string NN = "NN";
-        public const string NUL = "NUL";
+        public const string NNP = "NNP";
         public const string PAST_Participle = "PAST";
         public const string PREN_Pronoun = "PREN";
         public const string PRES_Participle = "PRES";

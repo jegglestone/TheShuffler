@@ -95,38 +95,38 @@ namespace ShufflerLibrary.Strategy
 
         private static bool PrenBeforeNN(Sentence sentence, int nnPosition)
         {
-            var textsUpToNN = GetTextsUpToNN(sentence, nnPosition);
-            return textsUpToNN.Any(text => text.IsPren);
+            var textsUpToNn = GetTextsUpToNN(sentence, nnPosition);
+            return textsUpToNn.Any(text => text.IsPren);
         }
 
         private static bool ByBeforeNN(Sentence sentence, int nnPosition)
         {
-            var textsUpToNN = GetTextsUpToNN(sentence, nnPosition);
-            return textsUpToNN.Any(text => text.IsBKBy);
+            var textsUpToNn = GetTextsUpToNN(sentence, nnPosition);
+            return textsUpToNn.Any(text => text.IsBKBy);
         }
         private bool AdjBeforeNN(Sentence sentence, int nnPosition)
         {
-            var textsUpToNN = GetTextsUpToNN(sentence, nnPosition);
-            return textsUpToNN.Any(text => text.IsType(UnitTypes.ADJ_Adjective));
+            var textsUpToNn = GetTextsUpToNN(sentence, nnPosition);
+            return textsUpToNn.Any(text => text.IsType(UnitTypes.ADJ_Adjective));
         }
 
         private static List<Text> GetTextsUpToNN(Sentence sentence, int nnPosition)
         {
-            var textsUpToNN = sentence.Texts.Take(nnPosition).ToList();
+            var textsUpToNn = sentence.Texts.Take(nnPosition).ToList();
 
-            if (textsUpToNN.Any(text => text.IsVbPastPres || text.IsType(UnitTypes.BKP_BreakerPunctuation)))
+            if (textsUpToNn.Any(text => text.IsVbPastPres || text.IsType(UnitTypes.BKP_BreakerPunctuation)))
             {
-                textsUpToNN =
-                    textsUpToNN
+                textsUpToNn =
+                    textsUpToNn
                     .Skip(
-                        textsUpToNN
+                        textsUpToNn
                         .ToList()
                         .FindLastIndex(
                             text => text.IsVbPastPres || text.IsType(UnitTypes.BKP_BreakerPunctuation)))
                     .ToList();
             }
 
-            return textsUpToNN;
+            return textsUpToNn;
         }
 
         private static bool NnUnitBeforeMdbk(Sentence sentence, int mdbkPosition)
@@ -146,7 +146,7 @@ namespace ShufflerLibrary.Strategy
             modifierPosition++;
 
             var mdSentenceDecorator =
-                    new MDSentenceDecorator(sentence);
+                    new MdSentenceDecorator(sentence);
 
             //*1.1.2.Move the MD unit to after the MDBK unit:
             MoveMdUnitAfterMdbk(
@@ -165,7 +165,7 @@ namespace ShufflerLibrary.Strategy
                             .FindIndex(text => text.IsDe());
         }
 
-        private static void MoveMdUnitAfterMdbk(Sentence sentence, MDSentenceDecorator mdSentenceDecorator, int modifierPosition,
+        private static void MoveMdUnitAfterMdbk(Sentence sentence, MdSentenceDecorator mdSentenceDecorator, int modifierPosition,
           int mdbkPosition)
         {
             var mdUnit =
@@ -173,8 +173,9 @@ namespace ShufflerLibrary.Strategy
 
             sentence.Texts.RemoveRange(modifierPosition, mdUnit.Count);
 
-            sentence.Texts.InsertRange(mdbkPosition + 2, // TODO: After MDBK which is 2 words?
-              mdUnit);
+            sentence.Texts.InsertRange(
+                mdbkPosition + 1 + sentence.Texts[mdbkPosition].pe_merge_ahead, // TODO: After MDBK which is 2 words?
+                mdUnit);
         }
 
         private static void InsertDeParticleAtPosition(Sentence sentence, int newPosition)

@@ -4,9 +4,9 @@
     using System.Linq;
     using Model;
 
-    public class MDSentenceDecorator : SentenceDecorator
+    public class MdSentenceDecorator : SentenceDecorator
     {
-        public MDSentenceDecorator(Sentence sentence)
+        public MdSentenceDecorator(Sentence sentence)
         {
             Sentence = sentence;
         }

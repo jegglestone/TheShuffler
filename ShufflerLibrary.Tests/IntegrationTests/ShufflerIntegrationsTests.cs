@@ -23,6 +23,7 @@
         [TestCase(2024, TestName = "Multiple MDs seperated by many breakers")]
         [TestCase(2025, TestName = "Real GDP rose percent")]
         [TestCase(2027, TestName = "Long sentence with NulThat")]
+        [TestCase(2028, TestName = "Economic growth has continued at a moderate rate so far this year")]
         public void Document_Can_Be_Retrieved_Shuffled_and_Saved(int documentId)
         {
             var shuffler = new Shuffler();
@@ -66,7 +67,7 @@
             Assert.That(sentence.Texts.Last().IsSentenceEnd);
       
             var nulThatStrategy =
-                new NulThatUnitStrategy();
+                new MdNulThatUnitStrategy();
             sentence = nulThatStrategy.ShuffleSentence(sentence);
             Assert.That(sentence.Texts.Last().IsSentenceEnd);
 

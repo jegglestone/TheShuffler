@@ -12,7 +12,7 @@ GO
 -- Description:	Gets all paragraphs, sentences
 --				and texts for a document by pe_pmd_id
 
---	EXEC dbo.GetDocumentById 2012
+--	EXEC dbo.GetDocumentById 2025
 -- =============================================
 CREATE PROCEDURE [dbo].[GetDocumentById]
 
@@ -25,6 +25,10 @@ BEGIN
     SELECT * 
 	FROM [dbo].[v3_Phrase_Element]
     WHERE pe_pmd_id = @pe_pmd_id
+	AND pe_id NOT IN (
+		SELECT pe_id
+		FROM [dbo].[v3_Phrase_Element]
+		where pe_text_revised  = '')
     ORDER BY pe_order
 END
 GO

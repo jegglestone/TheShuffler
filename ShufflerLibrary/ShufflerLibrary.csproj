@@ -46,6 +46,7 @@
     <Compile Include="DataAccess\IDataAccess.cs" />
     <Compile Include="DataAccess\ShufflerDataAccess.cs" />
     <Compile Include="Decorator\AdverbSentenceDecorator.cs" />
+    <Compile Include="Decorator\PyYoSentenceDecorator.cs" />
     <Compile Include="Model\ShuffledState.cs" />
     <Compile Include="Obsolete\BKBySentenceDecorator.cs" />
     <Compile Include="Decorator\ClauserSentenceDecorator.cs" />
@@ -78,9 +79,10 @@
     <Compile Include="Strategy\IStrategy.cs" />
     <Compile Include="Strategy\MdbkUnitStrategy.cs" />
     <Compile Include="Strategy\MDUnitStrategy.cs" />
-    <Compile Include="Strategy\NulThatUnitStrategy.cs" />
+    <Compile Include="Strategy\MdNulThatUnitStrategy.cs" />
     <Compile Include="Obsolete\PrenNNPastUnitStrategy.cs" />
     <Compile Include="Strategy\PercentUnitStrategy.cs" />
+    <Compile Include="Strategy\PyYouUnitStrategy.cs" />
     <Compile Include="Strategy\TimerUnitStrategy.cs" />
   </ItemGroup>
   <ItemGroup>

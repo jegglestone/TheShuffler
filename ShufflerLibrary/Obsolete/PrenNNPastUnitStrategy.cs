@@ -32,7 +32,7 @@
                 .Skip(pastPosition).ToList()
                 .FindIndex(
                     text => text.IsType(UnitTypes.VB_Verb)
-                    || text.IsType(UnitTypes.NBKP_NonBreakerPunctuation)
+                    || text.IsType(UnitTypes.NbkpNonBreakerPunctuation)
                     || text.IsType(UnitTypes.BKP_BreakerPunctuation));
 
             _prenNNPastSentenceDecorator = new PrenNNPastSentenceDecorator(sentence);

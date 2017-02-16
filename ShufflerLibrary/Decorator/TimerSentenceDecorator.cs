@@ -28,12 +28,12 @@
             }
         }
 
-        public int DGPosition
+        public int DIGPosition
         {
             get
             {
                 return Sentence.Texts.FindIndex(
-                    text => text.IsType(UnitTypes.DG_Digit));
+                    text => text.IsType(UnitTypes.DIG_Digit));
             }
         }
 

@@ -42,8 +42,8 @@
             IsType(UnitTypes.BKP_BreakerPunctuation)
             && actual_text_used.Replace(" ", "") == ",";
 
-        public bool IsNulThat => 
-            IsType(UnitTypes.NUL)
+        public bool IsMdNulThat => 
+            IsType(UnitTypes.MDNUL)
             && actual_text_used.Replace(" ", "").ToLower() == "that";
 
         public bool IsClauser =>
@@ -79,6 +79,9 @@
             IsType(UnitTypes.PREN_Pronoun)
             || IsNumberedType(UnitTypes.PREN_Pronoun);
 
+        public bool IsPres =>
+            IsType(UnitTypes.PRES_Participle);
+
         public bool IsPast =>
             IsType(UnitTypes.PAST_Participle);
 
@@ -96,14 +99,25 @@
               || IsType(UnitTypes.MDBK);
         }
 
-      public bool IsDe()
-      {
-        return IsType(UnitTypes.PY_ChineseWord)
-           && actual_text_used == " de ";
-      }
+        public bool IsDe()
+        {
+            return IsType(UnitTypes.PY_ChineseWord)
+                && actual_text_used.ToLower().Replace(" ", "") == "de";
+        }
+
+        public bool IsNNP => 
+            IsType(UnitTypes.NNP);
 
         public bool IsPyXuyao =>
             actual_text_used.ToLower().Replace(" ", "") == "xuyao"
+            && actual_tag_used == UnitTypes.PY_ChineseWord;
+
+        public bool IsPyYo =>
+            actual_text_used.ToLower().Replace(" ", "") == "yo"
+            && actual_tag_used == UnitTypes.PY_ChineseWord;
+
+        public bool IsPyJinxingde =>
+            actual_text_used.ToLower().Replace(" ", "") == "jinxingde"
             && actual_tag_used == UnitTypes.PY_ChineseWord;
 
         public bool IsPercent =>
