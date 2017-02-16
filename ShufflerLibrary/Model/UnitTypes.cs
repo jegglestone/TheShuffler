@@ -13,6 +13,7 @@
         public const string MDNUL = "MDNUL";
         public const string NbkpNonBreakerPunctuation = "NBKP";
         public const string NN = "NN";
+        public const string NNP = "NNP";
         public const string PAST_Participle = "PAST";
         public const string PREN_Pronoun = "PREN";
         public const string PRES_Participle = "PRES";

@@ -9,7 +9,7 @@
 
     public class MdUnitStrategy : IStrategy
     {
-        private MDSentenceDecorator _mdSentenceDecorator;
+        private MdSentenceDecorator _mdSentenceDecorator;
 
         public Sentence ShuffleSentence(Sentence sentence)
         {
@@ -17,7 +17,7 @@
                 return sentence;
 
             _mdSentenceDecorator = 
-                new MDSentenceDecorator(sentence);
+                new MdSentenceDecorator(sentence);
 
             List<Text> modifiersUpToVbPastPresOrBkp;
 

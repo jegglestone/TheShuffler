@@ -102,5 +102,14 @@ namespace ShufflerLibrary.Model
                     text => text.IsBKBy);
             }
         }
+
+        public bool HasPyYo
+        {
+            get
+            {
+                return Texts.Any(
+                    text => text.IsPyYo);
+            }
+        }
     }
 }

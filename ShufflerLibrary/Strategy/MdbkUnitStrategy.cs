@@ -146,7 +146,7 @@ namespace ShufflerLibrary.Strategy
             modifierPosition++;
 
             var mdSentenceDecorator =
-                    new MDSentenceDecorator(sentence);
+                    new MdSentenceDecorator(sentence);
 
             //*1.1.2.Move the MD unit to after the MDBK unit:
             MoveMdUnitAfterMdbk(
@@ -165,7 +165,7 @@ namespace ShufflerLibrary.Strategy
                             .FindIndex(text => text.IsDe());
         }
 
-        private static void MoveMdUnitAfterMdbk(Sentence sentence, MDSentenceDecorator mdSentenceDecorator, int modifierPosition,
+        private static void MoveMdUnitAfterMdbk(Sentence sentence, MdSentenceDecorator mdSentenceDecorator, int modifierPosition,
           int mdbkPosition)
         {
             var mdUnit =

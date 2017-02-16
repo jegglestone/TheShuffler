@@ -50,6 +50,7 @@
     <Compile Include="Unit\AdverbUnitStrategyTests.cs" />
     <Compile Include="Unit\MdbkStrategyTests.cs" />
     <Compile Include="Unit\PercentUnitStrategyTests.cs" />
+    <Compile Include="Unit\PyYoUnitStrategyTests.cs" />
     <Compile Include="Unit\removed\BKByMDBKUnitStrategyTests.cs" />
     <Compile Include="Unit\removed\ByUnitStrategyTests.cs" />
     <Compile Include="Unit\CommaUnitStrategyTests.cs" />
