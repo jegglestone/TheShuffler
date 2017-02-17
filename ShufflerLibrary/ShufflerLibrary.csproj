@@ -84,6 +84,7 @@
     <Compile Include="Obsolete\PrenNNPastUnitStrategy.cs" />
     <Compile Include="Strategy\PercentUnitStrategy.cs" />
     <Compile Include="Strategy\PyYouUnitStrategy.cs" />
+    <Compile Include="Strategy\DdlUnitStrategy.cs" />
     <Compile Include="Strategy\TimerUnitStrategy.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -5,7 +5,7 @@ using ShufflerLibrary.Model;
 
 namespace ShufflerLibrary.Strategy
 {
-    public class PyYouUnitStrategy : IStrategy
+    public class PyYoUnitStrategy : IStrategy
     {
         public Sentence ShuffleSentence(Sentence sentence)
         {

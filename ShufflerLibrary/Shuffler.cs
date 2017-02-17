@@ -27,6 +27,9 @@ namespace ShufflerLibrary
             _mDUnitStrategy;
 
         private readonly IStrategy
+            _ddlUnitStrategy;
+
+        private readonly IStrategy
             _pyYoUnitStrategy;
 
         private readonly IStrategy
@@ -62,8 +65,11 @@ namespace ShufflerLibrary
             _mDUnitStrategy = 
                 new MdUnitStrategy();
 
+            _ddlUnitStrategy =
+                new DdlUnitStrategy();
+
             _pyYoUnitStrategy =
-                new PyYouUnitStrategy();
+                new PyYoUnitStrategy();
 
             _mdbkUnitStrategy = 
                 new MdbkUnitStrategy();
@@ -109,13 +115,13 @@ namespace ShufflerLibrary
             AddShuffledState(sentence, "Before_Shuffling");
 
             sentence = _clauserUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffler_CS");
+            AddShuffledState(sentence, "Shuffle_CS");
 
             sentence = _adverbUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffler_ADV");
+            AddShuffledState(sentence, "Shuffle_ADV");
 
             sentence = _timerUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffler_TM");
+            AddShuffledState(sentence, "Shuffle_TM");
 
             #region not in use
             //if (sentence.SentenceHasMultipleOptions)
@@ -131,25 +137,28 @@ namespace ShufflerLibrary
             #endregion
 
             sentence = _mDUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffler_MD");
+            AddShuffledState(sentence, "Shuffle_MD");
+
+            sentence = _ddlUnitStrategy.ShuffleSentence(sentence);
+            AddShuffledState(sentence, "Shuffle_DDL");
 
             sentence = _pyYoUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffler_YO");
+            AddShuffledState(sentence, "Shuffle_YO");
 
             sentence = _mdbkUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffler_MDBK");
+            AddShuffledState(sentence, "Shuffle_MDBK");
 
             sentence = _percentUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffler_Percent");
+            AddShuffledState(sentence, "Shuffle_Percent");
 
             sentence = _mdNulThatStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffler_That");
+            AddShuffledState(sentence, "Shuffle_That");
 
             sentence = _doublePrenStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffler_DoublePREN");
+            AddShuffledState(sentence, "Shuffle_DoublePREN");
 
             sentence = _commaUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffler_Commas");
+            AddShuffledState(sentence, "Shuffle_Commas");
 
             sentence = SentenceOrderReSetter.SetPeOrderAsc(sentence);
 

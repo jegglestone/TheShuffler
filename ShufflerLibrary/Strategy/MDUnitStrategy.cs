@@ -248,7 +248,6 @@
                   0));
         }
 
-
         private void SortModifiersInDescendingNumericOrder(
             List<Text> modifiers,
             int firstModifierPosition,

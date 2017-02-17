@@ -48,6 +48,7 @@
     <Compile Include="IntegrationTests\ShufflerPhraseRepositoryIntegrationTests.cs" />
     <Compile Include="IntegrationTests\ShufflerIntegrationsTests.cs" />
     <Compile Include="Unit\AdverbUnitStrategyTests.cs" />
+    <Compile Include="Unit\DdlUnitStrategyTests.cs" />
     <Compile Include="Unit\MdbkStrategyTests.cs" />
     <Compile Include="Unit\PercentUnitStrategyTests.cs" />
     <Compile Include="Unit\PyYoUnitStrategyTests.cs" />

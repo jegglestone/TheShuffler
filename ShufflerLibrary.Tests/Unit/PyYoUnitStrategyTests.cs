@@ -22,7 +22,7 @@ namespace ShufflerLibrary.Tests.Unit
                 }
             };
 
-            PyYouUnitStrategy pyYouUnitStrategy = new PyYouUnitStrategy();
+            PyYoUnitStrategy pyYouUnitStrategy = new PyYoUnitStrategy();
             sentence = pyYouUnitStrategy.ShuffleSentence(sentence);
 
             Assert.That(sentence.Texts[0].pe_text, Is.EqualTo("Hi"));
@@ -55,7 +55,7 @@ namespace ShufflerLibrary.Tests.Unit
                 }
             };
 
-            PyYouUnitStrategy pyYouUnitStrategy = new PyYouUnitStrategy();
+            PyYoUnitStrategy pyYouUnitStrategy = new PyYoUnitStrategy();
             sentence = pyYouUnitStrategy.ShuffleSentence(sentence);
 
             //Aft: PYyo PRENthe NNuniversity PYjinxingde  PRENA NNsurvey PASTfound that…
@@ -100,7 +100,7 @@ namespace ShufflerLibrary.Tests.Unit
                 }
             };
 
-            PyYouUnitStrategy pyYouUnitStrategy = new PyYouUnitStrategy();
+            PyYoUnitStrategy pyYouUnitStrategy = new PyYoUnitStrategy();
             sentence = pyYouUnitStrategy.ShuffleSentence(sentence);
 
             //Aft: PYyo PRENthe NNuniversity PYjinxingde  MDBKon students PRENA NNsurvey PASTfound that…
@@ -142,7 +142,7 @@ namespace ShufflerLibrary.Tests.Unit
                 }
             };
 
-            PyYouUnitStrategy pyYouUnitStrategy = new PyYouUnitStrategy();
+            PyYoUnitStrategy pyYouUnitStrategy = new PyYoUnitStrategy();
             sentence = pyYouUnitStrategy.ShuffleSentence(sentence);
 
             //Aft: PYyo PRENthe NNFederal Reserve PASTconducted PYde PYde NNPTests PASTfound that…
@@ -187,7 +187,7 @@ namespace ShufflerLibrary.Tests.Unit
                 }
             };
 
-            PyYouUnitStrategy pyYouUnitStrategy = new PyYouUnitStrategy();
+            PyYoUnitStrategy pyYouUnitStrategy = new PyYoUnitStrategy();
             sentence = pyYouUnitStrategy.ShuffleSentence(sentence);
 
             //PYyo PRENthe NNFederal Reserve PASTconducted PYde MDBKof US banks PYde NNPTests PASTfound that
