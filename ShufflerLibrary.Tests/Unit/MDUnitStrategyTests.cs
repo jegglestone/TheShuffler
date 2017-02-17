@@ -21,7 +21,7 @@
                     new Text() { pe_tag_revised = "MD2", pe_text = "of"},
                     new Text() { pe_tag_revised = "NN", pe_text = "something"},
                     new Text() { pe_tag_revised = "MD3", pe_text = "in"},
-                    new Text() { pe_tag_revised = "BKP", pe_text = " . "},
+                    new Text() { pe_tag_revised = "BKP", pe_text = " . "}
                 }
             };
 
@@ -36,6 +36,8 @@
             Assert.That(sentenceWithAscendingMDUnits.Texts[3].pe_tag_revised, Is.EqualTo("MD1"));
             Assert.That(sentenceWithAscendingMDUnits.Texts[4].pe_tag_revised, Is.EqualTo("PY"));  // new de particle
             Assert.That(sentenceWithAscendingMDUnits.Texts[5].pe_tag_revised, Is.EqualTo("BKP"));
+
+            Assert.That(sentenceWithAscendingMDUnits.Texts[0].pe_merge_ahead, Is.EqualTo(4));
         }
 
         [Test]
@@ -65,6 +67,8 @@
             Assert.That(sentenceWithDescendingMDUnits.Texts[3].pe_tag_revised, Is.EqualTo("MD1"));
             Assert.That(sentenceWithDescendingMDUnits.Texts[4].pe_tag_revised, Is.EqualTo("PY"));
             Assert.That(sentenceWithDescendingMDUnits.Texts[5].pe_tag_revised, Is.EqualTo("BKP"));
+
+            Assert.That(sentenceWithDescendingMDUnits.Texts[0].pe_merge_ahead, Is.EqualTo(4));
         }
 
 
@@ -107,6 +111,8 @@
           Assert.That(sentence.Texts[10].pe_text, Is.EqualTo("corner"));
           Assert.That(sentence.Texts[11].pe_text, Is.EqualTo(" de "));
           Assert.That(sentence.Texts[12].pe_text, Is.EqualTo("."));
+
+          Assert.That(sentence.Texts[2].pe_merge_ahead, Is.EqualTo(9));
         }
 
 
@@ -139,6 +145,8 @@
             Assert.That(sentenceWithVBUnit.Texts[4].pe_tag_revised, Is.EqualTo("PY")); // de particle
             Assert.That(sentenceWithVBUnit.Texts[5].pe_tag_revised, Is.EqualTo("VB"));
             Assert.That(sentenceWithVBUnit.Texts[6].pe_tag_revised, Is.EqualTo("BKP"));
+
+            Assert.That(sentenceWithVBUnit.Texts[0].pe_merge_ahead, Is.EqualTo(4));
         }
 
         [Test]
@@ -178,6 +186,8 @@
             Assert.That(sentenceWithLargeMDUnits.Texts[8].pe_tag_revised, Is.EqualTo("PY"));
             Assert.That(sentenceWithLargeMDUnits.Texts[9].pe_tag_revised, Is.EqualTo("VB"));
             Assert.That(sentenceWithLargeMDUnits.Texts[10].pe_tag_revised, Is.EqualTo("BKP"));
+
+            Assert.That(sentenceWithLargeMDUnits.Texts[0].pe_merge_ahead, Is.EqualTo(8));
         }
 
         [Test]
@@ -209,12 +219,14 @@
             Assert.That(sentenceWithMDUnits.Texts[5].pe_tag_revised, Is.EqualTo("PY"));
             Assert.That(sentenceWithMDUnits.Texts[6].pe_tag_revised, Is.EqualTo("VB"));
             Assert.That(sentenceWithMDUnits.Texts[7].pe_tag_revised, Is.EqualTo("BKP"));
+
+            Assert.That(sentenceWithMDUnits.Texts[1].pe_merge_ahead, Is.EqualTo(4));
         }
 
         [Test]
         public void VbPrenMdUnit()
         {
-            var sentenceWithMDUnits = new Sentence()
+            var sentenceWithMdUnits = new Sentence()
             {
                 Texts = new List<Text>()
                 {
@@ -238,29 +250,31 @@
             };
 
             var strategy = new MdUnitStrategy();
-            sentenceWithMDUnits =
-                strategy.ShuffleSentence(sentenceWithMDUnits);
+            sentenceWithMdUnits =
+                strategy.ShuffleSentence(sentenceWithMdUnits);
 
-            Assert.That(sentenceWithMDUnits.Texts[0].pe_text, Is.EqualTo("They"));
-            Assert.That(sentenceWithMDUnits.Texts[1].pe_text, Is.EqualTo("bombed"));
+            Assert.That(sentenceWithMdUnits.Texts[0].pe_text, Is.EqualTo("They"));
+            Assert.That(sentenceWithMdUnits.Texts[1].pe_text, Is.EqualTo("bombed"));
 
-            Assert.That(sentenceWithMDUnits.Texts[2].pe_text, Is.EqualTo("in")); // MD unit
-            Assert.That(sentenceWithMDUnits.Texts[3].pe_text, Is.EqualTo("city"));
-            Assert.That(sentenceWithMDUnits.Texts[4].pe_text, Is.EqualTo("centre"));
-            Assert.That(sentenceWithMDUnits.Texts[5].pe_text, Is.EqualTo(" of "));
-            Assert.That(sentenceWithMDUnits.Texts[6].pe_text, Is.EqualTo("river"));
-            Assert.That(sentenceWithMDUnits.Texts[7].pe_text, Is.EqualTo("street"));
-            Assert.That(sentenceWithMDUnits.Texts[8].pe_text, Is.EqualTo("at"));
-            Assert.That(sentenceWithMDUnits.Texts[9].pe_text, Is.EqualTo("5pm"));
-            Assert.That(sentenceWithMDUnits.Texts[10].pe_text, Is.EqualTo("on"));
-            Assert.That(sentenceWithMDUnits.Texts[11].pe_text, Is.EqualTo("corner"));
-            Assert.That(sentenceWithMDUnits.Texts[12].pe_text, Is.EqualTo("house"));
-            Assert.That(sentenceWithMDUnits.Texts[13].pe_text, Is.EqualTo(" de "));
+            Assert.That(sentenceWithMdUnits.Texts[2].pe_text, Is.EqualTo("in")); // MD unit
+            Assert.That(sentenceWithMdUnits.Texts[3].pe_text, Is.EqualTo("city"));
+            Assert.That(sentenceWithMdUnits.Texts[4].pe_text, Is.EqualTo("centre"));
+            Assert.That(sentenceWithMdUnits.Texts[5].pe_text, Is.EqualTo(" of "));
+            Assert.That(sentenceWithMdUnits.Texts[6].pe_text, Is.EqualTo("river"));
+            Assert.That(sentenceWithMdUnits.Texts[7].pe_text, Is.EqualTo("street"));
+            Assert.That(sentenceWithMdUnits.Texts[8].pe_text, Is.EqualTo("at"));
+            Assert.That(sentenceWithMdUnits.Texts[9].pe_text, Is.EqualTo("5pm"));
+            Assert.That(sentenceWithMdUnits.Texts[10].pe_text, Is.EqualTo("on"));
+            Assert.That(sentenceWithMdUnits.Texts[11].pe_text, Is.EqualTo("corner"));
+            Assert.That(sentenceWithMdUnits.Texts[12].pe_text, Is.EqualTo("house"));
+            Assert.That(sentenceWithMdUnits.Texts[13].pe_text, Is.EqualTo(" de "));
 
-            Assert.That(sentenceWithMDUnits.Texts[14].pe_text, Is.EqualTo("the"));  // PREN
-            Assert.That(sentenceWithMDUnits.Texts[15].pe_text, Is.EqualTo("place"));
+            Assert.That(sentenceWithMdUnits.Texts[14].pe_text, Is.EqualTo("the"));  // PREN
+            Assert.That(sentenceWithMdUnits.Texts[15].pe_text, Is.EqualTo("place"));
 
-            Assert.That(sentenceWithMDUnits.Texts[16].pe_text, Is.EqualTo(" . "));
+            Assert.That(sentenceWithMdUnits.Texts[16].pe_text, Is.EqualTo(" . "));
+
+            Assert.That(sentenceWithMdUnits.Texts[2].pe_merge_ahead, Is.EqualTo(11));
         }
 
         [Test]
@@ -297,6 +311,9 @@
             Assert.That(sentenceWithMDUnits.Texts[7].pe_text, Is.EqualTo("short"));
             Assert.That(sentenceWithMDUnits.Texts[8].pe_text, Is.EqualTo("leaflet")); //NN
             Assert.That(sentenceWithMDUnits.Texts[9].pe_text, Is.EqualTo(" . "));
+
+            Assert.That(sentenceWithMDUnits.Texts[0].pe_merge_ahead, Is.EqualTo(5));
+
         }
 
 
@@ -337,6 +354,8 @@
             Assert.That(sentenceWithMDUnits.Texts[9].pe_text, Is.EqualTo("short"));
             Assert.That(sentenceWithMDUnits.Texts[10].pe_text, Is.EqualTo("leaflet")); //NN
             Assert.That(sentenceWithMDUnits.Texts[11].pe_text, Is.EqualTo(" . "));
+
+            Assert.That(sentenceWithMDUnits.Texts[2].pe_merge_ahead, Is.EqualTo(5));
         }
 
         [Test]
@@ -364,6 +383,8 @@
             Assert.That(sentenceWithMDUnits.Texts[2].pe_text, Is.EqualTo("Nice")); //ADJ
             Assert.That(sentenceWithMDUnits.Texts[3].pe_text, Is.EqualTo("folk")); //NN
             Assert.That(sentenceWithMDUnits.Texts[4].pe_text, Is.EqualTo(" . "));
+
+            Assert.That(sentenceWithMDUnits.Texts[0].pe_merge_ahead, Is.EqualTo(1));
         }
 
         [Test]
@@ -396,7 +417,9 @@
             Assert.That(sentenceWithMDUnits.Texts[5].pe_text, Is.EqualTo("degree")); 
             Assert.That(sentenceWithMDUnits.Texts[6].pe_text, Is.EqualTo(" de "));
             Assert.That(sentenceWithMDUnits.Texts[7].pe_text, Is.EqualTo("People")); //NN
-            Assert.That(sentenceWithMDUnits.Texts[8].pe_text, Is.EqualTo(" . ")); 
+            Assert.That(sentenceWithMDUnits.Texts[8].pe_text, Is.EqualTo(" . "));
+
+            Assert.That(sentenceWithMDUnits.Texts[0].pe_merge_ahead, Is.EqualTo(6));
         }
 
         [Test]
@@ -434,6 +457,8 @@
             Assert.That(sentenceWithMDUnits.Texts[8].pe_text, Is.EqualTo("met")); // PAST
             Assert.That(sentenceWithMDUnits.Texts[9].pe_text, Is.EqualTo("him"));
             Assert.That(sentenceWithMDUnits.Texts[10].pe_text, Is.EqualTo(" . "));
+
+            Assert.That(sentenceWithMDUnits.Texts[1].pe_merge_ahead, Is.EqualTo(6));
         }
 
         //[Test]

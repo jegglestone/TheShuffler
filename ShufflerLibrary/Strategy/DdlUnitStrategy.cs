@@ -32,11 +32,6 @@ namespace ShufflerLibrary.Strategy
             return sentence;
         }
 
-        private bool PyYoFollowedByNnAndMd1AndMdbk(Sentence sentence)
-        {
-            throw new NotImplementedException();
-        }
-
         private void MoveMdAfterMdbk(Sentence sentence)
         {
             // PyYo Nn Mdbk Md1
@@ -104,6 +99,24 @@ namespace ShufflerLibrary.Strategy
                 && sentence.Texts.Skip(pyYoPosition + 2).Any(text => text.IsModifier))
             {
                 return true;
+            }
+            return false;
+        }
+
+        private bool PyYoFollowedByNnAndMd1AndMdbk(Sentence sentence)
+        {
+            int pyYoPosition = GetPyYoPosition(sentence);
+
+            if (sentence.Texts[pyYoPosition + 1].IsNN
+                && sentence.Texts[pyYoPosition + 2].IsModifier)
+            {
+                int modifierStartPosition = pyYoPosition + 2;
+                int modifierEndPosition = sentence.Texts[pyYoPosition + 2].pe_merge_ahead;
+
+                if (sentence.Texts[modifierStartPosition + modifierEndPosition].IsMDBK())
+                {
+                    return true;
+                }
             }
             return false;
         }

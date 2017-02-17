@@ -36,12 +36,19 @@
                     ReverseModifierUnit(modifiersUpToVbPastPresOrBkp, firstModifierPosition, mdPositions);
 
                     AddDeParticleToMDUnit(sentence, mdPositions);
+
+                    UnderlineMdUnit(
+                        firstModifierPosition, 
+                        _mdSentenceDecorator.Texts.Skip(firstModifierPosition).ToList().FindIndex(text => text.IsDe()));
                 }
             }
             else  // one modifier unit
             {
                 modifiersUpToVbPastPresOrBkp = 
                   _mdSentenceDecorator.GetModifierUnitUpToVbPastPresBkp(firstModifierPosition);
+
+                UnderlineMdUnit(firstModifierPosition,
+                    modifiersUpToVbPastPresOrBkp.Count-1);
             }
 
             var textsbeforeMdUnit = 
@@ -56,7 +63,13 @@
             return sentence;
         }
 
-      private void ReverseModifierUnit(List<Text> modifiersUpToVbPastPresOrBkp, int firstModifierPosition,
+        private void UnderlineMdUnit(int firstModifierPosition, int endPosition)
+        {
+            _mdSentenceDecorator
+                .Texts[firstModifierPosition].pe_merge_ahead = endPosition;
+        }
+
+        private void ReverseModifierUnit(List<Text> modifiersUpToVbPastPresOrBkp, int firstModifierPosition,
         MoveableUnit[] mdPositions)
       {
         if (_mdSentenceDecorator.ReversableUnitsAreSortedAscending(
