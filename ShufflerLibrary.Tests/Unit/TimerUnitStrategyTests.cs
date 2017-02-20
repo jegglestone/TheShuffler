@@ -380,6 +380,47 @@ namespace ShufflerLibrary.Tests.Unit
         }
 
         [Test]
+        public void WhenEconomicGrowthStructuredDifferently()
+        {
+            // ADJEconomic NNgrowth VBAhas PASTcontinued TM1at a moderate rate so far TM2this year BKP.
+            var sentence = new Sentence()
+            {
+                Texts = new List<Text>()
+                {
+                    new Text() { pe_tag="ADJ", pe_text = "Economic"},
+                    new Text() { pe_tag="NN", pe_text = "growth"},
+                    new Text() { pe_tag="VBA", pe_text = "has"},
+                    new Text() { pe_tag="PAST", pe_text = "continued"},
+                    new Text() { pe_tag="TM1", pe_text = "at"},
+                    new Text() { pe_tag="", pe_text = "a"},
+                    new Text() { pe_tag="", pe_text = "moderate"},
+                    new Text() { pe_tag="", pe_text = "rate"},
+                    new Text() { pe_tag="", pe_text = "so"},
+                    new Text() { pe_tag="", pe_text = "far"},
+                    new Text() { pe_tag="TM2", pe_text = "this"},
+                    new Text() { pe_tag="", pe_text = "year"},
+                    new Text() { pe_tag="BKP", pe_text = " . "}
+                }
+            };
+            var timerUnitStrategy = new TimerUnitStrategy();
+            var returnedSentence = timerUnitStrategy.ShuffleSentence(sentence);
+
+            Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo("Economic")); 
+            Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo("growth"));
+            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo("has"));
+            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo("continued"));
+            Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo("this")); //TM2
+            Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo("year"));
+            Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo("at")); //TM1
+            Assert.That(returnedSentence.Texts[7].pe_text, Is.EqualTo("a"));
+            Assert.That(returnedSentence.Texts[8].pe_text, Is.EqualTo("moderate"));
+            Assert.That(returnedSentence.Texts[9].pe_text, Is.EqualTo("rate"));
+            Assert.That(returnedSentence.Texts[10].pe_text, Is.EqualTo("so"));
+            Assert.That(returnedSentence.Texts[11].pe_text, Is.EqualTo("far"));
+            Assert.That(returnedSentence.Texts[12].pe_text, Is.EqualTo(" . "));
+        }
+
+        [Test]
         public void When_DG_And_PAST_Shuffles_Keeps_DGAfter_TImer()
         {
             var sentence = new Sentence()
