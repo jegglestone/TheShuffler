@@ -461,45 +461,134 @@
             Assert.That(sentenceWithMDUnits.Texts[1].pe_merge_ahead, Is.EqualTo(6));
         }
 
-        //[Test]
-        //public void WhenPrenDigAdjPlusNNUnitBeforeModifier()
-        //{
-        //    var sentenceWithMDUnits = new Sentence()
-        //    {
-        //        Texts = new List<Text>()
-        //        {
-        //            new Text() { pe_tag_revised = "ADJ", pe_text = "Real"},
-        //            new Text() { pe_tag_revised = "NN", pe_text = "GDP"},
-        //            new Text() { pe_tag_revised = "NA", pe_text = "looks"},
-        //            new Text() { pe_tag_revised = "PREN1", pe_text = "about"},
-        //            new Text() { pe_tag_revised = "DIG", pe_text = "2"},
-        //            new Text() { pe_tag_revised = "NN", pe_text = "percent"},
-        //            new Text() { pe_tag_revised = "MD2", pe_text = "of"},
-        //            new Text() { pe_tag_revised = "PREN", pe_text = "this"},
-        //            new Text() { pe_tag_revised = "TMY", pe_text = "year"},
-        //            new Text() { pe_tag_revised = "MD1", pe_text = "in"},
-        //            new Text() { pe_tag_revised = "TM1", pe_text = "first quarter"},
-        //            new Text() { pe_tag_revised = "BKP", pe_text = " . "}
-        //        }
-        //    };
+        [Test]
+        public void WhenVbaBeforeVbPastPres_MoveMdAfterVba()
+        {
+            var sentenceWithMDUnits = new Sentence()
+            {
+                Texts = new List<Text>()
+                {
+                     new Text() { pe_tag_revised = null, pe_text = "We", pe_order =  10},
+                     new Text() { pe_tag_revised = "VBA", pe_text = "will", pe_order =  20},
 
-        //    var strategy = new MDUnitStrategy();
-        //    sentenceWithMDUnits =
-        //        strategy.ShuffleSentence(sentenceWithMDUnits);
+                     new Text() { pe_tag_revised = "VB", pe_text = "meet", pe_order =  30},
+                     new Text() { pe_tag_revised = null, pe_text = "him", pe_order =  40},
 
-        //    Assert.That(sentenceWithMDUnits.Texts[0].pe_tag_revised, Is.EqualTo("ADJ"));
-        //    Assert.That(sentenceWithMDUnits.Texts[1].pe_tag_revised, Is.EqualTo("NN"));
-        //    Assert.That(sentenceWithMDUnits.Texts[2].pe_tag_revised, Is.EqualTo("NA"));
-        //    Assert.That(sentenceWithMDUnits.Texts[3].pe_tag_revised, Is.EqualTo("PREN1"));
-        //    Assert.That(sentenceWithMDUnits.Texts[4].pe_tag_revised, Is.EqualTo("DIG"));
+                     new Text() { pe_tag_revised = "MD2", pe_text = "of", pe_order =  50},
+                     new Text() { pe_tag_revised = null, pe_text = "the", pe_order =  60},
+                     new Text() { pe_tag_revised = null, pe_text = "city", pe_order =  70},
+                     new Text() { pe_tag_revised = "MD1", pe_text = "at", pe_order =  80},
+                     new Text() { pe_tag_revised = null, pe_text = "the", pe_order =  90},
+                     new Text() { pe_tag_revised = null, pe_text = "centre", pe_order =  100},
 
-        //    Assert.That(sentenceWithMDUnits.Texts[5].pe_tag_revised, Is.EqualTo("TMY"));
-        //    Assert.That(sentenceWithMDUnits.Texts[6].pe_tag_revised, Is.EqualTo("TM1"));
-        //    Assert.That(sentenceWithMDUnits.Texts[7].pe_text_revised, Is.EqualTo(" de "));
+                     new Text() { pe_tag_revised = "BKP", pe_text = " . ", pe_order =  110}
+                }
+            };
 
-        //    Assert.That(sentenceWithMDUnits.Texts[8].pe_tag_revised, Is.EqualTo("NN"));
-        //    Assert.That(sentenceWithMDUnits.Texts[9].pe_tag_revised, Is.EqualTo("BKP"));
-        //}
+            var strategy = new MdUnitStrategy();
+            sentenceWithMDUnits =
+                strategy.ShuffleSentence(sentenceWithMDUnits);
+
+            Assert.That(sentenceWithMDUnits.Texts[0].pe_text, Is.EqualTo("We"));
+            Assert.That(sentenceWithMDUnits.Texts[1].pe_text, Is.EqualTo("will")); //VBA
+            Assert.That(sentenceWithMDUnits.Texts[2].pe_text, Is.EqualTo("of"));   //MD2
+            Assert.That(sentenceWithMDUnits.Texts[3].pe_text, Is.EqualTo("the"));
+            Assert.That(sentenceWithMDUnits.Texts[4].pe_text, Is.EqualTo("city"));
+
+            Assert.That(sentenceWithMDUnits.Texts[5].pe_text, Is.EqualTo("at"));   //MD1
+            Assert.That(sentenceWithMDUnits.Texts[6].pe_text, Is.EqualTo("the"));
+            Assert.That(sentenceWithMDUnits.Texts[7].pe_text, Is.EqualTo("centre"));
+            Assert.That(sentenceWithMDUnits.Texts[8].pe_text, Is.EqualTo(" de "));
+            Assert.That(sentenceWithMDUnits.Texts[9].pe_text, Is.EqualTo("meet")); //VB
+            Assert.That(sentenceWithMDUnits.Texts[10].pe_text, Is.EqualTo("him"));
+        }
+
+
+        [Test]
+        public void WhenMdNulThatVbaBeforeVbPastPres_MoveMdAfterVba()
+        {
+            var sentenceWithMDUnits = new Sentence()
+            {
+                Texts = new List<Text>()
+                {
+                     new Text() { pe_tag_revised = null, pe_text = "And", pe_order =  10},
+                     new Text() { pe_tag_revised = "MDNUL", pe_text = "that", pe_order =  20},
+                     new Text() { pe_tag_revised = null, pe_text = "is", pe_order =  30},
+                     new Text() { pe_tag_revised = null, pe_text = "Why", pe_order =  40},
+
+                     new Text() { pe_tag_revised = null, pe_text = "We", pe_order =  50},
+                     new Text() { pe_tag_revised = "VBA", pe_text = "will", pe_order =  60},
+
+                     new Text() { pe_tag_revised = "VB", pe_text = "meet", pe_order =  70},
+                     new Text() { pe_tag_revised = null, pe_text = "him", pe_order =  80},
+
+                     new Text() { pe_tag_revised = "MD2", pe_text = "of", pe_order =  90},
+                     new Text() { pe_tag_revised = null, pe_text = "the", pe_order =  100},
+                     new Text() { pe_tag_revised = null, pe_text = "city", pe_order =  170},
+                     new Text() { pe_tag_revised = "MD1", pe_text = "at", pe_order =  180},
+                     new Text() { pe_tag_revised = null, pe_text = "the", pe_order =  190},
+                     new Text() { pe_tag_revised = null, pe_text = "centre", pe_order =  100},
+
+                     new Text() { pe_tag_revised = "BKP", pe_text = " . ", pe_order =  110}
+                }
+            };
+
+            var strategy = new MdUnitStrategy();
+            sentenceWithMDUnits =
+                strategy.ShuffleSentence(sentenceWithMDUnits);
+
+            Assert.That(sentenceWithMDUnits.Texts[0].pe_text, Is.EqualTo("And"));
+            Assert.That(sentenceWithMDUnits.Texts[1].pe_text, Is.EqualTo("that")); //MDNUL
+            Assert.That(sentenceWithMDUnits.Texts[2].pe_text, Is.EqualTo("is"));  
+            Assert.That(sentenceWithMDUnits.Texts[3].pe_text, Is.EqualTo("Why"));
+
+            Assert.That(sentenceWithMDUnits.Texts[4].pe_text, Is.EqualTo("We"));
+            Assert.That(sentenceWithMDUnits.Texts[5].pe_text, Is.EqualTo("will")); //VBA
+            Assert.That(sentenceWithMDUnits.Texts[6].pe_text, Is.EqualTo("of"));   //MD2
+            Assert.That(sentenceWithMDUnits.Texts[7].pe_text, Is.EqualTo("the"));
+            Assert.That(sentenceWithMDUnits.Texts[8].pe_text, Is.EqualTo("city"));
+
+            Assert.That(sentenceWithMDUnits.Texts[9].pe_text, Is.EqualTo("at"));   //MD1
+            Assert.That(sentenceWithMDUnits.Texts[10].pe_text, Is.EqualTo("the"));
+            Assert.That(sentenceWithMDUnits.Texts[11].pe_text, Is.EqualTo("centre"));
+            Assert.That(sentenceWithMDUnits.Texts[12].pe_text, Is.EqualTo(" de "));
+            Assert.That(sentenceWithMDUnits.Texts[13].pe_text, Is.EqualTo("meet")); //VB
+            Assert.That(sentenceWithMDUnits.Texts[14].pe_text, Is.EqualTo("him"));
+        }
+
+        [Test]
+        public void WhenVBAPastNNMD_MoveMDAfterVba()
+        {
+            var sentenceWithMDandPYXuyao = new Sentence()
+            {
+                Texts = new List<Text>()
+                {
+                    new Text() { pe_tag_revised = "ADJ", pe_text = "Economic", pe_order =  10},
+                    new Text() { pe_tag_revised = "NN", pe_text = "growth", pe_order =  20},
+                    new Text() { pe_tag_revised = "VBA", pe_text = "has", pe_order =  30},
+                    new Text() { pe_tag_revised = "PAST", pe_text = "continued", pe_order =  40},
+                    new Text() { pe_tag_revised = "MD1", pe_text = "at", pe_order =  50},
+                    new Text() { pe_tag_revised = "PREN", pe_text = "a"},
+                    new Text() { pe_tag_revised = "ADJ", pe_text = "moderate"},
+                    new Text() { pe_tag_revised = "NN", pe_text = "rate"},
+                    new Text() { pe_tag_revised = "BKP", pe_text = " . "},
+                }
+            };
+
+            var strategy = new MdUnitStrategy();
+            sentenceWithMDandPYXuyao =
+                strategy.ShuffleSentence(sentenceWithMDandPYXuyao);
+
+            Assert.That(sentenceWithMDandPYXuyao.Texts[0].pe_text, Is.EqualTo("Economic"));
+            Assert.That(sentenceWithMDandPYXuyao.Texts[1].pe_text, Is.EqualTo("growth"));
+            Assert.That(sentenceWithMDandPYXuyao.Texts[2].pe_text, Is.EqualTo("has")); //VBA
+            Assert.That(sentenceWithMDandPYXuyao.Texts[3].pe_text, Is.EqualTo("at"));  //MD1
+            Assert.That(sentenceWithMDandPYXuyao.Texts[4].pe_text, Is.EqualTo("a"));
+            Assert.That(sentenceWithMDandPYXuyao.Texts[5].pe_text, Is.EqualTo("moderate"));
+            Assert.That(sentenceWithMDandPYXuyao.Texts[6].pe_text, Is.EqualTo("rate")); //PAST
+            Assert.That(sentenceWithMDandPYXuyao.Texts[7].pe_text, Is.EqualTo("continued"));
+            Assert.That(sentenceWithMDandPYXuyao.Texts[8].pe_text, Is.EqualTo(" . "));
+        }
 
         //[Test]
         //public void WhenPrenDigAdjPlusNNUnitBeforeShorterModifier()
@@ -540,37 +629,5 @@
         //}
 
 
-        //[Test]
-        //public void WhenMDfollowedByPyXuyao()
-        //{
-        //    var sentenceWithMDandPYXuyao = new Sentence()
-        //    {
-        //        Texts = new List<Text>()
-        //        {
-        //            new Text() { pe_tag_revised = "NA", pe_text = "This"},
-        //            new Text() { pe_tag_revised = "VB", pe_text = "is"},
-        //            new Text() { pe_tag_revised = "PREN", pe_text = "a"},
-        //            new Text() { pe_tag_revised = "NN", pe_text = "book"},
-        //            new Text() { pe_tag_revised = "MD", pe_text = "to"},
-        //            new Text() { pe_tag_revised = "PY", pe_text = " xuyao "},
-        //            new Text() { pe_tag_revised = "VB", pe_text = "read"},
-        //            new Text() { pe_tag_revised = "PY", pe_text = " de "},
-        //            new Text() { pe_tag_revised = "BKP", pe_text = " . "},
-        //        }
-        //    };
-
-        //    var strategy = new MDUnitStrategy();
-        //    sentenceWithMDandPYXuyao =
-        //        strategy.ShuffleSentence(sentenceWithMDandPYXuyao);
-
-        //    Assert.That(sentenceWithMDandPYXuyao.Texts[0].pe_text, Is.EqualTo("This"));
-        //    Assert.That(sentenceWithMDandPYXuyao.Texts[1].pe_text, Is.EqualTo("is"));
-        //    Assert.That(sentenceWithMDandPYXuyao.Texts[2].pe_text, Is.EqualTo("a"));
-        //    Assert.That(sentenceWithMDandPYXuyao.Texts[3].pe_text, Is.EqualTo(" xuyao "));
-        //    Assert.That(sentenceWithMDandPYXuyao.Texts[4].pe_text, Is.EqualTo("read"));
-        //    Assert.That(sentenceWithMDandPYXuyao.Texts[5].pe_text, Is.EqualTo(" de "));
-        //    Assert.That(sentenceWithMDandPYXuyao.Texts[6].pe_text, Is.EqualTo("book"));
-        //    Assert.That(sentenceWithMDandPYXuyao.Texts[7].pe_text, Is.EqualTo(" . "));
-        //}
     }
 }

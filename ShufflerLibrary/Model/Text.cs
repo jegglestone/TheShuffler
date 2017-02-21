@@ -39,8 +39,11 @@
         public int pe_C_num { get; set; }
 
         public bool IsComma =>
-            IsType(UnitTypes.BKP_BreakerPunctuation)
+            IsBkp
             && actual_text_used.Replace(" ", "") == ",";
+
+        public bool IsBkp =>
+            IsType(UnitTypes.BKP_BreakerPunctuation);
 
         public bool IsMdNulThat => 
             IsType(UnitTypes.MDNUL)

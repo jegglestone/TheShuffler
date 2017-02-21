@@ -83,26 +83,34 @@
       private static void ApplySearchLeftRules(Sentence sentence, List<Text> textsbeforeMdUnit, int firstModifierPosition,
             List<Text> modifiersUpToVbPastPresOrBkp)
         {
-            if(!textsbeforeMdUnit.Any(text => text.IsType(UnitTypes.VB_Verb)
+            if(!textsbeforeMdUnit.Any(text => text.IsType(UnitTypes.VB_Verb)  //2.
                            || text.IsType(UnitTypes.PAST_Participle)
                            || text.IsType(UnitTypes.PRES_Participle)
-                           || text.IsNN))
+                           || text.IsNN
+                           || text.IsBKBy
+                           || text.IsBkp
+                           || text.IsType(UnitTypes.NbkpNonBreakerPunctuation)))
                 return;
 
             var firstTextToImmediateLeftOfMdUnit = textsbeforeMdUnit.Last(
                 text => text.IsType(UnitTypes.VB_Verb)
                            || text.IsType(UnitTypes.PAST_Participle)
                            || text.IsType(UnitTypes.PRES_Participle)
-                           || text.IsNN);
+                           || text.IsNN
+                           || text.IsBKBy
+                           || text.IsBkp
+                           || text.IsType(UnitTypes.NbkpNonBreakerPunctuation));
 
-            if (firstTextToImmediateLeftOfMdUnit.IsNN)
-            {
-                SearchForPrenAndMoveMDBeforeIt(
+            if (firstTextToImmediateLeftOfMdUnit.IsNN)      // 2.1
+                SearchForPrenAndMoveMDBeforeIt(             // 2.1.1 - 2.1.2
                     sentence, textsbeforeMdUnit, firstModifierPosition, modifiersUpToVbPastPresOrBkp);
-            }
-            else if (firstTextToImmediateLeftOfMdUnit.IsVbPastPres)
+            if (firstTextToImmediateLeftOfMdUnit.IsBkp)     // 2.2
+                return;
+            if (firstTextToImmediateLeftOfMdUnit.IsBKBy)     // 2.3
+                return;
+            if (firstTextToImmediateLeftOfMdUnit.IsVbPastPres)
             {
-                MoveMDBeforeVbPastPres(
+                MoveMDBeforeVbPastPres(                     // 2.4
                     sentence, textsbeforeMdUnit, firstModifierPosition, modifiersUpToVbPastPresOrBkp);
             }
         }
@@ -225,7 +233,33 @@
             sentence.Texts.RemoveRange(
                 firstModifierPosition, mdUnitSize);
 
-            sentence.Texts.InsertRange(vbPastPresPositionInSentence, mdUnitPlusDe);
+            // search to left of VB/PAST/PRES for VBA until reaching MDNUL/BK/BKP
+           textsbeforeMdUnit =
+               textsbeforeMdUnit
+                   .Skip(textsbeforeMdUnit.FindLastIndex(
+                       text => text.IsMdNulThat
+                               || text.IsType(UnitTypes.BK_Breaker)
+                               || text.IsBkp)).ToList();
+
+           if (textsbeforeMdUnit
+               .Take(vbPastPresPositionInSentence)
+               .Any(text => text.IsType(UnitTypes.VBA_AuxilliaryVerb)))
+           {
+               // 2.4.1	If VBA is found, move MD unit to after VBA:
+               int vbaPeOrder = textsbeforeMdUnit
+                   .Take(vbPastPresPositionInSentence).ToList()
+                   .Last(text => text.IsType(UnitTypes.VBA_AuxilliaryVerb)).pe_order;
+
+               int vbaPositionInSentence =
+                   sentence.Texts.FindIndex(text => text.pe_order == vbaPeOrder);
+
+               sentence.Texts.InsertRange(vbaPositionInSentence + 1, mdUnitPlusDe);
+           }
+           else
+           {
+               // 2.4.2 	If VBA is not found, move MD unit to before VB/PAST/PRES
+               sentence.Texts.InsertRange(vbPastPresPositionInSentence, mdUnitPlusDe);
+           }
         }
 
         private static int GetModifierUnitSize(List<Text> modifiersUpToVbPastPresOrBkp)
@@ -287,150 +321,5 @@
         {
             return _mdSentenceDecorator.Texts.Take(position);
         }
-
-        #region obsolete code
-        //if (_mdSentenceDecorator.SentenceHasSingleModifierAndPyXuyaoUnit())
-        //{
-        //int PyXuyaoPosition =
-        //    _mdSentenceDecorator.Texts.FindIndex(
-        //        text => text.IsPyXuyao);
-
-        //if (_mdSentenceDecorator.PyXuyaoIsWithinMDandPreceededByNN(
-        //    PyXuyaoPosition))
-        //{
-        //    ApplyMDPlusPYXuyaoRules(
-        //        PyXuyaoPosition);
-        //}
-        //}
-
-        //private void ApplyMDPlusPYXuyaoRules(int PyXuyaoPosition)
-        //{
-        //    int nnPosition = _mdSentenceDecorator
-        //        .TextsBeforePyXuyao(PyXuyaoPosition)
-        //        .ToList()
-        //        .FindLastIndex(text => text.IsNN);
-
-        //    int modifierStartPosition = PyXuyaoPosition - 1;
-
-        //    int modifierEndPosition =
-        //        _mdSentenceDecorator.FirstBKPPositionAfterFirstModifier;
-
-        //    var mdPyXuyaoUnit = _mdSentenceDecorator
-        //        .Texts
-        //        .Skip(modifierStartPosition)
-        //        .ToList()
-        //        .Take(modifierEndPosition - modifierStartPosition);
-
-        //    _mdSentenceDecorator.Texts.RemoveRange(
-        //        modifierStartPosition,
-        //        modifierEndPosition - modifierStartPosition);
-
-        //    _mdSentenceDecorator.Texts.InsertRange(
-        //        nnPosition,
-        //        mdPyXuyaoUnit);
-
-        //    DeleteModifiers();
-        //}
-
-        //private void ApplyPrenDigAdjPlusNNRules(
-        //    int firstModifierPosition, 
-        //    MoveableUnit[] mdPositions, 
-        //    int nnPosition)
-        //{
-        //    int lastPrenDigAdjPosition = nnPosition - 1;
-
-        //    int firstModifierCurrentPosition =
-        //        _mdSentenceDecorator.FirstModifierPosition;
-
-        //    int modifierEndPosition =
-        //        mdPositions.Last().EndPosition + 1;
-
-        //    modifierEndPosition =
-        //        RemovePrensFromUnitAndDecrementEndPosition(
-        //            firstModifierCurrentPosition, modifierEndPosition);
-
-        //    MoveModifierUnitAfter_PrenDigAdj_AndAddDeParticle(
-        //        firstModifierPosition,
-        //        modifierEndPosition,
-        //        firstModifierCurrentPosition,
-        //        lastPrenDigAdjPosition);
-
-        //    DeleteModifiers();
-        //}
-
-        //private void MoveModifierUnitAfter_PrenDigAdj_AndAddDeParticle(
-        //    int firstModifierPosition, 
-        //    int modifierEndPosition,
-        //    int firstModifierCurrentPosition, 
-        //    int lastPrenDigAdjPosition)
-        //{
-        //    var modifierUnit =
-        //        _mdSentenceDecorator
-        //            .Texts
-        //            .Skip(firstModifierPosition)
-        //            .Take(modifierEndPosition).ToList();
-
-        //    _mdSentenceDecorator.Texts.RemoveRange(
-        //        firstModifierCurrentPosition,
-        //        modifierEndPosition);
-
-        //    modifierUnit.Add(
-        //        DeParticleHelper.CreateNewDeParticle(
-        //            modifierUnit.Last().pe_order, 0));
-
-        //    _mdSentenceDecorator.Texts.InsertRange(
-        //        lastPrenDigAdjPosition + 1,
-        //        modifierUnit);
-        //}
-
-        //private int RemovePrensFromUnitAndDecrementEndPosition(
-        //    int firstModifierCurrentPosition, int modifierEndPosition)
-        //{
-        //    for (int i = firstModifierCurrentPosition;
-        //         i < firstModifierCurrentPosition + modifierEndPosition; i++)
-        //    {
-        //        if (_mdSentenceDecorator.Texts[i].IsPren)
-        //        {
-        //            _mdSentenceDecorator.Texts.RemoveAt(i);
-        //            modifierEndPosition--;
-        //        }
-        //    }
-
-        //    return modifierEndPosition;
-        //}
-
-        //private IEnumerable<Text> TextsBefore(int position)
-        //{
-        //    return _mdSentenceDecorator.Texts.Take(position);
-        //}
-
-        //private void DeleteModifiers()
-        //{
-        //    _mdSentenceDecorator.Texts.RemoveAll(text => text.IsModifier);
-        //}
-
-        //private void MoveModifiersBeforeVbVbaPast(
-        //    MoveableUnit[] mdPositions, 
-        //    int firstModifierPosition,
-        //    List<Text> modifiersUpToVBorBK)
-        //{
-        //    ModifierPositionHelper.RemoveCurrentMDUnit(
-        //        _mdSentenceDecorator,
-        //        mdPositions,
-        //        _mdSentenceDecorator.FirstModifierPosition);
-
-        //    int VBVBAPASTPosition = _mdSentenceDecorator
-        //        .Texts
-        //        .Take(firstModifierPosition)
-        //        .ToList()
-        //        .FindIndex(text => text.IsVbVbaPast);
-
-        //    ModifierPositionHelper.InsertReversedMDUnitBeforePosition(
-        //        _mdSentenceDecorator,
-        //        modifiersUpToVBorBK,
-        //        VBVBAPASTPosition);
-        //}
-        #endregion
-
     }
 }
