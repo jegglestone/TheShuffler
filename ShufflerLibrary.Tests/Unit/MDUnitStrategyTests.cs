@@ -589,45 +589,5 @@
             Assert.That(sentenceWithMDandPYXuyao.Texts[7].pe_text, Is.EqualTo("continued"));
             Assert.That(sentenceWithMDandPYXuyao.Texts[8].pe_text, Is.EqualTo(" . "));
         }
-
-        //[Test]
-        //public void WhenPrenDigAdjPlusNNUnitBeforeShorterModifier()
-        //{
-        //    var sentenceWithMDUnits = new Sentence()
-        //    {
-        //        Texts = new List<Text>()
-        //        {
-        //            new Text() { pe_tag_revised = "ADJ", pe_text = "Real"},
-        //            new Text() { pe_tag_revised = "NN", pe_text = "GDP"},
-        //            new Text() { pe_tag_revised = "NA", pe_text = "looks"},
-        //            new Text() { pe_tag_revised = "PREN1", pe_text = "about"},
-        //            new Text() { pe_tag_revised = "DIG", pe_text = "2"},
-        //            new Text() { pe_tag_revised = "NN", pe_text = "percent"},
-        //            new Text() { pe_tag_revised = "MD2", pe_text = "of"},
-        //            new Text() { pe_tag_revised = "PREN", pe_text = "this"},
-        //            new Text() { pe_tag_revised = "TMY", pe_text = "year"},
-        //            new Text() { pe_tag_revised = "MD1", pe_text = "in"},
-        //            new Text() { pe_tag_revised = "BKP", pe_text = " . "}
-        //        }
-        //    };
-
-        //    var strategy = new MDUnitStrategy();
-        //    sentenceWithMDUnits =
-        //        strategy.ShuffleSentence(sentenceWithMDUnits);
-
-        //    Assert.That(sentenceWithMDUnits.Texts[0].pe_tag_revised, Is.EqualTo("ADJ"));
-        //    Assert.That(sentenceWithMDUnits.Texts[1].pe_tag_revised, Is.EqualTo("NN"));
-        //    Assert.That(sentenceWithMDUnits.Texts[2].pe_tag_revised, Is.EqualTo("NA"));
-        //    Assert.That(sentenceWithMDUnits.Texts[3].pe_tag_revised, Is.EqualTo("PREN1"));
-        //    Assert.That(sentenceWithMDUnits.Texts[4].pe_tag_revised, Is.EqualTo("DIG"));
-
-        //    Assert.That(sentenceWithMDUnits.Texts[5].pe_tag_revised, Is.EqualTo("TMY"));
-        //    Assert.That(sentenceWithMDUnits.Texts[6].pe_text_revised, Is.EqualTo(" de "));
-
-        //    Assert.That(sentenceWithMDUnits.Texts[7].pe_tag_revised, Is.EqualTo("NN"));
-        //    Assert.That(sentenceWithMDUnits.Texts[8].pe_tag_revised, Is.EqualTo("BKP"));
-        //}
-
-
     }
 }
