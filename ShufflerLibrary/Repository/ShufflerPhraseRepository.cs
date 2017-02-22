@@ -85,6 +85,10 @@
 
             if (dr["pe_text_revised"] is DBNull)
                 text.pe_text_revised = null;
+            if (dr["pe_tag_revised"] is DBNull)
+                text.pe_tag_revised = null;
+
+
             return text;
         }
 

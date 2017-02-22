@@ -76,12 +76,14 @@ namespace ShufflerLibrary.DataAccess
                 command.Parameters.AddWithValue("@pe_text", peText);
                 command.Parameters.AddWithValue("@pe_merge_ahead", peMergeAhead);
 
-                if (peTagRevised != null && peTagRevised.ToLower() != "null")
+                if (peTagRevised != null 
+                    && peTagRevised.ToLower() != "null")
                 {
                   command.Parameters.AddWithValue("@pe_tag_revised", peTagRevised);
                 }
 
-                if (peTextRevised != null && peTextRevised.ToLower() != "null")
+                if (peTextRevised != null 
+                    && peTextRevised.ToLower() != "null")
                 {
                   command.Parameters.AddWithValue("@pe_text_revised", peTextRevised);
                 }
