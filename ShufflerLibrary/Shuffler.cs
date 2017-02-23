@@ -139,26 +139,27 @@ namespace ShufflerLibrary
             sentence = _mDUnitStrategy.ShuffleSentence(sentence);
             AddShuffledState(sentence, "Shuffle_MD");
 
+
+            sentence = _mdbkUnitStrategy.ShuffleSentence(sentence);
+            AddShuffledState(sentence, "Shuffle_MDBK");
+
+            sentence = _mdNulThatStrategy.ShuffleSentence(sentence);
+            AddShuffledState(sentence, "Shuffle_That");  //MDNUL
+
             sentence = _ddlUnitStrategy.ShuffleSentence(sentence);
             AddShuffledState(sentence, "Shuffle_DDL");
 
             sentence = _pyYoUnitStrategy.ShuffleSentence(sentence);
             AddShuffledState(sentence, "Shuffle_YO");
 
-            sentence = _mdbkUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffle_MDBK");
-
             sentence = _percentUnitStrategy.ShuffleSentence(sentence);
             AddShuffledState(sentence, "Shuffle_Percent");
+            
+            //sentence = _doublePrenStrategy.ShuffleSentence(sentence);
+            //AddShuffledState(sentence, "Shuffle_DoublePREN");
 
-            sentence = _mdNulThatStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffle_That");
-
-            sentence = _doublePrenStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffle_DoublePREN");
-
-            sentence = _commaUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffle_Commas");
+            //sentence = _commaUnitStrategy.ShuffleSentence(sentence);
+            //AddShuffledState(sentence, "Shuffle_Commas");
 
             sentence = SentenceOrderReSetter.SetPeOrderAsc(sentence);
 
