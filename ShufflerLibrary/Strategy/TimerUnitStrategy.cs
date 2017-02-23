@@ -34,87 +34,99 @@
             List<Text> reversedTexts, 
             int originalTimerIndexPosition)
         {
-            if (TimerPreceededImmediatelyByPast(
-                timerSentenceDecorator, originalTimerIndexPosition))
+            if (TimerPreceededByDigButNotImmediately(
+                timerSentenceDecorator, originalTimerIndexPosition))   // 2.  
             {
-                // 2.1
-                KeepTimerUnitInSamePosition(
-                    timerSentenceDecorator, reversedTexts, originalTimerIndexPosition);
+                // 2.1.If DIG is found first, move the TM unit to before the DIG unit
+                MoveTimerBeforeDig(
+                    timerSentenceDecorator, reversedTexts);
 
                 return;
             }
- 
-            if (TimerPreceededByVbVbaDigPastButNotImmediately(
-                timerSentenceDecorator, originalTimerIndexPosition))
-            {
-                var firstVbVbaPastDig =
-                    GetFirstVbVbaPastDigNotImmediatleyBeforeTMUnit(
-                        timerSentenceDecorator, originalTimerIndexPosition);
+            // 2.2 not found 
 
-                if (firstVbVbaPastDig.IsType(UnitTypes.DIG_Digit))
-                {
-                    //3.1
-                    MoveTimerBeforeDig(
-                        timerSentenceDecorator, reversedTexts);
-                }
-                else 
-                {
-                    //3.2 vb/vba/past
-                    ShuffleVbVbaPast(
-                        timerSentenceDecorator, reversedTexts, originalTimerIndexPosition);
-                }
+            // 3.Search to the left of TM for any of ADV or ‘ADV and ADV’ or ‘ADV, ADV and ADV.
+            if (timerSentenceDecorator.Texts.Take(originalTimerIndexPosition).Any(text => text.IsAdverb))
+            {
+                // 3.1.If any of ADV or ‘ADV and ADV’ or ‘ADV, ADV and ADV is found move TM before first ADV:
+                MoveTimerBeforeAdverb(
+                    timerSentenceDecorator, reversedTexts, originalTimerIndexPosition);
+
+            }
+            //3.2.If no ADV or or ‘ADV and ADV’ or ‘ADV, ADV and ADV is found –
+            else if (PastPresBeforeTimerUnit(timerSentenceDecorator))
+            {  
+               
+               // 4.Search to the left of TM for PAST / PRES
+               //  4.1.If either is found, move the TM unit to before PAST or PRES whichever is the case:
+                int lastPastPresPosition =
+                                timerSentenceDecorator.Texts.Take(originalTimerIndexPosition).ToList()
+                                                .FindLastIndex(text => text.IsPast || text.IsPres);
+
+                MoveTimerUnitToPosition(
+                    lastPastPresPosition, reversedTexts, timerSentenceDecorator);
+            }
+            // 4.2.If neither PAST nor PRES is found -
+            else if (NoNnUnitBeforeTimerUnit(timerSentenceDecorator))
+            {
+                //   5.Search to the left of TM for NNX until reaching BKP
+                //   5.1.If no NNX is found, end the task.TM stays where it is
+
+                KeepTimerUnitInSamePosition(
+                    timerSentenceDecorator, reversedTexts, originalTimerIndexPosition);
             }
             else
             {
-                KeepTimerUnitInSamePosition(
-                     timerSentenceDecorator, reversedTexts, originalTimerIndexPosition);
-            }
+                // 5.2. NNX is found -
+                ApplyBeforeNnShuffleRules(
+                    timerSentenceDecorator, reversedTexts, originalTimerIndexPosition);
+            } 
+        }
 
-            // 4.1
-            if (NoNnUnitBeforeTimerUnit(timerSentenceDecorator))
-            {
-                return;
-            }
-
-            //  4.2.If NN is found, search its left for PREN / ADJ / DIG until reaching ‘and’ or BK / NBKP / BKP.
+        private static void ApplyBeforeNnShuffleRules(TimerSentenceDecorator timerSentenceDecorator, List<Text> reversedTexts,
+            int originalTimerIndexPosition)
+        {
+            //   5.3.Search its left for PREN or ADJ until reaching ‘and’ or BK / NBKP / BKP.
             int lastNnPosition =
                 GetClosestNnPosition(timerSentenceDecorator, originalTimerIndexPosition);
-
-            //TODO: move to decorator
+            
             int andOrBreakerPosition = GetLastAndOrBkpPositionBeforeNn(
                 timerSentenceDecorator, lastNnPosition);
             if (andOrBreakerPosition == -1) andOrBreakerPosition = 0;
 
-            //4.2.1.If PREN is found, move the TM unit to before PREN:
+            //   5.3.1.If PREN is found, move the TM unit to before PREN:
             if (timerSentenceDecorator
-                .Texts
-                .Skip(andOrBreakerPosition + 1)
-                .Take(lastNnPosition - andOrBreakerPosition)
-                 .Any(text => text.IsPren))
+                            .Texts
+                            .Skip(andOrBreakerPosition + 1)
+                            .Take(lastNnPosition - andOrBreakerPosition)
+                            .Any(text => text.IsPren))
             {
                 MoveTimerUnitBeforePren(
                     timerSentenceDecorator, reversedTexts, andOrBreakerPosition, lastNnPosition);
             }
-
-            //4.2.2.If no PREN is found but ADJ is found, move the TM unit to before ADJ:
+            //   5.3.2.If no PREN is found but ADJ is found, move the TM unit to before ADJ:
             else if (timerSentenceDecorator
-                .Texts
-                .Skip(andOrBreakerPosition + 1)
-                .Take(lastNnPosition - andOrBreakerPosition)
-                 .Any(text => text.IsNumberedType(UnitTypes.ADJ_Adjective)
-                        || text.IsType(UnitTypes.ADJ_Adjective)))
+                            .Texts
+                            .Skip(andOrBreakerPosition + 1)
+                            .Take(lastNnPosition - andOrBreakerPosition)
+                            .Any(text => text.IsNumberedType(UnitTypes.ADJ_Adjective)
+                                         || text.IsType(UnitTypes.ADJ_Adjective)))
             {
                 MoveTimerUnitBeforeAdj(
                     timerSentenceDecorator, reversedTexts, andOrBreakerPosition, lastNnPosition);
             }
+
             else
             {
-                // 4.2.3.	If neither PREN nor ADJ is found, move the TM unit to before NN
+                //   5.3.3.If neither PREN nor ADJ is found, move the TM unit to before NN
                 MoveTimerUnitToPosition(
                     lastNnPosition,
                     reversedTexts,
                     timerSentenceDecorator);
             }
+
+            //              Bef: …VBup from ADJabout 150, 000 jobs TMper month… 
+            //Aft: … VBup from TMper month ADJabout 150, 000 jobs … 
         }
 
         private static bool NoNnUnitBeforeTimerUnit(
@@ -129,6 +141,20 @@
                     .Skip(closestAndBkBkpPosition)
                     .Take(timerSentenceDecorator.FirstTimerPosition - closestAndBkBkpPosition)
                     .Any(text => text.IsNN);
+        }
+
+        private static bool PastPresBeforeTimerUnit(
+            TimerSentenceDecorator timerSentenceDecorator)
+        {
+            int closestAndBkBkpPosition
+                = GetClosestAndBkBkpPositionToTimer(
+                    timerSentenceDecorator, timerSentenceDecorator.FirstTimerPosition);
+
+            return timerSentenceDecorator
+                    .Texts
+                    .Skip(closestAndBkBkpPosition)
+                    .Take(timerSentenceDecorator.FirstTimerPosition - closestAndBkBkpPosition)
+                    .Any(text => text.IsPast || text.IsPres);
         }
 
         private static int GetClosestNnPosition(
@@ -204,27 +230,6 @@
                                         || text.IsType(UnitTypes.BK_Breaker));
         }
 
-        private static void ShuffleVbVbaPast(TimerSentenceDecorator timerSentenceDecorator, List<Text> reversedTexts,
-            int originalTimerIndexPosition)
-        {
-            int lastVbVbaPastPosition =
-                            GetLastVbVbaPastPosition(
-                                timerSentenceDecorator, originalTimerIndexPosition);
-
-            if (timerSentenceDecorator.Texts.Take(lastVbVbaPastPosition).Any(
-                text => text.IsAdverb))
-            {
-                MoveTimerBeforeAdverb(
-                    timerSentenceDecorator, reversedTexts, lastVbVbaPastPosition);
-            }
-            else
-            {
-                MoveTimerUnitToPosition(
-                    lastVbVbaPastPosition,
-                    reversedTexts,
-                    timerSentenceDecorator);
-            }
-        }
 
         private static void MoveTimerBeforeDig(TimerSentenceDecorator timerSentenceDecorator, List<Text> reversedTexts)
         {
@@ -253,9 +258,9 @@
         }
 
         private static void MoveTimerBeforeAdverb(TimerSentenceDecorator timerSentenceDecorator, List<Text> reversedTexts,
-            int lastVbVbaPastPosition)
+            int positionToSearchBefore)
         {
-            int adverbPosition = timerSentenceDecorator.Texts.Take(lastVbVbaPastPosition)
+            int adverbPosition = timerSentenceDecorator.Texts.Take(positionToSearchBefore)
                             .ToList()
                             .FindLastIndex(text => text.IsAdverb);
 
@@ -265,7 +270,7 @@
                 timerSentenceDecorator);
         }
 
-        private static bool TimerPreceededByVbVbaDigPastButNotImmediately(
+        private static bool TimerPreceededByDigButNotImmediately(
             TimerSentenceDecorator timerSentenceDecorator, int originalTimerIndexPosition)
         {
             int firstBreakerPosition =
@@ -280,7 +285,7 @@
             return 
                 textsAfterBreakerBeforeTimer
                 .Any(
-                    text => text.IsVbVbaPast || text.IsType(UnitTypes.DIG_Digit));
+                    text => text.IsType(UnitTypes.DIG_Digit));
         }
 
         private static void KeepTimerUnitInSamePosition(
@@ -291,39 +296,6 @@
                 originalTimerIndexPosition,
                 reversedTexts,
                 timerSentenceDecorator);
-        }
-
-        private static bool TimerPreceededImmediatelyByPast(
-            TimerSentenceDecorator timerSentenceDecorator, int originalTimerIndexPosition)
-        {
-            return timerSentenceDecorator.Texts[originalTimerIndexPosition - 1].IsPast;
-        }
-
-        private static int GetLastVbVbaPastPosition(
-            TimerSentenceDecorator timerSentenceDecorator, int originalTimerIndexPosition)
-        {
-            return timerSentenceDecorator
-                .Texts
-                .Take(originalTimerIndexPosition - 1)
-                .ToList()
-                .FindLastIndex(text => text.IsVbVbaPast);
-        }
-
-        private static Text GetFirstVbVbaPastDigNotImmediatleyBeforeTMUnit(TimerSentenceDecorator timerSentenceDecorator, int originalTimerIndexPosition)
-        {
-            int firstBreakerPosition =
-                timerSentenceDecorator.Texts.Take(originalTimerIndexPosition - 1)
-                    .ToList().FindLastIndex(text => text.IsComma) + 1;
-            if (firstBreakerPosition == -1) firstBreakerPosition = 0;
-
-            return timerSentenceDecorator.Texts[
-                timerSentenceDecorator
-                    .Texts
-                    .Skip(firstBreakerPosition)
-                    .Take(originalTimerIndexPosition - firstBreakerPosition)
-                    .ToList()
-                    .FindLastIndex(text => text.IsVbVbaPast || text.IsType(UnitTypes.DIG_Digit)) 
-                    + firstBreakerPosition];
         }
 
         private static List<Text> GetTimerUnitsInReverse(
