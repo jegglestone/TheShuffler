@@ -138,8 +138,7 @@ namespace ShufflerLibrary
 
             sentence = _mDUnitStrategy.ShuffleSentence(sentence);
             AddShuffledState(sentence, "Shuffle_MD");
-
-
+            
             sentence = _mdbkUnitStrategy.ShuffleSentence(sentence);
             AddShuffledState(sentence, "Shuffle_MDBK");
 
