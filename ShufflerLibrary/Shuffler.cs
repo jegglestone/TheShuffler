@@ -131,7 +131,7 @@ namespace ShufflerLibrary
             AddShuffledState(sentence, "Shuffle_MDBK");
 
             sentence = _mdNulThatStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffle_That");  //MDNUL
+            AddShuffledState(sentence, "Shuffle_MDNUL");
 
             sentence = _ddlUnitStrategy.ShuffleSentence(sentence);
             AddShuffledState(sentence, "Shuffle_DDL");

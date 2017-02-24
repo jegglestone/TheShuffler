@@ -14,10 +14,10 @@
             var adverbSentenceDecorator = 
                 new AdverbSentenceDecorator(sentence);
 
-            if (adverbSentenceDecorator
-                .Texts
-                .Take(adverbSentenceDecorator.AdverbIndexPosition)
-                .Any(text => text.IsVbPastPres))
+            if(adverbSentenceDecorator.AdjectiveAfterAdv(adverbSentenceDecorator))
+                return sentence;
+
+            if (adverbSentenceDecorator.VbPastPresBeforeAdv(adverbSentenceDecorator))
             {
                 MoveAdverbBeforeVbPastPres(
                     adverbSentenceDecorator);

@@ -126,7 +126,11 @@
         public bool IsPercent =>
               actual_text_used.ToLower().Replace(" ", "") == "percent"
               || actual_text_used.ToLower().Replace(" ", "") == "%";
-      
+
+        public bool IsVba =>
+            IsType(UnitTypes.VBA_AuxilliaryVerb)
+            || IsNumberedType(UnitTypes.VBA_AuxilliaryVerb);
+
 
         public bool IsType(string unitType)
         {

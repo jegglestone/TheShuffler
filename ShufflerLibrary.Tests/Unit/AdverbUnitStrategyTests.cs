@@ -121,6 +121,56 @@
         }
 
         [Test]
+        public void When_ADV_Then_ADJ_Does_Not_Shuffle()
+        {
+            var sentence = new Sentence()
+            {
+                Texts = new List<Text>
+                {
+                    new Text(){ pe_text = " This " },
+                    new Text(){ pe_text = " is " },
+                    new Text(){ pe_text = " absolutely ", pe_tag="ADV" },
+                    new Text(){ pe_text = " great ",      pe_tag="ADJ" },
+                    new Text(){ pe_text = " . " }
+                },
+            };
+
+            var adverbUnitStrategy = new AdverbUnitStrategy();
+            var returnedSentence = adverbUnitStrategy.ShuffleSentence(sentence);
+
+            Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo(" This "));
+            Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo(" is "));
+            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo(" absolutely "));
+            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo(" great "));
+            Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo(" . "));
+        }
+
+
+        [Test]
+        public void When_ADV_before_Verb_Does_Not_Shuffle()
+        {
+            var sentence = new Sentence()
+            {
+                Texts = new List<Text>
+                {
+                    new Text(){ pe_text = " He " },
+                    new Text(){ pe_text = " quickly ", pe_tag="ADV" },
+                    new Text(){ pe_text = " recovered ",      pe_tag="PAST" },
+                    new Text(){ pe_text = " . " }
+                },
+            };
+
+            var adverbUnitStrategy = new AdverbUnitStrategy();
+            var returnedSentence = adverbUnitStrategy.ShuffleSentence(sentence);
+
+            Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo(" He "));
+            Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo(" quickly "));
+            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo(" recovered "));
+            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo(" . "));
+        }
+
+
+        [Test]
         public void When_Adverb_And_Two_Timers_Does_Not_Duplicate()
         {
             // this is a bug fix
@@ -143,6 +193,29 @@
 
             Assert.That(
                 returnedSentence.Texts.Count(text => text.pe_text == "at a moderate rate"), Is.EqualTo(1));
+        }
+
+        [Test]
+        public void When_Adverb_Preceeded_By_VB_MoveAdverbBeforeVB()
+        {
+            var sentence = new Sentence()
+            {
+                Texts = new List<Text>()
+                {
+                    new Text { pe_tag="VB", pe_text =""},
+                    new Text { pe_tag="NN", pe_text =""},
+                    new Text { pe_tag="ADV1", pe_text =""},
+                    new Text { pe_tag="BKP", pe_text =" . "}
+                }
+            };
+
+            var adverbUnitStrategy = new AdverbUnitStrategy();
+            var returnedSentence = adverbUnitStrategy.ShuffleSentence(sentence);
+
+            Assert.That(returnedSentence.Texts[0].pe_tag, Is.EqualTo("ADV1"));
+            Assert.That(returnedSentence.Texts[1].pe_tag, Is.EqualTo("VB"));
+            Assert.That(returnedSentence.Texts[2].pe_tag, Is.EqualTo("NN"));
+            Assert.That(returnedSentence.Texts[3].pe_tag, Is.EqualTo("BKP"));
         }
     }
 }
