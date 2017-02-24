@@ -107,7 +107,7 @@
             //   5.3.2.If no PREN is found but ADJ is found, move the TM unit to before ADJ:
             else if (timerSentenceDecorator
                             .Texts
-                            .Skip(andOrBreakerPosition + 1)
+                            .Skip(andOrBreakerPosition)
                             .Take(lastNnPosition - andOrBreakerPosition)
                             .Any(text => text.IsNumberedType(UnitTypes.ADJ_Adjective)
                                          || text.IsType(UnitTypes.ADJ_Adjective)))
@@ -124,9 +124,6 @@
                     reversedTexts,
                     timerSentenceDecorator);
             }
-
-            //              Bef: …VBup from ADJabout 150, 000 jobs TMper month… 
-            //Aft: … VBup from TMper month ADJabout 150, 000 jobs … 
         }
 
         private static bool NoNnUnitBeforeTimerUnit(

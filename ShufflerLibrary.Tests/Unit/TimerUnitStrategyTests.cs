@@ -298,22 +298,26 @@ namespace ShufflerLibrary.Tests.Unit
             Assert.That(returnedSentence.Texts[12].pe_text, Is.EqualTo(" . "));
         }
 
-        [Test, Ignore]
+        [Test]
         public void WhenADJBeforeNNBeforeTM_MoveTMBeforePren()
         {
 
-            //Bef: …VBup from ADJabout 150, 000 jobs TMper month… 
-             
+            // If no PREN is found but ADJ is found, move the TM unit to before ADJ:
+
+            //Bef: … ADJ Real NN GDP TM1 in PREN thefirst quarter… 
+
+
+
             var sentence = new Sentence()
             {
                 Texts = new List<Text>()
                     {
-                        new Text() {pe_text = "Up", pe_tag = "VB", pe_tag_revised = null, pe_order = 1663970},
-                        new Text() {pe_text = "from", pe_tag = null, pe_tag_revised = null, pe_order = 1663980},
-                        new Text() {pe_text = "about", pe_tag = "ADJ", pe_tag_revised = null, pe_order = 1663990},
-                        new Text() {pe_text = "150,000", pe_tag = "DIG", pe_tag_revised = null, pe_order = 1664000},
-                        new Text() {pe_text = "jobs", pe_tag = "NN", pe_tag_revised = null, pe_order = 1664010},
-                        new Text() {pe_text = "per month", pe_tag = "TM", pe_tag_revised = null, pe_order = 1664020},
+                        new Text() {pe_text = "Real", pe_tag = "ADJ", pe_tag_revised = null, pe_order = 1663970},
+                        new Text() {pe_text = "GDP", pe_tag = "NN", pe_tag_revised = null, pe_order = 1663980},
+                        new Text() {pe_text = "in", pe_tag = "TM1", pe_tag_revised = null, pe_order = 1663990},
+                        new Text() {pe_text = "the", pe_tag = "PREN", pe_tag_revised = null, pe_order = 1664000},
+                        new Text() {pe_text = "first", pe_tag = "", pe_tag_revised = null, pe_order = 1664010},
+                        new Text() {pe_text = "quarter", pe_tag = "", pe_tag_revised = null, pe_order = 1664020},
                         new Text() {pe_text = " . ", pe_tag = "BKP", pe_tag_revised = null, pe_order = 1664030},
 
                     }
@@ -321,16 +325,14 @@ namespace ShufflerLibrary.Tests.Unit
             var timerUnitStrategy = new TimerUnitStrategy();
             var returnedSentence = timerUnitStrategy.ShuffleSentence(sentence);
 
+            //Aft: … TM1 in PREN thefirst quarter ADJ Real NN GDP …
 
-            //Actual: VBup from ADJabout TMper month 150,000 NNjobs   - 3.1 Move timer before Dig
-
-            //Aft: …  VBup from TMper month ADJabout 150, 000 jobs …
-            Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo("Up")); 
-            Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo("from"));
-            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo("per month")); //TM
-            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo("about"));  //ADJ
-            Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo("150,000")); //TM1
-            Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo("jobs"));
+            Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo("in")); 
+            Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo("the"));
+            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo("first")); //TM
+            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo("quarter"));  //ADJ
+            Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo("Real")); //TM1
+            Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo("GDP"));
             Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo(" . "));
         }
 
