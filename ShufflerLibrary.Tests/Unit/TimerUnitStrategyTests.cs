@@ -415,7 +415,7 @@ namespace ShufflerLibrary.Tests.Unit
             Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo("Economic")); 
             Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo("growth")); //NN
             Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo("has"));  //VBA
-            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo("this")); //TM3  --TODO: Why is the timer not before NN?
+            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo("this")); //TM3
             Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo("year"));
             Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo("so")); //TM2
             Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo("far"));
