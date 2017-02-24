@@ -55,8 +55,8 @@
     <Compile Include="Unit\PyYoUnitStrategyTests.cs" />
     <Compile Include="Unit\removed\BKByMDBKUnitStrategyTests.cs" />
     <Compile Include="Unit\removed\ByUnitStrategyTests.cs" />
-    <Compile Include="Unit\CommaUnitStrategyTests.cs" />
-    <Compile Include="Unit\DoublePrenUnitStrategyTests.cs" />
+    <Compile Include="Unit\removed\CommaUnitStrategyTests.cs" />
+    <Compile Include="Unit\removed\DoublePrenUnitStrategyTests.cs" />
     <Compile Include="Unit\MDUnitStrategyTests.cs" />
     <Compile Include="Unit\MoveableUnitHelperTests.cs" />
     <Compile Include="Unit\removed\PrenNNPastUnitStrategyTests.cs" />

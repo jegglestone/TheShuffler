@@ -75,8 +75,8 @@
     <Compile Include="Obsolete\BKByMDBKStrategy.cs" />
     <Compile Include="Obsolete\BKByUnitStrategy.cs" />
     <Compile Include="Strategy\ClauserUnitStrategy.cs" />
-    <Compile Include="Strategy\CommaUnitStrategy.cs" />
-    <Compile Include="Strategy\DoublePrenStrategy.cs" />
+    <Compile Include="Obsolete\CommaUnitStrategy.cs" />
+    <Compile Include="Obsolete\DoublePrenStrategy.cs" />
     <Compile Include="Strategy\IStrategy.cs" />
     <Compile Include="Strategy\MdbkUnitStrategy.cs" />
     <Compile Include="Strategy\MDUnitStrategy.cs" />

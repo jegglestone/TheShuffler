@@ -41,12 +41,6 @@ namespace ShufflerLibrary
         private readonly IStrategy
             _mdNulThatStrategy;
 
-        private readonly IStrategy
-            _doublePrenStrategy;
-    
-        private readonly IStrategy
-            _commaUnitStrategy;
-
         public Shuffler()
         {
             _shufflerPhraseRepository = 
@@ -79,12 +73,6 @@ namespace ShufflerLibrary
 
             _mdNulThatStrategy = 
                 new MdNulThatUnitStrategy();
-
-            _doublePrenStrategy = 
-                new DoublePrenStrategy();
-      
-            _commaUnitStrategy = 
-                new CommaUnitStrategy();
         }
 
         public bool ShuffleParagraph(int pePmdId)
@@ -154,12 +142,6 @@ namespace ShufflerLibrary
             sentence = _percentUnitStrategy.ShuffleSentence(sentence);
             AddShuffledState(sentence, "Shuffle_Percent");
             
-            //sentence = _doublePrenStrategy.ShuffleSentence(sentence);
-            //AddShuffledState(sentence, "Shuffle_DoublePREN");
-
-            //sentence = _commaUnitStrategy.ShuffleSentence(sentence);
-            //AddShuffledState(sentence, "Shuffle_Commas");
-
             sentence = SentenceOrderReSetter.SetPeOrderAsc(sentence);
 
             paragraph.Sentences[index] = sentence;
