@@ -82,33 +82,35 @@
 
       private static void ApplySearchLeftRules(Sentence sentence, List<Text> textsbeforeMdUnit, int firstModifierPosition,
             List<Text> modifiersUpToVbPastPresOrBkp)
-        {
-            if(!textsbeforeMdUnit.Any(text => text.IsType(UnitTypes.VB_Verb)  //2.
-                           || text.IsType(UnitTypes.PAST_Participle)
-                           || text.IsType(UnitTypes.PRES_Participle)
-                           || text.IsNN
-                           || text.IsBKBy
-                           || text.IsBkp
-                           || text.IsType(UnitTypes.NbkpNonBreakerPunctuation)))
-                return;
+        {  
+            var textToImmediateLeftOfMd = textsbeforeMdUnit.Last();
 
-            var firstTextToImmediateLeftOfMdUnit = textsbeforeMdUnit.Last(
-                text => text.IsType(UnitTypes.VB_Verb)
-                           || text.IsType(UnitTypes.PAST_Participle)
-                           || text.IsType(UnitTypes.PRES_Participle)
-                           || text.IsNN
-                           || text.IsBKBy
-                           || text.IsBkp
-                           || text.IsType(UnitTypes.NbkpNonBreakerPunctuation));
+            //if (!textToImmediateLeftOfMd.IsType(UnitTypes.VB_Verb)  //2.
+            //               && !textToImmediateLeftOfMd.IsType(UnitTypes.PAST_Participle)
+            //               && !textToImmediateLeftOfMd.IsType(UnitTypes.PRES_Participle)
+            //               && !textToImmediateLeftOfMd.IsNN
+            //               && !textToImmediateLeftOfMd.IsBKBy
+            //               && !textToImmediateLeftOfMd.IsBkp
+            //               && !textToImmediateLeftOfMd.IsType(UnitTypes.NbkpNonBreakerPunctuation)))
+            //    return;
 
-            if (firstTextToImmediateLeftOfMdUnit.IsNN)      // 2.1
+            //var firstTextToImmediateLeftOfMdUnit = textsbeforeMdUnit.Last(
+            //    text => text.IsType(UnitTypes.VB_Verb)
+            //               || text.IsType(UnitTypes.PAST_Participle)
+            //               || text.IsType(UnitTypes.PRES_Participle)
+            //               || text.IsNN
+            //               || text.IsBKBy
+            //               || text.IsBkp
+            //               || text.IsType(UnitTypes.NbkpNonBreakerPunctuation));
+
+            if (textToImmediateLeftOfMd.IsNN)      // 2.1
                 SearchForPrenAndMoveMDBeforeIt(             // 2.1.1 - 2.1.2
                     sentence, textsbeforeMdUnit, firstModifierPosition, modifiersUpToVbPastPresOrBkp);
-            if (firstTextToImmediateLeftOfMdUnit.IsBkp)     // 2.2
+            if (textToImmediateLeftOfMd.IsBkp)     // 2.2
                 return;
-            if (firstTextToImmediateLeftOfMdUnit.IsBKBy)     // 2.3
+            if (textToImmediateLeftOfMd.IsBKBy)     // 2.3
                 return;
-            if (firstTextToImmediateLeftOfMdUnit.IsVbPastPres)
+            if (textToImmediateLeftOfMd.IsVbPastPres)
             {
                 MoveMDBeforeVbPastPres(                     // 2.4
                     sentence, textsbeforeMdUnit, firstModifierPosition, modifiersUpToVbPastPresOrBkp);
@@ -243,9 +245,12 @@
 
            if (textsbeforeMdUnit
                .Take(vbPastPresPositionInSentence)
-               .Any(text => text.IsType(UnitTypes.VBA_AuxilliaryVerb)))
+               .Any(text => text.IsType(UnitTypes.VBA_AuxilliaryVerb) 
+                    && (text.pe_text.Replace(" ", "").ToLower()=="has")
+                     || text.pe_text.Replace(" ", "").ToLower() == "had" 
+                     || text.pe_text.Replace(" ", "").ToLower() == "have"))
            {
-               // 2.4.1	If VBA is found, move MD unit to after VBA:
+               // 2.4.1	If VBA has/had/have is found, move MD unit to before VBA:
                int vbaPeOrder = textsbeforeMdUnit
                    .Take(vbPastPresPositionInSentence).ToList()
                    .Last(text => text.IsType(UnitTypes.VBA_AuxilliaryVerb)).pe_order;
@@ -253,7 +258,7 @@
                int vbaPositionInSentence =
                    sentence.Texts.FindIndex(text => text.pe_order == vbaPeOrder);
 
-               sentence.Texts.InsertRange(vbaPositionInSentence + 1, mdUnitPlusDe);
+               sentence.Texts.InsertRange(vbaPositionInSentence, mdUnitPlusDe);
            }
            else
            {

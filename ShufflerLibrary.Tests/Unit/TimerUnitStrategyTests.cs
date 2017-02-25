@@ -398,14 +398,12 @@ namespace ShufflerLibrary.Tests.Unit
                     new Text() { pe_tag="NN", pe_text = "growth"},
                     new Text() { pe_tag="VBA", pe_text = "has"},
                     new Text() { pe_tag="PAST", pe_text = "continued"},
-                    new Text() { pe_tag="TM1", pe_text = "at"},
+                    new Text() { pe_tag="MD1", pe_text = "at"},
                     new Text() { pe_tag="", pe_text = "a"},
                     new Text() { pe_tag="", pe_text = "moderate"},
                     new Text() { pe_tag="", pe_text = "rate"},
-                    new Text() { pe_tag="TM2", pe_text = "so"},
-                    new Text() { pe_tag="", pe_text = "far"},
-                    new Text() { pe_tag="TM3", pe_text = "this"},
-                    new Text() { pe_tag="", pe_text = "year"},
+                    new Text() { pe_tag="TM2", pe_text = "so far"},
+                    new Text() { pe_tag="TM3", pe_text = "this year"},
                     new Text() { pe_tag="BKP", pe_text = " . "}
                 }
             };
@@ -413,19 +411,18 @@ namespace ShufflerLibrary.Tests.Unit
             var returnedSentence = timerUnitStrategy.ShuffleSentence(sentence);
 
             Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo("Economic")); 
-            Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo("growth")); //NN
-            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo("has"));  //VBA
-            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo("this")); //TM3
-            Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo("year"));
-            Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo("so")); //TM2
-            Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo("far"));
-            Assert.That(returnedSentence.Texts[7].pe_text, Is.EqualTo("at")); //TM1
-            Assert.That(returnedSentence.Texts[8].pe_text, Is.EqualTo("a"));
-            Assert.That(returnedSentence.Texts[9].pe_text, Is.EqualTo("moderate"));
-            Assert.That(returnedSentence.Texts[10].pe_text, Is.EqualTo("rate"));
-            Assert.That(returnedSentence.Texts[11].pe_text, Is.EqualTo("continued"));
+            Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo("growth"));    //NN
+            
+            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo("this year")); //TM
+            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo("so far"));
+            Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo("has"));       //VBA
+            Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo("continued")); //PAST
+            Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo("at"));   
+            Assert.That(returnedSentence.Texts[7].pe_text, Is.EqualTo("a")); 
+            Assert.That(returnedSentence.Texts[8].pe_text, Is.EqualTo("moderate"));
+            Assert.That(returnedSentence.Texts[9].pe_text, Is.EqualTo("rate"));
+            Assert.That(returnedSentence.Texts[10].pe_text, Is.EqualTo(" . "));
  
-            Assert.That(returnedSentence.Texts[12].pe_text, Is.EqualTo(" . "));
         }
 
         [Test]

@@ -53,20 +53,35 @@
                     timerSentenceDecorator, reversedTexts, originalTimerIndexPosition);
 
             }
-            //3.2.If no ADV or or ‘ADV and ADV’ or ‘ADV, ADV and ADV is found –
+            //3.2.If no ADV is found –
+            else if (VbaBeforeTimerUnit(timerSentenceDecorator))
+            {
+                // New: Economic growth-give precedence to VBA
+                int lastVbaPosition =
+                    timerSentenceDecorator
+                   .Texts
+                   .Take(originalTimerIndexPosition).ToList()
+                   .FindLastIndex(text => text.IsVba);
+
+                MoveTimerUnitToPosition(
+                    lastVbaPosition, reversedTexts, timerSentenceDecorator);
+            }
             else if (PastPresBeforeTimerUnit(timerSentenceDecorator))
             {  
+                //if vba somewhere move before that
                
                // 4.Search to the left of TM for PAST / PRES
                //  4.1.If either is found, move the TM unit to before PAST or PRES whichever is the case:
                 int lastPastPresPosition =
-                                timerSentenceDecorator.Texts.Take(originalTimerIndexPosition).ToList()
-                                                .FindLastIndex(text => text.IsPast || text.IsPres);
+                    timerSentenceDecorator
+                    .Texts
+                    .Take(originalTimerIndexPosition).ToList()
+                    .FindLastIndex(text => text.IsPast || text.IsPres);
 
                 MoveTimerUnitToPosition(
                     lastPastPresPosition, reversedTexts, timerSentenceDecorator);
             }
-            // 4.2.If neither PAST nor PRES is found -
+            // 4.2.If neither VBA, PAST nor PRES is found -
             else if (NoNnUnitBeforeTimerUnit(timerSentenceDecorator))
             {
                 //   5.Search to the left of TM for NNX until reaching BKP
@@ -152,6 +167,20 @@
                     .Skip(closestAndBkBkpPosition)
                     .Take(timerSentenceDecorator.FirstTimerPosition - closestAndBkBkpPosition)
                     .Any(text => text.IsPast || text.IsPres);
+        }
+
+        private static bool VbaBeforeTimerUnit(
+            TimerSentenceDecorator timerSentenceDecorator)
+        {
+            int closestAndBkBkpPosition
+                 = GetClosestAndBkBkpPositionToTimer(
+                     timerSentenceDecorator, timerSentenceDecorator.FirstTimerPosition);
+
+            return timerSentenceDecorator
+                    .Texts
+                    .Skip(closestAndBkBkpPosition)
+                    .Take(timerSentenceDecorator.FirstTimerPosition - closestAndBkBkpPosition)
+                    .Any(text => text.IsVba);
         }
 
         private static int GetClosestNnPosition(

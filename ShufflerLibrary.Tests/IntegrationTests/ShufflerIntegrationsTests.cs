@@ -36,60 +36,37 @@
         {
             var sentence = LargeSentence;
 
-            var clauserUnitStrategy =
-                new ClauserUnitStrategy();
+            var clauserUnitStrategy = new ClauserUnitStrategy();
             sentence = clauserUnitStrategy.ShuffleSentence(sentence);
-            Assert.That(sentence.Texts.Last().IsSentenceEnd);
 
-            var adverbUnitStrategy =
-                new AdverbUnitStrategy();
+            var adverbUnitStrategy = new AdverbUnitStrategy();
             sentence = adverbUnitStrategy.ShuffleSentence(sentence);
-            Assert.That(sentence.Texts.Last().IsSentenceEnd);
 
-            var timerUnitStrategy =
-                new TimerUnitStrategy();
+            var timerUnitStrategy = new TimerUnitStrategy();
             sentence = timerUnitStrategy.ShuffleSentence(sentence);
-            Assert.That(sentence.Texts.Last().IsSentenceEnd);
 
-            var mDUnitStrategy =
-                new MdUnitStrategy();
+            var mDUnitStrategy = new MdUnitStrategy();
             sentence = mDUnitStrategy.ShuffleSentence(sentence);
-            Assert.That(sentence.Texts.Last().IsSentenceEnd);
 
-            var mdbkUnitStrategy =
-                new MdbkUnitStrategy();
+            var mdbkUnitStrategy = new MdbkUnitStrategy();
             sentence = mdbkUnitStrategy.ShuffleSentence(sentence);
-            Assert.That(sentence.Texts.Last().IsSentenceEnd);
 
-            var percentUnitStrategy =
-                new PercentUnitStrategy();
+            var mdNulThatUnitStrategy = new MdNulThatUnitStrategy();
+            sentence = mdNulThatUnitStrategy.ShuffleSentence(sentence);
+
+            var ddlUnitStrategy = new DdlUnitStrategy();
+            sentence = ddlUnitStrategy.ShuffleSentence(sentence);
+
+            var pyYoUnitStrategy = new PyYoUnitStrategy();
+            sentence = pyYoUnitStrategy.ShuffleSentence(sentence);
+
+            var percentUnitStrategy = new PercentUnitStrategy();
             sentence = percentUnitStrategy.ShuffleSentence(sentence);
+
             Assert.That(sentence.Texts.Last().IsSentenceEnd);
-      
-            var nulThatStrategy =
-                new MdNulThatUnitStrategy();
-            sentence = nulThatStrategy.ShuffleSentence(sentence);
-            Assert.That(sentence.Texts.Last().IsSentenceEnd);
+        }
 
-            var doublePrenStrategy =
-                new DoublePrenStrategy();
-            sentence = doublePrenStrategy.ShuffleSentence(sentence);
-            Assert.That(sentence.Texts.Last().IsSentenceEnd);
-
-            var prenNnPastUnitStrategy =
-                new PrenNNPastUnitStrategy();
-            sentence = prenNnPastUnitStrategy.ShuffleSentence(sentence);
-            Assert.That(sentence.Texts.Last().IsSentenceEnd);
-
-            var commaUnitStrategy =
-                 new CommaUnitStrategy();
-            sentence = commaUnitStrategy.ShuffleSentence(sentence);
-            Assert.That(sentence.Texts.Last().IsSentenceEnd);
-
-
-    }
-
-    private Sentence LargeSentence => new Sentence()
+        private Sentence LargeSentence => new Sentence()
         {
             Texts = new List<Text>()
             {
@@ -136,7 +113,7 @@
         [Test]
         public void EachStrategyInTurnMaintainsTheSEntenceEnding()
         {
-            var realGDPSentence = new Sentence()
+            var realGdpSentence = new Sentence()
             {
                 Texts = new List<Text>()
                 {
@@ -171,20 +148,129 @@
             };
 
             ClauserUnitStrategy clauserUnitStrategy = new ClauserUnitStrategy();
-            realGDPSentence = clauserUnitStrategy.ShuffleSentence(realGDPSentence);
+            realGdpSentence = clauserUnitStrategy.ShuffleSentence(realGdpSentence);
 
-            Assert.That(realGDPSentence.Texts[0].pe_tag_revised == "CS");
-            Assert.That(realGDPSentence.Texts[realGDPSentence.TextCount-1].pe_text==" . ");
+            Assert.That(realGdpSentence.Texts[0].pe_tag_revised == "CS");
+            Assert.That(realGdpSentence.Texts[realGdpSentence.TextCount-1].pe_text==" . ");
            
             AdverbUnitStrategy adverbUnitStrategy = new AdverbUnitStrategy();
-            realGDPSentence = adverbUnitStrategy.ShuffleSentence(realGDPSentence);
+            realGdpSentence = adverbUnitStrategy.ShuffleSentence(realGdpSentence);
 
-            Assert.That(realGDPSentence.Texts[realGDPSentence.TextCount - 1].pe_text == " . ");
+            Assert.That(realGdpSentence.Texts[realGdpSentence.TextCount - 1].pe_text == " . ");
 
             TimerUnitStrategy timerUnitStrategy = new TimerUnitStrategy();
-            realGDPSentence = timerUnitStrategy.ShuffleSentence(realGDPSentence);
+            realGdpSentence = timerUnitStrategy.ShuffleSentence(realGdpSentence);
 
-            Assert.That(realGDPSentence.Texts[realGDPSentence.TextCount - 1].pe_text == " . ");
+            Assert.That(realGdpSentence.Texts[realGdpSentence.TextCount - 1].pe_text == " . ");
+        }
+
+        /*
+pe_tag	pe_text	pe_tag_revised	pe_merge_ahead
+ADJ	Economic	NULL	0
+NN	growth	NULL	0
+DYN9	has	VBA	1
+PAST	continued	NULL	0
+MD	at	MD1	3
+PREN	a	NULL	2
+ADJ	moderate	NULL	0
+NN	rate	NULL	0
+TM	so far	TM1	0
+TM	this year	TM2	0
+BKP	.	NULL	0
+
+         * */
+
+        [Test]
+        public void When_EconomicGrowth_Sentence_Shuffled_provides_Correct_Output()
+        {
+            var sentence = new Sentence()
+            {
+                Texts = new List<Text>()
+                {
+                    new Text { pe_tag="ADJ", pe_text="Economic", pe_order=10 },
+                    new Text { pe_tag="NN", pe_text="growth", pe_order=20 },
+                    new Text { pe_tag="DYN9", pe_tag_revised="VBA", pe_text="has", pe_order=30 },
+                    new Text { pe_tag="PAST", pe_text="continued", pe_order=40 },
+                    new Text { pe_tag="MD", pe_tag_revised="MD1", pe_text="at", pe_order=50, pe_merge_ahead = 3 },
+                    new Text { pe_tag="PREN", pe_text="a", pe_order=60, pe_merge_ahead=2 },
+                    new Text { pe_tag="ADJ", pe_text="moderate", pe_order=70 },
+                    new Text { pe_tag="NN", pe_text="rate", pe_order=80 },
+                    new Text { pe_tag="TM", pe_tag_revised="TM1", pe_text="so far", pe_order=90 },
+                    new Text { pe_tag="TM", pe_tag_revised="TM2", pe_text="this year", pe_order=100 },
+                    new Text { pe_tag="BKP", pe_text=" . ", pe_order=110 },
+                }
+            };
+
+            var clauserUnitStrategy = new ClauserUnitStrategy();
+            sentence = clauserUnitStrategy.ShuffleSentence(sentence);
+
+            var adverbUnitStrategy = new AdverbUnitStrategy();
+            sentence = adverbUnitStrategy.ShuffleSentence(sentence);
+
+            var timerUnitStrategy = new TimerUnitStrategy();
+            sentence = timerUnitStrategy.ShuffleSentence(sentence);
+
+
+            Assert.That(sentence.Texts[0].pe_text, Is.EqualTo("Economic"));
+            Assert.That(sentence.Texts[1].pe_text, Is.EqualTo("growth"));    //NN
+
+            Assert.That(sentence.Texts[2].pe_text, Is.EqualTo("this year")); //TM
+            Assert.That(sentence.Texts[3].pe_text, Is.EqualTo("so far"));
+            Assert.That(sentence.Texts[4].pe_text, Is.EqualTo("has"));       //VBA
+            Assert.That(sentence.Texts[5].pe_text, Is.EqualTo("continued")); //PAST
+            Assert.That(sentence.Texts[6].pe_text, Is.EqualTo("at"));
+            Assert.That(sentence.Texts[7].pe_text, Is.EqualTo("a"));
+            Assert.That(sentence.Texts[8].pe_text, Is.EqualTo("moderate"));
+            Assert.That(sentence.Texts[9].pe_text, Is.EqualTo("rate"));
+            Assert.That(sentence.Texts[10].pe_text, Is.EqualTo(" . "));
+
+            var mDUnitStrategy = new MdUnitStrategy();
+            sentence = mDUnitStrategy.ShuffleSentence(sentence);
+
+            var mdbkUnitStrategy = new MdbkUnitStrategy();
+            sentence = mdbkUnitStrategy.ShuffleSentence(sentence);
+
+            var mdNulThatUnitStrategy = new MdNulThatUnitStrategy();
+            sentence = mdNulThatUnitStrategy.ShuffleSentence(sentence);
+
+            Assert.That(sentence.Texts[0].pe_text, Is.EqualTo("Economic"));
+            Assert.That(sentence.Texts[1].pe_text, Is.EqualTo("growth"));
+
+            Assert.That(sentence.Texts[2].pe_text, Is.EqualTo("this year"));
+            Assert.That(sentence.Texts[3].pe_text, Is.EqualTo("so far"));
+
+            Assert.That(sentence.Texts[4].pe_text, Is.EqualTo("at"));
+            Assert.That(sentence.Texts[5].pe_text, Is.EqualTo("a"));
+            Assert.That(sentence.Texts[6].pe_text, Is.EqualTo("moderate"));
+            Assert.That(sentence.Texts[7].pe_text, Is.EqualTo("rate"));
+
+            Assert.That(sentence.Texts[8].pe_text, Is.EqualTo("has"));
+            Assert.That(sentence.Texts[9].pe_text, Is.EqualTo("continued"));
+            Assert.That(sentence.Texts[10].pe_text, Is.EqualTo(" . "));
+
+            var ddlUnitStrategy = new DdlUnitStrategy();
+            sentence = ddlUnitStrategy.ShuffleSentence(sentence);
+
+            var pyYoUnitStrategy = new PyYoUnitStrategy();
+            sentence = pyYoUnitStrategy.ShuffleSentence(sentence);
+
+            var percentUnitStrategy = new PercentUnitStrategy();
+            sentence = percentUnitStrategy.ShuffleSentence(sentence);
+
+            Assert.That(sentence.Texts[0].pe_text, Is.EqualTo("Economic"));
+            Assert.That(sentence.Texts[1].pe_text, Is.EqualTo("growth"));
+
+            Assert.That(sentence.Texts[2].pe_text, Is.EqualTo("this year"));
+            Assert.That(sentence.Texts[3].pe_text, Is.EqualTo("so far"));
+
+            Assert.That(sentence.Texts[4].pe_text, Is.EqualTo("at"));
+            Assert.That(sentence.Texts[5].pe_text, Is.EqualTo("a"));
+            Assert.That(sentence.Texts[6].pe_text, Is.EqualTo("moderate"));
+            Assert.That(sentence.Texts[7].pe_text, Is.EqualTo("rate"));
+
+            Assert.That(sentence.Texts[8].pe_text, Is.EqualTo("has"));       
+            Assert.That(sentence.Texts[9].pe_text, Is.EqualTo("continued"));
+            Assert.That(sentence.Texts[10].pe_text, Is.EqualTo(" . "));
         }
     }
 }
