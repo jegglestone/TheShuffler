@@ -234,37 +234,8 @@
 
             sentence.Texts.RemoveRange(
                 firstModifierPosition, mdUnitSize);
-
-            // search to left of VB/PAST/PRES for VBA until reaching MDNUL/BK/BKP
-           textsbeforeMdUnit =
-               textsbeforeMdUnit
-                   .Skip(textsbeforeMdUnit.FindLastIndex(
-                       text => text.IsMdNulThat
-                               || text.IsType(UnitTypes.BK_Breaker)
-                               || text.IsBkp)).ToList();
-
-           if (textsbeforeMdUnit
-               .Take(vbPastPresPositionInSentence)
-               .Any(text => text.IsType(UnitTypes.VBA_AuxilliaryVerb) 
-                    && (text.pe_text.Replace(" ", "").ToLower()=="has")
-                     || text.pe_text.Replace(" ", "").ToLower() == "had" 
-                     || text.pe_text.Replace(" ", "").ToLower() == "have"))
-           {
-               // 2.4.1	If VBA has/had/have is found, move MD unit to before VBA:
-               int vbaPeOrder = textsbeforeMdUnit
-                   .Take(vbPastPresPositionInSentence).ToList()
-                   .Last(text => text.IsType(UnitTypes.VBA_AuxilliaryVerb)).pe_order;
-
-               int vbaPositionInSentence =
-                   sentence.Texts.FindIndex(text => text.pe_order == vbaPeOrder);
-
-               sentence.Texts.InsertRange(vbaPositionInSentence, mdUnitPlusDe);
-           }
-           else
-           {
-               // 2.4.2 	If VBA is not found, move MD unit to before VB/PAST/PRES
-               sentence.Texts.InsertRange(vbPastPresPositionInSentence, mdUnitPlusDe);
-           }
+         
+            sentence.Texts.InsertRange(vbPastPresPositionInSentence, mdUnitPlusDe);
         }
 
         private static int GetModifierUnitSize(List<Text> modifiersUpToVbPastPresOrBkp)

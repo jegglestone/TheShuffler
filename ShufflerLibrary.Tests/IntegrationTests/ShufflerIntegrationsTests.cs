@@ -227,26 +227,27 @@ BKP	.	NULL	0
             var mDUnitStrategy = new MdUnitStrategy();
             sentence = mDUnitStrategy.ShuffleSentence(sentence);
 
+            Assert.That(sentence.Texts[0].pe_text, Is.EqualTo("Economic"));
+            Assert.That(sentence.Texts[1].pe_text, Is.EqualTo("growth"));
+
+            Assert.That(sentence.Texts[2].pe_text, Is.EqualTo("this year")); //TM 2 & 1
+            Assert.That(sentence.Texts[3].pe_text, Is.EqualTo("so far"));
+
+            Assert.That(sentence.Texts[4].pe_text, Is.EqualTo("has"));  //VBA
+
+            Assert.That(sentence.Texts[5].pe_text, Is.EqualTo("at"));   //MD1
+            Assert.That(sentence.Texts[6].pe_text, Is.EqualTo("a"));
+            Assert.That(sentence.Texts[7].pe_text, Is.EqualTo("moderate"));
+            Assert.That(sentence.Texts[8].pe_text, Is.EqualTo("rate"));
+
+            Assert.That(sentence.Texts[9].pe_text, Is.EqualTo("continued")); //PAST
+            Assert.That(sentence.Texts[10].pe_text, Is.EqualTo(" . "));
+
             var mdbkUnitStrategy = new MdbkUnitStrategy();
             sentence = mdbkUnitStrategy.ShuffleSentence(sentence);
 
             var mdNulThatUnitStrategy = new MdNulThatUnitStrategy();
             sentence = mdNulThatUnitStrategy.ShuffleSentence(sentence);
-
-            Assert.That(sentence.Texts[0].pe_text, Is.EqualTo("Economic"));
-            Assert.That(sentence.Texts[1].pe_text, Is.EqualTo("growth"));
-
-            Assert.That(sentence.Texts[2].pe_text, Is.EqualTo("this year"));
-            Assert.That(sentence.Texts[3].pe_text, Is.EqualTo("so far"));
-
-            Assert.That(sentence.Texts[4].pe_text, Is.EqualTo("at"));
-            Assert.That(sentence.Texts[5].pe_text, Is.EqualTo("a"));
-            Assert.That(sentence.Texts[6].pe_text, Is.EqualTo("moderate"));
-            Assert.That(sentence.Texts[7].pe_text, Is.EqualTo("rate"));
-
-            Assert.That(sentence.Texts[8].pe_text, Is.EqualTo("has"));
-            Assert.That(sentence.Texts[9].pe_text, Is.EqualTo("continued"));
-            Assert.That(sentence.Texts[10].pe_text, Is.EqualTo(" . "));
 
             var ddlUnitStrategy = new DdlUnitStrategy();
             sentence = ddlUnitStrategy.ShuffleSentence(sentence);
@@ -260,16 +261,17 @@ BKP	.	NULL	0
             Assert.That(sentence.Texts[0].pe_text, Is.EqualTo("Economic"));
             Assert.That(sentence.Texts[1].pe_text, Is.EqualTo("growth"));
 
-            Assert.That(sentence.Texts[2].pe_text, Is.EqualTo("this year"));
+            Assert.That(sentence.Texts[2].pe_text, Is.EqualTo("this year")); //TM 2 & 1
             Assert.That(sentence.Texts[3].pe_text, Is.EqualTo("so far"));
 
-            Assert.That(sentence.Texts[4].pe_text, Is.EqualTo("at"));
-            Assert.That(sentence.Texts[5].pe_text, Is.EqualTo("a"));
-            Assert.That(sentence.Texts[6].pe_text, Is.EqualTo("moderate"));
-            Assert.That(sentence.Texts[7].pe_text, Is.EqualTo("rate"));
+            Assert.That(sentence.Texts[4].pe_text, Is.EqualTo("has"));  //VBA
 
-            Assert.That(sentence.Texts[8].pe_text, Is.EqualTo("has"));       
-            Assert.That(sentence.Texts[9].pe_text, Is.EqualTo("continued"));
+            Assert.That(sentence.Texts[5].pe_text, Is.EqualTo("at"));   //MD1
+            Assert.That(sentence.Texts[6].pe_text, Is.EqualTo("a"));
+            Assert.That(sentence.Texts[7].pe_text, Is.EqualTo("moderate"));
+            Assert.That(sentence.Texts[8].pe_text, Is.EqualTo("rate"));
+
+            Assert.That(sentence.Texts[9].pe_text, Is.EqualTo("continued")); //PAST
             Assert.That(sentence.Texts[10].pe_text, Is.EqualTo(" . "));
         }
     }

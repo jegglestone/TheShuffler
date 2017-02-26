@@ -423,7 +423,7 @@
         }
 
         [Test]
-        public void WhenPASTThenMD_MoveMDBeforePAST()
+        public void WhenNNThenMDwithNoPrenOrAdj_MoveMDBeforeNN()
         {
             var sentenceWithMdUnits = new Sentence()
             {
@@ -431,7 +431,7 @@
                 {
                     new Text() { pe_tag_revised = "", pe_text = "They", pe_order = 10},
                     new Text() { pe_tag_revised = "PAST", pe_text = "met", pe_order = 20 },
-                    new Text() { pe_tag_revised = "", pe_text = "him", pe_order = 30},
+                    new Text() { pe_tag_revised = "NN", pe_text = "him", pe_order = 30},
                     new Text() { pe_tag_revised = "MD1", pe_text = "at", pe_order = 40},
                     new Text() { pe_tag_revised = "", pe_text = "the", pe_order = 50},
                     new Text() { pe_tag_revised = "", pe_text = "centre", pe_order = 60},
@@ -446,23 +446,25 @@
             sentenceWithMdUnits =
                 strategy.ShuffleSentence(sentenceWithMdUnits);
 
-            Assert.That(sentenceWithMdUnits.Texts[0].pe_text, Is.EqualTo("They")); 
-            Assert.That(sentenceWithMdUnits.Texts[1].pe_text, Is.EqualTo("of")); //MD2
-            Assert.That(sentenceWithMdUnits.Texts[2].pe_text, Is.EqualTo("the")); 
-            Assert.That(sentenceWithMdUnits.Texts[3].pe_text, Is.EqualTo("city"));
-            Assert.That(sentenceWithMdUnits.Texts[4].pe_text, Is.EqualTo("at")); //MD1
-            Assert.That(sentenceWithMdUnits.Texts[5].pe_text, Is.EqualTo("the"));
-            Assert.That(sentenceWithMdUnits.Texts[6].pe_text, Is.EqualTo("centre"));
-            Assert.That(sentenceWithMdUnits.Texts[7].pe_text, Is.EqualTo(" de "));
-            Assert.That(sentenceWithMdUnits.Texts[8].pe_text, Is.EqualTo("met")); // PAST
+            Assert.That(sentenceWithMdUnits.Texts[0].pe_text, Is.EqualTo("They"));
+            Assert.That(sentenceWithMdUnits.Texts[1].pe_text, Is.EqualTo("met")); // PAST
+
+            Assert.That(sentenceWithMdUnits.Texts[2].pe_text, Is.EqualTo("of")); //MD2
+            Assert.That(sentenceWithMdUnits.Texts[3].pe_text, Is.EqualTo("the")); 
+            Assert.That(sentenceWithMdUnits.Texts[4].pe_text, Is.EqualTo("city"));
+            Assert.That(sentenceWithMdUnits.Texts[5].pe_text, Is.EqualTo("at")); //MD1
+            Assert.That(sentenceWithMdUnits.Texts[6].pe_text, Is.EqualTo("the"));
+            Assert.That(sentenceWithMdUnits.Texts[7].pe_text, Is.EqualTo("centre"));
+            Assert.That(sentenceWithMdUnits.Texts[8].pe_text, Is.EqualTo(" de "));
+
             Assert.That(sentenceWithMdUnits.Texts[9].pe_text, Is.EqualTo("him"));
             Assert.That(sentenceWithMdUnits.Texts[10].pe_text, Is.EqualTo(" . "));
 
-            Assert.That(sentenceWithMdUnits.Texts[1].pe_merge_ahead, Is.EqualTo(6));
+            Assert.That(sentenceWithMdUnits.Texts[2].pe_merge_ahead, Is.EqualTo(6));
         }
 
         [Test]
-        public void WhenVbaBeforeVbPastPres_MoveMdAfterVba()
+        public void WhenVbPastPresThenNN_MoveMdAfterVbPastPres()
         {
             var sentenceWithMdUnits = new Sentence()
             {
@@ -472,7 +474,7 @@
                      new Text() { pe_tag_revised = "VBA", pe_text = "will", pe_order =  20},
 
                      new Text() { pe_tag_revised = "VB", pe_text = "meet", pe_order =  30},
-                     new Text() { pe_tag_revised = null, pe_text = "him", pe_order =  40},
+                     new Text() { pe_tag_revised = "NN", pe_text = "him", pe_order =  40},
 
                      new Text() { pe_tag_revised = "MD2", pe_text = "of", pe_order =  50},
                      new Text() { pe_tag_revised = null, pe_text = "the", pe_order =  60},
@@ -491,21 +493,22 @@
 
             Assert.That(sentenceWithMdUnits.Texts[0].pe_text, Is.EqualTo("We"));
             Assert.That(sentenceWithMdUnits.Texts[1].pe_text, Is.EqualTo("will")); //VBA
-            Assert.That(sentenceWithMdUnits.Texts[2].pe_text, Is.EqualTo("of"));   //MD2
-            Assert.That(sentenceWithMdUnits.Texts[3].pe_text, Is.EqualTo("the"));
-            Assert.That(sentenceWithMdUnits.Texts[4].pe_text, Is.EqualTo("city"));
 
-            Assert.That(sentenceWithMdUnits.Texts[5].pe_text, Is.EqualTo("at"));   //MD1
-            Assert.That(sentenceWithMdUnits.Texts[6].pe_text, Is.EqualTo("the"));
-            Assert.That(sentenceWithMdUnits.Texts[7].pe_text, Is.EqualTo("centre"));
-            Assert.That(sentenceWithMdUnits.Texts[8].pe_text, Is.EqualTo(" de "));
-            Assert.That(sentenceWithMdUnits.Texts[9].pe_text, Is.EqualTo("meet")); //VB
+            Assert.That(sentenceWithMdUnits.Texts[2].pe_text, Is.EqualTo("meet")); //VB
+            Assert.That(sentenceWithMdUnits.Texts[3].pe_text, Is.EqualTo("of"));   //MD2
+            Assert.That(sentenceWithMdUnits.Texts[4].pe_text, Is.EqualTo("the"));
+            Assert.That(sentenceWithMdUnits.Texts[5].pe_text, Is.EqualTo("city"));
+
+            Assert.That(sentenceWithMdUnits.Texts[6].pe_text, Is.EqualTo("at"));   //MD1
+            Assert.That(sentenceWithMdUnits.Texts[7].pe_text, Is.EqualTo("the"));
+            Assert.That(sentenceWithMdUnits.Texts[8].pe_text, Is.EqualTo("centre"));
+            Assert.That(sentenceWithMdUnits.Texts[9].pe_text, Is.EqualTo(" de "));
             Assert.That(sentenceWithMdUnits.Texts[10].pe_text, Is.EqualTo("him"));
         }
 
 
         [Test]
-        public void WhenMdNulThatVbaBeforeVbPastPres_MoveMdAfterVba()
+        public void WhenMdNulThatBeforeVbPastPresBeforeNN_MoveMdBeforeVbPastPres()
         {
             var sentenceWithMdUnits = new Sentence()
             {
@@ -520,7 +523,7 @@
                      new Text() { pe_tag_revised = "VBA", pe_text = "will", pe_order =  60},
 
                      new Text() { pe_tag_revised = "VB", pe_text = "meet", pe_order =  70},
-                     new Text() { pe_tag_revised = null, pe_text = "him", pe_order =  80},
+                     new Text() { pe_tag_revised = "NN", pe_text = "him", pe_order =  80},
 
                      new Text() { pe_tag_revised = "MD2", pe_text = "of", pe_order =  90},
                      new Text() { pe_tag_revised = null, pe_text = "the", pe_order =  100},
@@ -544,15 +547,18 @@
 
             Assert.That(sentenceWithMdUnits.Texts[4].pe_text, Is.EqualTo("We"));
             Assert.That(sentenceWithMdUnits.Texts[5].pe_text, Is.EqualTo("will")); //VBA
-            Assert.That(sentenceWithMdUnits.Texts[6].pe_text, Is.EqualTo("of"));   //MD2
-            Assert.That(sentenceWithMdUnits.Texts[7].pe_text, Is.EqualTo("the"));
-            Assert.That(sentenceWithMdUnits.Texts[8].pe_text, Is.EqualTo("city"));
 
-            Assert.That(sentenceWithMdUnits.Texts[9].pe_text, Is.EqualTo("at"));   //MD1
-            Assert.That(sentenceWithMdUnits.Texts[10].pe_text, Is.EqualTo("the"));
-            Assert.That(sentenceWithMdUnits.Texts[11].pe_text, Is.EqualTo("centre"));
-            Assert.That(sentenceWithMdUnits.Texts[12].pe_text, Is.EqualTo(" de "));
-            Assert.That(sentenceWithMdUnits.Texts[13].pe_text, Is.EqualTo("meet")); //VB
+            Assert.That(sentenceWithMdUnits.Texts[6].pe_text, Is.EqualTo("meet")); //VB
+
+
+            Assert.That(sentenceWithMdUnits.Texts[7].pe_text, Is.EqualTo("of"));   //MD2
+            Assert.That(sentenceWithMdUnits.Texts[8].pe_text, Is.EqualTo("the"));
+            Assert.That(sentenceWithMdUnits.Texts[9].pe_text, Is.EqualTo("city"));
+
+            Assert.That(sentenceWithMdUnits.Texts[10].pe_text, Is.EqualTo("at"));   //MD1
+            Assert.That(sentenceWithMdUnits.Texts[11].pe_text, Is.EqualTo("the"));
+            Assert.That(sentenceWithMdUnits.Texts[12].pe_text, Is.EqualTo("centre"));
+            Assert.That(sentenceWithMdUnits.Texts[13].pe_text, Is.EqualTo(" de "));
             Assert.That(sentenceWithMdUnits.Texts[14].pe_text, Is.EqualTo("him"));
         }
 
@@ -581,12 +587,13 @@
 
             Assert.That(sentenceWithMDandPyXuyao.Texts[0].pe_text, Is.EqualTo("Economic"));
             Assert.That(sentenceWithMDandPyXuyao.Texts[1].pe_text, Is.EqualTo("growth"));
-            Assert.That(sentenceWithMDandPyXuyao.Texts[2].pe_text, Is.EqualTo("at"));  //MD1
-            Assert.That(sentenceWithMDandPyXuyao.Texts[3].pe_text, Is.EqualTo("a"));
-            Assert.That(sentenceWithMDandPyXuyao.Texts[4].pe_text, Is.EqualTo("moderate"));
-            Assert.That(sentenceWithMDandPyXuyao.Texts[5].pe_text, Is.EqualTo("rate")); //PAST
 
-            Assert.That(sentenceWithMDandPyXuyao.Texts[6].pe_text, Is.EqualTo("has")); //VBA
+            Assert.That(sentenceWithMDandPyXuyao.Texts[2].pe_text, Is.EqualTo("has")); //VBA
+            Assert.That(sentenceWithMDandPyXuyao.Texts[3].pe_text, Is.EqualTo("at"));  //MD1
+            Assert.That(sentenceWithMDandPyXuyao.Texts[4].pe_text, Is.EqualTo("a"));
+            Assert.That(sentenceWithMDandPyXuyao.Texts[5].pe_text, Is.EqualTo("moderate"));
+            Assert.That(sentenceWithMDandPyXuyao.Texts[6].pe_text, Is.EqualTo("rate")); //PAST
+
             Assert.That(sentenceWithMDandPyXuyao.Texts[7].pe_text, Is.EqualTo("continued"));
             Assert.That(sentenceWithMDandPyXuyao.Texts[8].pe_text, Is.EqualTo(" . "));
         }
@@ -622,12 +629,14 @@
             Assert.That(sentenceWithMdUnits.Texts[2].pe_text, Is.EqualTo("this year"));
             Assert.That(sentenceWithMdUnits.Texts[3].pe_text, Is.EqualTo("so far"));
 
-            Assert.That(sentenceWithMdUnits.Texts[4].pe_text, Is.EqualTo("at"));
-            Assert.That(sentenceWithMdUnits.Texts[5].pe_text, Is.EqualTo("a"));
-            Assert.That(sentenceWithMdUnits.Texts[6].pe_text, Is.EqualTo("moderate"));
-            Assert.That(sentenceWithMdUnits.Texts[7].pe_text, Is.EqualTo("rate"));
+            Assert.That(sentenceWithMdUnits.Texts[4].pe_text, Is.EqualTo("has")); //Vba       
 
-            Assert.That(sentenceWithMdUnits.Texts[8].pe_text, Is.EqualTo("has")); //Vba       
+
+            Assert.That(sentenceWithMdUnits.Texts[5].pe_text, Is.EqualTo("at"));
+            Assert.That(sentenceWithMdUnits.Texts[6].pe_text, Is.EqualTo("a"));
+            Assert.That(sentenceWithMdUnits.Texts[7].pe_text, Is.EqualTo("moderate"));
+            Assert.That(sentenceWithMdUnits.Texts[8].pe_text, Is.EqualTo("rate"));
+
             Assert.That(sentenceWithMdUnits.Texts[9].pe_text, Is.EqualTo("continued"));
         }
     }
