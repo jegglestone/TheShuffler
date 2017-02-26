@@ -565,7 +565,7 @@
         [Test]
         public void WhenVBAPastNNMD_MoveMDAfterVba()
         {
-            var sentenceWithMDandPyXuyao = new Sentence()
+            var sentence = new Sentence()
             {
                 Texts = new List<Text>()
                 {
@@ -582,20 +582,20 @@
             };
 
             var strategy = new MdUnitStrategy();
-            sentenceWithMDandPyXuyao =
-                strategy.ShuffleSentence(sentenceWithMDandPyXuyao);
+            sentence =
+                strategy.ShuffleSentence(sentence);
 
-            Assert.That(sentenceWithMDandPyXuyao.Texts[0].pe_text, Is.EqualTo("Economic"));
-            Assert.That(sentenceWithMDandPyXuyao.Texts[1].pe_text, Is.EqualTo("growth"));
+            Assert.That(sentence.Texts[0].pe_text, Is.EqualTo("Economic"));
+            Assert.That(sentence.Texts[1].pe_text, Is.EqualTo("growth"));
 
-            Assert.That(sentenceWithMDandPyXuyao.Texts[2].pe_text, Is.EqualTo("has")); //VBA
-            Assert.That(sentenceWithMDandPyXuyao.Texts[3].pe_text, Is.EqualTo("at"));  //MD1
-            Assert.That(sentenceWithMDandPyXuyao.Texts[4].pe_text, Is.EqualTo("a"));
-            Assert.That(sentenceWithMDandPyXuyao.Texts[5].pe_text, Is.EqualTo("moderate"));
-            Assert.That(sentenceWithMDandPyXuyao.Texts[6].pe_text, Is.EqualTo("rate")); //PAST
+            Assert.That(sentence.Texts[2].pe_text, Is.EqualTo("has")); //VBA
+            Assert.That(sentence.Texts[3].pe_text, Is.EqualTo("at"));  //MD1
+            Assert.That(sentence.Texts[4].pe_text, Is.EqualTo("a"));
+            Assert.That(sentence.Texts[5].pe_text, Is.EqualTo("moderate"));
+            Assert.That(sentence.Texts[6].pe_text, Is.EqualTo("rate")); //PAST
 
-            Assert.That(sentenceWithMDandPyXuyao.Texts[7].pe_text, Is.EqualTo("continued"));
-            Assert.That(sentenceWithMDandPyXuyao.Texts[8].pe_text, Is.EqualTo(" . "));
+            Assert.That(sentence.Texts[7].pe_text, Is.EqualTo("continued"));
+            Assert.That(sentence.Texts[8].pe_text, Is.EqualTo(" . "));
         }
 
         [Test]
