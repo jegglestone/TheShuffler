@@ -550,7 +550,6 @@
 
             Assert.That(sentenceWithMdUnits.Texts[6].pe_text, Is.EqualTo("meet")); //VB
 
-
             Assert.That(sentenceWithMdUnits.Texts[7].pe_text, Is.EqualTo("of"));   //MD2
             Assert.That(sentenceWithMdUnits.Texts[8].pe_text, Is.EqualTo("the"));
             Assert.That(sentenceWithMdUnits.Texts[9].pe_text, Is.EqualTo("city"));

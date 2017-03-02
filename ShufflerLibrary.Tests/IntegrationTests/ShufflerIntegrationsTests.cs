@@ -163,23 +163,7 @@
 
             Assert.That(realGdpSentence.Texts[realGdpSentence.TextCount - 1].pe_text == " . ");
         }
-
-        /*
-pe_tag	pe_text	pe_tag_revised	pe_merge_ahead
-ADJ	Economic	NULL	0
-NN	growth	NULL	0
-DYN9	has	VBA	1
-PAST	continued	NULL	0
-MD	at	MD1	3
-PREN	a	NULL	2
-ADJ	moderate	NULL	0
-NN	rate	NULL	0
-TM	so far	TM1	0
-TM	this year	TM2	0
-BKP	.	NULL	0
-
-         * */
-
+        
         [Test]
         public void When_EconomicGrowth_Sentence_Shuffled_provides_Correct_Output()
         {
@@ -273,6 +257,93 @@ BKP	.	NULL	0
 
             Assert.That(sentence.Texts[9].pe_text, Is.EqualTo("continued")); //PAST
             Assert.That(sentence.Texts[10].pe_text, Is.EqualTo(" . "));
+        }
+
+        [Test]
+        public void When_UsEconomy02_Sentence_Shuffled_provides_correct_output()
+        {/*
+            ADJReal 
+            NNgross 
+            domestic product NN(GDP) 
+            PASTrose MD1at 
+            PRENan            
+            NNannual rate MD2of 
+            ADJabout 
+            DIG2 
+            NNpercent 
+            TM1in
+            PRENthe first quarter CSafter PRESincreasing MD1at PRENa DIG3 NNpercent NNpace TM1in PRENthe fourth quarter TMY2of 2011 PYzhihou BKP.
+             */
+            var sentence = new Sentence()
+            {
+                Texts = new List<Text>()
+                {
+                    new Text{ pe_tag="	ADJ	", pe_text="	 real 	", pe_order= 70   },
+                    new Text{ pe_tag="	NN	", pe_text="	 gross domestic product 	", pe_order= 80   },
+                    new Text{ pe_tag="	NN	", pe_text="	 (gdp), 	", pe_order= 100   },
+                    new Text{ pe_tag="	PAST	", pe_text="	 rose 	", pe_order= 120   },
+                    new Text{ pe_tag="	MD1	", pe_text="	 at 	", pe_order= 130 , pe_merge_ahead= 2 },
+                    new Text{ pe_tag="	PREN1	", pe_text="	 an 	", pe_order= 140   },
+                    new Text{ pe_tag="	NN	", pe_text="	 annual rate 	", pe_order= 150   },
+                    new Text{ pe_tag="	MD2	", pe_text="	 of 	", pe_order= 160 , pe_merge_ahead= 3 },
+                    new Text{ pe_tag="	PREN2	", pe_text="	 about 	", pe_order= 170   },  // This is ADJ in Kevin's sample
+                    new Text{ pe_tag="	DIG	", pe_text="	2	", pe_order= 180   },
+                    new Text{ pe_tag="	NN	", pe_text="	 percent 	", pe_order= 190   },
+                    new Text{ pe_tag="	MD3	", pe_text="	 in 	", pe_order= 200 , pe_merge_ahead= 2 },
+                    new Text{ pe_tag="	PREN3	", pe_text="	 the 	", pe_order= 210   },
+                    new Text{ pe_tag="	TM1	", pe_text="	 first quarter 	", pe_order= 220   },
+                    new Text{ pe_tag="	CS	", pe_text="	 after 	", pe_order= 230   },
+                    new Text{ pe_tag="	PRES	", pe_text="	 increasing 	", pe_order= 240   },
+                    new Text{ pe_tag="	MD4	", pe_text="	 at 	", pe_order= 250 , pe_merge_ahead= 4 },
+                    new Text{ pe_tag="	PREN4	", pe_text="	 a 	", pe_order= 260   },
+                    new Text{ pe_tag="	DG	", pe_text="	3	", pe_order= 270   },
+                    new Text{ pe_tag="	NN	", pe_text="	 percent 	", pe_order= 280   },
+                    new Text{ pe_tag="	NN	", pe_text="	 pace 	", pe_order= 290   },
+                    new Text{ pe_tag="	MD5	", pe_text="	 in 	", pe_order= 300 , pe_merge_ahead= 2 },
+                    new Text{ pe_tag="	PREN5	", pe_text="	 the 	", pe_order= 310   },
+                    new Text{ pe_tag="	TM2	", pe_text="	 fourth quarter 	", pe_order= 320   },
+                    new Text{ pe_tag="	MD6	", pe_text="	 of 	", pe_order= 330 , pe_merge_ahead= 1 },
+                    new Text{ pe_tag="	TMY	", pe_text="	2011	", pe_order= 340   },
+                    new Text{ pe_tag="	PY	", pe_text="	zhihou	", pe_order= 340   },
+                    new Text{ pe_tag="	BKP	", pe_text="	 . 	", pe_order= 350   },
+                }
+            };
+
+            var clauserUnitStrategy = new ClauserUnitStrategy();
+            sentence = clauserUnitStrategy.ShuffleSentence(sentence);
+
+            var adverbUnitStrategy = new AdverbUnitStrategy();
+            sentence = adverbUnitStrategy.ShuffleSentence(sentence);
+
+            var timerUnitStrategy = new TimerUnitStrategy();
+            sentence = timerUnitStrategy.ShuffleSentence(sentence);
+
+            var mDUnitStrategy = new MdUnitStrategy();
+            sentence = mDUnitStrategy.ShuffleSentence(sentence);
+
+            var mdbkUnitStrategy = new MdbkUnitStrategy();
+            sentence = mdbkUnitStrategy.ShuffleSentence(sentence);
+
+            var mdNulThatUnitStrategy = new MdNulThatUnitStrategy();
+            sentence = mdNulThatUnitStrategy.ShuffleSentence(sentence);
+
+            var ddlUnitStrategy = new DdlUnitStrategy();
+            sentence = ddlUnitStrategy.ShuffleSentence(sentence);
+
+            var pyYoUnitStrategy = new PyYoUnitStrategy();
+            sentence = pyYoUnitStrategy.ShuffleSentence(sentence);
+
+            var percentUnitStrategy = new PercentUnitStrategy();
+            sentence = percentUnitStrategy.ShuffleSentence(sentence);
+
+            Assert.That(sentence.Texts[0].pe_text, Is.EqualTo("after"));
+
+            /*
+             * CSafter TMY2of 2011 PYzhihou  TM1in PRENthe fourth quarter   
+             * MD1at PRENa DIG3 NNpercent NNpace  PRESincreasing BKP, ADJReal NNgross domestic product NN(GDP) 
+             * TM1in PRENthe first quarter MD2of ADJabout DIG2 NNpercent MD1at PRENan NNannual rate PYde PASTrose  BKP.
+             * 
+             */
         }
     }
 }
