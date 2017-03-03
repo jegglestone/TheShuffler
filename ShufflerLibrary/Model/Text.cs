@@ -68,7 +68,9 @@
 
         public bool IsTimer =>
             IsType(UnitTypes.TM_TimerPrefix)
-            || IsNumberedType(UnitTypes.TM_TimerPrefix);
+            || IsNumberedType(UnitTypes.TM_TimerPrefix)
+            || IsType(UnitTypes.TMY_TimerYear)
+            || IsNumberedType(UnitTypes.TMY_TimerYear);
 
         public bool IsModifier =>
             IsType(UnitTypes.MD_Modifier)

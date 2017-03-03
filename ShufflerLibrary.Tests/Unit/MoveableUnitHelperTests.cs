@@ -145,15 +145,18 @@
             Assert.That(returnedValue[5].EndPosition, Is.EqualTo(24));
 
             var returnedValue2 = MoveableUnitHelper.GetMoveableUnitPositions(
-                texts, MoveableUnitHelper.NumberableUnitType.Timer, 2);
+                texts, MoveableUnitHelper.NumberableUnitType.Timer, 3);
 
             Assert.That(returnedValue2[0].StartPosition, Is.EqualTo(12)); //TM1
             Assert.That(returnedValue2[0].EndPosition, Is.EqualTo(21));
 
             Assert.That(returnedValue2[1].StartPosition, Is.EqualTo(22)); //TM2
-            Assert.That(returnedValue2[1].EndPosition, Is.EqualTo(24));
-            
-            Assert.That(returnedValue2.Length, Is.EqualTo(2));
+            Assert.That(returnedValue2[1].EndPosition, Is.EqualTo(23));
+
+            Assert.That(returnedValue2[2].StartPosition, Is.EqualTo(24)); //TM1
+            Assert.That(returnedValue2[2].EndPosition, Is.EqualTo(24));
+
+            Assert.That(returnedValue2.Length, Is.EqualTo(3));
         }
 
         [Test]
@@ -218,13 +221,17 @@
             };
 
             var returnedValue = MoveableUnitHelper.GetMoveableUnitPositions(
-                texts, MoveableUnitHelper.NumberableUnitType.Timer, 2);
+                texts, MoveableUnitHelper.NumberableUnitType.Timer, 3);
 
-            Assert.That(returnedValue[0].StartPosition, Is.EqualTo(9)); //TM1
-            Assert.That(returnedValue[0].EndPosition, Is.EqualTo(24));
+            Assert.That(returnedValue[0].StartPosition, Is.EqualTo(9)); //TM2
+            Assert.That(returnedValue[0].EndPosition, Is.EqualTo(10));
 
-            Assert.That(returnedValue[1].StartPosition, Is.EqualTo(25)); //TM2
-            Assert.That(returnedValue[1].EndPosition, Is.EqualTo(25));
+            Assert.That(returnedValue[1].StartPosition, Is.EqualTo(11)); //TMY
+            Assert.That(returnedValue[1].EndPosition, Is.EqualTo(24));
+
+            Assert.That(returnedValue[2].StartPosition, Is.EqualTo(25)); //TM1
+            Assert.That(returnedValue[2].EndPosition, Is.EqualTo(25));
+
         }
     }
 }
