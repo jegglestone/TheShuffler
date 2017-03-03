@@ -7,6 +7,7 @@
     using NUnit.Framework;
     using Strategy;
     using Text = Model.Text;
+    using Helper;
 
     [TestFixture]
     public class ShufflerIntegrationsTests
@@ -186,9 +187,6 @@
                 }
             };
 
-            var clauserUnitStrategy = new ClauserUnitStrategy();
-            sentence = clauserUnitStrategy.ShuffleSentence(sentence);
-
             var adverbUnitStrategy = new AdverbUnitStrategy();
             sentence = adverbUnitStrategy.ShuffleSentence(sentence);
 
@@ -242,6 +240,9 @@
 
             var percentUnitStrategy = new PercentUnitStrategy();
             sentence = percentUnitStrategy.ShuffleSentence(sentence);
+
+            var clauserUnitStrategy = new ClauserUnitStrategy();
+            sentence = clauserUnitStrategy.ShuffleSentence(sentence);
 
             Assert.That(sentence.Texts[0].pe_text, Is.EqualTo("Economic"));
             Assert.That(sentence.Texts[1].pe_text, Is.EqualTo("growth"));
@@ -310,32 +311,20 @@
                 }
             };
 
-            var clauserUnitStrategy = new ClauserUnitStrategy();
-            sentence = clauserUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "CS");
-
-            //"after PRESincreasing at a 3 percent pace in the fourth quarter of 2011 zhihou ,
-            //real gross domestic product (gdp) rose at an annual rate of about 2 percent in the first quarter . "
-
             var adverbUnitStrategy = new AdverbUnitStrategy();
             sentence = adverbUnitStrategy.ShuffleSentence(sentence);
 
             var timerUnitStrategy = new TimerUnitStrategy();
             sentence = timerUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "TM");
+            ShuffledStateHelper.AddShuffledState(sentence, "TM");
 
-            //"after increasing at a in the 2011 zhihou  ,  
-            // real gross domestic product (gdp) rose at an annual rate of about 2 percent fourth quarter of in the 
-            //3 percent pace first quarter . "
-
+            //"ADJreal NNgross domestic product NN(gdp) TMY22011 PYzhihou TM2fourth quarter MD6of TM1in PREN5the TM1first quarter CSafter PRESincreasing MD4at PREN4a DIG3 NNpercent NNpace TM1in PREN3the PASTrose MD1at PREN1an NNannual rate MD2of ADJabout DIG2 NNpercent BKP .  "
 
             var mDUnitStrategy = new MdUnitStrategy();
             sentence = mDUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "MD");
+            ShuffledStateHelper.AddShuffledState(sentence, "MD");
 
-            //"after at a in the 2011 zhihou increasing  de   ,  
-            //real gross domestic product (gdp) rose at an annual rate of about 2 percent fourth quarter of 
-            //in the 3 percent pace first quarter  .  "
+            //"ADJreal NNgross domestic product NN(gdp) TMY22011 PYzhihou TM2fourth quarter MD6of TM1in PREN5the TM1first quarter CSafter PY de  PRESincreasing MD4at PREN4a DIG3 NNpercent NNpace TM1in PREN3the PASTrose MD1at PREN1an NNannual rate MD2of ADJabout DIG2 NNpercent BKP .  "
 
             var mdbkUnitStrategy = new MdbkUnitStrategy();
             sentence = mdbkUnitStrategy.ShuffleSentence(sentence);
@@ -351,6 +340,15 @@
 
             var percentUnitStrategy = new PercentUnitStrategy();
             sentence = percentUnitStrategy.ShuffleSentence(sentence);
+
+            var clauserUnitStrategy = new ClauserUnitStrategy();
+            sentence = clauserUnitStrategy.ShuffleSentence(sentence);
+            ShuffledStateHelper.AddShuffledState(sentence, "CS");
+
+            /*
+             * "after  de  increasing at a percent 3 pace in the rose at an annual rate of about 2 percent  ,  real gross domestic product (gdp) 2011 zhihou fourth quarter of in the first quarter  .  "
+             * 
+             */
 
             Assert.That(sentence.Texts[0].pe_text, Is.EqualTo("after")); //CS
             Assert.That(sentence.Texts[1].pe_text, Is.EqualTo("of"));    //TMY2
@@ -392,22 +390,6 @@
              * TM1in PRENthe first quarter MD2of ADJabout DIG2 NNpercent MD1at PRENan NNannual rate PYde PASTrose  BKP.
              * 
              */
-        }
-
-        private static void AddShuffledState(Sentence sentence, string ruleApplied)
-        {
-            StringBuilder sentenceLineStringBuilder = new StringBuilder();
-            foreach (var text in sentence.Texts)
-            {
-                sentenceLineStringBuilder.Append(text.actual_text_used + " ");
-            }
-
-            sentence.ShuffledStates.Add(new ShuffledState()
-            {
-                SentenceIdentifier = sentence.Sentence_Identifier,
-                SentenceState = sentenceLineStringBuilder.ToString(),
-                StrategyApplied = ruleApplied
-            });
         }
     }
 }

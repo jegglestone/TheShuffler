@@ -34,26 +34,15 @@
             List<Text> reversedTexts, 
             int originalTimerIndexPosition)
         {
-            if (TimerPreceededByDigButNotImmediately(
-                timerSentenceDecorator, originalTimerIndexPosition))   // 2.  
-            {
-                // 2.1.If DIG is found first, move the TM unit to before the DIG unit
-                MoveTimerBeforeDig(
-                    timerSentenceDecorator, reversedTexts);
-
-                return;
-            }
-            // 2.2 not found 
-
-            // 3.Search to the left of TM for any of ADV or ‘ADV and ADV’ or ‘ADV, ADV and ADV.
+            // 2.Search to the left of TM for any of ADV or ‘ADV and ADV’ or ‘ADV, ADV and ADV.
             if (timerSentenceDecorator.Texts.Take(originalTimerIndexPosition).Any(text => text.IsAdverb))
             {
-                // 3.1.If any of ADV or ‘ADV and ADV’ or ‘ADV, ADV and ADV is found move TM before first ADV:
+                // 2.1.If any of ADV or ‘ADV and ADV’ or ‘ADV, ADV and ADV is found move TM before first ADV:
                 MoveTimerBeforeAdverb(
                     timerSentenceDecorator, reversedTexts, originalTimerIndexPosition);
 
             }
-            //3.2.If no ADV is found –
+            //2.2.If no ADV is found –
             else if (VbaBeforeTimerUnit(timerSentenceDecorator))
             {
                 // New: Economic growth-give precedence to VBA
@@ -67,11 +56,9 @@
                     lastVbaPosition, reversedTexts, timerSentenceDecorator);
             }
             else if (PastPresBeforeTimerUnit(timerSentenceDecorator))
-            {  
-                //if vba somewhere move before that
-               
-               // 4.Search to the left of TM for PAST / PRES
-               //  4.1.If either is found, move the TM unit to before PAST or PRES whichever is the case:
+            {                 
+               // 3.Search to the left of TM for PAST / PRES
+               //  3.1.If either is found, move the TM unit to before PAST or PRES whichever is the case:
                 int lastPastPresPosition =
                     timerSentenceDecorator
                     .Texts
@@ -81,18 +68,18 @@
                 MoveTimerUnitToPosition(
                     lastPastPresPosition, reversedTexts, timerSentenceDecorator);
             }
-            // 4.2.If neither VBA, PAST nor PRES is found -
+            // 3.2.If neither VBA, PAST nor PRES is found -
             else if (NoNnUnitBeforeTimerUnit(timerSentenceDecorator))
             {
-                //   5.Search to the left of TM for NNX until reaching BKP
-                //   5.1.If no NNX is found, end the task.TM stays where it is
+                //   4.Search to the left of TM for NNX until reaching BKP
+                //   4.1.If no NNX is found, end the task.TM stays where it is
 
                 KeepTimerUnitInSamePosition(
                     timerSentenceDecorator, reversedTexts, originalTimerIndexPosition);
             }
             else
             {
-                // 5.2. NNX is found -
+                // 4.2. NNX is found -
                 ApplyBeforeNnShuffleRules(
                     timerSentenceDecorator, reversedTexts, originalTimerIndexPosition);
             } 
@@ -101,7 +88,7 @@
         private static void ApplyBeforeNnShuffleRules(TimerSentenceDecorator timerSentenceDecorator, List<Text> reversedTexts,
             int originalTimerIndexPosition)
         {
-            //   5.3.Search its left for PREN or ADJ until reaching ‘and’ or BK / NBKP / BKP.
+            //   4.3.Search its left for PREN or ADJ until reaching ‘and’ or BK / NBKP / BKP.
             int lastNnPosition =
                 GetClosestNnPosition(timerSentenceDecorator, originalTimerIndexPosition);
             
@@ -109,7 +96,7 @@
                 timerSentenceDecorator, lastNnPosition);
             if (andOrBreakerPosition == -1) andOrBreakerPosition = 0;
 
-            //   5.3.1.If PREN is found, move the TM unit to before PREN:
+            //   4.3.1.If PREN is found, move the TM unit to before PREN:
             if (timerSentenceDecorator
                             .Texts
                             .Skip(andOrBreakerPosition + 1)
@@ -119,7 +106,7 @@
                 MoveTimerUnitBeforePren(
                     timerSentenceDecorator, reversedTexts, andOrBreakerPosition, lastNnPosition);
             }
-            //   5.3.2.If no PREN is found but ADJ is found, move the TM unit to before ADJ:
+            //   4.3.2.If no PREN is found but ADJ is found, move the TM unit to before ADJ:
             else if (timerSentenceDecorator
                             .Texts
                             .Skip(andOrBreakerPosition)
@@ -133,7 +120,7 @@
 
             else
             {
-                //   5.3.3.If neither PREN nor ADJ is found, move the TM unit to before NN
+                //   4.3.3.If neither PREN nor ADJ is found, move the TM unit to before NN
                 MoveTimerUnitToPosition(
                     lastNnPosition,
                     reversedTexts,

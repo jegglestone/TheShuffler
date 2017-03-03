@@ -48,6 +48,7 @@
     <Compile Include="Decorator\AdverbSentenceDecorator.cs" />
     <Compile Include="Decorator\MdbkSentenceDecorator.cs" />
     <Compile Include="Decorator\PyYoSentenceDecorator.cs" />
+    <Compile Include="Helper\ShuffledStateHelper.cs" />
     <Compile Include="Model\ShuffledState.cs" />
     <Compile Include="Obsolete\BKBySentenceDecorator.cs" />
     <Compile Include="Decorator\ClauserSentenceDecorator.cs" />

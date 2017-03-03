@@ -100,16 +100,13 @@ namespace ShufflerLibrary
         private void ShuffleSentence(
             Paragraph paragraph, int index, Sentence sentence)
         {
-            AddShuffledState(sentence, "Before_Shuffling");
-
-            sentence = _clauserUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffle_CS");
+            ShuffledStateHelper.AddShuffledState(sentence, "Before_Shuffling");
 
             sentence = _adverbUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffle_ADV");
+            ShuffledStateHelper.AddShuffledState(sentence, "Shuffle_ADV");
 
             sentence = _timerUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffle_TM");
+            ShuffledStateHelper.AddShuffledState(sentence, "Shuffle_TM");
 
             #region not in use
             //if (sentence.SentenceHasMultipleOptions)
@@ -125,43 +122,30 @@ namespace ShufflerLibrary
             #endregion
 
             sentence = _mDUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffle_MD");
+            ShuffledStateHelper.AddShuffledState(sentence, "Shuffle_MD");
             
             sentence = _mdbkUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffle_MDBK");
+            ShuffledStateHelper.AddShuffledState(sentence, "Shuffle_MDBK");
 
             sentence = _mdNulThatStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffle_MDNUL");
+            ShuffledStateHelper.AddShuffledState(sentence, "Shuffle_MDNUL");
 
             sentence = _ddlUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffle_DDL");
+            ShuffledStateHelper.AddShuffledState(sentence, "Shuffle_DDL");
 
             sentence = _pyYoUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffle_YO");
+            ShuffledStateHelper.AddShuffledState(sentence, "Shuffle_YO");
 
             sentence = _percentUnitStrategy.ShuffleSentence(sentence);
-            AddShuffledState(sentence, "Shuffle_Percent");
-            
+            ShuffledStateHelper.AddShuffledState(sentence, "Shuffle_Percent");
+
+            sentence = _clauserUnitStrategy.ShuffleSentence(sentence);
+            ShuffledStateHelper.AddShuffledState(sentence, "Shuffle_CS");
+
             sentence = SentenceOrderReSetter.SetPeOrderAsc(sentence);
 
             paragraph.Sentences[index] = sentence;
         }
-
-      private static void AddShuffledState(Sentence sentence, string ruleApplied)
-      {
-        StringBuilder sentenceLineStringBuilder = new StringBuilder();
-        foreach (var text in sentence.Texts)
-        {
-          sentenceLineStringBuilder.Append(text.actual_text_used);
-        }
-
-        sentence.ShuffledStates.Add(new ShuffledState()
-        {
-          SentenceIdentifier = sentence.Sentence_Identifier,
-          SentenceState = sentenceLineStringBuilder.ToString(),
-          StrategyApplied = ruleApplied
-        });
-      }
 
       #region multi sentence options
     //private void ApplySubsequentStrategiesToMultipleSentences(Sentence sentence)

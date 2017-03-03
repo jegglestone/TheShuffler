@@ -124,40 +124,40 @@ namespace ShufflerLibrary.Tests.Unit
             Assert.That(sentence.Texts[29].pe_text == " . ");
         }
 
-        [Test]
-        public void When_DIG_Is_Found_Move_TM_before_it()
-        {
-            // Real GDP PASTrose by DIG100 pence TMper month
-            var sentence = new Sentence()
-            {
-                Texts = new List<Text>()
-                {
-                    new Text() {pe_text = " Real ", pe_tag = "ADJ", pe_order = 1663970},
-                    new Text() {pe_text = " GDP ", pe_tag = "NN", pe_order = 1663980},
-                    new Text() {pe_text = " rose ", pe_tag_revised = "PAST", pe_order = 1663990},
-                    new Text() {pe_text = " by ", pe_tag = "BK", pe_order = 1663990},
-                    new Text() {pe_text = " 100 ", pe_tag = "DIG",  pe_order = 1664010},
-                    new Text() {pe_text = " pence ", pe_tag = null,pe_order = 1664010},
+        //[Test]
+        //public void When_DIG_Is_Found_Move_TM_before_it()
+        //{
+        //    // Real GDP PASTrose by DIG100 pence TMper month
+        //    var sentence = new Sentence()
+        //    {
+        //        Texts = new List<Text>()
+        //        {
+        //            new Text() {pe_text = " Real ", pe_tag = "ADJ", pe_order = 1663970},
+        //            new Text() {pe_text = " GDP ", pe_tag = "NN", pe_order = 1663980},
+        //            new Text() {pe_text = " rose ", pe_tag_revised = "PAST", pe_order = 1663990},
+        //            new Text() {pe_text = " by ", pe_tag = "BK", pe_order = 1663990},
+        //            new Text() {pe_text = " 100 ", pe_tag = "DIG",  pe_order = 1664010},
+        //            new Text() {pe_text = " pence ", pe_tag = null,pe_order = 1664010},
 
-                    new Text() {pe_text = " per month ", pe_tag = "TM", pe_tag_revised = "TM1", pe_order = 1664020},
-                    new Text() {pe_text = " . ", pe_tag = "BKP", pe_tag_revised = "NULL", pe_order = 1664030},
-                }
-            };
+        //            new Text() {pe_text = " per month ", pe_tag = "TM", pe_tag_revised = "TM1", pe_order = 1664020},
+        //            new Text() {pe_text = " . ", pe_tag = "BKP", pe_tag_revised = "NULL", pe_order = 1664030},
+        //        }
+        //    };
 
-            var timerUnitStrategy = new TimerUnitStrategy();
-            var returnedSentence = timerUnitStrategy.ShuffleSentence(sentence);
+        //    var timerUnitStrategy = new TimerUnitStrategy();
+        //    var returnedSentence = timerUnitStrategy.ShuffleSentence(sentence);
 
-            // per month Real  GPD  rose  by per month 100 pence
-            Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo(" Real ")); //TM
-            Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo(" GDP "));  //ADJ
-            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo(" rose "));
-            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo(" by "));
-            Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo(" per month "));
-            Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo(" 100 ")); //DG
-            Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo(" pence "));
+        //    // per month Real  GPD  rose  by per month 100 pence
+        //    Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo(" Real ")); //TM
+        //    Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo(" GDP "));  //ADJ
+        //    Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo(" rose "));
+        //    Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo(" by "));
+        //    Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo(" per month "));
+        //    Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo(" 100 ")); //DG
+        //    Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo(" pence "));
         
-            Assert.That(returnedSentence.Texts[7].pe_text, Is.EqualTo(" . "));
-        }
+        //    Assert.That(returnedSentence.Texts[7].pe_text, Is.EqualTo(" . "));
+        //}
 
         [Test]
         public void WhenAdvBeforeVbVbaPastThatIsbeforeTimer_MoveTMbeforeAdv()
@@ -588,52 +588,52 @@ namespace ShufflerLibrary.Tests.Unit
             Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo(" . "));
         }
 
-        [Test]
-        public void When_DIG_Is_Found_Twice_Move_TM_before_closest_one()
-        {
-            // Real GDP PASTrose by DIG100 pence TMper month
-            var sentence = new Sentence()
-            {
-                Texts = new List<Text>()
-                {
-                    new Text() {pe_text = "However", pe_tag = "CS", pe_order = 1663970},
-                    new Text() {pe_text = "150", pe_tag = "DIG", pe_order = 1663970},
-                    new Text() {pe_text = "journalists", pe_tag = "NN", pe_order = 1663970},
-                    new Text() {pe_text = "said", pe_tag = "VB", pe_order = 1663970},
-                    new Text() {pe_text = " , ", pe_tag = "BKP", pe_order = 1663980},
+        //[Test]
+        //public void When_DIG_Is_Found_Twice_Move_TM_before_closest_one()
+        //{
+        //    // Real GDP PASTrose by DIG100 pence TMper month
+        //    var sentence = new Sentence()
+        //    {
+        //        Texts = new List<Text>()
+        //        {
+        //            new Text() {pe_text = "However", pe_tag = "CS", pe_order = 1663970},
+        //            new Text() {pe_text = "150", pe_tag = "DIG", pe_order = 1663970},
+        //            new Text() {pe_text = "journalists", pe_tag = "NN", pe_order = 1663970},
+        //            new Text() {pe_text = "said", pe_tag = "VB", pe_order = 1663970},
+        //            new Text() {pe_text = " , ", pe_tag = "BKP", pe_order = 1663980},
 
-                    new Text() {pe_text = " Real ", pe_tag = "ADJ", pe_order = 1663970},
-                    new Text() {pe_text = " GDP ", pe_tag = "NN", pe_order = 1663980},
-                    new Text() {pe_text = " rose ", pe_tag_revised = "PAST", pe_order = 1663990},
-                    new Text() {pe_text = " by ", pe_tag = "BK", pe_order = 1663990},
-                    new Text() {pe_text = " 100 ", pe_tag = "DIG",  pe_order = 1664010},
-                    new Text() {pe_text = " pence ", pe_tag = null,pe_order = 1664010},
+        //            new Text() {pe_text = " Real ", pe_tag = "ADJ", pe_order = 1663970},
+        //            new Text() {pe_text = " GDP ", pe_tag = "NN", pe_order = 1663980},
+        //            new Text() {pe_text = " rose ", pe_tag_revised = "PAST", pe_order = 1663990},
+        //            new Text() {pe_text = " by ", pe_tag = "BK", pe_order = 1663990},
+        //            new Text() {pe_text = " 100 ", pe_tag = "DIG",  pe_order = 1664010},
+        //            new Text() {pe_text = " pence ", pe_tag = null,pe_order = 1664010},
 
-                    new Text() {pe_text = " per month ", pe_tag = "TM", pe_tag_revised = "TM1", pe_order = 1664020},
-                    new Text() {pe_text = " . ", pe_tag = "BKP", pe_tag_revised = "NULL", pe_order = 1664030},
-                }
-            };
+        //            new Text() {pe_text = " per month ", pe_tag = "TM", pe_tag_revised = "TM1", pe_order = 1664020},
+        //            new Text() {pe_text = " . ", pe_tag = "BKP", pe_tag_revised = "NULL", pe_order = 1664030},
+        //        }
+        //    };
 
-            var timerUnitStrategy = new TimerUnitStrategy();
-            var returnedSentence = timerUnitStrategy.ShuffleSentence(sentence);
+        //    var timerUnitStrategy = new TimerUnitStrategy();
+        //    var returnedSentence = timerUnitStrategy.ShuffleSentence(sentence);
 
-            // per month Real  GPD  rose  by per month 100 pence
-            Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo("However")); 
-            Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo("150")); 
-            Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo("journalists"));
-            Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo("said")); 
-            Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo(" , "));  
+        //    // per month Real  GPD  rose  by per month 100 pence
+        //    Assert.That(returnedSentence.Texts[0].pe_text, Is.EqualTo("However")); 
+        //    Assert.That(returnedSentence.Texts[1].pe_text, Is.EqualTo("150")); 
+        //    Assert.That(returnedSentence.Texts[2].pe_text, Is.EqualTo("journalists"));
+        //    Assert.That(returnedSentence.Texts[3].pe_text, Is.EqualTo("said")); 
+        //    Assert.That(returnedSentence.Texts[4].pe_text, Is.EqualTo(" , "));  
 
-            Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo(" Real ")); 
-            Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo(" GDP ")); 
-            Assert.That(returnedSentence.Texts[7].pe_text, Is.EqualTo(" rose "));
-            Assert.That(returnedSentence.Texts[8].pe_text, Is.EqualTo(" by "));
-            Assert.That(returnedSentence.Texts[9].pe_text, Is.EqualTo(" per month "));
-            Assert.That(returnedSentence.Texts[10].pe_text, Is.EqualTo(" 100 ")); //DG
-            Assert.That(returnedSentence.Texts[11].pe_text, Is.EqualTo(" pence "));
+        //    Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo(" Real ")); 
+        //    Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo(" GDP ")); 
+        //    Assert.That(returnedSentence.Texts[7].pe_text, Is.EqualTo(" rose "));
+        //    Assert.That(returnedSentence.Texts[8].pe_text, Is.EqualTo(" by "));
+        //    Assert.That(returnedSentence.Texts[9].pe_text, Is.EqualTo(" per month "));
+        //    Assert.That(returnedSentence.Texts[10].pe_text, Is.EqualTo(" 100 ")); //DG
+        //    Assert.That(returnedSentence.Texts[11].pe_text, Is.EqualTo(" pence "));
 
-            Assert.That(returnedSentence.Texts[12].pe_text, Is.EqualTo(" . "));
-        }
+        //    Assert.That(returnedSentence.Texts[12].pe_text, Is.EqualTo(" . "));
+        //}
 
         [Test]
         public void WhenPrenBeforeNNBeforeTM_MoveTMBeforePren()
