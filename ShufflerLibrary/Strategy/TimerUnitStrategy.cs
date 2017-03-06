@@ -316,7 +316,7 @@
         {
             MoveableUnit[] timerPositions =
                 GetTimerUnitPositions(timerSentenceDecorator);
-
+            
             timerPositions[timerPositions.Length - 1].EndPosition =
                 timerSentenceDecorator
                     .Texts

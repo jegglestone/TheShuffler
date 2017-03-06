@@ -146,7 +146,6 @@ namespace Main
 
         private bool IsClauserUnit(OpenXmlElement node)
         {
-            //TODO: Move this to make it reusable
             var doc = new XmlDocument();
             doc.LoadXml("<xml xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\">"
                 + node.OuterXml + "</xml>");

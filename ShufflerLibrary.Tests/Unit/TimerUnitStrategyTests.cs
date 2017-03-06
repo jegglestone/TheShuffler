@@ -189,7 +189,6 @@ namespace ShufflerLibrary.Tests.Unit
             Assert.That(returnedSentence.Texts[5].pe_text, Is.EqualTo(" the "));
             Assert.That(returnedSentence.Texts[6].pe_text, Is.EqualTo(" offer "));
             Assert.That(returnedSentence.Texts[7].pe_text, Is.EqualTo(" . "));
-
         }
 
         [Test]

@@ -71,8 +71,8 @@ namespace ShufflerLibrary.Helper
     private static void SetEndPositionOfFinalItem(
       List<Text> texts, MoveableUnit[] unitPositions)
     {
-      int endPosition = //TODO: why last index - should be next index
-        texts.FindLastIndex( //TODO: need to pass in the type - maybe end is BKP or something else
+      int endPosition = 
+        texts.FindLastIndex(
           text => text.IsType(UnitTypes.BKP_BreakerPunctuation)
                   || text.IsType(UnitTypes.BK_Breaker)) - 1;
 
